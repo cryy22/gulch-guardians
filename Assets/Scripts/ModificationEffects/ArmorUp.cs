@@ -13,7 +13,7 @@ namespace GulchGuardians
         public override string Name => _name;
         public override TargetType Target => TargetType.Unit;
 
-        public override void Apply(Unit unit = null, UnitTeam team = null)
+        public override void Apply(Unit unit = null, Team team = null)
         {
             base.Apply(unit: unit, team: team);
 

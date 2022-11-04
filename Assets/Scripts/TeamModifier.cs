@@ -15,7 +15,7 @@ namespace GulchGuardians
         [SerializeField] private List<ModificationEffect> Effects = new();
 
         [SerializeField] private UnitFactory UnitFactory;
-        [SerializeField] private UnitTeam PlayerTeam;
+        [SerializeField] private Team PlayerTeam;
 
         [SerializeField] private TMP_Text ActionsRemainingText;
         [SerializeField] private TMP_Text ChooseATargetText;

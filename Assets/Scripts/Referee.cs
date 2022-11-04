@@ -2,13 +2,14 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Scene = GulchGuardians.Constants.Scene;
 
 namespace GulchGuardians
 {
     public class Referee : MonoBehaviour
     {
-        [SerializeField] private UnitTeam PlayerTeam;
-        [SerializeField] private UnitTeam EnemyTeam;
+        [SerializeField] private Team PlayerTeam;
+        [SerializeField] private Team EnemyTeam;
         [SerializeField] private TeamModifier TeamModifier;
 
         [SerializeField] private Button RunCombatButton;
@@ -52,7 +53,7 @@ namespace GulchGuardians
 
             if (!isWin)
             {
-                SceneManager.LoadScene(Constants.Scene.TitleScene);
+                SceneManager.LoadScene(Scene.TitleScene);
                 yield break;
             }
 
@@ -63,10 +64,10 @@ namespace GulchGuardians
             RunCombatButton.gameObject.SetActive(true);
         }
 
-        private IEnumerator Run1V1(UnitTeam player, UnitTeam enemy)
+        private IEnumerator Run1V1(Team player, Team enemy)
         {
-            UnitTeam attacker;
-            UnitTeam defender;
+            Team attacker;
+            Team defender;
 
             while (true)
             {

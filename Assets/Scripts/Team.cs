@@ -1,22 +1,23 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace GulchGuardians
 {
-    public class UnitTeam : MonoBehaviour
+    public class Team : MonoBehaviour
     {
-        [SerializeField] private bool IsPlayerTeam;
+        public List<Unit> Units = new();
+        public int UnitsPerCombatCycle = 3;
 
-        [SerializeField] public int UnitsPerCombatCycle = 3;
+        [SerializeField] private bool IsPlayerTeam;
         [SerializeField] private int UnitCount = 3;
         [SerializeField] private bool DemarcatesRounds;
-        [SerializeField] private UnitFactory UnitFactory;
 
-        [SerializeField] private Transform UnitList;
+        [SerializeField] private UnitFactory UnitFactory;
         [SerializeField] private GameObject RoundDemarcation;
 
-        public List<Unit> Units = new();
+        public event EventHandler UnitsChanged;
 
         public Unit FrontUnit => Units.Count > 0 ? Units.First() : null;
         public int UnitsInCombatCycle { get; private set; }
@@ -25,13 +26,13 @@ namespace GulchGuardians
         {
             RoundDemarcation.SetActive(DemarcatesRounds);
 
-            foreach (Transform child in UnitList) Destroy(child.gameObject);
-
             for (var i = 0; i < UnitCount; i++)
             {
                 Unit unit = UnitFactory.Create(isPlayerTeam: IsPlayerTeam);
                 AddUnit(unit);
             }
+
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
 
             ResetUnitsOnDeck();
         }
@@ -40,6 +41,8 @@ namespace GulchGuardians
         {
             Units.RemoveAt(0);
             UnitsInCombatCycle--;
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
+
             UpdateDemarcation();
         }
 
@@ -51,16 +54,16 @@ namespace GulchGuardians
 
         public void AddUnit(Unit unit)
         {
-            unit.transform.SetParent(UnitList);
             Units.Add(unit);
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
         public void SetUnitIndex(Unit unit, int index)
         {
             if (!Units.Remove(unit)) return;
 
-            unit.transform.SetSiblingIndex(index);
             Units.Insert(index: index, item: unit);
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
         private void UpdateDemarcation()
@@ -70,7 +73,7 @@ namespace GulchGuardians
             RoundDemarcation.SetActive(UnitsInCombatCycle > 0);
             if (UnitsInCombatCycle == 0) return;
 
-            Transform lastUnitInCombatCycle = UnitList.GetChild(UnitsInCombatCycle - 1);
+            Transform lastUnitInCombatCycle = Units[UnitsInCombatCycle - 1].transform;
 
             Vector3 initialPosition = RoundDemarcation.transform.position;
             RoundDemarcation.transform.position = new Vector3(
@@ -80,5 +83,4 @@ namespace GulchGuardians
             );
         }
     }
-
 }
