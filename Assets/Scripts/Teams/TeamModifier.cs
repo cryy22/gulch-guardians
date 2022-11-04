@@ -98,7 +98,10 @@ namespace GulchGuardians
 
         private IEnumerable<ModificationEffect> GetRandomEffects(int numberOfEffects)
         {
-            return Effects.OrderBy(_ => Random.value).Take(Mathf.Min(a: numberOfEffects, b: Effects.Count));
+            return Effects
+                .Where(e => e.CanBeAppliedTo(PlayerTeam))
+                .OrderBy(_ => Random.value)
+                .Take(Mathf.Min(a: numberOfEffects, b: Effects.Count));
         }
 
         private void UpdateActionsRemainingText()

@@ -10,6 +10,8 @@ namespace GulchGuardians
         public abstract string Name { get; }
         public abstract TargetType Target { get; }
 
+        public virtual bool CanBeAppliedTo(Team team = null) { return true; }
+
         public virtual void Prepare() { }
 
         public virtual void Apply(Unit unit = null, Team team = null)

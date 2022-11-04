@@ -1406,6 +1406,10 @@ PrefabInstance:
       value: EnemyTeam
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: MaxUnits
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: UnitCount
       value: 99
       objectReference: {fileID: 0}
@@ -2467,6 +2471,10 @@ PrefabInstance:
       value: PlayerTeam
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: MaxUnits
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: UnitCount
       value: 1
       objectReference: {fileID: 0}
@@ -2484,7 +2492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: UnitsPerCombatCycle
-      value: 999
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: UnitSets.Array.data[0]
@@ -2492,6 +2500,14 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: bfd8c297f251c403084cf761966795ec, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: UnitSets.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: bfd8c297f251c403084cf761966795ec, type: 2}
+    - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: UnitSets.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: bfd8c297f251c403084cf761966795ec, type: 2}
+    - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: UnitSets.Array.data[3]
       value: 
       objectReference: {fileID: 11400000, guid: bfd8c297f251c403084cf761966795ec, type: 2}
     - target: {fileID: 7077939781010037160, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}

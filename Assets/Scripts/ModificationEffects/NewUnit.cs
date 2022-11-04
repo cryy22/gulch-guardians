@@ -16,6 +16,11 @@ namespace GulchGuardians
         public override string Name => _name;
         public override TargetType Target => TargetType.Team;
 
+        public override bool CanBeAppliedTo(Team team = null)
+        {
+            return team != null && team.Units.Count < team.MaxUnits;
+        }
+
         public override void Prepare()
         {
             base.Prepare();

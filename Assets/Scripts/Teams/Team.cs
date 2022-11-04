@@ -10,6 +10,7 @@ namespace GulchGuardians
     public class Team : MonoBehaviour
     {
         public List<Unit> Units = new();
+        public int MaxUnits = 99;
         public int UnitsPerCombatCycle = 3;
 
         [SerializeField] private List<UnitSet> UnitSets;
@@ -55,6 +56,8 @@ namespace GulchGuardians
 
         public void AddUnit(Unit unit)
         {
+            if (Units.Count >= MaxUnits) throw new Exception("Team is full");
+
             AddUnitInternal(unit);
 
             _unitsDisplayer.UpdateDisplay(units: Units);
@@ -107,8 +110,9 @@ namespace GulchGuardians
 
         private void AddUnits(IEnumerable<Unit> units)
         {
-            foreach (Unit unit in units)
-                AddUnitInternal(unit);
+            if (Units.Count + units.Count() > MaxUnits) throw new Exception("Team is full");
+
+            foreach (Unit unit in units) AddUnitInternal(unit);
 
             _unitsDisplayer.UpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
