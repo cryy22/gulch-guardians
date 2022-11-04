@@ -23,8 +23,18 @@ namespace GulchGuardians
         private EffectOptionsDisplayer _effectOptions;
 
         private void Awake() { _effectOptions = GetComponent<EffectOptionsDisplayer>(); }
-        private void OnEnable() { _effectOptions.EffectSelected += EffectSelectedEventHandler; }
-        private void OnDisable() { _effectOptions.EffectSelected -= EffectSelectedEventHandler; }
+
+        private void OnEnable()
+        {
+            _effectOptions.EffectSelected += EffectSelectedEventHandler;
+            PlayerTeam.UnitClicked += UnitClickedEventHandler;
+        }
+
+        private void OnDisable()
+        {
+            _effectOptions.EffectSelected -= EffectSelectedEventHandler;
+            PlayerTeam.UnitClicked -= UnitClickedEventHandler;
+        }
 
         public void BeginModificationRound()
         {
@@ -32,20 +42,20 @@ namespace GulchGuardians
             _actionsRemaining = ActionsPerRound;
             UpdateActionsRemainingText();
 
-            foreach (Unit unit in PlayerTeam.Units)
-                unit.GetComponent<ClickReporter>().OnReporterClickedEvent += OnUnitClicked;
-
             OfferEffectOptions();
         }
 
         public void EndModificationRound()
         {
-            foreach (Unit unit in PlayerTeam.Units)
-                unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClicked;
-
             CleanUpOfferedEffects();
             _effectOptions.CleanUpEffectOptions();
             gameObject.SetActive(false);
+        }
+
+        private void UnitClickedEventHandler(object sender, Team.UnitClickedEventArgs e)
+        {
+            if (_effectOptions.SelectedEffect == null) return;
+            ApplySelectedEffect(e.Unit);
         }
 
         private void EffectSelectedEventHandler(object sender, EventArgs e)
@@ -54,14 +64,6 @@ namespace GulchGuardians
                 ApplySelectedEffect(null);
             else
                 ChooseATargetText.gameObject.SetActive(true);
-        }
-
-        private void OnUnitClicked(ClickReporter reporter)
-        {
-            if (_effectOptions.SelectedEffect == null) return;
-
-            var selectedUnit = reporter.GetComponent<Unit>();
-            ApplySelectedEffect(selectedUnit);
         }
 
         private void ApplySelectedEffect(Unit unit)

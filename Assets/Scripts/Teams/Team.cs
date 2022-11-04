@@ -17,6 +17,7 @@ namespace GulchGuardians
         [SerializeField] private UnitFactory UnitFactory;
 
         public event EventHandler UnitsChanged;
+        public event EventHandler<UnitClickedEventArgs> UnitClicked;
 
         public Unit FrontUnit => Units.Count > 0 ? Units.First() : null;
         public int UnitsInCombatCycle { get; private set; }
@@ -26,18 +27,32 @@ namespace GulchGuardians
             for (var i = 0; i < UnitCount; i++)
             {
                 Unit unit = UnitFactory.Create(isPlayerTeam: IsPlayerTeam);
-                AddUnit(unit);
+                AddUnit(unit: unit, skipClickHandling: true);
             }
 
             ResetUnitsOnDeck();
         }
 
+        private void OnEnable()
+        {
+            foreach (Unit unit in Units)
+                unit.GetComponent<ClickReporter>().OnReporterClickedEvent += OnUnitClickedEventHandler;
+        }
+
+        private void OnDisable()
+        {
+            foreach (Unit unit in Units)
+                unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClickedEventHandler;
+        }
+
         public IEnumerator UnitDefeated(Unit unit)
         {
             if (!Units.Remove(unit)) yield break;
+            unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClickedEventHandler;
+            UnitsInCombatCycle--;
 
             yield return unit.BecomeDefeated();
-            UnitsInCombatCycle--;
+
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
@@ -47,9 +62,12 @@ namespace GulchGuardians
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
-        public void AddUnit(Unit unit)
+        public void AddUnit(Unit unit, bool skipClickHandling = false)
         {
             Units.Add(unit);
+            if (!skipClickHandling)
+                unit.GetComponent<ClickReporter>().OnReporterClickedEvent += OnUnitClickedEventHandler;
+
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
@@ -59,6 +77,18 @@ namespace GulchGuardians
 
             Units.Insert(index: index, item: unit);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
+        }
+
+        private void OnUnitClickedEventHandler(ClickReporter reporter)
+        {
+            UnitClicked?.Invoke(sender: this, e: new UnitClickedEventArgs(unit: reporter.GetComponent<Unit>()));
+        }
+
+        public class UnitClickedEventArgs : EventArgs
+        {
+            public UnitClickedEventArgs(Unit unit) { Unit = unit; }
+
+            public Unit Unit { get; }
         }
     }
 }
