@@ -19,6 +19,7 @@ namespace GulchGuardians
 
         [SerializeField] private TMP_Text ActionsRemainingText;
         [SerializeField] private TMP_Text ChooseATargetText;
+        private readonly List<ModificationEffect> _offeredEffects = new();
 
         private int _actionsRemaining;
         private EffectOptionsDisplayer _effectOptions;
@@ -39,7 +40,7 @@ namespace GulchGuardians
                 PlayerTeam.AddUnit(unit);
             }
 
-            ResetEffectOptions();
+            OfferEffectOptions();
 
             foreach (Unit unit in PlayerTeam.Units)
                 unit.GetComponent<ClickReporter>().OnReporterClickedEvent += OnUnitClicked;
@@ -50,6 +51,7 @@ namespace GulchGuardians
             foreach (Unit unit in PlayerTeam.Units)
                 unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClicked;
 
+            CleanUpOfferedEffects();
             _effectOptions.CleanUpEffectOptions();
             gameObject.SetActive(false);
         }
@@ -77,21 +79,32 @@ namespace GulchGuardians
             _actionsRemaining--;
             UpdateActionsRemainingText();
 
+            CleanUpOfferedEffects();
             if (_actionsRemaining <= 0)
                 EndModificationRound();
             else
-                ResetEffectOptions();
+                OfferEffectOptions();
         }
 
-        private void ResetEffectOptions()
+        private void OfferEffectOptions()
+        {
+            _offeredEffects.AddRange(GetRandomEffects(3));
+            foreach (ModificationEffect effect in _offeredEffects) effect.Prepare();
+
+            _effectOptions.DisplayEffectOptions(_offeredEffects);
+        }
+
+        private void CleanUpOfferedEffects()
         {
             ChooseATargetText.gameObject.SetActive(false);
-            _effectOptions.DisplayEffectOptions(GetRandomEffects());
+
+            foreach (ModificationEffect effect in _offeredEffects) effect.CleanUp();
+            _offeredEffects.Clear();
         }
 
-        private IEnumerable<ModificationEffect> GetRandomEffects()
+        private IEnumerable<ModificationEffect> GetRandomEffects(int numberOfEffects)
         {
-            return Effects.OrderBy(x => Random.value).Take(2);
+            return Effects.OrderBy(x => Random.value).Take(Mathf.Min(a: numberOfEffects, b: Effects.Count));
         }
 
         private void UpdateActionsRemainingText()

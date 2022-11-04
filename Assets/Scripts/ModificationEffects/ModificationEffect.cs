@@ -10,11 +10,17 @@ namespace GulchGuardians
         public abstract string Name { get; }
         public abstract TargetType Target { get; }
 
+        public virtual void Prepare() { }
+
         public virtual void Apply(Unit unit = null, Team team = null)
         {
             if (ParametersMeetTargetTypeRequirements(unit: unit, team: team) == false)
                 throw new ArgumentException("Arguments do not meet target type requirements");
         }
+
+        public virtual void CleanUp() { }
+
+        public virtual GameObject GetPreviewGameObject() { return null; }
 
         private bool ParametersMeetTargetTypeRequirements(Unit unit, Team team)
         {
