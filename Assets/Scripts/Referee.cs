@@ -8,6 +8,8 @@ public class Referee : MonoBehaviour
     [SerializeField] private UnitTeam EnemyTeam;
     [SerializeField] private UIGameResultPanel GameResultPanel;
 
+    private bool _isPlayerTurn = true;
+
     private void Start() { StartCoroutine(RunCombat()); }
 
     private IEnumerator RunCombat()
@@ -28,15 +30,13 @@ public class Referee : MonoBehaviour
 
     private IEnumerator Run1V1(Unit playerUnit, Unit enemyUnit)
     {
-        var isPlayerTurn = true;
-
         while (playerUnit != null && enemyUnit != null)
         {
-            Unit attacker = isPlayerTurn ? playerUnit : enemyUnit;
-            Unit defender = isPlayerTurn ? enemyUnit : playerUnit;
+            Unit attacker = _isPlayerTurn ? playerUnit : enemyUnit;
+            Unit defender = _isPlayerTurn ? enemyUnit : playerUnit;
 
             attacker.AttackUnit(defender);
-            isPlayerTurn = !isPlayerTurn;
+            _isPlayerTurn = !_isPlayerTurn;
 
             yield return new WaitForSeconds(1f);
         }

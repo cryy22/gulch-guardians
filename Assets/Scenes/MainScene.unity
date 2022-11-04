@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53ea4856ae5c4057bc7474852427453a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UnitPrefab: {fileID: 6608307905624749109, guid: c719fc16d577f434aae58957cea96210, type: 3}
 --- !u!4 &312459701
 Transform:
   m_ObjectHideFlags: 0
@@ -642,6 +643,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyTeam
       objectReference: {fileID: 0}
+    - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: UnitFactory
+      value: 
+      objectReference: {fileID: 312459700}
     - target: {fileID: 7077939781010037160, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1245,6 +1250,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerTeam
       objectReference: {fileID: 0}
+    - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: UnitFactory
+      value: 
+      objectReference: {fileID: 312459700}
     - target: {fileID: 7077939781010037160, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: m_RootOrder
       value: 3
