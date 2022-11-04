@@ -8,21 +8,22 @@ namespace GulchGuardians
     {
         [SerializeField] private Unit UnitPrefab;
 
-        [SerializeField] private Sprite[] PlayerTeamSprites;
-        [SerializeField] private Sprite[] EnemyTeamSprites;
+        [SerializeField] private UnitConfig[] PlayerTeamUnitConfigs;
+        [SerializeField] private UnitConfig[] EnemyTeamUnitConfigs;
 
         public Unit Create(bool isPlayerTeam)
         {
+            UnitConfig[] configPool = isPlayerTeam ? PlayerTeamUnitConfigs : EnemyTeamUnitConfigs;
+            UnitConfig config = configPool[Random.Range(minInclusive: 0, maxExclusive: configPool.Length)];
+
             Unit unit = Instantiate(UnitPrefab);
             unit.Initialize(
                 firstName: Name.RandomName(),
-                attack: Random.Range(minInclusive: 1, maxExclusive: 4),
-                health: Random.Range(minInclusive: 1, maxExclusive: 8)
+                attack: Random.Range(minInclusive: config.MinAttack, maxExclusive: config.MaxAttack + 1),
+                health: Random.Range(minInclusive: config.MinHealth, maxExclusive: config.MaxHealth + 1)
             );
 
-            Sprite[] spritePool = isPlayerTeam ? PlayerTeamSprites : EnemyTeamSprites;
-            Sprite sprite = spritePool[Random.Range(minInclusive: 0, maxExclusive: spritePool.Length)];
-            unit.Renderer.sprite = sprite;
+            unit.Renderer.sprite = config.Sprite;
 
             return unit;
         }

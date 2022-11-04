@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: UnitFactory
   m_EditorClassIdentifier: 
   UnitPrefab: {fileID: 6608307905624749109, guid: c719fc16d577f434aae58957cea96210, type: 3}
-  PlayerTeamSprites:
-  - {fileID: 21300000, guid: 8aa1419f8be2941bca8b3b248d0282eb, type: 3}
-  EnemyTeamSprites:
-  - {fileID: 21300000, guid: 4afb913c0bafc43e19572c48e3b1a84f, type: 3}
-  - {fileID: 21300000, guid: 3b63433b53af146fd879a73ee5ac9c3a, type: 3}
+  PlayerTeamUnitConfigs:
+  - {fileID: 11400000, guid: 332c1c95c1b52459694579c1e1e62015, type: 2}
+  EnemyTeamUnitConfigs:
+  - {fileID: 11400000, guid: 90d633533490445b291afa881f18e685, type: 2}
+  - {fileID: 11400000, guid: d1d07a90ec477454687a65d2509270df, type: 2}
