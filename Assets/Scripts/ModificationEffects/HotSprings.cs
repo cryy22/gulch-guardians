@@ -15,15 +15,16 @@ namespace GulchGuardians
         public override string Name => _name;
         public override TargetType Target => TargetType.Unit;
 
-        public override bool CanBeAppliedTo(Team team = null)
+        public override bool CanBeAppliedTo(Context context)
         {
-            return team != null && team.Units.Any(u => u.Health < u.MaxHealth);
+            Team playerTeam = context.PlayerTeam;
+            return playerTeam != null && playerTeam.Units.Any(u => u.Health < u.MaxHealth);
         }
 
-        public override IEnumerator Apply(Unit unit = null, Team team = null)
+        public override IEnumerator Apply(Context context)
         {
-            yield return base.Apply(unit: unit, team: team);
-            yield return unit!.FullHeal();
+            yield return base.Apply(context);
+            yield return context.Unit!.FullHeal();
         }
     }
 }

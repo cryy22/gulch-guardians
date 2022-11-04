@@ -12,14 +12,14 @@ namespace GulchGuardians
         private const string _name = "Conditioning";
 
         public override string Name => _name;
-        public override TargetType Target => TargetType.Team;
+        public override TargetType Target => TargetType.PlayerTeam;
 
-        public override IEnumerator Apply(Unit unit = null, Team team = null)
+        public override IEnumerator Apply(Context context)
         {
-            yield return base.Apply(unit: unit, team: team);
+            yield return base.Apply(context);
 
             yield return CoroutineHelper.RunConcurrently(
-                behaviours: team!.Units,
+                behaviours: context.PlayerTeam!.Units,
                 u => u.Upgrade(attack: 0, health: 1)
             );
         }

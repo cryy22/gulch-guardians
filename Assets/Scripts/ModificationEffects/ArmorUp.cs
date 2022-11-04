@@ -14,10 +14,10 @@ namespace GulchGuardians
         public override string Name => _name;
         public override TargetType Target => TargetType.Unit;
 
-        public override IEnumerator Apply(Unit unit = null, Team team = null)
+        public override IEnumerator Apply(Context context)
         {
-            yield return base.Apply(unit: unit, team: team);
-            yield return unit!.Upgrade(attack: 0, health: 2);
+            yield return base.Apply(context);
+            yield return context.Unit!.Upgrade(attack: 0, health: 2);
         }
     }
 }

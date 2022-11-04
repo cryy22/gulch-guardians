@@ -12,18 +12,25 @@ namespace GulchGuardians
         private const string _name = "Eager";
 
         public override string Name => _name;
-        public override TargetType Target => TargetType.Both;
+        public override TargetType Target => TargetType.UnitAndPlayerTeam;
 
-        public override bool CanBeAppliedTo(Team team = null) { return team != null && team.Units.Count > 1; }
-
-        public override IEnumerator Apply(Unit unit = null, Team team = null)
+        public override bool CanBeAppliedTo(Context context)
         {
-            yield return base.Apply(unit: unit, team: team);
+            Team playerTeam = context.PlayerTeam;
+            return playerTeam != null && playerTeam.Units.Count > 1;
+        }
 
-            int targetIndex = team!.Units.IndexOf(unit) - 1;
-            if (targetIndex < 0) targetIndex = team.Units.Count - 1;
+        public override IEnumerator Apply(Context context)
+        {
+            yield return base.Apply(context);
 
-            yield return team.SetUnitIndex(unit: unit, index: targetIndex);
+            Team playerTeam = context.PlayerTeam!;
+            Unit unit = context.Unit!;
+
+            int targetIndex = playerTeam!.Units.IndexOf(unit) - 1;
+            if (targetIndex < 0) targetIndex = playerTeam.Units.Count - 1;
+
+            yield return playerTeam.SetUnitIndex(unit: unit, index: targetIndex);
         }
     }
 }

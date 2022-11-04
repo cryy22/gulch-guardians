@@ -15,11 +15,12 @@ namespace GulchGuardians
         [DoNotSerialize] private Unit _unit;
 
         public override string Name => _name;
-        public override TargetType Target => TargetType.Team;
+        public override TargetType Target => TargetType.PlayerTeam;
 
-        public override bool CanBeAppliedTo(Team team = null)
+        public override bool CanBeAppliedTo(Context context)
         {
-            return team != null && team.Units.Count < team.MaxUnits;
+            Team playerTeam = context.PlayerTeam;
+            return playerTeam != null && playerTeam.Units.Count < playerTeam.MaxUnits;
         }
 
         public override void Prepare()
@@ -30,10 +31,10 @@ namespace GulchGuardians
             _unit.gameObject.SetActive(false);
         }
 
-        public override IEnumerator Apply(Unit unit = null, Team team = null)
+        public override IEnumerator Apply(Context context)
         {
-            yield return base.Apply(unit: unit, team: team);
-            yield return team!.AddUnit(_unit);
+            yield return base.Apply(context);
+            yield return context.PlayerTeam!.AddUnit(_unit);
             _unit.TooltipEnabled = true;
             _unit = null;
         }

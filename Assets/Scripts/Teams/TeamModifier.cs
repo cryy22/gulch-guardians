@@ -15,6 +15,7 @@ namespace GulchGuardians
         [SerializeField] private List<ModificationEffect> Effects = new();
 
         [SerializeField] private Team PlayerTeam;
+        [SerializeField] private Team EnemyTeam;
 
         [SerializeField] private TMP_Text ActionsRemainingText;
         [SerializeField] private TMP_Text ChooseATargetText;
@@ -64,17 +65,23 @@ namespace GulchGuardians
 
         private void EffectSelectedEventHandler(object sender, EventArgs e)
         {
-            if (_effectOptions.SelectedEffect.Target == ModificationEffect.TargetType.Team)
-                StartCoroutine(ApplySelectedEffect(null));
-            else
-                ChooseATargetText.gameObject.SetActive(true);
+            switch (_effectOptions.SelectedEffect.Target)
+            {
+                case ModificationEffect.TargetType.PlayerTeam:
+                case ModificationEffect.TargetType.EnemyTeam:
+                    StartCoroutine(ApplySelectedEffect(null));
+                    break;
+                default:
+                    ChooseATargetText.gameObject.SetActive(true);
+                    break;
+            }
         }
 
         private IEnumerator ApplySelectedEffect(Unit unit)
         {
             _isModifying = true;
 
-            yield return _effectOptions.SelectedEffect.Apply(unit: unit, team: PlayerTeam);
+            yield return _effectOptions.SelectedEffect.Apply(BuildContext(unit));
 
             _actionsRemaining--;
             UpdateActionsRemainingText();
@@ -107,7 +114,7 @@ namespace GulchGuardians
         private IEnumerable<ModificationEffect> GetRandomEffects(int numberOfEffects)
         {
             return Effects
-                .Where(e => e.CanBeAppliedTo(PlayerTeam))
+                .Where(e => e.CanBeAppliedTo(BuildContext()))
                 .OrderBy(_ => Random.value)
                 .Take(Mathf.Min(a: numberOfEffects, b: Effects.Count));
         }
@@ -115,6 +122,16 @@ namespace GulchGuardians
         private void UpdateActionsRemainingText()
         {
             ActionsRemainingText.text = $"actions remaining: {_actionsRemaining.ToString()}";
+        }
+
+        private ModificationEffect.Context BuildContext(Unit unit = null)
+        {
+            return new ModificationEffect.Context
+            {
+                Unit = unit,
+                PlayerTeam = PlayerTeam,
+                EnemyTeam = EnemyTeam,
+            };
         }
     }
 }

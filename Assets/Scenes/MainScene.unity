@@ -1730,7 +1730,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a8f6575479ffa494ebb6c82658de589e, type: 2}
   - {fileID: 11400000, guid: 63b3fa5338c3c48929e601e48f43db08, type: 2}
   - {fileID: 11400000, guid: 9dfee1c77403647c095091649e138b8d, type: 2}
+  - {fileID: 11400000, guid: dec189eec826748e58c325ff5eb08f35, type: 2}
   PlayerTeam: {fileID: 294015327}
+  EnemyTeam: {fileID: 1087500376}
   ActionsRemainingText: {fileID: 2088620647}
   ChooseATargetText: {fileID: 1962821024}
 --- !u!4 &663429226

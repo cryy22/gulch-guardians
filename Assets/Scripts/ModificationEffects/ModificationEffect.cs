@@ -11,13 +11,13 @@ namespace GulchGuardians
         public abstract string Name { get; }
         public abstract TargetType Target { get; }
 
-        public virtual bool CanBeAppliedTo(Team team = null) { return true; }
+        public virtual bool CanBeAppliedTo(Context context) { return true; }
 
         public virtual void Prepare() { }
 
-        public virtual IEnumerator Apply(Unit unit = null, Team team = null)
+        public virtual IEnumerator Apply(Context context)
         {
-            if (ParametersMeetTargetTypeRequirements(unit: unit, team: team) == false)
+            if (ParametersMeetTargetTypeRequirements(context) == false)
                 throw new ArgumentException("Arguments do not meet target type requirements");
             yield break;
         }
@@ -26,22 +26,31 @@ namespace GulchGuardians
 
         public virtual GameObject GetPreviewGameObject() { return null; }
 
-        private bool ParametersMeetTargetTypeRequirements(Unit unit, Team team)
+        private bool ParametersMeetTargetTypeRequirements(Context context)
         {
             return Target switch
             {
-                TargetType.Unit => unit != null,
-                TargetType.Team => team != null,
-                TargetType.Both => unit != null && team != null,
-                _               => throw new ArgumentOutOfRangeException(),
+                TargetType.Unit              => context.Unit != null,
+                TargetType.PlayerTeam        => context.PlayerTeam != null,
+                TargetType.EnemyTeam         => context.EnemyTeam != null,
+                TargetType.UnitAndPlayerTeam => context.Unit != null && context.PlayerTeam != null,
+                _                            => throw new ArgumentOutOfRangeException(),
             };
         }
 
         public enum TargetType
         {
             Unit,
-            Team,
-            Both,
+            PlayerTeam,
+            EnemyTeam,
+            UnitAndPlayerTeam,
+        }
+
+        public struct Context
+        {
+            public Unit Unit;
+            public Team PlayerTeam;
+            public Team EnemyTeam;
         }
     }
 }
