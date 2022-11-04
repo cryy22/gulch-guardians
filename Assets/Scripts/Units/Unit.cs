@@ -22,7 +22,7 @@ namespace GulchGuardians
             remove => _clickReporter.Clicked -= value;
         }
 
-        public event EventHandler Defeated;
+        public bool IsDefeated => Health <= 0;
 
         public bool IsBoss { get; private set; }
         private int Attack { get; set; }
@@ -80,6 +80,8 @@ namespace GulchGuardians
 
         private IEnumerator BecomeDefeated()
         {
+            yield return new WaitForEndOfFrame();
+
             Renderer.color = Color.red;
             AttackText.color = Color.red;
             HealthText.color = Color.red;
@@ -95,10 +97,7 @@ namespace GulchGuardians
             yield return AnimateDamage();
             yield return ShowHealthChange();
 
-            if (Health > 0) yield break;
-
-            Defeated?.Invoke(sender: this, e: EventArgs.Empty);
-            yield return BecomeDefeated();
+            if (IsDefeated) StartCoroutine(BecomeDefeated());
         }
 
         private IEnumerator AnimateAttack(Unit target)

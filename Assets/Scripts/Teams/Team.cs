@@ -21,7 +21,6 @@ namespace GulchGuardians
         public event EventHandler<UnitClickedEventArgs> UnitClicked;
         public Unit FrontUnit => Units.Count > 0 ? Units.First() : null;
 
-        public bool IsReady { get; private set; } = true;
         public int UnitsInCombatCycle { get; private set; }
         private Unit LastUnitInCycle => UnitsInCombatCycle > 0 ? Units[UnitsInCombatCycle - 1] : null;
 
@@ -31,27 +30,19 @@ namespace GulchGuardians
         {
             List<Unit> units = new();
             foreach (UnitSet unitSet in UnitSets) units.AddRange(unitSet.GenerateUnits());
-            AddUnits(units); // doing this in Start avoids OnEnable adding DefeatedEventHandler a second time
+            AddUnits(units); // doing this in Start avoids OnEnable adding EventHandlers a second time
 
             ResetUnitsOnDeck();
         }
 
         private void OnEnable()
         {
-            foreach (Unit unit in Units)
-            {
-                unit.Clicked += OnUnitClickedEventHandler;
-                unit.Defeated += DefeatedEventHandler;
-            }
+            foreach (Unit unit in Units) unit.Clicked += OnUnitClickedEventHandler;
         }
 
         private void OnDisable()
         {
-            foreach (Unit unit in Units)
-            {
-                unit.Clicked -= OnUnitClickedEventHandler;
-                unit.Defeated -= DefeatedEventHandler;
-            }
+            foreach (Unit unit in Units) unit.Clicked -= OnUnitClickedEventHandler;
         }
 
         public void AddUnit(Unit unit)
@@ -76,36 +67,23 @@ namespace GulchGuardians
         public IEnumerator SetUnitIndex(Unit unit, int index)
         {
             if (!Units.Remove(unit)) yield break;
-            IsReady = false;
-
             Units.Insert(index: index, item: unit);
 
             yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
-
-            IsReady = true;
         }
 
-        private void DefeatedEventHandler(object sender, EventArgs e)
-        {
-            StartCoroutine(DefeatUnit(unit: (Unit) sender));
-        }
-
-        private IEnumerator DefeatUnit(Unit unit)
+        public IEnumerator HandleUnitDefeat(Unit unit)
         {
             if (!Units.Remove(unit)) yield break;
-            IsReady = false;
 
             unit.Clicked -= OnUnitClickedEventHandler;
-            unit.Defeated -= DefeatedEventHandler;
             UnitsInCombatCycle--;
 
             yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
             _unitsDisplayer.UpdateDemarcation(lastUnitInCycle: LastUnitInCycle, unitsInCombatCycle: UnitsInCombatCycle);
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
-
-            IsReady = true;
         }
 
         private void AddUnits(IEnumerable<Unit> units)
@@ -122,7 +100,6 @@ namespace GulchGuardians
         {
             Units.Add(unit);
             unit.Clicked += OnUnitClickedEventHandler;
-            unit.Defeated += DefeatedEventHandler;
         }
 
         private void OnUnitClickedEventHandler(object sender, EventArgs e)

@@ -66,27 +66,25 @@ namespace GulchGuardians
         private IEnumerator RunAttackCycle(Team player, Team enemy)
         {
             yield return player.FrontUnit.AttackUnit(enemy.FrontUnit);
-            yield return WaitForReady(player: player, enemy: enemy);
+            if (enemy.FrontUnit.IsDefeated) yield return enemy.HandleUnitDefeat(enemy.FrontUnit);
+
             if (enemy.UnitsInCombatCycle <= 0) yield break;
 
             yield return new WaitForSeconds(1f);
 
             Unit playerFrontUnit = player.FrontUnit;
             yield return enemy.FrontUnit.AttackUnit(playerFrontUnit);
-            yield return WaitForReady(player: player, enemy: enemy);
+            if (playerFrontUnit.IsDefeated) yield return player.HandleUnitDefeat(playerFrontUnit);
+
             if (player.UnitsInCombatCycle <= 0) yield break;
 
             yield return new WaitForSeconds(1f);
 
-            if (playerFrontUnit == null) yield break;
+            if (playerFrontUnit == null || playerFrontUnit.IsDefeated) yield break;
 
             yield return player.SetUnitIndex(unit: player.FrontUnit, index: player.UnitsInCombatCycle - 1);
-            yield return new WaitForSeconds(0.5f);
-        }
 
-        private IEnumerator WaitForReady(Team player, Team enemy)
-        {
-            yield return new WaitUntil(() => player.IsReady && enemy.IsReady);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }
