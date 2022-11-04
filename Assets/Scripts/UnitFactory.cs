@@ -14,8 +14,8 @@ namespace GulchGuardians
         {
             Unit unit = Instantiate(UnitPrefab);
             unit.SetInitialStats(
-                attack: Random.Range(minInclusive: 1, maxExclusive: 5),
-                health: Random.Range(minInclusive: 1, maxExclusive: 5)
+                attack: Random.Range(minInclusive: 1, maxExclusive: 4),
+                health: Random.Range(minInclusive: 1, maxExclusive: 8)
             );
             unit.SoundFXPlayer = SoundFXPlayer;
 

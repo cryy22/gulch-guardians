@@ -24,7 +24,6 @@ namespace GulchGuardians
         private void Update()
         {
             UpdateStats();
-            UpdateSize();
         }
 
         public void SetInitialStats(int attack, int health)
@@ -141,15 +140,5 @@ namespace GulchGuardians
             HealthText.text = Health.ToString();
             HealthText.color = Health < _initialHealth ? Color.red : Color.white;
         }
-
-        private void UpdateSize()
-        {
-            float totalStats = Attack + _initialHealth;
-            float lerpValue = Mathf.InverseLerp(a: 2, b: 10, value: totalStats);
-
-            float sizeDelta = Mathf.Lerp(a: 1, b: 2f, t: lerpValue);
-            transform.localScale = Vector3.one * sizeDelta;
-        }
     }
-
 }
