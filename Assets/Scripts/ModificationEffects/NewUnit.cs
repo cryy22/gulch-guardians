@@ -26,6 +26,7 @@ namespace GulchGuardians
         {
             base.Prepare();
             _unit = UnitSet.GenerateUnits().First();
+            _unit.TooltipEnabled = false;
             _unit.gameObject.SetActive(false);
         }
 
@@ -33,6 +34,7 @@ namespace GulchGuardians
         {
             yield return base.Apply(unit: unit, team: team);
             yield return team!.AddUnit(_unit);
+            _unit.TooltipEnabled = true;
             _unit = null;
         }
 

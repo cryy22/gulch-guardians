@@ -6,14 +6,15 @@ namespace Tooltip
 {
     public class Tooltip : MonoBehaviour
     {
-        [SerializeField] private TMP_Text NameText;
-        [SerializeField] private TMP_Text AttackText;
-        [SerializeField] private TMP_Text HealthText;
-        [SerializeField] private TMP_Text MaxHealthText;
+        [SerializeField] private GameObject Container;
+        [SerializeField] private TMP_Text TitleText;
+        [SerializeField] private TMP_Text Line1Text;
+        [SerializeField] private TMP_Text Line2Text;
+        [SerializeField] private TMP_Text Line3Text;
 
         private Camera _camera;
 
-        public Tooltip Instance { get; private set; }
+        public static Tooltip Instance { get; private set; }
 
         public void Awake()
         {
@@ -25,6 +26,17 @@ namespace Tooltip
 
             Instance = this;
             _camera = Camera.main;
+        }
+
+        public void Show() { Container.SetActive(true); }
+        public void Hide() { Container.SetActive(false); }
+
+        public void SetContent(string title, string line1, string line2, string line3)
+        {
+            TitleText.text = title;
+            Line1Text.text = line1;
+            Line2Text.text = line2;
+            Line3Text.text = line3;
         }
 
         public void OnPointerMove(InputAction.CallbackContext context)

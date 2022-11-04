@@ -24,10 +24,12 @@ namespace GulchGuardians
 
         public bool IsDefeated => Health <= 0;
 
+        public bool TooltipEnabled { get; set; } = true;
+
         public bool IsBoss { get; private set; }
         public int Attack { get; set; }
         public int Health { get; set; }
-        public int InitialHealth { get; set; }
+        public int MaxHealth { get; set; }
         public string FirstName { get; set; }
 
         private void Awake() { _clickReporter = GetComponent<ClickReporter>(); }
@@ -40,7 +42,7 @@ namespace GulchGuardians
 
             Attack = attack;
             Health = health;
-            InitialHealth = health;
+            MaxHealth = health;
             FirstName = firstName;
             IsBoss = isBoss;
 
@@ -59,14 +61,14 @@ namespace GulchGuardians
         {
             Attack += attack;
             Health += health;
-            InitialHealth += health;
+            MaxHealth += health;
 
             yield return AnimateStatsChange(animateAttack: attack != 0, animateHealth: health != 0);
         }
 
         public IEnumerator FullHeal()
         {
-            Health = InitialHealth;
+            Health = MaxHealth;
             yield return AnimateStatsChange(animateHealth: true);
         }
 
@@ -177,7 +179,7 @@ namespace GulchGuardians
             AttackText.text = Attack.ToString();
 
             HealthText.text = Health.ToString();
-            HealthText.color = Health < InitialHealth ? Color.red : Color.white;
+            HealthText.color = Health < MaxHealth ? Color.red : Color.white;
         }
     }
 }
