@@ -1,10 +1,12 @@
 using System.Collections;
+using DefaultNamespace;
 using UnityEngine;
 
 public class Referee : MonoBehaviour
 {
     [SerializeField] private UnitTeam PlayerTeam;
     [SerializeField] private UnitTeam EnemyTeam;
+    [SerializeField] private UIGameResultPanel GameResultPanel;
 
     private void Start() { StartCoroutine(RunCombat()); }
 
@@ -21,7 +23,7 @@ public class Referee : MonoBehaviour
             yield return StartCoroutine(Run1V1(playerUnit: playerUnit, enemyUnit: enemyUnit));
         }
 
-        Debug.Log("One side has lost!");
+        GameResultPanel.DisplayResult(isWin: PlayerTeam.FrontUnit != null);
     }
 
     private IEnumerator Run1V1(Unit playerUnit, Unit enemyUnit)
