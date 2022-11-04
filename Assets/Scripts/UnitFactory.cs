@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace InfiniteSAPPrototype
 {
     public class UnitFactory : MonoBehaviour
     {

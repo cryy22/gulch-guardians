@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace InfiniteSAPPrototype
 {
     public class UIGameResultPanel : MonoBehaviour
     {

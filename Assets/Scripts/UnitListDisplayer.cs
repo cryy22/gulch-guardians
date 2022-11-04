@@ -20,6 +20,7 @@ public class UnitListDisplayer : MonoBehaviour
                     y: 0f,
                     z: 0f
                 );
+                child.localScale = Vector3.one;
             };
     }
 }

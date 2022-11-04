@@ -1,5 +1,5 @@
 using System.Collections;
-using DefaultNamespace;
+using InfiniteSAPPrototype;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +7,7 @@ public class Referee : MonoBehaviour
 {
     [SerializeField] private UnitTeam PlayerTeam;
     [SerializeField] private UnitTeam EnemyTeam;
+    [SerializeField] private TeamModifier TeamModifier;
 
     [SerializeField] private Button RunCombatButton;
     [SerializeField] private UIGameResultPanel GameResultPanel;
@@ -36,6 +37,7 @@ public class Referee : MonoBehaviour
         }
 
         yield return GameResultPanel.DisplayResult(isWin: PlayerTeam.UnitsInCombatCycle > 0);
+        TeamModifier.BeginModificationRound();
         RunCombatButton.gameObject.SetActive(true);
     }
 

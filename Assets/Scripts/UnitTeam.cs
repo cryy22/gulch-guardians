@@ -1,4 +1,4 @@
-using DefaultNamespace;
+using InfiniteSAPPrototype;
 using UnityEngine;
 
 public class UnitTeam : MonoBehaviour
@@ -32,7 +32,7 @@ public class UnitTeam : MonoBehaviour
 
     public void ResetUnitsOnDeck() { UnitsInCombatCycle = Mathf.Min(a: UnitsPerCombatCycle, b: UnitCount); }
 
-    private void AddUnit(Unit unit)
+    public void AddUnit(Unit unit)
     {
         unit.transform.SetParent(transform);
         UnitCount++;
