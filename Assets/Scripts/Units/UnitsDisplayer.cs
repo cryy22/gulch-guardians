@@ -62,23 +62,21 @@ public class UnitsDisplayer : MonoBehaviour
         {
             Vector3 position = UnitsParent.TransformPoint(
                 new Vector3(
-                    x: positionedUnits * UnitSpacing * (IsInverted ? -1 : 1),
+                    x: positionedUnits++ * UnitSpacing * (IsInverted ? -1 : 1),
                     y: 0f,
                     z: 0f
                 )
             );
-            if (!_unitsPositions.ContainsKey(unit) || _unitsPositions[unit] != position)
-            {
-                unit.transform.SetParent(UnitsParent);
-                unit.gameObject.SetActive(true);
-                unit.transform.localScale = Vector3.one;
 
-                _unitsPositions[unit] = position;
+            if (_unitsPositions.ContainsKey(unit) && _unitsPositions[unit] == position) continue;
 
-                hasChanged = true;
-            }
+            unit.transform.SetParent(UnitsParent);
+            unit.gameObject.SetActive(true);
+            unit.transform.localScale = Vector3.one;
 
-            positionedUnits++;
+            _unitsPositions[unit] = position;
+
+            hasChanged = true;
         }
 
         List<Unit> removedUnits = _unitsPositions.Keys.Except(units).ToList();
