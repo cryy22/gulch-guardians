@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace InfiniteSAPPrototype
+namespace GulchGuardians
 {
     [RequireComponent(typeof(EffectOptionsDisplayer))]
     public class TeamModifier : MonoBehaviour

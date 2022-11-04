@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace InfiniteSAPPrototype
+namespace GulchGuardians
 {
     [CreateAssetMenu(
         fileName = "Conditioning",

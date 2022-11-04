@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace InfiniteSAPPrototype
+namespace GulchGuardians
 {
     public class EffectOptionsDisplayer : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace InfiniteSAPPrototype
+namespace GulchGuardians
 {
     public class UnitFactory : MonoBehaviour
     {

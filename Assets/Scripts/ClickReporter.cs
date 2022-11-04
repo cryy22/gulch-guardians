@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace InfiniteSAPPrototype
+namespace GulchGuardians
 {
     [RequireComponent(typeof(Collider2D))]
     public class ClickReporter : MonoBehaviour

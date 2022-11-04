@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace InfiniteSAPPrototype
+namespace GulchGuardians
 {
     public abstract class ModificationEffect : ScriptableObject
     {

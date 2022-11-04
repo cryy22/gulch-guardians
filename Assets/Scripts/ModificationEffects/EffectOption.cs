@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace InfiniteSAPPrototype
+namespace GulchGuardians
 {
     [RequireComponent(typeof(Image))]
     public class EffectOption : MonoBehaviour
