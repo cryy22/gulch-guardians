@@ -20,7 +20,7 @@ public class Referee : MonoBehaviour
         Unit enemyUnit = EnemyTeam.FrontUnit;
         var isPlayerTurn = true;
 
-        while (true)
+        while (playerUnit != null && enemyUnit != null)
         {
             Unit attacker = isPlayerTurn ? playerUnit : enemyUnit;
             Unit defender = isPlayerTurn ? enemyUnit : playerUnit;
@@ -28,7 +28,9 @@ public class Referee : MonoBehaviour
             attacker.AttackUnit(defender);
             isPlayerTurn = !isPlayerTurn;
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
         }
+
+        Debug.Log("Combat over");
     }
 }
