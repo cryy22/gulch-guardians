@@ -1,13 +1,15 @@
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace GulchGuardians
 {
     [RequireComponent(typeof(Collider2D))]
     public class ClickReporter : MonoBehaviour
     {
-        public delegate void OnReporterClicked(ClickReporter reporter);
-        public event OnReporterClicked OnReporterClickedEvent;
+        public Object Sender;
+        public event EventHandler Clicked;
 
-        private void OnMouseDown() { OnReporterClickedEvent?.Invoke(this); }
+        private void OnMouseDown() { Clicked?.Invoke(sender: Sender, e: EventArgs.Empty); }
     }
 }

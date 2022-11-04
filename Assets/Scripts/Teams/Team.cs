@@ -40,7 +40,7 @@ namespace GulchGuardians
         {
             foreach (Unit unit in Units)
             {
-                unit.GetComponent<ClickReporter>().OnReporterClickedEvent += OnUnitClickedEventHandler;
+                unit.Clicked += OnUnitClickedEventHandler;
                 unit.Defeated += DefeatedEventHandler;
             }
         }
@@ -49,7 +49,7 @@ namespace GulchGuardians
         {
             foreach (Unit unit in Units)
             {
-                unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClickedEventHandler;
+                unit.Clicked -= OnUnitClickedEventHandler;
                 unit.Defeated -= DefeatedEventHandler;
             }
         }
@@ -96,7 +96,7 @@ namespace GulchGuardians
             if (!Units.Remove(unit)) yield break;
             IsReady = false;
 
-            unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClickedEventHandler;
+            unit.Clicked -= OnUnitClickedEventHandler;
             unit.Defeated -= DefeatedEventHandler;
             UnitsInCombatCycle--;
 
@@ -121,13 +121,13 @@ namespace GulchGuardians
         private void AddUnitInternal(Unit unit)
         {
             Units.Add(unit);
-            unit.GetComponent<ClickReporter>().OnReporterClickedEvent += OnUnitClickedEventHandler;
+            unit.Clicked += OnUnitClickedEventHandler;
             unit.Defeated += DefeatedEventHandler;
         }
 
-        private void OnUnitClickedEventHandler(ClickReporter reporter)
+        private void OnUnitClickedEventHandler(object sender, EventArgs e)
         {
-            UnitClicked?.Invoke(sender: this, e: new UnitClickedEventArgs(unit: reporter.GetComponent<Unit>()));
+            UnitClicked?.Invoke(sender: this, e: new UnitClickedEventArgs(unit: (Unit) sender));
         }
 
         public class UnitClickedEventArgs : EventArgs

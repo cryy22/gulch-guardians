@@ -14,6 +14,13 @@ namespace GulchGuardians
         [SerializeField] private TMP_Text NameText;
 
         private bool _isInitialized;
+        private ClickReporter _clickReporter;
+
+        public event EventHandler Clicked
+        {
+            add => _clickReporter.Clicked += value;
+            remove => _clickReporter.Clicked -= value;
+        }
 
         public event EventHandler Defeated;
 
@@ -22,6 +29,8 @@ namespace GulchGuardians
         private int Health { get; set; }
         private int InitialHealth { get; set; }
         private string FirstName { get; set; }
+
+        private void Awake() { _clickReporter = GetComponent<ClickReporter>(); }
 
         private void Update() { UpdateStats(); }
 
