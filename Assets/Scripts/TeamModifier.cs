@@ -10,11 +10,9 @@ namespace GulchGuardians
     [RequireComponent(typeof(EffectOptionsDisplayer))]
     public class TeamModifier : MonoBehaviour
     {
-        [SerializeField] private int NumberOfUnitsPerRound = 1;
         [SerializeField] private int ActionsPerRound = 2;
         [SerializeField] private List<ModificationEffect> Effects = new();
 
-        [SerializeField] private UnitFactory UnitFactory;
         [SerializeField] private Team PlayerTeam;
 
         [SerializeField] private TMP_Text ActionsRemainingText;
@@ -34,16 +32,10 @@ namespace GulchGuardians
             _actionsRemaining = ActionsPerRound;
             UpdateActionsRemainingText();
 
-            for (var i = 0; i < NumberOfUnitsPerRound; i++)
-            {
-                Unit unit = UnitFactory.Create(isPlayerTeam: true);
-                PlayerTeam.AddUnit(unit);
-            }
-
-            OfferEffectOptions();
-
             foreach (Unit unit in PlayerTeam.Units)
                 unit.GetComponent<ClickReporter>().OnReporterClickedEvent += OnUnitClicked;
+
+            OfferEffectOptions();
         }
 
         public void EndModificationRound()
