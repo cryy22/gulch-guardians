@@ -44,11 +44,10 @@ namespace GulchGuardians
                 yield return RunAttackCycle(player: PlayerTeam, enemy: EnemyTeam);
             }
 
-            bool isWin = PlayerTeam.UnitsInCombatCycle > 0;
-            yield return GameResultPanel.DisplayResult(isWin);
-
-            if (!isWin)
+            if (PlayerTeam.Units.Count == 0 || EnemyTeam.Units.Count == 0)
             {
+                yield return GameResultPanel.DisplayResult(PlayerTeam.Units.Count > 0);
+
                 SceneManager.LoadScene(Scene.TitleScene);
                 yield break;
             }
