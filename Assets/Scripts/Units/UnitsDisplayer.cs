@@ -27,7 +27,7 @@ public class UnitsDisplayer : MonoBehaviour
 
         yield return CoroutineHelper.RunConcurrently(
             behaviours: _unitsPositions.Keys,
-            unit => unit.AnimateToPosition(_unitsPositions[unit])
+            unit => unit.MoveToPosition(_unitsPositions[unit])
         );
     }
 

@@ -1,23 +1,18 @@
 using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
-using Random = UnityEngine.Random;
 
 namespace GulchGuardians
 {
+    [RequireComponent(typeof(ClickReporter))]
+    [RequireComponent(typeof(UnitDisplayer))]
     public class Unit : MonoBehaviour
     {
-        [SerializeField] private TMP_Text AttackText;
-        [SerializeField] private TMP_Text HealthText;
-        [SerializeField] private TMP_Text NameText;
-        [SerializeField] private SpriteRenderer Renderer;
-        [SerializeField] private SpriteLibrary SpriteLibrary;
-        [SerializeField] private Animator Animator;
+        private ClickReporter _clickReporter;
+        private UnitDisplayer _displayer;
 
         private bool _isInitialized;
-        private ClickReporter _clickReporter;
 
         public event EventHandler Clicked
         {
@@ -27,17 +22,19 @@ namespace GulchGuardians
 
         public bool IsDefeated => Health <= 0;
 
+        public string FirstName { get; private set; }
+        public bool IsBoss { get; private set; }
+        public int Attack { get; private set; }
+        public int Health { get; private set; }
+        public int MaxHealth { get; private set; }
+
         public bool TooltipEnabled { get; set; } = true;
 
-        public bool IsBoss { get; private set; }
-        public int Attack { get; set; }
-        public int Health { get; set; }
-        public int MaxHealth { get; set; }
-        public string FirstName { get; set; }
-
-        private void Awake() { _clickReporter = GetComponent<ClickReporter>(); }
-
-        private void Update() { UpdateStats(); }
+        private void Awake()
+        {
+            _clickReporter = GetComponent<ClickReporter>();
+            _displayer = GetComponent<UnitDisplayer>();
+        }
 
         public void Initialize(
             SpriteLibraryAsset spriteLibraryAsset,
@@ -49,25 +46,20 @@ namespace GulchGuardians
         {
             if (_isInitialized) throw new Exception("Unit is already initialized");
 
-            SpriteLibrary.spriteLibraryAsset = spriteLibraryAsset;
-            Animator.Play(stateNameHash: 0, layer: 0, normalizedTime: Random.Range(minInclusive: 0f, maxInclusive: 1f));
-
             Attack = attack;
             Health = health;
             MaxHealth = health;
             FirstName = firstName;
             IsBoss = isBoss;
 
-            NameText.text = FirstName;
-
-            if (IsBoss) Renderer.transform.localScale *= 1.33f;
+            _displayer.Setup(spriteLibraryAsset: spriteLibraryAsset, attributes: BuildAttributes());
 
             _isInitialized = true;
         }
 
         public IEnumerator AttackUnit(Unit target)
         {
-            yield return AnimateAttack(target);
+            yield return _displayer.AnimateAttack(target);
             yield return target.TakeDamage(Attack);
         }
 
@@ -77,122 +69,61 @@ namespace GulchGuardians
             Health += health;
             MaxHealth += health;
 
-            yield return AnimateStatsChange(animateAttack: attack != 0, animateHealth: health != 0);
+            _displayer.UpdateAttributes(BuildAttributes());
+            yield return _displayer.AnimateStatsChange(animateAttack: attack != 0, animateHealth: health != 0);
         }
 
         public IEnumerator FullHeal()
         {
             Health = MaxHealth;
-            yield return AnimateStatsChange(animateHealth: true);
+
+            _displayer.UpdateAttributes(BuildAttributes());
+            yield return _displayer.AnimateStatsChange(animateHealth: true);
         }
 
-        public IEnumerator AnimateToPosition(Vector3 position, float duration = 0.25f)
+        public IEnumerator MoveToPosition(Vector3 position, float duration = 0.25f)
         {
-            Vector3 startPosition = transform.position;
-            var t = 0f;
-            while (t <= 1f)
-            {
-                t += Time.deltaTime / duration;
-                transform.position = Vector3.Lerp(a: startPosition, b: position, t: t);
-                yield return null;
-            }
-
-            transform.position = position;
-        }
-
-        private IEnumerator HandleDefeat()
-        {
-            yield return new WaitForEndOfFrame();
-
-            AttackText.color = Color.red;
-            HealthText.color = Color.red;
-
-            SoundFXPlayer.Instance.PlayDefeatSound();
-            yield return AnimateDefeat();
-
-            Destroy(gameObject);
+            yield return _displayer.AnimateToPosition(position: position, duration: duration);
         }
 
         private IEnumerator TakeDamage(int damage)
         {
             Health -= damage;
-            yield return AnimateDamage();
-            yield return AnimateStatsChange(animateHealth: true);
+
+            _displayer.UpdateAttributes(BuildAttributes());
+            yield return _displayer.AnimateDamage();
+            yield return _displayer.AnimateStatsChange(animateHealth: true);
 
             if (IsDefeated) StartCoroutine(HandleDefeat());
         }
 
-        private IEnumerator AnimateAttack(Unit target)
+        private IEnumerator HandleDefeat()
         {
-            Vector3 startPosition = transform.position;
-            Vector3 endPosition = target.transform.position;
-            var duration = 0.0833f;
-            var time = 0f;
+            yield return new WaitForEndOfFrame();
+            yield return _displayer.AnimateDefeat();
 
-            while (time < duration)
+            Destroy(gameObject);
+        }
+
+        private Attributes BuildAttributes()
+        {
+            return new Attributes
             {
-                transform.position = Vector3.Lerp(a: startPosition, b: endPosition, t: time / duration);
-                time += Time.deltaTime;
-                yield return null;
-            }
-
-            SoundFXPlayer.Instance.PlayAttackSound();
-            transform.position = startPosition;
+                FirstName = FirstName,
+                Attack = Attack,
+                Health = Health,
+                MaxHealth = MaxHealth,
+                IsBoss = IsBoss,
+            };
         }
 
-        private IEnumerator AnimateDamage()
+        public struct Attributes
         {
-            Vector3 startPosition = transform.position;
-            var duration = 0.08f;
-            var period = 0.04f;
-            var time = 0f;
-
-            while (time < duration)
-            {
-                transform.position = startPosition + (Vector3.up * (0.2f * Mathf.Sin((time / period) * Mathf.PI)));
-                time += Time.deltaTime;
-                yield return null;
-            }
-
-            transform.position = startPosition;
-        }
-
-        private IEnumerator AnimateDefeat()
-        {
-            var duration = 0.2f;
-            var time = 0f;
-            Vector3 initialScale = transform.localScale;
-
-            while (time < duration)
-            {
-                transform.localScale = Vector3.Slerp(a: initialScale, b: Vector3.zero, t: time / duration);
-                time += Time.deltaTime;
-                yield return null;
-            }
-        }
-
-        private IEnumerator AnimateStatsChange(bool animateAttack = false, bool animateHealth = false)
-        {
-            if (!animateAttack && !animateHealth) yield break;
-
-            Vector3 attackCurrentScale = AttackText.transform.localScale;
-            Vector3 healthCurrentScale = HealthText.transform.localScale;
-
-            if (animateAttack) AttackText.transform.localScale = attackCurrentScale * 1.5f;
-            if (animateHealth) HealthText.transform.localScale = healthCurrentScale * 1.5f;
-
-            yield return new WaitForSeconds(0.5f);
-
-            AttackText.transform.localScale = attackCurrentScale;
-            HealthText.transform.localScale = healthCurrentScale;
-        }
-
-        private void UpdateStats()
-        {
-            AttackText.text = Attack.ToString();
-
-            HealthText.text = Health.ToString();
-            HealthText.color = Health < MaxHealth ? Color.red : Color.white;
+            public string FirstName;
+            public int Attack;
+            public int Health;
+            public int MaxHealth;
+            public bool IsBoss;
         }
     }
 }
