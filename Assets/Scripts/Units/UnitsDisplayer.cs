@@ -7,7 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(Team))]
 public class UnitsDisplayer : MonoBehaviour
 {
-    public float UnitSpacing = 1.8825f;
+    public float UnitSpacingX = 1.8825f;
+    public float UnitStaggerY = 0.25f;
     public bool IsInverted;
 
     [SerializeField] private bool DemarcatesRounds;
@@ -62,11 +63,12 @@ public class UnitsDisplayer : MonoBehaviour
         {
             Vector3 position = UnitsParent.TransformPoint(
                 new Vector3(
-                    x: positionedUnits++ * UnitSpacing * (IsInverted ? -1 : 1),
-                    y: 0f,
+                    x: positionedUnits * UnitSpacingX * (IsInverted ? -1 : 1),
+                    y: UnitStaggerY * (positionedUnits % 2),
                     z: 0f
                 )
             );
+            positionedUnits++;
 
             if (_unitsPositions.ContainsKey(unit) && _unitsPositions[unit] == position) continue;
 
