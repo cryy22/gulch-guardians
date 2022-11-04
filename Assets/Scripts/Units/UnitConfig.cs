@@ -7,6 +7,7 @@ namespace GulchGuardians
     public class UnitConfig : ScriptableObject
     {
         public List<Sprite> Sprites;
+        public bool IsBoss;
         public int MinAttack;
         public int MaxAttack;
         public int MinHealth;

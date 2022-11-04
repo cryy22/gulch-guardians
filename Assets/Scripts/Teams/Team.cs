@@ -55,7 +55,10 @@ namespace GulchGuardians
 
         public void ResetUnitsOnDeck()
         {
-            UnitsInCombatCycle = Mathf.Min(a: UnitsPerCombatCycle, b: Units.Count);
+            UnitsInCombatCycle = FrontUnit && FrontUnit.IsBoss
+                ? 1
+                : Mathf.Min(a: UnitsPerCombatCycle, b: Units.Count);
+
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 

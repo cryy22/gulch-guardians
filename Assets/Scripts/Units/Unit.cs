@@ -19,17 +19,19 @@ namespace GulchGuardians
         public int Attack { get; private set; }
         public int Health { get; private set; }
         public string FirstName { get; private set; }
+        public bool IsBoss { get; private set; }
 
         private void Update() { UpdateStats(); }
 
-        public void Initialize(int attack, int health, string firstName = "")
+        public void Initialize(int attack, int health, string firstName = "", bool isBoss = false)
         {
             if (_isInitialized) throw new Exception("Unit is already initialized");
 
-            FirstName = firstName;
             Attack = attack;
             Health = health;
             _initialHealth = health;
+            FirstName = firstName;
+            IsBoss = isBoss;
 
             NameText.text = FirstName;
 

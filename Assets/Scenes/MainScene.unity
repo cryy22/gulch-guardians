@@ -1441,6 +1441,10 @@ PrefabInstance:
       propertyPath: UnitSets.Array.data[4]
       value: 
       objectReference: {fileID: 11400000, guid: 129cb54f595944b8cb3a38bb6190728e, type: 2}
+    - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: UnitSets.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 522748ab80bef45baa03ae46804c11fe, type: 2}
     - target: {fileID: 7077939781010037160, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: m_RootOrder
       value: 5
