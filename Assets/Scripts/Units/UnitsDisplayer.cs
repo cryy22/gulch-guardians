@@ -21,7 +21,8 @@ public class UnitsDisplayer : MonoBehaviour
 
     public IEnumerator AnimateUpdateDisplay(List<Unit> units)
     {
-        UpdateUnitsAndPositions(units);
+        bool hasChanged = UpdateUnitsAndPositions(units);
+        if (!hasChanged) yield break;
 
         List<Coroutine> coroutines = new();
         foreach (Unit unit in _unitsPositions.Keys)
@@ -52,26 +53,38 @@ public class UnitsDisplayer : MonoBehaviour
         );
     }
 
-    private void UpdateUnitsAndPositions(List<Unit> units)
+    private bool UpdateUnitsAndPositions(List<Unit> units)
     {
+        var hasChanged = false;
+
         var positionedUnits = 0;
         foreach (Unit unit in units)
         {
-            unit.transform.SetParent(UnitsParent);
-            unit.gameObject.SetActive(true);
-            unit.transform.localScale = Vector3.one;
-
-            var localPosition = new Vector3(
-                x: positionedUnits * UnitSpacing * (IsInverted ? -1 : 1),
-                y: 0f,
-                z: 0f
+            Vector3 position = UnitsParent.TransformPoint(
+                new Vector3(
+                    x: positionedUnits * UnitSpacing * (IsInverted ? -1 : 1),
+                    y: 0f,
+                    z: 0f
+                )
             );
-            _unitsPositions[unit] = UnitsParent.TransformPoint(localPosition);
+            if (!_unitsPositions.ContainsKey(unit) || _unitsPositions[unit] != position)
+            {
+                unit.transform.SetParent(UnitsParent);
+                unit.gameObject.SetActive(true);
+                unit.transform.localScale = Vector3.one;
+
+                _unitsPositions[unit] = position;
+
+                hasChanged = true;
+            }
 
             positionedUnits++;
         }
 
         List<Unit> removedUnits = _unitsPositions.Keys.Except(units).ToList();
+        if (removedUnits.Count > 0) hasChanged = true;
         foreach (Unit unit in removedUnits) _unitsPositions.Remove(unit);
+
+        return hasChanged;
     }
 }
