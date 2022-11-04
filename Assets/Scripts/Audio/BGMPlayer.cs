@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Settings;
 using UnityEngine;
 
 namespace GulchGuardians
@@ -11,8 +13,15 @@ namespace GulchGuardians
 
         [SerializeField] private AudioSource PreparationAudioSource;
         [SerializeField] private AudioSource CombatAudioSource;
+        [SerializeField] private UserSettings Settings;
+        private State _state = State.Preparation;
+
+        private bool _isCrossfading;
 
         public static BGMPlayer Instance { get; private set; }
+
+        private float TargetPreparationVolume => Settings.MusicOn && _state == State.Preparation ? Volume : 0f;
+        private float TargetCombatVolume => Settings.MusicOn && _state == State.Combat ? Volume : 0f;
 
         private void Awake()
         {
@@ -23,29 +32,61 @@ namespace GulchGuardians
             }
 
             Instance = this;
-            CombatAudioSource.volume = 0;
+
+            PreparationAudioSource.volume = TargetPreparationVolume;
+            CombatAudioSource.volume = TargetCombatVolume;
+        }
+
+        private void OnEnable() { Settings.Changed += ChangedEventHandler; }
+        private void OnDisable() { Settings.Changed -= ChangedEventHandler; }
+
+        public void TransitionToPreparation()
+        {
+            _state = State.Preparation;
+            StartCoroutine(CrossfadeVolumes());
         }
 
         public void TransitionToCombat()
         {
-            StartCoroutine(Crossfade(from: PreparationAudioSource, to: CombatAudioSource));
+            _state = State.Combat;
+            StartCoroutine(CrossfadeVolumes());
         }
 
-        public void TransitionToPreparation()
+        private void ChangedEventHandler(object sender, EventArgs e)
         {
-            StartCoroutine(Crossfade(from: CombatAudioSource, to: PreparationAudioSource));
+            PreparationAudioSource.volume = TargetPreparationVolume;
+            CombatAudioSource.volume = TargetCombatVolume;
         }
 
-        private IEnumerator Crossfade(AudioSource from, AudioSource to)
+        private IEnumerator CrossfadeVolumes()
         {
+            yield return new WaitUntil(() => !_isCrossfading);
+            _isCrossfading = true;
+
             float t = 0;
+
+            float preparationInitialVolume = PreparationAudioSource.volume;
+            float combatInitialVolume = CombatAudioSource.volume;
+
             while (t < CrossfadeDuration)
             {
                 t += Time.deltaTime / CrossfadeDuration;
-                from.volume = Mathf.SmoothStep(from: Volume, to: 0, t: t);
-                to.volume = Mathf.SmoothStep(from: 0, to: Volume, t: t);
+                PreparationAudioSource.volume = Mathf.SmoothStep(
+                    from: preparationInitialVolume,
+                    to: TargetPreparationVolume,
+                    t: t
+                );
+                CombatAudioSource.volume = Mathf.SmoothStep(from: combatInitialVolume, to: TargetCombatVolume, t: t);
                 yield return null;
             }
+
+            _isCrossfading = false;
+        }
+
+        private enum State
+        {
+            Preparation,
+            Combat,
         }
     }
 }

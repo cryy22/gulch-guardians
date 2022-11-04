@@ -1,3 +1,4 @@
+using Settings;
 using UnityEngine;
 
 namespace GulchGuardians
@@ -7,6 +8,7 @@ namespace GulchGuardians
     {
         [SerializeField] private AudioClip[] AttackSounds;
         [SerializeField] private AudioClip[] DefeatSounds;
+        [SerializeField] private UserSettings Settings;
 
         private AudioSource _audioSource;
 
@@ -24,9 +26,15 @@ namespace GulchGuardians
             _audioSource = GetComponent<AudioSource>();
         }
 
-        public void PlayAttackSound() { PlayRandom(AttackSounds); }
+        public void PlayAttackSound()
+        {
+            if (Settings.SoundFXOn) PlayRandom(AttackSounds);
+        }
 
-        public void PlayDefeatSound() { PlayRandom(DefeatSounds); }
+        public void PlayDefeatSound()
+        {
+            if (Settings.SoundFXOn) PlayRandom(DefeatSounds);
+        }
 
         private void PlayRandom(AudioClip[] clips)
         {
