@@ -13,8 +13,10 @@ namespace InfiniteSAPPrototype
         public Unit Create(bool isPlayerTeam)
         {
             Unit unit = Instantiate(UnitPrefab);
-            unit.Attack = Random.Range(minInclusive: 1, maxExclusive: 5);
-            unit.Health = Random.Range(minInclusive: 1, maxExclusive: 5);
+            unit.SetInitialStats(
+                attack: Random.Range(minInclusive: 1, maxExclusive: 5),
+                health: Random.Range(minInclusive: 1, maxExclusive: 5)
+            );
             unit.SoundFXPlayer = SoundFXPlayer;
 
             Sprite[] spritePool = isPlayerTeam ? PlayerTeamSprites : EnemyTeamSprites;

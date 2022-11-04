@@ -6,9 +6,6 @@ using UnityEngine.Serialization;
 
 public class Unit : MonoBehaviour
 {
-    public int Attack;
-    public int Health;
-
     public SpriteRenderer Renderer;
 
     [FormerlySerializedAs("SFXPlayer")]
@@ -19,16 +16,21 @@ public class Unit : MonoBehaviour
 
     private int _initialHealth;
 
-    private void Awake()
-    {
-        // Renderer.color = GenerateRandomColor();
-        _initialHealth = Health;
-    }
+    public int Attack { get; private set; }
+
+    public int Health { get; private set; }
 
     private void Update()
     {
         UpdateStats();
         UpdateSize();
+    }
+
+    public void SetInitialStats(int attack, int health)
+    {
+        Attack = attack;
+        Health = health;
+        _initialHealth = health;
     }
 
     public IEnumerator AttackUnit(Unit target)
@@ -54,6 +56,8 @@ public class Unit : MonoBehaviour
         Health += health;
         _initialHealth += health;
     }
+
+    public void FullHeal() { Health = _initialHealth; }
 
     private static Color GenerateRandomColor()
     {
@@ -132,7 +136,9 @@ public class Unit : MonoBehaviour
     private void UpdateStats()
     {
         AttackText.text = Attack.ToString();
+
         HealthText.text = Health.ToString();
+        HealthText.color = Health < _initialHealth ? Color.red : Color.white;
     }
 
     private void UpdateSize()

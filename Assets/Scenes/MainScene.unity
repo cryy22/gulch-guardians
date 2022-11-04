@@ -808,6 +808,7 @@ MonoBehaviour:
   Effects:
   - {fileID: 11400000, guid: 10b16097b2ec049f1956e86fec81c6d2, type: 2}
   - {fileID: 11400000, guid: 32427ccc7eb9445debb5f2155119dd88, type: 2}
+  - {fileID: 11400000, guid: 8df339fd5672d4673b7c64bb8b11cbec, type: 2}
   UnitFactory: {fileID: 312459700}
   PlayerTeam: {fileID: 294015327}
   ActionsRemainingText: {fileID: 2088620647}

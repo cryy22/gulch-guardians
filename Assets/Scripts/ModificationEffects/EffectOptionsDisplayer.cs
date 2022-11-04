@@ -13,7 +13,7 @@ namespace InfiniteSAPPrototype
 
         public ModificationEffect SelectedEffect { get; private set; }
 
-        public void DisplayEffectOptions(List<ModificationEffect> effects)
+        public void DisplayEffectOptions(IEnumerable<ModificationEffect> effects)
         {
             foreach (Transform child in EffectOptionParent)
                 Destroy(child.gameObject);

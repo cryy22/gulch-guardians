@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace InfiniteSAPPrototype
 {
@@ -83,7 +85,12 @@ namespace InfiniteSAPPrototype
         private void ResetEffectOptions()
         {
             ChooseATargetText.gameObject.SetActive(false);
-            _effectOptions.DisplayEffectOptions(effects: Effects);
+            _effectOptions.DisplayEffectOptions(GetRandomEffects());
+        }
+
+        private IEnumerable<ModificationEffect> GetRandomEffects()
+        {
+            return Effects.OrderBy(x => Random.value).Take(2);
         }
 
         private void UpdateActionsRemainingText()
