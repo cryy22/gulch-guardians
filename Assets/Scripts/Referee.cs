@@ -1,6 +1,7 @@
 using System.Collections;
 using GulchGuardians;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Referee : MonoBehaviour
@@ -44,8 +45,15 @@ public class Referee : MonoBehaviour
             if (PlayerTeam.UnitsInCombatCycle == 0 || EnemyTeam.UnitsInCombatCycle == 0) break;
             yield return Run1V1(player: PlayerTeam, enemy: EnemyTeam);
         }
+        
+        bool isWin = PlayerTeam.UnitsInCombatCycle > 0;
+        yield return GameResultPanel.DisplayResult(isWin);
 
-        yield return GameResultPanel.DisplayResult(isWin: PlayerTeam.UnitsInCombatCycle > 0);
+        if (!isWin)
+        {
+            SceneManager.LoadScene(GulchGuardians.Constants.Scene.TitleScene);
+            yield break;
+        }
 
         PlayerTeam.ResetUnitsOnDeck();
         EnemyTeam.ResetUnitsOnDeck();
