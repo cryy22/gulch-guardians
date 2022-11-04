@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GulchGuardians
 {
     public class Unit : MonoBehaviour
     {
-        public SpriteRenderer Renderer;
-
         [SerializeField] private TMP_Text AttackText;
         [SerializeField] private TMP_Text HealthText;
         [SerializeField] private TMP_Text NameText;
+        [SerializeField] private SpriteRenderer Renderer;
+        [SerializeField] private Animator Animator;
 
         private bool _isInitialized;
         private ClickReporter _clickReporter;
@@ -36,9 +37,18 @@ namespace GulchGuardians
 
         private void Update() { UpdateStats(); }
 
-        public void Initialize(int attack, int health, string firstName = "", bool isBoss = false)
+        public void Initialize(
+            RuntimeAnimatorController runtimeAnimatorController,
+            int attack,
+            int health,
+            string firstName = "",
+            bool isBoss = false
+        )
         {
             if (_isInitialized) throw new Exception("Unit is already initialized");
+
+            Animator.runtimeAnimatorController = runtimeAnimatorController;
+            Animator.Play(stateNameHash: 0, layer: 0, normalizedTime: Random.Range(minInclusive: 0f, maxInclusive: 1f));
 
             Attack = attack;
             Health = health;
@@ -47,6 +57,8 @@ namespace GulchGuardians
             IsBoss = isBoss;
 
             NameText.text = FirstName;
+
+            if (IsBoss) Renderer.transform.localScale *= 1.33f;
 
             _isInitialized = true;
         }
@@ -90,7 +102,6 @@ namespace GulchGuardians
         {
             yield return new WaitForEndOfFrame();
 
-            Renderer.color = Color.red;
             AttackText.color = Color.red;
             HealthText.color = Color.red;
 

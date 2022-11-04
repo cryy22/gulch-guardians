@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
   m_Name: EnemyStilterUnitConfig
   m_EditorClassIdentifier: 
-  Sprites:
-  - {fileID: -1506325202, guid: 74387f495350e408ab5e1f2da8641bfd, type: 3}
-  - {fileID: 83504389, guid: 74387f495350e408ab5e1f2da8641bfd, type: 3}
+  RuntimeAnimatorControllers:
+  - {fileID: 9100000, guid: d94456e67183b44fa82fb2e172c2eef6, type: 2}
+  - {fileID: 9100000, guid: 15916c45078c24cbeac013e9c0033f71, type: 2}
   IsBoss: 0
   MinAttack: 5
   MaxAttack: 8

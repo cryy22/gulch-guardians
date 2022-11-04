@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
   m_Name: PlayerUnitConfig
   m_EditorClassIdentifier: 
-  Sprites:
-  - {fileID: 21300000, guid: e6c06734e85544287b238ebfe75f1a88, type: 3}
-  - {fileID: 21300000, guid: 428cab758f00b434bbe5db3e34dc1b21, type: 3}
-  - {fileID: 21300000, guid: 1236ef2a718f5429fb6b8bd6e05c4d15, type: 3}
-  - {fileID: 21300000, guid: f16ef7ad0daa0450999def8ea20d990f, type: 3}
+  RuntimeAnimatorControllers:
+  - {fileID: 9100000, guid: 5a01430b60c3846a78e72295264c9109, type: 2}
+  - {fileID: 9100000, guid: 5990862e978704c7bbbc31876729803d, type: 2}
+  - {fileID: 9100000, guid: 13b7e0bb48b304e95b4f92880d2bc865, type: 2}
+  - {fileID: 9100000, guid: 17b647488cd9041bc835af7504acf73b, type: 2}
   IsBoss: 0
   MinAttack: 2
   MaxAttack: 3

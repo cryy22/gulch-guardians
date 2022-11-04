@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
   m_Name: EnemyKnightUnitConfig
   m_EditorClassIdentifier: 
-  Sprites:
-  - {fileID: 21300000, guid: 891a75e8e7a7a462b8e662c5ae8000b1, type: 3}
-  - {fileID: 21300000, guid: 34687f663f89f4bedb21c18b48292421, type: 3}
+  RuntimeAnimatorControllers:
+  - {fileID: 9100000, guid: 89a8fd63839e0461ba579f7e9f925666, type: 2}
+  - {fileID: 9100000, guid: a5097cfe4c3ee48148f56cb8ea9f8559, type: 2}
   IsBoss: 0
   MinAttack: 2
   MaxAttack: 3
