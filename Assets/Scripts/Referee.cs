@@ -40,7 +40,7 @@ public class Referee : MonoBehaviour
         while (true)
         {
             if (PlayerTeam.UnitsInCombatCycle == 0 || EnemyTeam.UnitsInCombatCycle == 0) break;
-            yield return StartCoroutine(Run1V1(player: PlayerTeam, enemy: EnemyTeam));
+            yield return Run1V1(player: PlayerTeam, enemy: EnemyTeam);
         }
 
         yield return GameResultPanel.DisplayResult(isWin: PlayerTeam.UnitsInCombatCycle > 0);
@@ -61,10 +61,14 @@ public class Referee : MonoBehaviour
             Unit attackerUnit = attacker.FrontUnit;
             Unit defenderUnit = defender.FrontUnit;
 
-            bool result = attackerUnit.AttackUnit(defenderUnit);
+            yield return attackerUnit.AttackUnit(defenderUnit);
             _isPlayerTurn = !_isPlayerTurn;
+            if (defenderUnit.Health <= 0)
+            {
+                yield return defenderUnit.BecomeDefeated();
+                break;
+            }
 
-            if (result == true) break;
             yield return new WaitForSeconds(1f);
         }
 

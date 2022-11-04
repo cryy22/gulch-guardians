@@ -25,7 +25,22 @@ public class Unit : MonoBehaviour
         UpdateSize();
     }
 
-    public bool AttackUnit(Unit target) { return target.TakeDamage(Attack); }
+    public IEnumerator AttackUnit(Unit target)
+    {
+        yield return AnimateAttack(target);
+        yield return target.TakeDamage(Attack);
+    }
+
+    public IEnumerator BecomeDefeated()
+    {
+        Renderer.color = Color.red;
+        AttackText.color = Color.red;
+        HealthText.color = Color.red;
+
+        yield return AnimateDefeat();
+
+        Destroy(gameObject);
+    }
 
     public void Upgrade(int attack, int health)
     {
@@ -43,15 +58,59 @@ public class Unit : MonoBehaviour
         );
     }
 
-    private bool TakeDamage(int damage)
+    private IEnumerator TakeDamage(int damage)
     {
         Health -= damage;
-        StartCoroutine(ShowHealthChange());
+        yield return AnimateDamage();
+        yield return ShowHealthChange();
+    }
 
-        if (Health > 0) return false;
+    private IEnumerator AnimateAttack(Unit target)
+    {
+        Vector3 startPosition = transform.position;
+        Vector3 endPosition = target.transform.position;
+        var duration = 0.0833f;
+        var time = 0f;
 
-        Destroy(gameObject);
-        return true;
+        while (time < duration)
+        {
+            transform.position = Vector3.Slerp(a: startPosition, b: endPosition, t: time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = startPosition;
+    }
+
+    private IEnumerator AnimateDamage()
+    {
+        Vector3 startPosition = transform.position;
+        var duration = 0.08f;
+        var period = 0.04f;
+        var time = 0f;
+
+        while (time < duration)
+        {
+            transform.position = startPosition + (Vector3.up * (0.2f * Mathf.Sin((time / period) * Mathf.PI)));
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = startPosition;
+    }
+
+    private IEnumerator AnimateDefeat()
+    {
+        var duration = 0.2f;
+        var time = 0f;
+        Vector3 initialScale = transform.localScale;
+
+        while (time < duration)
+        {
+            transform.localScale = Vector3.Slerp(a: initialScale, b: Vector3.zero, t: time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
     }
 
     private IEnumerator ShowHealthChange()
