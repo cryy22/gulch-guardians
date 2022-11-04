@@ -10,6 +10,10 @@ public class Unit : MonoBehaviour
     [SerializeField] private TMP_Text AttackText;
     [SerializeField] private TMP_Text HealthText;
 
+    [SerializeField] private SpriteRenderer Renderer;
+
+    private void Awake() { Renderer.color = GenerateRandomColor(); }
+
     private void Update() { UpdateStats(); }
 
     public bool AttackUnit(Unit target) { return target.TakeDamage(Attack); }
@@ -18,6 +22,15 @@ public class Unit : MonoBehaviour
     {
         Attack += attack;
         Health += health;
+    }
+
+    private static Color GenerateRandomColor()
+    {
+        return Color.HSVToRGB(
+            H: Random.Range(minInclusive: 0f, maxInclusive: 1f),
+            S: Random.Range(minInclusive: 0.5f, maxInclusive: 1f),
+            V: 1f
+        );
     }
 
     private bool TakeDamage(int damage)

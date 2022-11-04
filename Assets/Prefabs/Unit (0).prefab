@@ -52,6 +52,7 @@ MonoBehaviour:
   Health: 0
   AttackText: {fileID: 4943982858609528545}
   HealthText: {fileID: 4943982859194164453}
+  Renderer: {fileID: 4943982858057783518}
 --- !u!114 &-5873586629161309623
 MonoBehaviour:
   m_ObjectHideFlags: 0
