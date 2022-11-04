@@ -5,6 +5,8 @@ namespace InfiniteSAPPrototype
 {
     public abstract class ModificationEffect : ScriptableObject
     {
+        [TextArea] public string Description;
+
         public abstract string Name { get; }
         public abstract TargetType Target { get; }
 
