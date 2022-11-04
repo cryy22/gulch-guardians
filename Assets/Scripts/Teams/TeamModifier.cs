@@ -20,10 +20,9 @@ namespace GulchGuardians
         [SerializeField] private TMP_Text ChooseATargetText;
         private readonly List<ModificationEffect> _offeredEffects = new();
 
-        private int _actionsRemaining;
         private EffectOptionsDisplayer _effectOptions;
-
-        private bool IsReady { get; set; } = true;
+        private int _actionsRemaining;
+        private bool _isModifying;
 
         private void Awake() { _effectOptions = GetComponent<EffectOptionsDisplayer>(); }
 
@@ -50,7 +49,7 @@ namespace GulchGuardians
 
         public IEnumerator EndModificationRound()
         {
-            yield return new WaitUntil(() => IsReady);
+            yield return new WaitUntil(() => !_isModifying);
 
             CleanUpOfferedEffects();
             _effectOptions.CleanUpEffectOptions();
@@ -73,7 +72,7 @@ namespace GulchGuardians
 
         private IEnumerator ApplySelectedEffect(Unit unit)
         {
-            IsReady = false;
+            _isModifying = true;
 
             yield return _effectOptions.SelectedEffect.Apply(unit: unit, team: PlayerTeam);
 
@@ -86,7 +85,7 @@ namespace GulchGuardians
             else
                 OfferEffectOptions();
 
-            IsReady = true;
+            _isModifying = true;
         }
 
         private void OfferEffectOptions()
