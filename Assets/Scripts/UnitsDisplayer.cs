@@ -33,7 +33,12 @@ public class UnitsDisplayer : MonoBehaviour
 
     private void UnitsChangedEventHandler(object sender, EventArgs e)
     {
-        foreach (Unit unit in _team.Units) unit.gameObject.SetActive(false);
+        foreach (Unit unit in _team.Units)
+        {
+            unit.transform.SetParent(UnitsParent);
+            unit.gameObject.SetActive(false);
+        }
+
         if (_isUpdateEnqueued) return;
 
         StartCoroutine(UpdateUnitPositions());
@@ -47,14 +52,13 @@ public class UnitsDisplayer : MonoBehaviour
         var positionedUnits = 0;
         foreach (Unit unit in _team.Units)
         {
-            unit.gameObject.SetActive(true);
-            unit.transform.SetParent(UnitsParent);
             unit.transform.localPosition = new Vector3(
                 x: positionedUnits * UnitSpacing * (IsInverted ? -1 : 1),
                 y: 0f,
                 z: 0f
             );
             unit.transform.localScale = Vector3.one;
+            unit.gameObject.SetActive(true);
 
             positionedUnits++;
         }

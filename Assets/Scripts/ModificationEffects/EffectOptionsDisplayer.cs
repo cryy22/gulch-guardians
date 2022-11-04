@@ -15,8 +15,7 @@ namespace GulchGuardians
 
         public void DisplayEffectOptions(IEnumerable<ModificationEffect> effects)
         {
-            foreach (Transform child in EffectOptionParent)
-                Destroy(child.gameObject);
+            foreach (Transform child in EffectOptionParent) Destroy(child.gameObject);
 
             foreach (ModificationEffect effect in effects)
             {
@@ -32,6 +31,8 @@ namespace GulchGuardians
             foreach (EffectOption effectOption in EffectOptionParent.GetComponentsInChildren<EffectOption>())
                 effectOption.SetSelected(effectOption == (EffectOption) sender);
             EffectSelected?.Invoke(sender: this, e: EventArgs.Empty);
+
+            foreach (Transform child in EffectOptionParent) Destroy(child.gameObject);
         }
     }
 }
