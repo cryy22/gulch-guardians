@@ -36,6 +36,8 @@ namespace GulchGuardians
 
             yield return TeamModifier.EndModificationRound();
 
+            BGMPlayer.Instance.TransitionToCombat();
+
             yield return new WaitForSeconds(1f);
 
             while (true)
@@ -57,6 +59,8 @@ namespace GulchGuardians
 
             TeamModifier.BeginModificationRound();
             RunCombatButton.gameObject.SetActive(true);
+
+            BGMPlayer.Instance.TransitionToPreparation();
         }
 
         private IEnumerator RunAttackCycle(Team player, Team enemy)
