@@ -25,10 +25,10 @@ namespace GulchGuardians
         public bool IsDefeated => Health <= 0;
 
         public bool IsBoss { get; private set; }
-        private int Attack { get; set; }
-        private int Health { get; set; }
-        private int InitialHealth { get; set; }
-        private string FirstName { get; set; }
+        public int Attack { get; set; }
+        public int Health { get; set; }
+        public int InitialHealth { get; set; }
+        public string FirstName { get; set; }
 
         private void Awake() { _clickReporter = GetComponent<ClickReporter>(); }
 
