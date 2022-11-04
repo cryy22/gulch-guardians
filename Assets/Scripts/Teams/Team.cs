@@ -24,13 +24,13 @@ namespace GulchGuardians
         public int UnitsInCombatCycle { get; private set; }
         private Unit LastUnitInCycle => UnitsInCombatCycle > 0 ? Units[UnitsInCombatCycle - 1] : null;
 
-        private void Awake()
-        {
-            _unitsDisplayer = GetComponent<UnitsDisplayer>();
+        private void Awake() { _unitsDisplayer = GetComponent<UnitsDisplayer>(); }
 
+        private void Start()
+        {
             List<Unit> units = new();
             foreach (UnitSet unitSet in UnitSets) units.AddRange(unitSet.GenerateUnits());
-            AddUnits(units);
+            AddUnits(units); // doing this in Start avoids OnEnable adding DefeatedEventHandler a second time
 
             ResetUnitsOnDeck();
         }
@@ -118,6 +118,7 @@ namespace GulchGuardians
         {
             Units.Add(unit);
             unit.GetComponent<ClickReporter>().OnReporterClickedEvent += OnUnitClickedEventHandler;
+            unit.Defeated += DefeatedEventHandler;
         }
 
         private void OnUnitClickedEventHandler(ClickReporter reporter)

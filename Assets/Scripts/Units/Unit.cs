@@ -46,17 +46,6 @@ namespace GulchGuardians
             yield return target.TakeDamage(Attack);
         }
 
-        public IEnumerator BecomeDefeated()
-        {
-            Renderer.color = Color.red;
-            AttackText.color = Color.red;
-            HealthText.color = Color.red;
-
-            yield return AnimateDefeat();
-
-            Destroy(gameObject);
-        }
-
         public void Upgrade(int attack, int health)
         {
             Attack += attack;
@@ -78,6 +67,17 @@ namespace GulchGuardians
             }
 
             transform.position = position;
+        }
+
+        private IEnumerator BecomeDefeated()
+        {
+            Renderer.color = Color.red;
+            AttackText.color = Color.red;
+            HealthText.color = Color.red;
+
+            yield return AnimateDefeat();
+
+            Destroy(gameObject);
         }
 
         private IEnumerator TakeDamage(int damage)
