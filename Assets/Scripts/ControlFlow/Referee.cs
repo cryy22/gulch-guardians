@@ -64,7 +64,7 @@ namespace GulchGuardians
             yield return player.FrontUnit.AttackUnit(enemy.FrontUnit);
             if (enemy.FrontUnit.Health <= 0)
             {
-                yield return enemy.UnitDefeated(enemy.FrontUnit);
+                yield return enemy.DefeatUnit(enemy.FrontUnit);
                 if (enemy.UnitsInCombatCycle <= 0) yield break;
             }
 
@@ -75,7 +75,7 @@ namespace GulchGuardians
             yield return enemy.FrontUnit.AttackUnit(player.FrontUnit);
             if (player.FrontUnit.Health <= 0)
             {
-                yield return player.UnitDefeated(player.FrontUnit);
+                yield return player.DefeatUnit(player.FrontUnit);
                 isPlayerUnitDefeated = true;
                 if (player.UnitsInCombatCycle <= 0) yield break;
             }

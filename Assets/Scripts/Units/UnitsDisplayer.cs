@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+using System.Collections.Generic;
 using GulchGuardians;
 using UnityEngine;
 
@@ -14,44 +13,14 @@ public class UnitsDisplayer : MonoBehaviour
     [SerializeField] private Transform UnitsParent;
     [SerializeField] private GameObject RoundDemarcation;
 
-    private Team _team;
-    private bool _isUpdateEnqueued;
+    private void Awake() { RoundDemarcation.SetActive(DemarcatesRounds); }
 
-    private void Awake()
+    public void UpdateDisplay(List<Unit> units)
     {
-        _team = GetComponent<Team>();
-        RoundDemarcation.SetActive(DemarcatesRounds);
-    }
-
-    private void OnEnable()
-    {
-        _team.UnitsChanged += UnitsChangedEventHandler;
-        UnitsChangedEventHandler(sender: this, e: EventArgs.Empty);
-    }
-
-    private void OnDisable() { _team.UnitsChanged -= UnitsChangedEventHandler; }
-
-    private void UnitsChangedEventHandler(object sender, EventArgs e)
-    {
-        foreach (Unit unit in _team.Units)
+        var positionedUnits = 0;
+        foreach (Unit unit in units)
         {
             unit.transform.SetParent(UnitsParent);
-            unit.gameObject.SetActive(false);
-        }
-
-        if (_isUpdateEnqueued) return;
-
-        StartCoroutine(UpdateUnitPositions());
-        _isUpdateEnqueued = true;
-    }
-
-    private IEnumerator UpdateUnitPositions()
-    {
-        yield return new WaitForEndOfFrame();
-
-        var positionedUnits = 0;
-        foreach (Unit unit in _team.Units)
-        {
             unit.transform.localPosition = new Vector3(
                 x: positionedUnits * UnitSpacing * (IsInverted ? -1 : 1),
                 y: 0f,
@@ -62,23 +31,18 @@ public class UnitsDisplayer : MonoBehaviour
 
             positionedUnits++;
         }
-
-        UpdateDemarcation();
-        _isUpdateEnqueued = false;
     }
 
-    private void UpdateDemarcation()
+    public void UpdateDemarcation(Unit lastUnitInCycle, int unitsInCombatCycle)
     {
         if (!DemarcatesRounds) return;
 
-        RoundDemarcation.SetActive(_team.UnitsInCombatCycle > 0);
-        if (_team.UnitsInCombatCycle == 0) return;
-
-        Transform lastUnitInCombatCycle = _team.Units[_team.UnitsInCombatCycle - 1].transform;
+        RoundDemarcation.SetActive(unitsInCombatCycle > 0);
+        if (unitsInCombatCycle == 0) return;
 
         Vector3 initialPosition = RoundDemarcation.transform.position;
         RoundDemarcation.transform.position = new Vector3(
-            x: lastUnitInCombatCycle.position.x + 1f,
+            x: lastUnitInCycle.transform.position.x + 0.95f,
             y: initialPosition.y,
             z: initialPosition.z
         );

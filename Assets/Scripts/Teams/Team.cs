@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace GulchGuardians
 {
+    [RequireComponent(typeof(UnitsDisplayer))]
     public class Team : MonoBehaviour
     {
         public List<Unit> Units = new();
@@ -13,19 +14,22 @@ namespace GulchGuardians
 
         [SerializeField] private List<UnitSet> UnitSets;
 
+        private UnitsDisplayer _unitsDisplayer;
+
         public event EventHandler UnitsChanged;
         public event EventHandler<UnitClickedEventArgs> UnitClicked;
 
         public Unit FrontUnit => Units.Count > 0 ? Units.First() : null;
         public int UnitsInCombatCycle { get; private set; }
+        private Unit LastUnitInCycle => UnitsInCombatCycle > 0 ? Units[UnitsInCombatCycle - 1] : null;
 
         private void Awake()
         {
-            foreach (UnitSet unitSet in UnitSets)
-            {
-                List<Unit> units = unitSet.GenerateUnits();
-                foreach (Unit unit in units) AddUnit(unit);
-            }
+            _unitsDisplayer = GetComponent<UnitsDisplayer>();
+
+            List<Unit> units = new();
+            foreach (UnitSet unitSet in UnitSets) units.AddRange(unitSet.GenerateUnits());
+            AddUnits(units);
 
             ResetUnitsOnDeck();
         }
@@ -42,13 +46,25 @@ namespace GulchGuardians
                 unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClickedEventHandler;
         }
 
-        public IEnumerator UnitDefeated(Unit unit)
+        public void AddUnit(Unit unit)
+        {
+            AddUnitInternal(unit);
+
+            _unitsDisplayer.UpdateDisplay(units: Units);
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
+        }
+
+        public IEnumerator DefeatUnit(Unit unit)
         {
             if (!Units.Remove(unit)) yield break;
+
             unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClickedEventHandler;
-            UnitsInCombatCycle--;
 
             yield return unit.BecomeDefeated();
+            UnitsInCombatCycle--;
+
+            _unitsDisplayer.UpdateDisplay(units: Units);
+            _unitsDisplayer.UpdateDemarcation(lastUnitInCycle: LastUnitInCycle, unitsInCombatCycle: UnitsInCombatCycle);
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
@@ -59,16 +75,7 @@ namespace GulchGuardians
                 ? 1
                 : Mathf.Min(a: UnitsPerCombatCycle, b: Units.Count);
 
-            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
-        }
-
-        public void AddUnit(Unit unit, bool skipClickHandling = false)
-        {
-            Units.Add(unit);
-            if (!skipClickHandling)
-                unit.GetComponent<ClickReporter>().OnReporterClickedEvent += OnUnitClickedEventHandler;
-
-            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
+            _unitsDisplayer.UpdateDemarcation(lastUnitInCycle: LastUnitInCycle, unitsInCombatCycle: UnitsInCombatCycle);
         }
 
         public void SetUnitIndex(Unit unit, int index)
@@ -76,7 +83,24 @@ namespace GulchGuardians
             if (!Units.Remove(unit)) return;
 
             Units.Insert(index: index, item: unit);
+
+            _unitsDisplayer.UpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
+        }
+
+        private void AddUnits(IEnumerable<Unit> units)
+        {
+            foreach (Unit unit in units)
+                AddUnitInternal(unit);
+
+            _unitsDisplayer.UpdateDisplay(units: Units);
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
+        }
+
+        private void AddUnitInternal(Unit unit)
+        {
+            Units.Add(unit);
+            unit.GetComponent<ClickReporter>().OnReporterClickedEvent += OnUnitClickedEventHandler;
         }
 
         private void OnUnitClickedEventHandler(ClickReporter reporter)
