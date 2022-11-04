@@ -15,7 +15,7 @@ namespace GulchGuardians
 
         public void DisplayEffectOptions(IEnumerable<ModificationEffect> effects)
         {
-            foreach (Transform child in EffectOptionParent) Destroy(child.gameObject);
+            CleanUpEffectOptions();
 
             foreach (ModificationEffect effect in effects)
             {
@@ -25,14 +25,17 @@ namespace GulchGuardians
             }
         }
 
+        public void CleanUpEffectOptions()
+        {
+            foreach (Transform child in EffectOptionParent) Destroy(child.gameObject);
+        }
+
         private void EffectOptionClickedEventHandler(object sender, EffectOption.EffectOptionClickedEventArgs e)
         {
             SelectedEffect = e.Effect;
             foreach (EffectOption effectOption in EffectOptionParent.GetComponentsInChildren<EffectOption>())
                 effectOption.SetSelected(effectOption == (EffectOption) sender);
             EffectSelected?.Invoke(sender: this, e: EventArgs.Empty);
-
-            foreach (Transform child in EffectOptionParent) Destroy(child.gameObject);
         }
     }
 }

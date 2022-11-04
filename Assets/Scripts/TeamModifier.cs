@@ -50,6 +50,7 @@ namespace GulchGuardians
             foreach (Unit unit in PlayerTeam.Units)
                 unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClicked;
 
+            _effectOptions.CleanUpEffectOptions();
             gameObject.SetActive(false);
         }
 
