@@ -1116,7 +1116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c6918fc55b4b0f8aec697cc412cfb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumberOfUnitsPerRound: 1
   ActionsPerRound: 2
   Effects:
   - {fileID: 11400000, guid: 10b16097b2ec049f1956e86fec81c6d2, type: 2}
@@ -1126,7 +1125,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a8f6575479ffa494ebb6c82658de589e, type: 2}
   - {fileID: 11400000, guid: 63b3fa5338c3c48929e601e48f43db08, type: 2}
   - {fileID: 11400000, guid: 9dfee1c77403647c095091649e138b8d, type: 2}
-  UnitFactory: {fileID: 11400000, guid: 54544406e80754789ac74591d0238e76, type: 2}
   PlayerTeam: {fileID: 294015327}
   ActionsRemainingText: {fileID: 2088620647}
   ChooseATargetText: {fileID: 1962821024}
