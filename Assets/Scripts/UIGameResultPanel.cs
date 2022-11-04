@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -7,10 +8,13 @@ namespace DefaultNamespace
     {
         [SerializeField] private TMP_Text ResultText;
 
-        public void DisplayResult(bool isWin)
+        public IEnumerator DisplayResult(bool isWin)
         {
             ResultText.text = isWin ? "You Win!" : "You Lose!";
             gameObject.SetActive(true);
+
+            yield return new WaitForSeconds(2f);
+            gameObject.SetActive(false);
         }
     }
 }

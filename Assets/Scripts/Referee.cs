@@ -1,20 +1,33 @@
 using System.Collections;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Referee : MonoBehaviour
 {
     [SerializeField] private UnitTeam PlayerTeam;
     [SerializeField] private UnitTeam EnemyTeam;
+
+    [SerializeField] private Button RunCombatButton;
     [SerializeField] private UIGameResultPanel GameResultPanel;
 
     private bool _isPlayerTurn = true;
 
-    private void Start() { StartCoroutine(RunCombat()); }
+    private void Start() { RunCombatButton.onClick.AddListener(OnRunCombatButtonClicked); }
+
+    private void OnRunCombatButtonClicked()
+    {
+        RunCombatButton.gameObject.SetActive(false);
+        StartCoroutine(RunCombat());
+    }
 
     private IEnumerator RunCombat()
     {
-        yield return new WaitForSeconds(2f);
+        _isPlayerTurn = true;
+        PlayerTeam.ResetUnitsOnDeck();
+        EnemyTeam.ResetUnitsOnDeck();
+
+        yield return new WaitForSeconds(1f);
 
         while (true)
         {
@@ -22,7 +35,8 @@ public class Referee : MonoBehaviour
             yield return StartCoroutine(Run1V1(player: PlayerTeam, enemy: EnemyTeam));
         }
 
-        GameResultPanel.DisplayResult(isWin: PlayerTeam.UnitsInCombatCycle > 0);
+        yield return GameResultPanel.DisplayResult(isWin: PlayerTeam.UnitsInCombatCycle > 0);
+        RunCombatButton.gameObject.SetActive(true);
     }
 
     private IEnumerator Run1V1(UnitTeam player, UnitTeam enemy)
