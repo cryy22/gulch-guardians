@@ -15,8 +15,6 @@ namespace GulchGuardians
         [SerializeField] private Button RunCombatButton;
         [SerializeField] private UIGameResultPanel GameResultPanel;
 
-        private bool _isPlayerTurn = true;
-
         private IEnumerator Start()
         {
             RunCombatButton.onClick.AddListener(OnRunCombatButtonClicked);
@@ -33,8 +31,6 @@ namespace GulchGuardians
 
         private IEnumerator RunCombat()
         {
-            _isPlayerTurn = true;
-
             PlayerTeam.ResetUnitsOnDeck();
             EnemyTeam.ResetUnitsOnDeck();
 
@@ -45,7 +41,7 @@ namespace GulchGuardians
             while (true)
             {
                 if (PlayerTeam.UnitsInCombatCycle == 0 || EnemyTeam.UnitsInCombatCycle == 0) break;
-                yield return Run1V1(player: PlayerTeam, enemy: EnemyTeam);
+                yield return RunAttackCycle(player: PlayerTeam, enemy: EnemyTeam);
             }
 
             bool isWin = PlayerTeam.UnitsInCombatCycle > 0;
@@ -64,32 +60,35 @@ namespace GulchGuardians
             RunCombatButton.gameObject.SetActive(true);
         }
 
-        private IEnumerator Run1V1(Team player, Team enemy)
+        private IEnumerator RunAttackCycle(Team player, Team enemy)
         {
-            Team attacker;
-            Team defender;
-
-            while (true)
+            yield return player.FrontUnit.AttackUnit(enemy.FrontUnit);
+            if (enemy.FrontUnit.Health <= 0)
             {
-                attacker = _isPlayerTurn ? player : enemy;
-                defender = _isPlayerTurn ? enemy : player;
-
-                Unit attackerUnit = attacker.FrontUnit;
-                Unit defenderUnit = defender.FrontUnit;
-
-                yield return attackerUnit.AttackUnit(defenderUnit);
-                _isPlayerTurn = !_isPlayerTurn;
-                if (defenderUnit.Health <= 0)
-                {
-                    yield return defenderUnit.BecomeDefeated();
-                    break;
-                }
-
-                yield return new WaitForSeconds(1f);
+                yield return enemy.UnitDefeated(enemy.FrontUnit);
+                if (enemy.UnitsInCombatCycle <= 0) yield break;
             }
 
-            defender.UnitDefeated();
             yield return new WaitForSeconds(1f);
+
+            var isPlayerUnitDefeated = false;
+
+            yield return enemy.FrontUnit.AttackUnit(player.FrontUnit);
+            if (player.FrontUnit.Health <= 0)
+            {
+                yield return player.UnitDefeated(player.FrontUnit);
+                isPlayerUnitDefeated = true;
+                if (player.UnitsInCombatCycle <= 0) yield break;
+            }
+
+            yield return new WaitForSeconds(1f);
+
+            if (isPlayerUnitDefeated) yield break;
+
+            player.SetUnitIndex(unit: player.FrontUnit, index: player.UnitsInCombatCycle - 1);
+            yield return null; // let the UI update
+
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

@@ -47,6 +47,7 @@ public class UnitsDisplayer : MonoBehaviour
         var positionedUnits = 0;
         foreach (Unit unit in _team.Units)
         {
+            unit.gameObject.SetActive(true);
             unit.transform.SetParent(UnitsParent);
             unit.transform.localPosition = new Vector3(
                 x: positionedUnits * UnitSpacing * (IsInverted ? -1 : 1),
@@ -54,7 +55,6 @@ public class UnitsDisplayer : MonoBehaviour
                 z: 0f
             );
             unit.transform.localScale = Vector3.one;
-            unit.gameObject.SetActive(true);
 
             positionedUnits++;
         }

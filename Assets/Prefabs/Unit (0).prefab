@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6608307905624749109}
   - component: {fileID: -5873586629161309623}
   - component: {fileID: -8309591086784092033}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Unit (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4943982858057783519}
   - component: {fileID: 4943982858057783518}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 4943982858519393664}
   - component: {fileID: 4943982858519393695}
   - component: {fileID: 4943982858519393666}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StatLineCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 4943982858609528544}
   - component: {fileID: 4943982858609528546}
   - component: {fileID: 4943982858609528545}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 4943982859194164452}
   - component: {fileID: 4943982859194164454}
   - component: {fileID: 4943982859194164453}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HealthText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

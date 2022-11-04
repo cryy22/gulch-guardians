@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace GulchGuardians
         public Unit FrontUnit => Units.Count > 0 ? Units.First() : null;
         public int UnitsInCombatCycle { get; private set; }
 
-        private void Start() // should probably be Awake
+        private void Awake()
         {
             for (var i = 0; i < UnitCount; i++)
             {
@@ -28,14 +29,14 @@ namespace GulchGuardians
                 AddUnit(unit);
             }
 
-            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
-
             ResetUnitsOnDeck();
         }
 
-        public void UnitDefeated()
+        public IEnumerator UnitDefeated(Unit unit)
         {
-            Units.RemoveAt(0);
+            if (!Units.Remove(unit)) yield break;
+
+            yield return unit.BecomeDefeated();
             UnitsInCombatCycle--;
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }

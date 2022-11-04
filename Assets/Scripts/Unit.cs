@@ -21,10 +21,7 @@ namespace GulchGuardians
 
         public int Health { get; private set; }
 
-        private void Update()
-        {
-            UpdateStats();
-        }
+        private void Update() { UpdateStats(); }
 
         public void SetInitialStats(int attack, int health)
         {
@@ -84,7 +81,7 @@ namespace GulchGuardians
 
             while (time < duration)
             {
-                transform.position = Vector3.Slerp(a: startPosition, b: endPosition, t: time / duration);
+                transform.position = Vector3.Lerp(a: startPosition, b: endPosition, t: time / duration);
                 time += Time.deltaTime;
                 yield return null;
             }
