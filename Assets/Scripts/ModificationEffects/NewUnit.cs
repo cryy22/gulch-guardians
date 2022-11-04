@@ -19,6 +19,7 @@ namespace GulchGuardians
         {
             base.Prepare();
             _unit = UnitFactory.Create(isPlayerTeam: true);
+            _unit.gameObject.SetActive(false);
         }
 
         public override void Apply(Unit unit = null, Team team = null)
@@ -35,6 +36,10 @@ namespace GulchGuardians
             if (_unit != null) Destroy(_unit.gameObject);
         }
 
-        public override GameObject GetPreviewGameObject() { return _unit.gameObject; }
+        public override GameObject GetPreviewGameObject()
+        {
+            _unit.gameObject.SetActive(true);
+            return _unit.gameObject;
+        }
     }
 }

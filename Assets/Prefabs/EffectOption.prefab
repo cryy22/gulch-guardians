@@ -355,6 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EffectNameText: {fileID: 5434274790919812566}
+  EffectDescriptionPanel: {fileID: 1901562725112350259}
   EffectDescriptionText: {fileID: 5434274789806881470}
 --- !u!1 &5434274790919812564
 GameObject:
