@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace GulchGuardians
@@ -19,10 +17,10 @@ namespace GulchGuardians
         {
             yield return base.Apply(unit: unit, team: team);
 
-            IEnumerable<Coroutine> coroutines = team!.Units.Select(
-                teamUnit => teamUnit.StartCoroutine(teamUnit.Upgrade(attack: 1, health: 0))
+            yield return CoroutineHelper.RunConcurrently(
+                behaviours: team!.Units,
+                u => u.Upgrade(attack: 1, health: 0)
             );
-            foreach (Coroutine coroutine in coroutines) yield return coroutine;
         }
     }
 }

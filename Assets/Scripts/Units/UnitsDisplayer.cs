@@ -25,10 +25,10 @@ public class UnitsDisplayer : MonoBehaviour
         bool hasChanged = UpdateUnitsAndPositions(units);
         if (!hasChanged) yield break;
 
-        IEnumerable<Coroutine> coroutines = _unitsPositions.Keys.Select(
-            unit => StartCoroutine(unit.AnimateToPosition(_unitsPositions[unit]))
+        yield return CoroutineHelper.RunConcurrently(
+            behaviours: _unitsPositions.Keys,
+            unit => unit.AnimateToPosition(_unitsPositions[unit])
         );
-        foreach (Coroutine coroutine in coroutines) yield return coroutine;
     }
 
     public void UpdateDisplay(List<Unit> units)
