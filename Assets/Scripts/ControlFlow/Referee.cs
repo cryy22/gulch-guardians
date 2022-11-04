@@ -34,7 +34,7 @@ namespace GulchGuardians
             PlayerTeam.ResetUnitsOnDeck();
             EnemyTeam.ResetUnitsOnDeck();
 
-            TeamModifier.EndModificationRound();
+            yield return TeamModifier.EndModificationRound();
 
             yield return new WaitForSeconds(1f);
 

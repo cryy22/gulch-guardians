@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace GulchGuardians
@@ -13,9 +14,9 @@ namespace GulchGuardians
         public override string Name => _name;
         public override TargetType Target => TargetType.Unit;
 
-        public override void Apply(Unit unit = null, Team team = null)
+        public override IEnumerator Apply(Unit unit = null, Team team = null)
         {
-            base.Apply(unit: unit, team: team);
+            yield return base.Apply(unit: unit, team: team);
 
             unit!.Upgrade(attack: 0, health: 2);
         }

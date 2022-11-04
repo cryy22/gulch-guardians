@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace GulchGuardians
@@ -13,14 +14,14 @@ namespace GulchGuardians
         public override string Name => _name;
         public override TargetType Target => TargetType.Both;
 
-        public override void Apply(Unit unit = null, Team team = null)
+        public override IEnumerator Apply(Unit unit = null, Team team = null)
         {
-            base.Apply(unit: unit, team: team);
+            yield return base.Apply(unit: unit, team: team);
 
             int targetIndex = team!.Units.IndexOf(unit) - 1;
             if (targetIndex < 0) targetIndex = team.Units.Count - 1;
 
-            team.SetUnitIndex(unit: unit, index: targetIndex);
+            yield return team.SetUnitIndex(unit: unit, index: targetIndex);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -28,9 +29,9 @@ namespace GulchGuardians
             _unit.gameObject.SetActive(false);
         }
 
-        public override void Apply(Unit unit = null, Team team = null)
+        public override IEnumerator Apply(Unit unit = null, Team team = null)
         {
-            base.Apply(unit: unit, team: team);
+            yield return base.Apply(unit: unit, team: team);
 
             team!.AddUnit(_unit);
             _unit = null;

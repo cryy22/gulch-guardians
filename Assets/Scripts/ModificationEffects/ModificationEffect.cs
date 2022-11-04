@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace GulchGuardians
@@ -14,10 +15,11 @@ namespace GulchGuardians
 
         public virtual void Prepare() { }
 
-        public virtual void Apply(Unit unit = null, Team team = null)
+        public virtual IEnumerator Apply(Unit unit = null, Team team = null)
         {
             if (ParametersMeetTargetTypeRequirements(unit: unit, team: team) == false)
                 throw new ArgumentException("Arguments do not meet target type requirements");
+            yield break;
         }
 
         public virtual void CleanUp() { }

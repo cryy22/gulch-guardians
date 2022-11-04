@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -21,6 +22,8 @@ namespace GulchGuardians
 
         private int _actionsRemaining;
         private EffectOptionsDisplayer _effectOptions;
+
+        private bool IsReady { get; set; }
 
         private void Awake() { _effectOptions = GetComponent<EffectOptionsDisplayer>(); }
 
@@ -45,8 +48,10 @@ namespace GulchGuardians
             OfferEffectOptions();
         }
 
-        public void EndModificationRound()
+        public IEnumerator EndModificationRound()
         {
+            yield return new WaitUntil(() => IsReady);
+
             CleanUpOfferedEffects();
             _effectOptions.CleanUpEffectOptions();
             gameObject.SetActive(false);
@@ -55,29 +60,33 @@ namespace GulchGuardians
         private void UnitClickedEventHandler(object sender, Team.UnitClickedEventArgs e)
         {
             if (_effectOptions.SelectedEffect == null) return;
-            ApplySelectedEffect(e.Unit);
+            StartCoroutine(ApplySelectedEffect(e.Unit));
         }
 
         private void EffectSelectedEventHandler(object sender, EventArgs e)
         {
             if (_effectOptions.SelectedEffect.Target == ModificationEffect.TargetType.Team)
-                ApplySelectedEffect(null);
+                StartCoroutine(ApplySelectedEffect(null));
             else
                 ChooseATargetText.gameObject.SetActive(true);
         }
 
-        private void ApplySelectedEffect(Unit unit)
+        private IEnumerator ApplySelectedEffect(Unit unit)
         {
-            _effectOptions.SelectedEffect.Apply(unit: unit, team: PlayerTeam);
+            IsReady = false;
+
+            yield return _effectOptions.SelectedEffect.Apply(unit: unit, team: PlayerTeam);
 
             _actionsRemaining--;
             UpdateActionsRemainingText();
 
             CleanUpOfferedEffects();
             if (_actionsRemaining <= 0)
-                EndModificationRound();
+                StartCoroutine(EndModificationRound());
             else
                 OfferEffectOptions();
+
+            IsReady = true;
         }
 
         private void OfferEffectOptions()
