@@ -10,15 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
-  m_Name: PlayerUnitConfig
+  m_Name: EnemyBossStilterUnitConfig
   m_EditorClassIdentifier: 
   Sprites:
-  - {fileID: 21300000, guid: e6c06734e85544287b238ebfe75f1a88, type: 3}
-  - {fileID: 21300000, guid: 428cab758f00b434bbe5db3e34dc1b21, type: 3}
-  - {fileID: 21300000, guid: 1236ef2a718f5429fb6b8bd6e05c4d15, type: 3}
-  - {fileID: 21300000, guid: f16ef7ad0daa0450999def8ea20d990f, type: 3}
-  IsBoss: 0
-  MinAttack: 2
-  MaxAttack: 3
-  MinHealth: 4
-  MaxHealth: 7
+  - {fileID: -1217824966, guid: 74387f495350e408ab5e1f2da8641bfd, type: 3}
+  IsBoss: 1
+  MinAttack: 12
+  MaxAttack: 16
+  MinHealth: 10
+  MaxHealth: 12

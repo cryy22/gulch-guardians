@@ -19,6 +19,7 @@ namespace GulchGuardians
             );
 
             unit.Renderer.sprite = config.Sprites[Random.Range(minInclusive: 0, maxExclusive: config.Sprites.Count)];
+            if (config.IsBoss) unit.Renderer.transform.localScale *= 1.25f;
 
             return unit;
         }

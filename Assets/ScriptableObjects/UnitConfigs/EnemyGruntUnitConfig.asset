@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
-  m_Name: StilterUnitConfig
+  m_Name: EnemyGruntUnitConfig
   m_EditorClassIdentifier: 
   Sprites:
-  - {fileID: -1506325202, guid: 74387f495350e408ab5e1f2da8641bfd, type: 3}
-  - {fileID: 83504389, guid: 74387f495350e408ab5e1f2da8641bfd, type: 3}
-  - {fileID: -1217824966, guid: 74387f495350e408ab5e1f2da8641bfd, type: 3}
-  MinAttack: 5
-  MaxAttack: 8
-  MinHealth: 2
-  MaxHealth: 3
+  - {fileID: 21300000, guid: 58381b4d740ea46f7b79ba3cebd8db06, type: 3}
+  - {fileID: 21300000, guid: 803ef51dbfa5b43abbbddce916c472f7, type: 3}
+  - {fileID: 21300000, guid: 1f9a2a58839754605a2b25103fc83dcf, type: 3}
+  MinAttack: 1
+  MaxAttack: 3
+  MinHealth: 1
+  MaxHealth: 4
