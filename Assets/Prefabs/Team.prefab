@@ -315,10 +315,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Units: []
+  MaxUnits: 99
   UnitsPerCombatCycle: 3
-  IsPlayerTeam: 0
-  UnitCount: 3
-  UnitFactory: {fileID: 0}
+  UnitSets: []
 --- !u!114 &3575982119089321520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,7 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a974efe4f31f4c9485d49749bb44aa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitSpacing: 1.8825
+  UnitSpacingX: 1.8825
+  UnitStaggerY: 0.25
   IsInverted: 0
   DemarcatesRounds: 0
   UnitsParent: {fileID: 8730069270952273387}
@@ -360,7 +360,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7312968144270021125}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

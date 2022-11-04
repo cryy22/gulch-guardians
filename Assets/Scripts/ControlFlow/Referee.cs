@@ -15,19 +15,27 @@ namespace GulchGuardians
         [SerializeField] private TeamModifier TeamModifier;
 
         [SerializeField] private Button AdvanceButton;
+        [SerializeField] private Button AutoButton;
         [SerializeField] private TMP_Text TrySpacebarText;
         [SerializeField] private UIGameResultPanel GameResultPanel;
 
         private TMP_Text _advanceButtonText;
+        private TMP_Text _autoButtonText;
         private Phase _currentPhase;
         private bool _didPlayerAdvance;
         private bool _hasUsedSpacebar;
+        private bool _isAutoAdvance;
 
-        private void Awake() { _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>(); }
+        private void Awake()
+        {
+            _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>();
+            _autoButtonText = AutoButton.GetComponentInChildren<TMP_Text>();
+        }
 
         private IEnumerator Start()
         {
             AdvanceButton.onClick.AddListener(OnAdvanceButtonClicked);
+            AutoButton.onClick.AddListener(OnAutoButtonClicked);
 
             yield return new WaitForSeconds(1f);
             TeamModifier.BeginModificationRound();
@@ -46,6 +54,13 @@ namespace GulchGuardians
             TrySpacebarText.gameObject.SetActive(false);
         }
 
+        private void OnAutoButtonClicked()
+        {
+            _isAutoAdvance = !_isAutoAdvance;
+            _autoButtonText.text = _isAutoAdvance ? "Auto: On" : "Auto: Off";
+            TrySpacebarText.gameObject.SetActive(!_isAutoAdvance && !_hasUsedSpacebar);
+        }
+
         private void OnAdvanceButtonClicked()
         {
             if (_currentPhase == Phase.Combat) _didPlayerAdvance = true;
@@ -56,9 +71,11 @@ namespace GulchGuardians
         {
             _currentPhase = Phase.Combat;
             _advanceButtonText.text = "next";
-            AdvanceButton.interactable = false;
 
-            TrySpacebarText.gameObject.SetActive(!_hasUsedSpacebar);
+            AdvanceButton.interactable = false;
+            AutoButton.gameObject.SetActive(true);
+
+            TrySpacebarText.gameObject.SetActive(!_hasUsedSpacebar && !_isAutoAdvance);
 
             BGMPlayer.Instance.TransitionToCombat();
 
@@ -69,7 +86,9 @@ namespace GulchGuardians
         {
             _currentPhase = Phase.Preparation;
             _advanceButtonText.text = "fight!";
+
             AdvanceButton.interactable = true;
+            AutoButton.gameObject.SetActive(false);
 
             TrySpacebarText.gameObject.SetActive(false);
 
@@ -142,7 +161,7 @@ namespace GulchGuardians
         private IEnumerator WaitForPlayer()
         {
             AdvanceButton.interactable = true;
-            yield return new WaitUntil(() => _didPlayerAdvance);
+            yield return new WaitUntil(() => _didPlayerAdvance || _isAutoAdvance);
 
             AdvanceButton.interactable = false;
             _didPlayerAdvance = false;
