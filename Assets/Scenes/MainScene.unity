@@ -767,7 +767,7 @@ MonoBehaviour:
   PlayerTeam: {fileID: 294015327}
   EnemyTeam: {fileID: 1087500376}
   TeamModifier: {fileID: 663429225}
-  RunCombatButton: {fileID: 1386515120}
+  AdvanceButton: {fileID: 1386515120}
   GameResultPanel: {fileID: 542451868}
 --- !u!1 &252537363
 GameObject:
@@ -1799,7 +1799,7 @@ GameObject:
   - component: {fileID: 1386515121}
   - component: {fileID: 1386515120}
   m_Layer: 5
-  m_Name: RunCombatButton
+  m_Name: AdvanceButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1966,7 +1966,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Fight!
+  m_text: fight!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f48260563c04f4defa2b3b1edc7ab55e, type: 2}
   m_sharedMaterial: {fileID: -7160917702915140125, guid: f48260563c04f4defa2b3b1edc7ab55e, type: 2}

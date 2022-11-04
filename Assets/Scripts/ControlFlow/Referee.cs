@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,22 +12,45 @@ namespace GulchGuardians
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private Team EnemyTeam;
         [SerializeField] private TeamModifier TeamModifier;
+        [SerializeField] private Button AdvanceButton;
 
-        [SerializeField] private Button RunCombatButton;
         [SerializeField] private UIGameResultPanel GameResultPanel;
+
+        private TMP_Text _advanceButtonText;
+        private Phase _currentPhase;
+
+        private void Awake() { _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>(); }
 
         private IEnumerator Start()
         {
-            RunCombatButton.onClick.AddListener(OnRunCombatButtonClicked);
+            AdvanceButton.onClick.AddListener(OnAdvanceButtonClicked);
 
             yield return new WaitForSeconds(1f);
             TeamModifier.BeginModificationRound();
         }
 
-        private void OnRunCombatButtonClicked()
+        private void OnAdvanceButtonClicked()
         {
-            RunCombatButton.gameObject.SetActive(false);
+            if (_currentPhase == Phase.Combat) Debug.Log("clicked...");
+            else if (_currentPhase == Phase.Preparation) EnterCombatPhase();
+        }
+
+        private void EnterCombatPhase()
+        {
+            _currentPhase = Phase.Combat;
+            _advanceButtonText.text = "next";
+            BGMPlayer.Instance.TransitionToCombat();
+
             StartCoroutine(RunCombat());
+        }
+
+        private void EnterPreparationPhase()
+        {
+            _currentPhase = Phase.Preparation;
+            _advanceButtonText.text = "fight!";
+            BGMPlayer.Instance.TransitionToPreparation();
+
+            TeamModifier.BeginModificationRound();
         }
 
         private IEnumerator RunCombat()
@@ -36,7 +60,6 @@ namespace GulchGuardians
 
             yield return TeamModifier.EndModificationRound();
 
-            BGMPlayer.Instance.TransitionToCombat();
 
             yield return new WaitForSeconds(1f);
 
@@ -57,10 +80,7 @@ namespace GulchGuardians
             PlayerTeam.ResetUnitsOnDeck();
             EnemyTeam.ResetUnitsOnDeck();
 
-            TeamModifier.BeginModificationRound();
-            RunCombatButton.gameObject.SetActive(true);
-
-            BGMPlayer.Instance.TransitionToPreparation();
+            EnterPreparationPhase();
         }
 
         private IEnumerator RunAttackCycle(Team player, Team enemy)
@@ -85,6 +105,12 @@ namespace GulchGuardians
             yield return player.SetUnitIndex(unit: player.FrontUnit, index: player.UnitsInCombatCycle - 1);
 
             yield return new WaitForSeconds(0.5f);
+        }
+
+        private enum Phase
+        {
+            Preparation,
+            Combat,
         }
     }
 }
