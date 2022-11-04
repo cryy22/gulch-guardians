@@ -19,4 +19,4 @@ MonoBehaviour:
   MinAttack: 1
   MaxAttack: 3
   MinHealth: 1
-  MaxHealth: 3
+  MaxHealth: 4

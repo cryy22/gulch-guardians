@@ -1,3 +1,4 @@
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace GulchGuardians
     {
         private const string _name = "New Unit";
 
-        [SerializeField] private UnitFactory UnitFactory;
+        [SerializeField] private UnitSet UnitSet;
 
         [DoNotSerialize] private Unit _unit;
 
@@ -18,7 +19,7 @@ namespace GulchGuardians
         public override void Prepare()
         {
             base.Prepare();
-            _unit = UnitFactory.Create(isPlayerTeam: true);
+            _unit = UnitSet.GenerateUnits().First();
             _unit.gameObject.SetActive(false);
         }
 

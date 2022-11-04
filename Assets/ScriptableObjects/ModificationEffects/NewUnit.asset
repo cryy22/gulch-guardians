@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: NewUnit
   m_EditorClassIdentifier: 
   Description: 
-  UnitFactory: {fileID: 11400000, guid: 54544406e80754789ac74591d0238e76, type: 2}
+  UnitSet: {fileID: 11400000, guid: bfd8c297f251c403084cf761966795ec, type: 2}

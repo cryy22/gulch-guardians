@@ -8,17 +8,6 @@ namespace GulchGuardians
     {
         [SerializeField] private Unit UnitPrefab;
 
-        [SerializeField] private UnitConfig[] PlayerTeamUnitConfigs;
-        [SerializeField] private UnitConfig[] EnemyTeamUnitConfigs;
-
-        public Unit Create(bool isPlayerTeam)
-        {
-            UnitConfig[] configPool = isPlayerTeam ? PlayerTeamUnitConfigs : EnemyTeamUnitConfigs;
-            UnitConfig config = configPool[Random.Range(minInclusive: 0, maxExclusive: configPool.Length)];
-
-            return CreateFromConfig(config);
-        }
-
         public Unit CreateFromConfig(UnitConfig config)
         {
             Unit unit = Instantiate(UnitPrefab);
