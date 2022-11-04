@@ -19,7 +19,6 @@ namespace GulchGuardians
                 attack: Random.Range(minInclusive: 1, maxExclusive: 4),
                 health: Random.Range(minInclusive: 1, maxExclusive: 8)
             );
-            unit.SoundFXPlayer = SoundFXPlayer;
 
             Sprite[] spritePool = isPlayerTeam ? PlayerTeamSprites : EnemyTeamSprites;
             Sprite sprite = spritePool[Random.Range(minInclusive: 0, maxExclusive: spritePool.Length)];

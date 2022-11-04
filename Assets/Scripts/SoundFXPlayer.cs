@@ -9,7 +9,19 @@ namespace GulchGuardians
 
         private AudioSource _audioSource;
 
-        private void Awake() { _audioSource = GetComponent<AudioSource>(); }
+        public static SoundFXPlayer Instance { get; private set; }
+
+        private void Awake()
+        {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+            _audioSource = GetComponent<AudioSource>();
+        }
 
         public void PlayAttackSound()
         {

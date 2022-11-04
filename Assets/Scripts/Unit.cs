@@ -2,17 +2,12 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 namespace GulchGuardians
 {
     public class Unit : MonoBehaviour
     {
         public SpriteRenderer Renderer;
-
-        [FormerlySerializedAs("SFXPlayer")]
-        public SoundFXPlayer SoundFXPlayer;
 
         [SerializeField] private TMP_Text AttackText;
         [SerializeField] private TMP_Text HealthText;
@@ -67,15 +62,6 @@ namespace GulchGuardians
 
         public void FullHeal() { Health = _initialHealth; }
 
-        private static Color GenerateRandomColor()
-        {
-            return Color.HSVToRGB(
-                H: Random.Range(minInclusive: 0f, maxInclusive: 1f),
-                S: Random.Range(minInclusive: 0.5f, maxInclusive: 1f),
-                V: 1f
-            );
-        }
-
         private IEnumerator TakeDamage(int damage)
         {
             Health -= damage;
@@ -97,7 +83,7 @@ namespace GulchGuardians
                 yield return null;
             }
 
-            SoundFXPlayer.PlayAttackSound();
+            SoundFXPlayer.Instance.PlayAttackSound();
             transform.position = startPosition;
         }
 
