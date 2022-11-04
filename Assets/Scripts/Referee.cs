@@ -11,13 +11,21 @@ public class Referee : MonoBehaviour
     private IEnumerator RunCombat()
     {
         yield return new WaitForSeconds(0.5f);
-        yield return StartCoroutine(Run1v1());
+
+        while (true)
+        {
+            Unit playerUnit = PlayerTeam.FrontUnit;
+            Unit enemyUnit = EnemyTeam.FrontUnit;
+            if (playerUnit == null || enemyUnit == null) break;
+
+            yield return StartCoroutine(Run1V1(playerUnit: playerUnit, enemyUnit: enemyUnit));
+        }
+
+        Debug.Log("One side has lost!");
     }
 
-    private IEnumerator Run1v1()
+    private IEnumerator Run1V1(Unit playerUnit, Unit enemyUnit)
     {
-        Unit playerUnit = PlayerTeam.FrontUnit;
-        Unit enemyUnit = EnemyTeam.FrontUnit;
         var isPlayerTurn = true;
 
         while (playerUnit != null && enemyUnit != null)
@@ -28,9 +36,9 @@ public class Referee : MonoBehaviour
             attacker.AttackUnit(defender);
             isPlayerTurn = !isPlayerTurn;
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
         }
 
-        Debug.Log("Combat over");
+        Debug.Log("1v1 over");
     }
 }
