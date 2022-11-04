@@ -12,7 +12,7 @@ namespace GulchGuardians
         {
             Unit unit = Instantiate(UnitPrefab);
             unit.Initialize(
-                runtimeAnimatorController: config.GetRandomAnimatorController(),
+                spriteLibraryAsset: config.GetSpriteLibraryAsset(),
                 attack: Random.Range(minInclusive: config.MinAttack, maxExclusive: config.MaxAttack + 1),
                 health: Random.Range(minInclusive: config.MinHealth, maxExclusive: config.MaxHealth + 1),
                 firstName: Name.RandomName(),

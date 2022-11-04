@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
   m_Name: EnemyBossGruntUnitConfig
   m_EditorClassIdentifier: 
-  RuntimeAnimatorControllers:
-  - {fileID: 9100000, guid: dc4c0648a559442868bb01ce560d5753, type: 2}
-  - {fileID: 9100000, guid: 701e53f3909ad4bc9b5ffe0bfdbcdd43, type: 2}
-  - {fileID: 9100000, guid: 6e70e035bbaaa4df2b8c04df2f6500f0, type: 2}
+  SpriteLibraryAssets:
+  - {fileID: 7108339969198208228, guid: 51fe817d395b2436cb6c0d0bf2818864, type: 3}
+  - {fileID: 7108339969198208228, guid: aeaeafef953894cbb8ef377e02198e39, type: 3}
+  - {fileID: 7108339969198208228, guid: c25eb7285b61b45baadfcd8350722f55, type: 3}
   IsBoss: 1
   MinAttack: 4
   MaxAttack: 5

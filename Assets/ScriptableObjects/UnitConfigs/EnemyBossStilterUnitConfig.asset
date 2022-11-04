@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
   m_Name: EnemyBossStilterUnitConfig
   m_EditorClassIdentifier: 
-  RuntimeAnimatorControllers:
-  - {fileID: 9100000, guid: 35061836786ff45bba6b9377d42fa497, type: 2}
+  SpriteLibraryAssets:
+  - {fileID: 7108339969198208228, guid: 24102bf8cae574eb4a8a87d6cedd6daf, type: 3}
   IsBoss: 1
   MinAttack: 12
   MaxAttack: 16

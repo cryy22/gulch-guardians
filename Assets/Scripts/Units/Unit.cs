@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 using Random = UnityEngine.Random;
 
 namespace GulchGuardians
@@ -12,6 +13,7 @@ namespace GulchGuardians
         [SerializeField] private TMP_Text HealthText;
         [SerializeField] private TMP_Text NameText;
         [SerializeField] private SpriteRenderer Renderer;
+        [SerializeField] private SpriteLibrary SpriteLibrary;
         [SerializeField] private Animator Animator;
 
         private bool _isInitialized;
@@ -38,7 +40,7 @@ namespace GulchGuardians
         private void Update() { UpdateStats(); }
 
         public void Initialize(
-            RuntimeAnimatorController runtimeAnimatorController,
+            SpriteLibraryAsset spriteLibraryAsset,
             int attack,
             int health,
             string firstName = "",
@@ -47,7 +49,7 @@ namespace GulchGuardians
         {
             if (_isInitialized) throw new Exception("Unit is already initialized");
 
-            Animator.runtimeAnimatorController = runtimeAnimatorController;
+            SpriteLibrary.spriteLibraryAsset = spriteLibraryAsset;
             Animator.Play(stateNameHash: 0, layer: 0, normalizedTime: Random.Range(minInclusive: 0f, maxInclusive: 1f));
 
             Attack = attack;
