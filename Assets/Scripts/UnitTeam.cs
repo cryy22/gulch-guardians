@@ -54,6 +54,14 @@ public class UnitTeam : MonoBehaviour
         Units.Add(unit);
     }
 
+    public void SetUnitIndex(Unit unit, int index)
+    {
+        if (!Units.Remove(unit)) return;
+
+        unit.transform.SetSiblingIndex(index);
+        Units.Insert(index: index, item: unit);
+    }
+
     private void UpdateDemarcation()
     {
         if (!DemarcatesRounds) return;
