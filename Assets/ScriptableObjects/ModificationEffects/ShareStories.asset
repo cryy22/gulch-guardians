@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05ce385d05dd4dcb9b1eed62dca082ff, type: 3}
-  m_Name: HotSprings
+  m_Script: {fileID: 11500000, guid: 619bea14c1c34aa4a39179815ede2950, type: 3}
+  m_Name: ShareStories
   m_EditorClassIdentifier: 
-  Description: Select a unit to be healed back to full.
+  Description: All your units gain 1 attack.

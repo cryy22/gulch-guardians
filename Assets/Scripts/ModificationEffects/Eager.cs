@@ -11,7 +11,7 @@ namespace InfiniteSAPPrototype
         private const string _name = "Eager";
 
         public override string Name => _name;
-        public override TargetType Target => TargetType.Unit;
+        public override TargetType Target => TargetType.Both;
 
         public override void Apply(Unit unit = null, UnitTeam team = null)
         {
