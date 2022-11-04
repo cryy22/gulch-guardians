@@ -18,6 +18,7 @@ namespace GulchGuardians
 
         private TMP_Text _advanceButtonText;
         private Phase _currentPhase;
+        private bool _didPlayerAdvance;
 
         private void Awake() { _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>(); }
 
@@ -31,7 +32,7 @@ namespace GulchGuardians
 
         private void OnAdvanceButtonClicked()
         {
-            if (_currentPhase == Phase.Combat) Debug.Log("clicked...");
+            if (_currentPhase == Phase.Combat) _didPlayerAdvance = true;
             else if (_currentPhase == Phase.Preparation) EnterCombatPhase();
         }
 
@@ -39,6 +40,7 @@ namespace GulchGuardians
         {
             _currentPhase = Phase.Combat;
             _advanceButtonText.text = "next";
+            AdvanceButton.interactable = false;
             BGMPlayer.Instance.TransitionToCombat();
 
             StartCoroutine(RunCombat());
@@ -48,6 +50,7 @@ namespace GulchGuardians
         {
             _currentPhase = Phase.Preparation;
             _advanceButtonText.text = "fight!";
+            AdvanceButton.interactable = true;
             BGMPlayer.Instance.TransitionToPreparation();
 
             TeamModifier.BeginModificationRound();
@@ -59,7 +62,6 @@ namespace GulchGuardians
             EnemyTeam.ResetUnitsOnDeck();
 
             yield return TeamModifier.EndModificationRound();
-
 
             yield return new WaitForSeconds(1f);
 
@@ -85,26 +87,44 @@ namespace GulchGuardians
 
         private IEnumerator RunAttackCycle(Team player, Team enemy)
         {
-            yield return player.FrontUnit.AttackUnit(enemy.FrontUnit);
-            if (enemy.FrontUnit.IsDefeated) yield return enemy.HandleUnitDefeat(enemy.FrontUnit);
+            Unit playerUnit = player.FrontUnit;
+            Unit enemyUnit = enemy.FrontUnit;
 
-            if (enemy.UnitsInCombatCycle <= 0) yield break;
+            yield return playerUnit.AttackUnit(enemyUnit);
+            yield return WaitForPlayer();
 
-            yield return new WaitForSeconds(1f);
+            if (enemyUnit == null || enemyUnit.IsDefeated)
+            {
+                yield return enemy.HandleUnitDefeat(enemyUnit);
+                if (enemy.UnitsInCombatCycle <= 0) yield break;
+                yield return new WaitForSeconds(0.25f);
 
-            Unit playerFrontUnit = player.FrontUnit;
-            yield return enemy.FrontUnit.AttackUnit(playerFrontUnit);
-            if (playerFrontUnit.IsDefeated) yield return player.HandleUnitDefeat(playerFrontUnit);
+                enemyUnit = enemy.FrontUnit;
+            }
 
-            if (player.UnitsInCombatCycle <= 0) yield break;
+            yield return enemyUnit.AttackUnit(playerUnit);
+            yield return WaitForPlayer();
 
-            yield return new WaitForSeconds(1f);
+            if (playerUnit == null || playerUnit.IsDefeated)
+            {
+                yield return player.HandleUnitDefeat(playerUnit);
+                yield return WaitForPlayer();
+                yield break;
+            }
 
-            if (playerFrontUnit == null || playerFrontUnit.IsDefeated) yield break;
+            if (player.UnitsInCombatCycle <= 1) yield break;
 
             yield return player.SetUnitIndex(unit: player.FrontUnit, index: player.UnitsInCombatCycle - 1);
+            yield return WaitForPlayer();
+        }
 
-            yield return new WaitForSeconds(0.5f);
+        private IEnumerator WaitForPlayer()
+        {
+            AdvanceButton.interactable = true;
+            yield return new WaitUntil(() => _didPlayerAdvance);
+
+            AdvanceButton.interactable = false;
+            _didPlayerAdvance = false;
         }
 
         private enum Phase

@@ -76,8 +76,6 @@ namespace GulchGuardians
         public IEnumerator HandleUnitDefeat(Unit unit)
         {
             if (!Units.Remove(unit)) yield break;
-
-            unit.Clicked -= OnUnitClickedEventHandler;
             UnitsInCombatCycle--;
 
             yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
