@@ -97,7 +97,7 @@ namespace GulchGuardians
             unit.Defeated -= DefeatedEventHandler;
             UnitsInCombatCycle--;
 
-            _unitsDisplayer.UpdateDisplay(units: Units);
+            yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
             _unitsDisplayer.UpdateDemarcation(lastUnitInCycle: LastUnitInCycle, unitsInCombatCycle: UnitsInCombatCycle);
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);

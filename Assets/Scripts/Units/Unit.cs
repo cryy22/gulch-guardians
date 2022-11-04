@@ -14,14 +14,14 @@ namespace GulchGuardians
         [SerializeField] private TMP_Text NameText;
 
         private bool _isInitialized;
-        private int _initialHealth;
 
         public event EventHandler Defeated;
 
-        public int Attack { get; private set; }
-        public int Health { get; private set; }
-        public string FirstName { get; private set; }
         public bool IsBoss { get; private set; }
+        private int Attack { get; set; }
+        private int Health { get; set; }
+        private int InitialHealth { get; set; }
+        private string FirstName { get; set; }
 
         private void Update() { UpdateStats(); }
 
@@ -31,7 +31,7 @@ namespace GulchGuardians
 
             Attack = attack;
             Health = health;
-            _initialHealth = health;
+            InitialHealth = health;
             FirstName = firstName;
             IsBoss = isBoss;
 
@@ -61,10 +61,10 @@ namespace GulchGuardians
         {
             Attack += attack;
             Health += health;
-            _initialHealth += health;
+            InitialHealth += health;
         }
 
-        public void FullHeal() { Health = _initialHealth; }
+        public void FullHeal() { Health = InitialHealth; }
 
         public IEnumerator AnimateToPosition(Vector3 position, float duration = 0.25f)
         {
@@ -155,7 +155,7 @@ namespace GulchGuardians
             AttackText.text = Attack.ToString();
 
             HealthText.text = Health.ToString();
-            HealthText.color = Health < _initialHealth ? Color.red : Color.white;
+            HealthText.color = Health < InitialHealth ? Color.red : Color.white;
         }
     }
 }
