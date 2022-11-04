@@ -31,8 +31,10 @@ public class Referee : MonoBehaviour
     private IEnumerator RunCombat()
     {
         _isPlayerTurn = true;
+
         PlayerTeam.ResetUnitsOnDeck();
         EnemyTeam.ResetUnitsOnDeck();
+
         TeamModifier.EndModificationRound();
 
         yield return new WaitForSeconds(1f);
@@ -44,6 +46,10 @@ public class Referee : MonoBehaviour
         }
 
         yield return GameResultPanel.DisplayResult(isWin: PlayerTeam.UnitsInCombatCycle > 0);
+
+        PlayerTeam.ResetUnitsOnDeck();
+        EnemyTeam.ResetUnitsOnDeck();
+
         TeamModifier.BeginModificationRound();
         RunCombatButton.gameObject.SetActive(true);
     }
