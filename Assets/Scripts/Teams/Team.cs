@@ -11,10 +11,7 @@ namespace GulchGuardians
         public List<Unit> Units = new();
         public int UnitsPerCombatCycle = 3;
 
-        [SerializeField] private bool IsPlayerTeam;
-        [SerializeField] private int UnitCount = 3;
-
-        [SerializeField] private UnitFactory UnitFactory;
+        [SerializeField] private List<UnitSet> UnitSets;
 
         public event EventHandler UnitsChanged;
         public event EventHandler<UnitClickedEventArgs> UnitClicked;
@@ -24,10 +21,10 @@ namespace GulchGuardians
 
         private void Awake()
         {
-            for (var i = 0; i < UnitCount; i++)
+            foreach (UnitSet unitSet in UnitSets)
             {
-                Unit unit = UnitFactory.Create(isPlayerTeam: IsPlayerTeam);
-                AddUnit(unit: unit, skipClickHandling: true);
+                List<Unit> units = unitSet.GenerateUnits();
+                foreach (Unit unit in units) AddUnit(unit);
             }
 
             ResetUnitsOnDeck();

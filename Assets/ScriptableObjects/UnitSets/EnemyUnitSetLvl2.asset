@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665fcda3e8824d1eb986c1d295d5963e, type: 3}
+  m_Name: EnemyUnitSetLvl2
+  m_EditorClassIdentifier: 
+  UnitConfigQuantities:
+  - UnitConfig: {fileID: 11400000, guid: 90d633533490445b291afa881f18e685, type: 2}
+    Quantity: 4
+  - UnitConfig: {fileID: 11400000, guid: d1d07a90ec477454687a65d2509270df, type: 2}
+    Quantity: 2
+  - UnitConfig: {fileID: 11400000, guid: 8bc192206cfa045cb8693fbad65ed87d, type: 2}
+    Quantity: 0
+  UnitFactory: {fileID: 11400000, guid: 54544406e80754789ac74591d0238e76, type: 2}

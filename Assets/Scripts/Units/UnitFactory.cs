@@ -16,6 +16,11 @@ namespace GulchGuardians
             UnitConfig[] configPool = isPlayerTeam ? PlayerTeamUnitConfigs : EnemyTeamUnitConfigs;
             UnitConfig config = configPool[Random.Range(minInclusive: 0, maxExclusive: configPool.Length)];
 
+            return CreateFromConfig(config);
+        }
+
+        public Unit CreateFromConfig(UnitConfig config)
+        {
             Unit unit = Instantiate(UnitPrefab);
             unit.Initialize(
                 firstName: Name.RandomName(),
