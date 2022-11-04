@@ -130,7 +130,6 @@ namespace GulchGuardians
             if (playerUnit == null || playerUnit.IsDefeated)
             {
                 yield return player.HandleUnitDefeat(playerUnit);
-                yield return WaitForPlayer();
                 yield break;
             }
 
