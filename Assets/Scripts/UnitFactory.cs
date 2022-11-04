@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace GulchGuardians
 {
-    public class UnitFactory : MonoBehaviour
+    [CreateAssetMenu(fileName = "UnitFactory", menuName = "Scriptable Objects/Factories/Unit Factory")]
+    public class UnitFactory : ScriptableObject
     {
         [SerializeField] private Unit UnitPrefab;
-        [SerializeField] private SoundFXPlayer SoundFXPlayer;
 
         [SerializeField] private Sprite[] PlayerTeamSprites;
         [SerializeField] private Sprite[] EnemyTeamSprites;
