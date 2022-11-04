@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Scene = GulchGuardians.Constants.Scene;
@@ -12,13 +13,15 @@ namespace GulchGuardians
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private Team EnemyTeam;
         [SerializeField] private TeamModifier TeamModifier;
-        [SerializeField] private Button AdvanceButton;
 
+        [SerializeField] private Button AdvanceButton;
+        [SerializeField] private TMP_Text TrySpacebarText;
         [SerializeField] private UIGameResultPanel GameResultPanel;
 
         private TMP_Text _advanceButtonText;
         private Phase _currentPhase;
         private bool _didPlayerAdvance;
+        private bool _hasUsedSpacebar;
 
         private void Awake() { _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>(); }
 
@@ -28,6 +31,19 @@ namespace GulchGuardians
 
             yield return new WaitForSeconds(1f);
             TeamModifier.BeginModificationRound();
+        }
+
+        public void OnAdvance(InputAction.CallbackContext context)
+        {
+            if (!context.performed) return;
+            if (_currentPhase != Phase.Combat) return;
+
+            OnAdvanceButtonClicked();
+
+            if (_hasUsedSpacebar) return;
+
+            _hasUsedSpacebar = true;
+            TrySpacebarText.gameObject.SetActive(false);
         }
 
         private void OnAdvanceButtonClicked()
@@ -41,6 +57,9 @@ namespace GulchGuardians
             _currentPhase = Phase.Combat;
             _advanceButtonText.text = "next";
             AdvanceButton.interactable = false;
+
+            TrySpacebarText.gameObject.SetActive(!_hasUsedSpacebar);
+
             BGMPlayer.Instance.TransitionToCombat();
 
             StartCoroutine(RunCombat());
@@ -51,6 +70,9 @@ namespace GulchGuardians
             _currentPhase = Phase.Preparation;
             _advanceButtonText.text = "fight!";
             AdvanceButton.interactable = true;
+
+            TrySpacebarText.gameObject.SetActive(false);
+
             BGMPlayer.Instance.TransitionToPreparation();
 
             TeamModifier.BeginModificationRound();
