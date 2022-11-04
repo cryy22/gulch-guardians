@@ -1,92 +1,94 @@
 using System.Collections;
-using GulchGuardians;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Referee : MonoBehaviour
+namespace GulchGuardians
 {
-    [SerializeField] private UnitTeam PlayerTeam;
-    [SerializeField] private UnitTeam EnemyTeam;
-    [SerializeField] private TeamModifier TeamModifier;
-
-    [SerializeField] private Button RunCombatButton;
-    [SerializeField] private UIGameResultPanel GameResultPanel;
-
-    private bool _isPlayerTurn = true;
-
-    private IEnumerator Start()
+    public class Referee : MonoBehaviour
     {
-        RunCombatButton.onClick.AddListener(OnRunCombatButtonClicked);
+        [SerializeField] private UnitTeam PlayerTeam;
+        [SerializeField] private UnitTeam EnemyTeam;
+        [SerializeField] private TeamModifier TeamModifier;
 
-        yield return new WaitForSeconds(1f);
-        TeamModifier.BeginModificationRound();
-    }
+        [SerializeField] private Button RunCombatButton;
+        [SerializeField] private UIGameResultPanel GameResultPanel;
 
-    private void OnRunCombatButtonClicked()
-    {
-        RunCombatButton.gameObject.SetActive(false);
-        StartCoroutine(RunCombat());
-    }
+        private bool _isPlayerTurn = true;
 
-    private IEnumerator RunCombat()
-    {
-        _isPlayerTurn = true;
-
-        PlayerTeam.ResetUnitsOnDeck();
-        EnemyTeam.ResetUnitsOnDeck();
-
-        TeamModifier.EndModificationRound();
-
-        yield return new WaitForSeconds(1f);
-
-        while (true)
+        private IEnumerator Start()
         {
-            if (PlayerTeam.UnitsInCombatCycle == 0 || EnemyTeam.UnitsInCombatCycle == 0) break;
-            yield return Run1V1(player: PlayerTeam, enemy: EnemyTeam);
-        }
-        
-        bool isWin = PlayerTeam.UnitsInCombatCycle > 0;
-        yield return GameResultPanel.DisplayResult(isWin);
-
-        if (!isWin)
-        {
-            SceneManager.LoadScene(GulchGuardians.Constants.Scene.TitleScene);
-            yield break;
-        }
-
-        PlayerTeam.ResetUnitsOnDeck();
-        EnemyTeam.ResetUnitsOnDeck();
-
-        TeamModifier.BeginModificationRound();
-        RunCombatButton.gameObject.SetActive(true);
-    }
-
-    private IEnumerator Run1V1(UnitTeam player, UnitTeam enemy)
-    {
-        UnitTeam attacker;
-        UnitTeam defender;
-
-        while (true)
-        {
-            attacker = _isPlayerTurn ? player : enemy;
-            defender = _isPlayerTurn ? enemy : player;
-
-            Unit attackerUnit = attacker.FrontUnit;
-            Unit defenderUnit = defender.FrontUnit;
-
-            yield return attackerUnit.AttackUnit(defenderUnit);
-            _isPlayerTurn = !_isPlayerTurn;
-            if (defenderUnit.Health <= 0)
-            {
-                yield return defenderUnit.BecomeDefeated();
-                break;
-            }
+            RunCombatButton.onClick.AddListener(OnRunCombatButtonClicked);
 
             yield return new WaitForSeconds(1f);
+            TeamModifier.BeginModificationRound();
         }
 
-        defender.UnitDefeated();
-        yield return new WaitForSeconds(1f);
+        private void OnRunCombatButtonClicked()
+        {
+            RunCombatButton.gameObject.SetActive(false);
+            StartCoroutine(RunCombat());
+        }
+
+        private IEnumerator RunCombat()
+        {
+            _isPlayerTurn = true;
+
+            PlayerTeam.ResetUnitsOnDeck();
+            EnemyTeam.ResetUnitsOnDeck();
+
+            TeamModifier.EndModificationRound();
+
+            yield return new WaitForSeconds(1f);
+
+            while (true)
+            {
+                if (PlayerTeam.UnitsInCombatCycle == 0 || EnemyTeam.UnitsInCombatCycle == 0) break;
+                yield return Run1V1(player: PlayerTeam, enemy: EnemyTeam);
+            }
+
+            bool isWin = PlayerTeam.UnitsInCombatCycle > 0;
+            yield return GameResultPanel.DisplayResult(isWin);
+
+            if (!isWin)
+            {
+                SceneManager.LoadScene(Constants.Scene.TitleScene);
+                yield break;
+            }
+
+            PlayerTeam.ResetUnitsOnDeck();
+            EnemyTeam.ResetUnitsOnDeck();
+
+            TeamModifier.BeginModificationRound();
+            RunCombatButton.gameObject.SetActive(true);
+        }
+
+        private IEnumerator Run1V1(UnitTeam player, UnitTeam enemy)
+        {
+            UnitTeam attacker;
+            UnitTeam defender;
+
+            while (true)
+            {
+                attacker = _isPlayerTurn ? player : enemy;
+                defender = _isPlayerTurn ? enemy : player;
+
+                Unit attackerUnit = attacker.FrontUnit;
+                Unit defenderUnit = defender.FrontUnit;
+
+                yield return attackerUnit.AttackUnit(defenderUnit);
+                _isPlayerTurn = !_isPlayerTurn;
+                if (defenderUnit.Health <= 0)
+                {
+                    yield return defenderUnit.BecomeDefeated();
+                    break;
+                }
+
+                yield return new WaitForSeconds(1f);
+            }
+
+            defender.UnitDefeated();
+            yield return new WaitForSeconds(1f);
+        }
     }
 }
