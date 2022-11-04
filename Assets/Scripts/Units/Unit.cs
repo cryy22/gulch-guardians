@@ -84,7 +84,7 @@ namespace GulchGuardians
             transform.position = position;
         }
 
-        private IEnumerator BecomeDefeated()
+        private IEnumerator HandleDefeat()
         {
             yield return new WaitForEndOfFrame();
 
@@ -92,6 +92,7 @@ namespace GulchGuardians
             AttackText.color = Color.red;
             HealthText.color = Color.red;
 
+            SoundFXPlayer.Instance.PlayDefeatSound();
             yield return AnimateDefeat();
 
             Destroy(gameObject);
@@ -103,7 +104,7 @@ namespace GulchGuardians
             yield return AnimateDamage();
             yield return AnimateStatsChange(animateHealth: true);
 
-            if (IsDefeated) StartCoroutine(BecomeDefeated());
+            if (IsDefeated) StartCoroutine(HandleDefeat());
         }
 
         private IEnumerator AnimateAttack(Unit target)

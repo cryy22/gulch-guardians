@@ -6,6 +6,7 @@ namespace GulchGuardians
     public class SoundFXPlayer : MonoBehaviour
     {
         [SerializeField] private AudioClip[] AttackSounds;
+        [SerializeField] private AudioClip[] DefeatSounds;
 
         private AudioSource _audioSource;
 
@@ -23,9 +24,13 @@ namespace GulchGuardians
             _audioSource = GetComponent<AudioSource>();
         }
 
-        public void PlayAttackSound()
+        public void PlayAttackSound() { PlayRandom(AttackSounds); }
+
+        public void PlayDefeatSound() { PlayRandom(DefeatSounds); }
+
+        private void PlayRandom(AudioClip[] clips)
         {
-            _audioSource.PlayOneShot(AttackSounds[Random.Range(minInclusive: 0, maxExclusive: AttackSounds.Length)]);
+            _audioSource.PlayOneShot(clips[Random.Range(minInclusive: 0, maxExclusive: clips.Length)]);
         }
     }
 }
