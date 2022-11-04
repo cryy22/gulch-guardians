@@ -1,6 +1,8 @@
 using System.Collections;
+using InfiniteSAPPrototype;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Unit : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class Unit : MonoBehaviour
     public int Health;
 
     public SpriteRenderer Renderer;
+
+    [FormerlySerializedAs("SFXPlayer")]
+    public SoundFXPlayer SoundFXPlayer;
 
     [SerializeField] private TMP_Text AttackText;
     [SerializeField] private TMP_Text HealthText;
@@ -80,6 +85,7 @@ public class Unit : MonoBehaviour
             yield return null;
         }
 
+        SoundFXPlayer.PlayAttackSound();
         transform.position = startPosition;
     }
 

@@ -5,6 +5,7 @@ namespace InfiniteSAPPrototype
     public class UnitFactory : MonoBehaviour
     {
         [SerializeField] private Unit UnitPrefab;
+        [SerializeField] private SoundFXPlayer SoundFXPlayer;
 
         [SerializeField] private Sprite[] PlayerTeamSprites;
         [SerializeField] private Sprite[] EnemyTeamSprites;
@@ -14,6 +15,7 @@ namespace InfiniteSAPPrototype
             Unit unit = Instantiate(UnitPrefab);
             unit.Attack = Random.Range(minInclusive: 1, maxExclusive: 5);
             unit.Health = Random.Range(minInclusive: 1, maxExclusive: 5);
+            unit.SoundFXPlayer = SoundFXPlayer;
 
             Sprite[] spritePool = isPlayerTeam ? PlayerTeamSprites : EnemyTeamSprites;
             Sprite sprite = spritePool[Random.Range(minInclusive: 0, maxExclusive: spritePool.Length)];
