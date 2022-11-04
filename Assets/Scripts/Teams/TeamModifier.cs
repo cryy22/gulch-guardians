@@ -23,7 +23,7 @@ namespace GulchGuardians
         private int _actionsRemaining;
         private EffectOptionsDisplayer _effectOptions;
 
-        private bool IsReady { get; set; }
+        private bool IsReady { get; set; } = true;
 
         private void Awake() { _effectOptions = GetComponent<EffectOptionsDisplayer>(); }
 
