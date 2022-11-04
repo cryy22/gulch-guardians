@@ -7,15 +7,16 @@ public class Unit : MonoBehaviour
     public int Attack;
     public int Health;
 
+    public SpriteRenderer Renderer;
+
     [SerializeField] private TMP_Text AttackText;
     [SerializeField] private TMP_Text HealthText;
-    [SerializeField] private SpriteRenderer Renderer;
 
     private int _initialHealth;
 
     private void Awake()
     {
-        Renderer.color = GenerateRandomColor();
+        // Renderer.color = GenerateRandomColor();
         _initialHealth = Health;
     }
 

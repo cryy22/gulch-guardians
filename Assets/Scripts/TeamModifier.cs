@@ -26,7 +26,7 @@ namespace InfiniteSAPPrototype
 
             for (var i = 0; i < NumberOfUnitsPerRound; i++)
             {
-                Unit unit = UnitFactory.Create();
+                Unit unit = UnitFactory.Create(isPlayerTeam: true);
                 _newUnitOptions.Add(unit);
                 unit.transform.SetParent(UnitList);
 

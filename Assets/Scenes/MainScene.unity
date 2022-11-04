@@ -348,6 +348,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UnitPrefab: {fileID: 6608307905624749109, guid: c719fc16d577f434aae58957cea96210, type: 3}
+  PlayerTeamSprites:
+  - {fileID: 21300000, guid: 8aa1419f8be2941bca8b3b248d0282eb, type: 3}
+  EnemyTeamSprites:
+  - {fileID: 21300000, guid: 4afb913c0bafc43e19572c48e3b1a84f, type: 3}
+  - {fileID: 21300000, guid: 3b63433b53af146fd879a73ee5ac9c3a, type: 3}
 --- !u!4 &312459701
 Transform:
   m_ObjectHideFlags: 0
@@ -1562,6 +1567,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4943982858057783518, guid: c719fc16d577f434aae58957cea96210, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8aa1419f8be2941bca8b3b248d0282eb, type: 3}
     - target: {fileID: 4943982858609528544, guid: c719fc16d577f434aae58957cea96210, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2388,6 +2397,10 @@ PrefabInstance:
       propertyPath: UnitFactory
       value: 
       objectReference: {fileID: 312459700}
+    - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: IsPlayerTeam
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: UnitsPerCombatCycle
       value: 999

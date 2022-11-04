@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class UnitTeam : MonoBehaviour
 {
-    [SerializeField] public int UnitsPerCombatCycle = 3;
+    [SerializeField] private bool IsPlayerTeam;
 
+    [SerializeField] public int UnitsPerCombatCycle = 3;
     [SerializeField] private int UnitCount = 3;
     [SerializeField] private bool DemarcatesRounds;
     [SerializeField] private UnitFactory UnitFactory;
@@ -27,7 +28,7 @@ public class UnitTeam : MonoBehaviour
 
         for (var i = 0; i < UnitCount; i++)
         {
-            Unit unit = UnitFactory.Create();
+            Unit unit = UnitFactory.Create(isPlayerTeam: IsPlayerTeam);
             AddUnit(unit);
         }
 

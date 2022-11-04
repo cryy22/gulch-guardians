@@ -50,10 +50,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Attack: 0
   Health: 0
-  MediumStatsCount: 5
+  Renderer: {fileID: 4943982858057783518}
   AttackText: {fileID: 4943982858609528545}
   HealthText: {fileID: 4943982859194164453}
-  Renderer: {fileID: 4943982858057783518}
 --- !u!114 &-5873586629161309623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +164,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4afb913c0bafc43e19572c48e3b1a84f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
