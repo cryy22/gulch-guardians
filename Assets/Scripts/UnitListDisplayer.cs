@@ -12,6 +12,9 @@ public class UnitListDisplayer : MonoBehaviour
     {
         var placedUnits = 0;
         foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+
             EditorApplication.delayCall += () =>
             {
                 if (child == null) return;
@@ -21,6 +24,9 @@ public class UnitListDisplayer : MonoBehaviour
                     z: 0f
                 );
                 child.localScale = Vector3.one;
+
+                child.gameObject.SetActive(true);
             };
+        }
     }
 }

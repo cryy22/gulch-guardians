@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Attack: 0
   Health: 0
+  MediumStatsCount: 5
   AttackText: {fileID: 4943982858609528545}
   HealthText: {fileID: 4943982859194164453}
   Renderer: {fileID: 4943982858057783518}

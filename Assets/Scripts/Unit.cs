@@ -9,12 +9,21 @@ public class Unit : MonoBehaviour
 
     [SerializeField] private TMP_Text AttackText;
     [SerializeField] private TMP_Text HealthText;
-
     [SerializeField] private SpriteRenderer Renderer;
 
-    private void Awake() { Renderer.color = GenerateRandomColor(); }
+    private int _initialHealth;
 
-    private void Update() { UpdateStats(); }
+    private void Awake()
+    {
+        Renderer.color = GenerateRandomColor();
+        _initialHealth = Health;
+    }
+
+    private void Update()
+    {
+        UpdateStats();
+        UpdateSize();
+    }
 
     public bool AttackUnit(Unit target) { return target.TakeDamage(Attack); }
 
@@ -22,6 +31,7 @@ public class Unit : MonoBehaviour
     {
         Attack += attack;
         Health += health;
+        _initialHealth += health;
     }
 
     private static Color GenerateRandomColor()
@@ -57,5 +67,14 @@ public class Unit : MonoBehaviour
     {
         AttackText.text = Attack.ToString();
         HealthText.text = Health.ToString();
+    }
+
+    private void UpdateSize()
+    {
+        float totalStats = Attack + _initialHealth;
+        float lerpValue = Mathf.InverseLerp(a: 2, b: 10, value: totalStats);
+
+        float sizeDelta = Mathf.Lerp(a: 1, b: 2f, t: lerpValue);
+        transform.localScale = Vector3.one * sizeDelta;
     }
 }
