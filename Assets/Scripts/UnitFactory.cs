@@ -1,3 +1,4 @@
+using GulchGuardians.Constants;
 using UnityEngine;
 
 namespace GulchGuardians
@@ -13,7 +14,8 @@ namespace GulchGuardians
         public Unit Create(bool isPlayerTeam)
         {
             Unit unit = Instantiate(UnitPrefab);
-            unit.SetInitialStats(
+            unit.Initialize(
+                firstName: Name.RandomName(),
                 attack: Random.Range(minInclusive: 1, maxExclusive: 4),
                 health: Random.Range(minInclusive: 1, maxExclusive: 8)
             );

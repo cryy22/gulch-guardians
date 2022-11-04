@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace GulchGuardians
 {
@@ -14,20 +16,29 @@ namespace GulchGuardians
 
         [SerializeField] private TMP_Text AttackText;
         [SerializeField] private TMP_Text HealthText;
+        [SerializeField] private TMP_Text NameText;
 
+        private bool _isInitialized;
         private int _initialHealth;
 
         public int Attack { get; private set; }
-
         public int Health { get; private set; }
+        public string FirstName { get; private set; }
 
         private void Update() { UpdateStats(); }
 
-        public void SetInitialStats(int attack, int health)
+        public void Initialize(int attack, int health, string firstName = "")
         {
+            if (_isInitialized) throw new Exception("Unit is already initialized");
+
+            FirstName = firstName;
             Attack = attack;
             Health = health;
             _initialHealth = health;
+
+            NameText.text = FirstName;
+
+            _isInitialized = true;
         }
 
         public IEnumerator AttackUnit(Unit target)
