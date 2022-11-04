@@ -12,10 +12,8 @@ namespace GulchGuardians
 
         [SerializeField] private bool IsPlayerTeam;
         [SerializeField] private int UnitCount = 3;
-        [SerializeField] private bool DemarcatesRounds;
 
         [SerializeField] private UnitFactory UnitFactory;
-        [SerializeField] private GameObject RoundDemarcation;
 
         public event EventHandler UnitsChanged;
 
@@ -24,8 +22,6 @@ namespace GulchGuardians
 
         private void Start() // should probably be Awake
         {
-            RoundDemarcation.SetActive(DemarcatesRounds);
-
             for (var i = 0; i < UnitCount; i++)
             {
                 Unit unit = UnitFactory.Create(isPlayerTeam: IsPlayerTeam);
@@ -42,14 +38,12 @@ namespace GulchGuardians
             Units.RemoveAt(0);
             UnitsInCombatCycle--;
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
-
-            UpdateDemarcation();
         }
 
         public void ResetUnitsOnDeck()
         {
             UnitsInCombatCycle = Mathf.Min(a: UnitsPerCombatCycle, b: Units.Count);
-            UpdateDemarcation();
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
         public void AddUnit(Unit unit)
@@ -64,23 +58,6 @@ namespace GulchGuardians
 
             Units.Insert(index: index, item: unit);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
-        }
-
-        private void UpdateDemarcation()
-        {
-            if (!DemarcatesRounds) return;
-
-            RoundDemarcation.SetActive(UnitsInCombatCycle > 0);
-            if (UnitsInCombatCycle == 0) return;
-
-            Transform lastUnitInCombatCycle = Units[UnitsInCombatCycle - 1].transform;
-
-            Vector3 initialPosition = RoundDemarcation.transform.position;
-            RoundDemarcation.transform.position = new Vector3(
-                x: lastUnitInCombatCycle.position.x + 1f,
-                y: initialPosition.y,
-                z: initialPosition.z
-            );
         }
     }
 }

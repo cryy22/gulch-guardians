@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using GulchGuardians;
 using UnityEngine;
 
@@ -8,11 +9,19 @@ public class UnitsDisplayer : MonoBehaviour
     public float UnitSpacing = 1.8825f;
     public bool IsInverted;
 
+    [SerializeField] private bool DemarcatesRounds;
+
     [SerializeField] private Transform UnitsParent;
+    [SerializeField] private GameObject RoundDemarcation;
 
     private Team _team;
+    private bool _isUpdateEnqueued;
 
-    private void Awake() { _team = GetComponent<Team>(); }
+    private void Awake()
+    {
+        _team = GetComponent<Team>();
+        RoundDemarcation.SetActive(DemarcatesRounds);
+    }
 
     private void OnEnable()
     {
@@ -25,11 +34,16 @@ public class UnitsDisplayer : MonoBehaviour
     private void UnitsChangedEventHandler(object sender, EventArgs e)
     {
         foreach (Unit unit in _team.Units) unit.gameObject.SetActive(false);
-        UpdateUnitPositions();
+        if (_isUpdateEnqueued) return;
+
+        StartCoroutine(UpdateUnitPositions());
+        _isUpdateEnqueued = true;
     }
 
-    private void UpdateUnitPositions()
+    private IEnumerator UpdateUnitPositions()
     {
+        yield return new WaitForEndOfFrame();
+
         var positionedUnits = 0;
         foreach (Unit unit in _team.Units)
         {
@@ -44,5 +58,25 @@ public class UnitsDisplayer : MonoBehaviour
 
             positionedUnits++;
         }
+
+        UpdateDemarcation();
+        _isUpdateEnqueued = false;
+    }
+
+    private void UpdateDemarcation()
+    {
+        if (!DemarcatesRounds) return;
+
+        RoundDemarcation.SetActive(_team.UnitsInCombatCycle > 0);
+        if (_team.UnitsInCombatCycle == 0) return;
+
+        Transform lastUnitInCombatCycle = _team.Units[_team.UnitsInCombatCycle - 1].transform;
+
+        Vector3 initialPosition = RoundDemarcation.transform.position;
+        RoundDemarcation.transform.position = new Vector3(
+            x: lastUnitInCombatCycle.position.x + 1f,
+            y: initialPosition.y,
+            z: initialPosition.z
+        );
     }
 }
