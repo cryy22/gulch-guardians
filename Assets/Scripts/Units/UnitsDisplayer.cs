@@ -23,8 +23,12 @@ public class UnitsDisplayer : MonoBehaviour
     {
         UpdateUnitsAndPositions(units);
 
+        List<Coroutine> coroutines = new();
         foreach (Unit unit in _unitsPositions.Keys)
-            yield return unit.AnimateToPosition(_unitsPositions[unit]);
+            coroutines.Add(StartCoroutine(unit.AnimateToPosition(_unitsPositions[unit])));
+
+        foreach (Coroutine coroutine in coroutines)
+            yield return coroutine;
     }
 
     public void UpdateDisplay(List<Unit> units)
