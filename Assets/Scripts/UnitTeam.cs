@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using InfiniteSAPPrototype;
 using UnityEngine;
 
@@ -8,7 +10,9 @@ public class UnitTeam : MonoBehaviour
     [SerializeField] private int UnitCount = 3;
     [SerializeField] private UnitFactory UnitFactory;
 
-    public Unit FrontUnit => transform.childCount > 0 ? transform.GetChild(0).GetComponent<Unit>() : null;
+    public List<Unit> Units = new();
+
+    public Unit FrontUnit => Units.Count > 0 ? Units.First() : null;
     public int UnitsInCombatCycle { get; private set; }
 
     private void Start()
@@ -18,7 +22,7 @@ public class UnitTeam : MonoBehaviour
         for (var i = 0; i < UnitCount; i++)
         {
             Unit unit = UnitFactory.Create();
-            unit.transform.SetParent(transform);
+            AddUnit(unit);
         }
 
         ResetUnitsOnDeck();
@@ -26,15 +30,15 @@ public class UnitTeam : MonoBehaviour
 
     public void UnitDefeated()
     {
-        UnitCount--;
+        Units.RemoveAt(0);
         UnitsInCombatCycle--;
     }
 
-    public void ResetUnitsOnDeck() { UnitsInCombatCycle = Mathf.Min(a: UnitsPerCombatCycle, b: UnitCount); }
+    public void ResetUnitsOnDeck() { UnitsInCombatCycle = Mathf.Min(a: UnitsPerCombatCycle, b: Units.Count); }
 
     public void AddUnit(Unit unit)
     {
         unit.transform.SetParent(transform);
-        UnitCount++;
+        Units.Add(unit);
     }
 }

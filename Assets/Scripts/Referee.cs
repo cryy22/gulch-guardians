@@ -14,7 +14,13 @@ public class Referee : MonoBehaviour
 
     private bool _isPlayerTurn = true;
 
-    private void Start() { RunCombatButton.onClick.AddListener(OnRunCombatButtonClicked); }
+    private IEnumerator Start()
+    {
+        RunCombatButton.onClick.AddListener(OnRunCombatButtonClicked);
+
+        yield return new WaitForSeconds(1f);
+        TeamModifier.BeginModificationRound();
+    }
 
     private void OnRunCombatButtonClicked()
     {
@@ -27,6 +33,7 @@ public class Referee : MonoBehaviour
         _isPlayerTurn = true;
         PlayerTeam.ResetUnitsOnDeck();
         EnemyTeam.ResetUnitsOnDeck();
+        TeamModifier.EndModificationRound();
 
         yield return new WaitForSeconds(1f);
 

@@ -14,6 +14,12 @@ public class Unit : MonoBehaviour
 
     public bool AttackUnit(Unit target) { return target.TakeDamage(Attack); }
 
+    public void Upgrade(int attack, int health)
+    {
+        Attack += attack;
+        Health += health;
+    }
+
     private bool TakeDamage(int damage)
     {
         Health -= damage;
