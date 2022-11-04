@@ -14,6 +14,8 @@ namespace GulchGuardians
         public override string Name => _name;
         public override TargetType Target => TargetType.Both;
 
+        public override bool CanBeAppliedTo(Team team = null) { return team != null && team.Units.Count > 1; }
+
         public override IEnumerator Apply(Unit unit = null, Team team = null)
         {
             yield return base.Apply(unit: unit, team: team);
