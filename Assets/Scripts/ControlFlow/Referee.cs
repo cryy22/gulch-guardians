@@ -84,8 +84,7 @@ namespace GulchGuardians
 
             if (isPlayerUnitDefeated) yield break;
 
-            player.SetUnitIndex(unit: player.FrontUnit, index: player.UnitsInCombatCycle - 1);
-            yield return null; // let the UI update
+            yield return player.SetUnitIndex(unit: player.FrontUnit, index: player.UnitsInCombatCycle - 1);
 
             yield return new WaitForSeconds(0.5f);
         }

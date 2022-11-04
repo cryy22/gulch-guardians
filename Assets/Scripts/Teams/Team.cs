@@ -78,13 +78,13 @@ namespace GulchGuardians
             _unitsDisplayer.UpdateDemarcation(lastUnitInCycle: LastUnitInCycle, unitsInCombatCycle: UnitsInCombatCycle);
         }
 
-        public void SetUnitIndex(Unit unit, int index)
+        public IEnumerator SetUnitIndex(Unit unit, int index)
         {
-            if (!Units.Remove(unit)) return;
+            if (!Units.Remove(unit)) yield break;
 
             Units.Insert(index: index, item: unit);
 
-            _unitsDisplayer.UpdateDisplay(units: Units);
+            yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 

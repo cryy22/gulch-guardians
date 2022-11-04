@@ -64,6 +64,20 @@ namespace GulchGuardians
 
         public void FullHeal() { Health = _initialHealth; }
 
+        public IEnumerator AnimateToPosition(Vector3 position, float duration = 0.25f)
+        {
+            Vector3 startPosition = transform.position;
+            var t = 0f;
+            while (t <= 1f)
+            {
+                t += Time.deltaTime / duration;
+                transform.position = Vector3.Lerp(a: startPosition, b: position, t: t);
+                yield return null;
+            }
+
+            transform.position = position;
+        }
+
         private IEnumerator TakeDamage(int damage)
         {
             Health -= damage;
