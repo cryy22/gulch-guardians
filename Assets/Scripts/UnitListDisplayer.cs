@@ -4,7 +4,7 @@ using UnityEngine;
 [ExecuteAlways]
 public class UnitListDisplayer : MonoBehaviour
 {
-    private const float _unitSpacing = 2f;
+    private const float _unitSpacing = 1.8825f;
 
     public bool IsInverted;
 

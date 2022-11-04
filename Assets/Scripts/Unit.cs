@@ -12,14 +12,17 @@ public class Unit : MonoBehaviour
 
     private void Update() { UpdateStats(); }
 
-    public void AttackUnit(Unit target) { target.TakeDamage(Attack); }
+    public bool AttackUnit(Unit target) { return target.TakeDamage(Attack); }
 
-    private void TakeDamage(int damage)
+    private bool TakeDamage(int damage)
     {
         Health -= damage;
         StartCoroutine(ShowHealthChange());
 
-        if (Health <= 0) Destroy(gameObject);
+        if (Health > 0) return false;
+
+        Destroy(gameObject);
+        return true;
     }
 
     private IEnumerator ShowHealthChange()

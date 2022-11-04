@@ -14,33 +14,38 @@ public class Referee : MonoBehaviour
 
     private IEnumerator RunCombat()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
 
         while (true)
         {
-            Unit playerUnit = PlayerTeam.FrontUnit;
-            Unit enemyUnit = EnemyTeam.FrontUnit;
-            if (playerUnit == null || enemyUnit == null) break;
-
-            yield return StartCoroutine(Run1V1(playerUnit: playerUnit, enemyUnit: enemyUnit));
+            if (PlayerTeam.UnitsInCombatCycle == 0 || EnemyTeam.UnitsInCombatCycle == 0) break;
+            yield return StartCoroutine(Run1V1(player: PlayerTeam, enemy: EnemyTeam));
         }
 
-        GameResultPanel.DisplayResult(isWin: PlayerTeam.FrontUnit != null);
+        GameResultPanel.DisplayResult(isWin: PlayerTeam.UnitsInCombatCycle > 0);
     }
 
-    private IEnumerator Run1V1(Unit playerUnit, Unit enemyUnit)
+    private IEnumerator Run1V1(UnitTeam player, UnitTeam enemy)
     {
-        while (playerUnit != null && enemyUnit != null)
-        {
-            Unit attacker = _isPlayerTurn ? playerUnit : enemyUnit;
-            Unit defender = _isPlayerTurn ? enemyUnit : playerUnit;
+        UnitTeam attacker;
+        UnitTeam defender;
 
-            attacker.AttackUnit(defender);
+        while (true)
+        {
+            attacker = _isPlayerTurn ? player : enemy;
+            defender = _isPlayerTurn ? enemy : player;
+
+            Unit attackerUnit = attacker.FrontUnit;
+            Unit defenderUnit = defender.FrontUnit;
+
+            bool result = attackerUnit.AttackUnit(defenderUnit);
             _isPlayerTurn = !_isPlayerTurn;
 
+            if (result == true) break;
             yield return new WaitForSeconds(1f);
         }
 
-        Debug.Log("1v1 over");
+        defender.UnitDefeated();
+        yield return new WaitForSeconds(1f);
     }
 }
