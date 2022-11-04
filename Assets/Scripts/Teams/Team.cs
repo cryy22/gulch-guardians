@@ -18,8 +18,9 @@ namespace GulchGuardians
 
         public event EventHandler UnitsChanged;
         public event EventHandler<UnitClickedEventArgs> UnitClicked;
-
         public Unit FrontUnit => Units.Count > 0 ? Units.First() : null;
+
+        public bool IsReady { get; private set; } = true;
         public int UnitsInCombatCycle { get; private set; }
         private Unit LastUnitInCycle => UnitsInCombatCycle > 0 ? Units[UnitsInCombatCycle - 1] : null;
 
@@ -37,13 +38,19 @@ namespace GulchGuardians
         private void OnEnable()
         {
             foreach (Unit unit in Units)
+            {
                 unit.GetComponent<ClickReporter>().OnReporterClickedEvent += OnUnitClickedEventHandler;
+                unit.Defeated += DefeatedEventHandler;
+            }
         }
 
         private void OnDisable()
         {
             foreach (Unit unit in Units)
+            {
                 unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClickedEventHandler;
+                unit.Defeated -= DefeatedEventHandler;
+            }
         }
 
         public void AddUnit(Unit unit)
@@ -51,21 +58,6 @@ namespace GulchGuardians
             AddUnitInternal(unit);
 
             _unitsDisplayer.UpdateDisplay(units: Units);
-            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
-        }
-
-        public IEnumerator DefeatUnit(Unit unit)
-        {
-            if (!Units.Remove(unit)) yield break;
-
-            unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClickedEventHandler;
-
-            yield return unit.BecomeDefeated();
-            UnitsInCombatCycle--;
-
-            _unitsDisplayer.UpdateDisplay(units: Units);
-            _unitsDisplayer.UpdateDemarcation(lastUnitInCycle: LastUnitInCycle, unitsInCombatCycle: UnitsInCombatCycle);
-
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
@@ -81,11 +73,36 @@ namespace GulchGuardians
         public IEnumerator SetUnitIndex(Unit unit, int index)
         {
             if (!Units.Remove(unit)) yield break;
+            IsReady = false;
 
             Units.Insert(index: index, item: unit);
 
             yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
+
+            IsReady = true;
+        }
+
+        private void DefeatedEventHandler(object sender, EventArgs e)
+        {
+            StartCoroutine(DefeatUnit(unit: (Unit) sender));
+        }
+
+        private IEnumerator DefeatUnit(Unit unit)
+        {
+            if (!Units.Remove(unit)) yield break;
+            IsReady = false;
+
+            unit.GetComponent<ClickReporter>().OnReporterClickedEvent -= OnUnitClickedEventHandler;
+            unit.Defeated -= DefeatedEventHandler;
+            UnitsInCombatCycle--;
+
+            _unitsDisplayer.UpdateDisplay(units: Units);
+            _unitsDisplayer.UpdateDemarcation(lastUnitInCycle: LastUnitInCycle, unitsInCombatCycle: UnitsInCombatCycle);
+
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
+
+            IsReady = true;
         }
 
         private void AddUnits(IEnumerable<Unit> units)

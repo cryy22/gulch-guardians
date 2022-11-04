@@ -16,6 +16,8 @@ namespace GulchGuardians
         private bool _isInitialized;
         private int _initialHealth;
 
+        public event EventHandler Defeated;
+
         public int Attack { get; private set; }
         public int Health { get; private set; }
         public string FirstName { get; private set; }
@@ -83,6 +85,11 @@ namespace GulchGuardians
             Health -= damage;
             yield return AnimateDamage();
             yield return ShowHealthChange();
+
+            if (Health > 0) yield break;
+
+            Defeated?.Invoke(sender: this, e: EventArgs.Empty);
+            yield return BecomeDefeated();
         }
 
         private IEnumerator AnimateAttack(Unit target)
