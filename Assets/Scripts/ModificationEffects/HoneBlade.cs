@@ -17,8 +17,7 @@ namespace GulchGuardians
         public override IEnumerator Apply(Unit unit = null, Team team = null)
         {
             yield return base.Apply(unit: unit, team: team);
-
-            unit!.Upgrade(attack: 2, health: 0);
+            yield return unit!.Upgrade(attack: 2, health: 0);
         }
     }
 }

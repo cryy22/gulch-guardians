@@ -55,14 +55,20 @@ namespace GulchGuardians
             yield return target.TakeDamage(Attack);
         }
 
-        public void Upgrade(int attack, int health)
+        public IEnumerator Upgrade(int attack, int health)
         {
             Attack += attack;
             Health += health;
             InitialHealth += health;
+
+            yield return AnimateStatsChange(animateAttack: attack != 0, animateHealth: health != 0);
         }
 
-        public void FullHeal() { Health = InitialHealth; }
+        public IEnumerator FullHeal()
+        {
+            Health = InitialHealth;
+            yield return AnimateStatsChange(animateHealth: true);
+        }
 
         public IEnumerator AnimateToPosition(Vector3 position, float duration = 0.25f)
         {
@@ -95,7 +101,7 @@ namespace GulchGuardians
         {
             Health -= damage;
             yield return AnimateDamage();
-            yield return ShowHealthChange();
+            yield return AnimateStatsChange(animateHealth: true);
 
             if (IsDefeated) StartCoroutine(BecomeDefeated());
         }
@@ -149,13 +155,20 @@ namespace GulchGuardians
             }
         }
 
-        private IEnumerator ShowHealthChange()
+        private IEnumerator AnimateStatsChange(bool animateAttack = false, bool animateHealth = false)
         {
-            Vector3 defaultScale = HealthText.transform.localScale;
-            HealthText.transform.localScale = defaultScale * 1.5f;
+            if (!animateAttack && !animateHealth) yield break;
+
+            Vector3 attackCurrentScale = AttackText.transform.localScale;
+            Vector3 healthCurrentScale = HealthText.transform.localScale;
+
+            if (animateAttack) AttackText.transform.localScale = attackCurrentScale * 1.5f;
+            if (animateHealth) HealthText.transform.localScale = healthCurrentScale * 1.5f;
 
             yield return new WaitForSeconds(0.5f);
-            HealthText.transform.localScale = defaultScale;
+
+            AttackText.transform.localScale = attackCurrentScale;
+            HealthText.transform.localScale = healthCurrentScale;
         }
 
         private void UpdateStats()

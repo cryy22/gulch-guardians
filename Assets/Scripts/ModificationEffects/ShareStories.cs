@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GulchGuardians
@@ -16,7 +17,13 @@ namespace GulchGuardians
         public override IEnumerator Apply(Unit unit = null, Team team = null)
         {
             yield return base.Apply(unit: unit, team: team);
-            foreach (Unit teamUnit in team!.Units) teamUnit.Upgrade(attack: 1, health: 0);
+
+            List<Coroutine> coroutines = new();
+            foreach (Unit teamUnit in team!.Units)
+                coroutines.Add(teamUnit.StartCoroutine(teamUnit.Upgrade(attack: 1, health: 0)));
+
+            foreach (Coroutine coroutine in coroutines)
+                yield return coroutine;
         }
     }
 }

@@ -45,13 +45,13 @@ namespace GulchGuardians
             foreach (Unit unit in Units) unit.Clicked -= OnUnitClickedEventHandler;
         }
 
-        public void AddUnit(Unit unit)
+        public IEnumerator AddUnit(Unit unit)
         {
             if (Units.Count >= MaxUnits) throw new Exception("Team is full");
 
             AddUnitInternal(unit);
 
-            _unitsDisplayer.UpdateDisplay(units: Units);
+            yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 

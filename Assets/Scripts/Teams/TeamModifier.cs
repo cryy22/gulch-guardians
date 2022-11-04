@@ -85,7 +85,7 @@ namespace GulchGuardians
             else
                 OfferEffectOptions();
 
-            _isModifying = true;
+            _isModifying = false;
         }
 
         private void OfferEffectOptions()
