@@ -23,7 +23,7 @@ namespace GulchGuardians
                 health: Random.Range(minInclusive: config.MinHealth, maxExclusive: config.MaxHealth + 1)
             );
 
-            unit.Renderer.sprite = config.Sprite;
+            unit.Renderer.sprite = config.Sprites[Random.Range(minInclusive: 0, maxExclusive: config.Sprites.Count)];
 
             return unit;
         }

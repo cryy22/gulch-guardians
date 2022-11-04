@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
   m_Name: KnightEnemyUnitConfig
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 3b63433b53af146fd879a73ee5ac9c3a, type: 3}
+  Sprites:
+  - {fileID: 21300000, guid: 891a75e8e7a7a462b8e662c5ae8000b1, type: 3}
+  - {fileID: 21300000, guid: 34687f663f89f4bedb21c18b48292421, type: 3}
+  - {fileID: 21300000, guid: afdf6690f29694101b893f25788d4e3c, type: 3}
   MinAttack: 2
   MaxAttack: 3
   MinHealth: 5

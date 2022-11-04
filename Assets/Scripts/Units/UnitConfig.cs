@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GulchGuardians
@@ -5,7 +6,7 @@ namespace GulchGuardians
     [CreateAssetMenu(fileName = "NewUnitConfig", menuName = "Scriptable Objects/Config/Unit Config")]
     public class UnitConfig : ScriptableObject
     {
-        public Sprite Sprite;
+        public List<Sprite> Sprites;
         public int MinAttack;
         public int MaxAttack;
         public int MinHealth;
