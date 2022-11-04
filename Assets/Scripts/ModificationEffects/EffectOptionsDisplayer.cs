@@ -27,6 +27,7 @@ namespace GulchGuardians
 
         public void CleanUpEffectOptions()
         {
+            SelectedEffect = null;
             foreach (Transform child in EffectOptionParent) Destroy(child.gameObject);
         }
 
