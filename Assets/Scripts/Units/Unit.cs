@@ -28,6 +28,7 @@ namespace GulchGuardians
         public int MaxHealth { get; private set; }
         public bool IsBoss { get; private set; }
         public bool IsSturdy { get; private set; }
+        public bool IsArcher { get; private set; }
 
         public bool TooltipEnabled { get; set; } = true;
 
@@ -50,6 +51,7 @@ namespace GulchGuardians
             MaxHealth = Mathf.Max(a: Health, b: attributes.MaxHealth);
             IsBoss = attributes.IsBoss;
             IsSturdy = attributes.IsSturdy;
+            IsArcher = attributes.IsArcher;
 
             _displayer.Setup(spriteLibraryAsset: spriteLibraryAsset, attributes: BuildAttributes());
 
@@ -78,6 +80,8 @@ namespace GulchGuardians
         {
             yield return _displayer.AnimateToPosition(position: position, duration: duration);
         }
+
+        public bool WillAttack(int index) { return index == (IsArcher ? 1 : 0); }
 
         public IEnumerator AttackUnit(Unit target)
         {
@@ -132,6 +136,7 @@ namespace GulchGuardians
             public int MaxHealth;
             public bool IsBoss;
             public bool IsSturdy;
+            public bool IsArcher;
         }
     }
 }

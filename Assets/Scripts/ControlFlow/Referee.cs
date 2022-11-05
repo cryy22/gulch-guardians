@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -104,7 +106,7 @@ namespace GulchGuardians
 
             yield return TeamModifier.EndModificationRound();
 
-            yield return new WaitForSeconds(1f);
+            yield return WaitForPlayer(1f);
 
             while (true)
             {
@@ -128,28 +130,35 @@ namespace GulchGuardians
 
         private IEnumerator RunAttackCycle(Team player, Team enemy)
         {
-            Unit playerUnit = player.FrontUnit;
-            Unit enemyUnit = enemy.FrontUnit;
-
-            yield return playerUnit.AttackUnit(enemyUnit);
-            yield return WaitForPlayer();
-
-            if (enemyUnit == null || enemyUnit.IsDefeated)
+            IEnumerable<Unit> playerAttackers = player.Units.Where((u, index) => u.WillAttack(index));
+            foreach (Unit attacker in playerAttackers)
             {
-                yield return enemy.HandleUnitDefeat(enemyUnit);
-                if (enemy.UnitsInCombatCycle <= 0) yield break;
-                yield return new WaitForSeconds(0.25f);
+                Unit defender = enemy.FrontUnit;
+                yield return attacker.AttackUnit(defender);
+                yield return WaitForPlayer();
 
-                enemyUnit = enemy.FrontUnit;
+                if (defender != null && !defender.IsDefeated) continue;
+
+                yield return enemy.HandleUnitDefeat(defender);
+                if (enemy.UnitsInCombatCycle <= 0) yield break;
+
+                yield return WaitForPlayer(0.25f);
             }
 
-            yield return enemyUnit.AttackUnit(playerUnit);
-            yield return WaitForPlayer();
-
-            if (playerUnit == null || playerUnit.IsDefeated)
+            IEnumerable<Unit> enemyAttackers = enemy.Units.Where((u, index) => u.WillAttack(index));
+            foreach (Unit attacker in enemyAttackers)
             {
-                yield return player.HandleUnitDefeat(playerUnit);
-                yield break;
+                Unit defender = player.FrontUnit;
+
+                yield return attacker.AttackUnit(defender);
+                yield return WaitForPlayer();
+
+                if (defender != null && !defender.IsDefeated) continue;
+
+                yield return player.HandleUnitDefeat(defender);
+                if (player.UnitsInCombatCycle <= 0) yield break;
+
+                yield return WaitForPlayer(0.25f);
             }
 
             if (player.UnitsInCombatCycle <= 1) yield break;
@@ -158,10 +167,11 @@ namespace GulchGuardians
             yield return WaitForPlayer();
         }
 
-        private IEnumerator WaitForPlayer()
+        private IEnumerator WaitForPlayer(float autoAdvanceDelay = 0f)
         {
             AdvanceButton.interactable = true;
             yield return new WaitUntil(() => _didPlayerAdvance || _isAutoAdvance);
+            if (_isAutoAdvance) yield return new WaitForSeconds(autoAdvanceDelay);
 
             AdvanceButton.interactable = false;
             _didPlayerAdvance = false;

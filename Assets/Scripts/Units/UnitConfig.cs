@@ -13,6 +13,7 @@ namespace GulchGuardians
         public int MaxHealth;
         public bool IsBoss;
         public bool IsSturdy;
+        public bool IsArcher;
 
         public List<SpriteLibraryAsset> SpriteLibraryAssets;
 
