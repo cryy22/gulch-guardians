@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Abilities;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -11,7 +9,6 @@ namespace GulchGuardians
     [RequireComponent(typeof(UnitDisplayer))]
     public class Unit : MonoBehaviour
     {
-        private readonly List<Ability> _abilities = new();
         private ClickReporter _clickReporter;
         private UnitDisplayer _displayer;
 
@@ -26,10 +23,11 @@ namespace GulchGuardians
         public bool IsDefeated => Health <= 0;
 
         public string FirstName { get; private set; }
-        public bool IsBoss { get; private set; }
         public int Attack { get; private set; }
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
+        public bool IsBoss { get; private set; }
+        public bool IsSturdy { get; private set; }
 
         public bool TooltipEnabled { get; set; } = true;
 
@@ -41,22 +39,17 @@ namespace GulchGuardians
 
         public void Initialize(
             SpriteLibraryAsset spriteLibraryAsset,
-            int attack,
-            int health,
-            string firstName = "",
-            bool isBoss = false,
-            IEnumerable<Ability> abilities = null
+            Attributes attributes
         )
         {
             if (_isInitialized) throw new Exception("Unit is already initialized");
 
-            Attack = attack;
-            Health = health;
-            MaxHealth = health;
-            FirstName = firstName;
-            IsBoss = isBoss;
-
-            _abilities.AddRange(abilities ?? Array.Empty<Ability>());
+            FirstName = attributes.FirstName;
+            Attack = attributes.Attack;
+            Health = attributes.Health;
+            MaxHealth = Mathf.Max(a: Health, b: attributes.MaxHealth);
+            IsBoss = attributes.IsBoss;
+            IsSturdy = attributes.IsSturdy;
 
             _displayer.Setup(spriteLibraryAsset: spriteLibraryAsset, attributes: BuildAttributes());
 
@@ -81,8 +74,6 @@ namespace GulchGuardians
             yield return _displayer.AnimateStatsChange(animateHealth: true);
         }
 
-        public void AddAbility(Ability ability) { _abilities.Add(ability); }
-
         public IEnumerator MoveToPosition(Vector3 position, float duration = 0.25f)
         {
             yield return _displayer.AnimateToPosition(position: position, duration: duration);
@@ -96,22 +87,13 @@ namespace GulchGuardians
 
         private IEnumerator TakeDamage(int damage)
         {
-            List<Ability> exhaustedAbilities = new();
-            int resolvedDamage = damage;
-            foreach (Ability ability in _abilities)
+            if (IsSturdy && damage >= Health)
             {
-                Ability.WillTakeDamageResult result = ability.WillTakeDamage(
-                    unit: this,
-                    intendedDamage: resolvedDamage
-                );
-                resolvedDamage = result.Damage;
-
-                if (result.IsExhausted) exhaustedAbilities.Add(ability);
+                damage = Health - 1;
+                IsSturdy = false;
             }
 
-            _abilities.RemoveAll(a => exhaustedAbilities.Contains(a));
-
-            Health -= resolvedDamage;
+            Health -= damage;
 
             _displayer.UpdateAttributes(BuildAttributes());
             yield return _displayer.AnimateDamage();
@@ -137,9 +119,11 @@ namespace GulchGuardians
                 Health = Health,
                 MaxHealth = MaxHealth,
                 IsBoss = IsBoss,
+                IsSturdy = IsSturdy,
             };
         }
 
+        [Serializable]
         public struct Attributes
         {
             public string FirstName;
@@ -147,6 +131,7 @@ namespace GulchGuardians
             public int Health;
             public int MaxHealth;
             public bool IsBoss;
+            public bool IsSturdy;
         }
     }
 }

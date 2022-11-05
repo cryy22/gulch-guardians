@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
   m_Name: EnemyKnightUnitConfig
   m_EditorClassIdentifier: 
-  SpriteLibraryAssets:
-  - {fileID: 7108339969198208228, guid: 1702561239b7648c89bd7efc4e9c7ce6, type: 3}
-  - {fileID: 7108339969198208228, guid: e9079ebdec4e248ca99a332cf6f5955e, type: 3}
-  IsBoss: 0
   MinAttack: 2
   MaxAttack: 3
   MinHealth: 5
   MaxHealth: 8
+  IsBoss: 0
+  IsSturdy: 1
+  SpriteLibraryAssets:
+  - {fileID: 7108339969198208228, guid: 1702561239b7648c89bd7efc4e9c7ce6, type: 3}
+  - {fileID: 7108339969198208228, guid: e9079ebdec4e248ca99a332cf6f5955e, type: 3}

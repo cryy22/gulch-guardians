@@ -13,11 +13,14 @@ namespace GulchGuardians
             Unit unit = Instantiate(UnitPrefab);
             unit.Initialize(
                 spriteLibraryAsset: config.GetSpriteLibraryAsset(),
-                attack: Random.Range(minInclusive: config.MinAttack, maxExclusive: config.MaxAttack + 1),
-                health: Random.Range(minInclusive: config.MinHealth, maxExclusive: config.MaxHealth + 1),
-                firstName: Name.RandomName(),
-                isBoss: config.IsBoss,
-                abilities: config.Abilities
+                attributes: new Unit.Attributes
+                {
+                    FirstName = Name.RandomName(),
+                    Attack = Random.Range(minInclusive: config.MinAttack, maxExclusive: config.MaxAttack + 1),
+                    Health = Random.Range(minInclusive: config.MinHealth, maxExclusive: config.MaxHealth + 1),
+                    IsBoss = config.IsBoss,
+                    IsSturdy = config.IsSturdy,
+                }
             );
 
             return unit;

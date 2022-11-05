@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
   m_Name: PlayerUnitConfig
   m_EditorClassIdentifier: 
+  MinAttack: 2
+  MaxAttack: 3
+  MinHealth: 4
+  MaxHealth: 7
+  IsBoss: 0
+  IsSturdy: 0
   SpriteLibraryAssets:
   - {fileID: 7108339969198208228, guid: bc19b9d0557d0496bb40a77d6d45498b, type: 3}
   - {fileID: 7108339969198208228, guid: 1fc5c702e9c004b6c8c4e7772a785f2e, type: 3}
   - {fileID: 7108339969198208228, guid: 15a714c8b75e4419a9e707132a3d15bc, type: 3}
   - {fileID: 7108339969198208228, guid: cf79b1d45699e4c2a9937308c2d922f3, type: 3}
-  IsBoss: 0
-  MinAttack: 2
-  MaxAttack: 3
-  MinHealth: 4
-  MaxHealth: 7

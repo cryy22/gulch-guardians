@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
   m_Name: EnemyBossStilterUnitConfig
   m_EditorClassIdentifier: 
-  SpriteLibraryAssets:
-  - {fileID: 7108339969198208228, guid: 24102bf8cae574eb4a8a87d6cedd6daf, type: 3}
-  IsBoss: 1
   MinAttack: 12
   MaxAttack: 16
   MinHealth: 10
   MaxHealth: 12
+  IsBoss: 1
+  IsSturdy: 1
+  SpriteLibraryAssets:
+  - {fileID: 7108339969198208228, guid: 24102bf8cae574eb4a8a87d6cedd6daf, type: 3}

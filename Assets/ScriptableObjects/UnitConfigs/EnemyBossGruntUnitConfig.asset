@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
   m_Name: EnemyBossGruntUnitConfig
   m_EditorClassIdentifier: 
-  SpriteLibraryAssets:
-  - {fileID: 7108339969198208228, guid: 51fe817d395b2436cb6c0d0bf2818864, type: 3}
-  - {fileID: 7108339969198208228, guid: aeaeafef953894cbb8ef377e02198e39, type: 3}
-  - {fileID: 7108339969198208228, guid: c25eb7285b61b45baadfcd8350722f55, type: 3}
-  IsBoss: 1
   MinAttack: 4
   MaxAttack: 5
   MinHealth: 7
   MaxHealth: 8
+  IsBoss: 1
+  IsSturdy: 1
+  SpriteLibraryAssets:
+  - {fileID: 7108339969198208228, guid: 51fe817d395b2436cb6c0d0bf2818864, type: 3}
+  - {fileID: 7108339969198208228, guid: aeaeafef953894cbb8ef377e02198e39, type: 3}
+  - {fileID: 7108339969198208228, guid: c25eb7285b61b45baadfcd8350722f55, type: 3}

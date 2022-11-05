@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Abilities;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -8,14 +7,14 @@ namespace GulchGuardians
     [CreateAssetMenu(fileName = "NewUnitConfig", menuName = "Scriptable Objects/Config/Unit Config")]
     public class UnitConfig : ScriptableObject
     {
-        public List<SpriteLibraryAsset> SpriteLibraryAssets;
-        public bool IsBoss;
-        public List<Ability> Abilities;
-
         public int MinAttack;
         public int MaxAttack;
         public int MinHealth;
         public int MaxHealth;
+        public bool IsBoss;
+        public bool IsSturdy;
+
+        public List<SpriteLibraryAsset> SpriteLibraryAssets;
 
         public SpriteLibraryAsset GetSpriteLibraryAsset()
         {
