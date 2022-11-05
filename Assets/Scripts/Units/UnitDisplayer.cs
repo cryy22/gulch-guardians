@@ -13,6 +13,14 @@ namespace GulchGuardians
         [SerializeField] private SpriteRenderer Renderer;
         [SerializeField] private SpriteLibrary SpriteLibrary;
         [SerializeField] private Animator Animator;
+        [SerializeField] private Transform AbilityIcons;
+        [SerializeField] private GameObject AbilityIconPrefab;
+
+        private bool _isSturdyCurrently;
+        private bool _isArcherCurrently;
+
+        private GameObject _sturdyIcon;
+        private GameObject _archerIcon;
 
         public void Setup(SpriteLibraryAsset spriteLibraryAsset, Unit.Attributes attributes)
         {
@@ -30,6 +38,8 @@ namespace GulchGuardians
             AttackText.text = attributes.Attack.ToString();
             HealthText.text = attributes.Health.ToString();
             HealthText.color = attributes.Health == attributes.MaxHealth ? Color.white : Color.red;
+
+            UpdateAbilities(attributes);
         }
 
         public IEnumerator AnimateToPosition(Vector3 position, float duration = 0.25f)
@@ -115,6 +125,26 @@ namespace GulchGuardians
 
             AttackText.transform.localScale = attackCurrentScale;
             HealthText.transform.localScale = healthCurrentScale;
+        }
+
+        private void UpdateAbilities(Unit.Attributes attributes)
+        {
+            if (attributes.IsSturdy && !_isSturdyCurrently)
+            {
+                _sturdyIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
+                _sturdyIcon.GetComponent<TMP_Text>().text = "S";
+                _isSturdyCurrently = true;
+            }
+
+            if (attributes.IsArcher && !_isArcherCurrently)
+            {
+                _archerIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
+                _archerIcon.GetComponent<TMP_Text>().text = "A";
+                _isArcherCurrently = true;
+            }
+
+            if (!attributes.IsSturdy) Destroy(_sturdyIcon);
+            if (!attributes.IsArcher) Destroy(_archerIcon);
         }
     }
 }

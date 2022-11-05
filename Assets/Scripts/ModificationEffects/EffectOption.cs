@@ -55,10 +55,10 @@ namespace GulchGuardians
             yield return new WaitForEndOfFrame();
             unit.transform.position = new Vector3(
                 x: EffectDescriptionPanel.position.x,
-                y: EffectDescriptionPanel.position.y - 0.85f,
+                y: EffectDescriptionPanel.position.y - 1.5f,
                 z: unit.transform.position.z
             );
-            unit.transform.localScale = Vector3.one * 0.85f;
+            unit.transform.localScale = Vector3.one * 0.66f;
         }
 
         public class EffectOptionClickedEventArgs : EventArgs

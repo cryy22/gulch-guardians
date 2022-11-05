@@ -124,6 +124,7 @@ namespace GulchGuardians
                 MaxHealth = MaxHealth,
                 IsBoss = IsBoss,
                 IsSturdy = IsSturdy,
+                IsArcher = IsArcher,
             };
         }
 
