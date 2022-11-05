@@ -16,7 +16,8 @@ namespace GulchGuardians
                 attack: Random.Range(minInclusive: config.MinAttack, maxExclusive: config.MaxAttack + 1),
                 health: Random.Range(minInclusive: config.MinHealth, maxExclusive: config.MaxHealth + 1),
                 firstName: Name.RandomName(),
-                isBoss: config.IsBoss
+                isBoss: config.IsBoss,
+                abilities: config.Abilities
             );
 
             return unit;
