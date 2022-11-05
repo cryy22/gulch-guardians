@@ -76,7 +76,7 @@ namespace GulchGuardians
             yield return _displayer.AnimateStatsChange(animateHealth: true);
         }
 
-        public IEnumerator MoveToPosition(Vector3 position, float duration = 0.25f)
+        public IEnumerator MoveToPosition(Vector3 position, float duration)
         {
             yield return _displayer.AnimateToPosition(position: position, duration: duration);
         }

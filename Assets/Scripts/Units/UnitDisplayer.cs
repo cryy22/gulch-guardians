@@ -48,15 +48,16 @@ namespace GulchGuardians
 
         public IEnumerator AnimateAttack(Unit target)
         {
+            const float duration = 0.0833f;
+
             Vector3 startPosition = transform.position;
             Vector3 endPosition = target.transform.position;
-            var duration = 0.0833f;
-            var time = 0f;
+            var t = 0f;
 
-            while (time < duration)
+            while (t <= 1f)
             {
-                transform.position = Vector3.Lerp(a: startPosition, b: endPosition, t: time / duration);
-                time += Time.deltaTime;
+                t += Time.deltaTime / duration;
+                transform.position = Vector3.Lerp(a: startPosition, b: endPosition, t: t);
                 yield return null;
             }
 
@@ -66,15 +67,16 @@ namespace GulchGuardians
 
         public IEnumerator AnimateDamage()
         {
-            Vector3 startPosition = transform.position;
-            var duration = 0.08f;
-            var period = 0.04f;
-            var time = 0f;
+            const float duration = 0.08f;
+            const float period = 0.04f;
 
-            while (time < duration)
+            Vector3 startPosition = transform.position;
+            var t = 0f;
+
+            while (t <= duration)
             {
-                transform.position = startPosition + (Vector3.up * (0.2f * Mathf.Sin((time / period) * Mathf.PI)));
-                time += Time.deltaTime;
+                t += Time.deltaTime;
+                transform.position = startPosition + (Vector3.up * (0.2f * Mathf.Sin((t / period) * Mathf.PI)));
                 yield return null;
             }
 

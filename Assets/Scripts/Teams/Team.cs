@@ -61,7 +61,7 @@ namespace GulchGuardians
                 ? 1
                 : Mathf.Min(a: UnitsPerCombatCycle, b: Units.Count);
 
-            _unitsDisplayer.UpdateDemarcation(lastUnitInCycle: LastUnitInCycle, unitsInCombatCycle: UnitsInCombatCycle);
+            _unitsDisplayer.UpdateDemarcation(LastUnitInCycle);
         }
 
         public IEnumerator SetUnitIndex(Unit unit, int index)
@@ -79,7 +79,6 @@ namespace GulchGuardians
             UnitsInCombatCycle--;
 
             yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
-            _unitsDisplayer.UpdateDemarcation(lastUnitInCycle: LastUnitInCycle, unitsInCombatCycle: UnitsInCombatCycle);
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }

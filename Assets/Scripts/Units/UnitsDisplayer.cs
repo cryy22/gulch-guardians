@@ -17,6 +17,7 @@ public class UnitsDisplayer : MonoBehaviour
     [SerializeField] private GameObject RoundDemarcation;
 
     private readonly Dictionary<Unit, Vector3> _unitsPositions = new();
+    private Unit _lastUnitInCycle;
 
     private void Awake() { RoundDemarcation.SetActive(DemarcatesRounds); }
 
@@ -25,10 +26,23 @@ public class UnitsDisplayer : MonoBehaviour
         bool hasChanged = UpdateUnitsAndPositions(units);
         if (!hasChanged) yield break;
 
-        yield return CoroutineHelper.RunConcurrently(
-            behaviours: _unitsPositions.Keys,
-            unit => unit.MoveToPosition(_unitsPositions[unit])
+        List<Coroutine> coroutines = new();
+        coroutines.Add(
+            StartCoroutine(
+                CoroutineHelper.RunConcurrently(
+                    behaviours: _unitsPositions.Keys,
+                    unit => unit.MoveToPosition(position: _unitsPositions[unit], duration: 0.25f)
+                )
+            )
         );
+        if (DemarcatesRounds)
+            coroutines.Add(
+                StartCoroutine(
+                    AnimateMoveDemarcation(position: GetRoundDemarcationPosition(), duration: 0.25f)
+                )
+            );
+
+        foreach (Coroutine coroutine in coroutines) yield return coroutine;
     }
 
     public void UpdateDisplay(List<Unit> units)
@@ -37,18 +51,49 @@ public class UnitsDisplayer : MonoBehaviour
         foreach (Unit unit in _unitsPositions.Keys) unit.transform.position = _unitsPositions[unit];
     }
 
-    public void UpdateDemarcation(Unit lastUnitInCycle, int unitsInCombatCycle)
+    public void UpdateDemarcation(Unit lastUnitInCycle)
     {
         if (!DemarcatesRounds) return;
 
-        RoundDemarcation.SetActive(unitsInCombatCycle > 0);
-        if (unitsInCombatCycle == 0) return;
+        if (!_unitsPositions.ContainsKey(lastUnitInCycle))
+        {
+            RoundDemarcation.SetActive(false);
+            return;
+        }
 
-        Vector3 initialPosition = RoundDemarcation.transform.position;
-        RoundDemarcation.transform.position = new Vector3(
-            x: lastUnitInCycle.transform.position.x + 0.95f,
-            y: initialPosition.y,
-            z: initialPosition.z
+        RoundDemarcation.SetActive(true);
+        _lastUnitInCycle = lastUnitInCycle;
+
+        RoundDemarcation.transform.position = GetRoundDemarcationPosition();
+    }
+
+    private IEnumerator AnimateMoveDemarcation(Vector3 position, float duration)
+    {
+        if (!_unitsPositions.ContainsKey(_lastUnitInCycle))
+        {
+            RoundDemarcation.SetActive(false);
+            yield break;
+        }
+
+        Vector3 startPosition = RoundDemarcation.transform.position;
+        var t = 0f;
+        while (t <= 1f)
+        {
+            t += Time.deltaTime / duration;
+            RoundDemarcation.transform.position = Vector3.Lerp(a: startPosition, b: position, t: t);
+            yield return null;
+        }
+    }
+
+    private Vector3 GetRoundDemarcationPosition()
+    {
+        if (!_unitsPositions.ContainsKey(_lastUnitInCycle)) return Vector3.negativeInfinity;
+
+        Vector3 position = RoundDemarcation.transform.position;
+        return new Vector3(
+            x: _unitsPositions[_lastUnitInCycle].x + 0.95f,
+            y: position.y,
+            z: position.z
         );
     }
 
