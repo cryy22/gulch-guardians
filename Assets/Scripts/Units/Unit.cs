@@ -38,6 +38,20 @@ namespace GulchGuardians
             _displayer = GetComponent<UnitDisplayer>();
         }
 
+        public IEnumerator AddSturdy()
+        {
+            IsSturdy = true;
+            _displayer.UpdateAttributes(BuildAttributes());
+            yield return _displayer.AnimateStatsChange(animateAbilities: true);
+        }
+
+        public IEnumerator AddArcher()
+        {
+            IsArcher = true;
+            _displayer.UpdateAttributes(BuildAttributes());
+            yield return _displayer.AnimateStatsChange(animateAbilities: true);
+        }
+
         public void Initialize(
             SpriteLibraryAsset spriteLibraryAsset,
             Attributes attributes
@@ -91,17 +105,19 @@ namespace GulchGuardians
 
         private IEnumerator TakeDamage(int damage)
         {
+            var abilitiesChanged = false;
             if (IsSturdy && damage >= Health)
             {
                 damage = Health - 1;
                 IsSturdy = false;
+                abilitiesChanged = true;
             }
 
             Health -= damage;
 
             _displayer.UpdateAttributes(BuildAttributes());
             yield return _displayer.AnimateDamage();
-            yield return _displayer.AnimateStatsChange(animateHealth: true);
+            yield return _displayer.AnimateStatsChange(animateHealth: true, animateAbilities: abilitiesChanged);
 
             if (IsDefeated) StartCoroutine(HandleDefeat());
         }

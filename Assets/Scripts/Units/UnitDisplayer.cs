@@ -111,20 +111,27 @@ namespace GulchGuardians
             }
         }
 
-        public IEnumerator AnimateStatsChange(bool animateAttack = false, bool animateHealth = false)
+        public IEnumerator AnimateStatsChange(
+            bool animateAttack = false,
+            bool animateHealth = false,
+            bool animateAbilities = false
+        )
         {
-            if (!animateAttack && !animateHealth) yield break;
+            if ((animateAttack || animateHealth || animateAbilities) == false) yield break;
 
             Vector3 attackCurrentScale = AttackText.transform.localScale;
             Vector3 healthCurrentScale = HealthText.transform.localScale;
+            Vector3 abilityIconsCurrentScale = AbilityIcons.localScale;
 
             if (animateAttack) AttackText.transform.localScale = attackCurrentScale * 1.5f;
             if (animateHealth) HealthText.transform.localScale = healthCurrentScale * 1.5f;
+            if (animateAbilities) AbilityIcons.localScale = abilityIconsCurrentScale * 1.5f;
 
             yield return new WaitForSeconds(0.5f);
 
             AttackText.transform.localScale = attackCurrentScale;
             HealthText.transform.localScale = healthCurrentScale;
+            AbilityIcons.localScale = abilityIconsCurrentScale;
         }
 
         private void UpdateAbilities(Unit.Attributes attributes)
