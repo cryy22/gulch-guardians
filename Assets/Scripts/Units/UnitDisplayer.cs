@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using GulchGuardians.Constants;
 using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -75,22 +77,14 @@ namespace GulchGuardians
             transform.position = startPosition;
         }
 
-        public IEnumerator AnimateDamage()
+        public IEnumerator AnimateDamage(int damage = 1)
         {
-            const float duration = 0.08f;
-            const float period = 0.04f;
+            List<Coroutine> coroutines = new();
+            coroutines.Add(StartCoroutine(AnimateSineShake()));
+            coroutines.Add(StartCoroutine(AnimateHurtAnimation()));
+            coroutines.Add(StartCoroutine(AnimateFlash(damage > 0 ? Color.red : Color.gray)));
 
-            Vector3 startPosition = transform.position;
-            var t = 0f;
-
-            while (t <= duration)
-            {
-                t += Time.deltaTime;
-                transform.position = startPosition + (Vector3.up * (0.2f * Mathf.Sin((t / period) * Mathf.PI)));
-                yield return null;
-            }
-
-            transform.position = startPosition;
+            foreach (Coroutine coroutine in coroutines) yield return coroutine;
         }
 
         public IEnumerator AnimateDefeat()
@@ -132,6 +126,49 @@ namespace GulchGuardians
             AttackText.transform.localScale = attackCurrentScale;
             HealthText.transform.localScale = healthCurrentScale;
             AbilityIcons.localScale = abilityIconsCurrentScale;
+        }
+
+        private IEnumerator AnimateSineShake(float duration = 0.08f, float period = 0.04f, float magnitude = 0.25f)
+        {
+            Vector3 startPosition = transform.position;
+            var t = 0f;
+
+            while (t < duration)
+            {
+                t += Time.deltaTime;
+                transform.position = startPosition + (Vector3.up * (magnitude * Mathf.Sin((t / period) * Mathf.PI)));
+                yield return null;
+            }
+
+            transform.position = startPosition;
+        }
+
+        private IEnumerator AnimateFlash(Color flashColor, float duration = 0.125f)
+        {
+            Color startColor = Renderer.color;
+            var t = 0f;
+            while (t < 1f)
+            {
+                t += Time.deltaTime / duration;
+                Renderer.color = Color.Lerp(a: flashColor, b: startColor, t: t);
+                yield return null;
+            }
+
+            Renderer.color = startColor;
+        }
+
+        private IEnumerator AnimateHurtAnimation(float duration = 0.33f)
+        {
+            Animator.SetTrigger(AnimatorProperties.OnHurtTrigger);
+
+            var t = 0f;
+            while (t < duration)
+            {
+                t += Time.deltaTime;
+                yield return null;
+            }
+
+            Animator.SetTrigger(AnimatorProperties.OnIdleTrigger);
         }
 
         private void UpdateAbilities(Unit.Attributes attributes)

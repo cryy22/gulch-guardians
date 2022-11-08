@@ -116,7 +116,7 @@ namespace GulchGuardians
             Health -= damage;
 
             _displayer.UpdateAttributes(BuildAttributes());
-            yield return _displayer.AnimateDamage();
+            yield return _displayer.AnimateDamage(damage);
             yield return _displayer.AnimateStatsChange(animateHealth: true, animateAbilities: abilitiesChanged);
 
             if (IsDefeated) StartCoroutine(HandleDefeat());
