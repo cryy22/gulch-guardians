@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using GulchGuardians.Constants;
 using TMPro;
 using UnityEngine;
@@ -79,12 +78,11 @@ namespace GulchGuardians
 
         public IEnumerator AnimateDamage(int damage = 1)
         {
-            List<Coroutine> coroutines = new();
-            coroutines.Add(StartCoroutine(AnimateSineShake()));
-            coroutines.Add(StartCoroutine(AnimateHurtAnimation()));
-            coroutines.Add(StartCoroutine(AnimateFlash(damage > 0 ? Color.red : Color.gray)));
-
-            foreach (Coroutine coroutine in coroutines) yield return coroutine;
+            yield return CoroutineHelper.RunConcurrently(
+                StartCoroutine(AnimateSineShake()),
+                StartCoroutine(AnimateHurtAnimation()),
+                StartCoroutine(AnimateFlash(damage > 0 ? Color.red : Color.gray))
+            );
         }
 
         public IEnumerator AnimateDefeat()

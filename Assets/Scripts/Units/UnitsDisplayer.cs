@@ -26,23 +26,17 @@ public class UnitsDisplayer : MonoBehaviour
         bool hasChanged = UpdateUnitsAndPositions(units);
         if (!hasChanged) yield break;
 
-        List<Coroutine> coroutines = new();
-        coroutines.Add(
+        yield return CoroutineHelper.RunConcurrently(
             StartCoroutine(
                 CoroutineHelper.RunConcurrently(
                     behaviours: _unitsPositions.Keys,
                     unit => unit.MoveToPosition(position: _unitsPositions[unit], duration: 0.25f)
                 )
+            ),
+            StartCoroutine(
+                AnimateMoveDemarcation(position: GetRoundDemarcationPosition(), duration: 0.25f)
             )
         );
-        if (DemarcatesRounds)
-            coroutines.Add(
-                StartCoroutine(
-                    AnimateMoveDemarcation(position: GetRoundDemarcationPosition(), duration: 0.25f)
-                )
-            );
-
-        foreach (Coroutine coroutine in coroutines) yield return coroutine;
     }
 
     public void UpdateDisplay(List<Unit> units)
@@ -53,9 +47,7 @@ public class UnitsDisplayer : MonoBehaviour
 
     public void UpdateDemarcation(Unit lastUnitInCycle)
     {
-        if (!DemarcatesRounds) return;
-
-        if (!_unitsPositions.ContainsKey(lastUnitInCycle))
+        if (!DemarcatesRounds || !_unitsPositions.ContainsKey(lastUnitInCycle))
         {
             RoundDemarcation.SetActive(false);
             return;
@@ -69,7 +61,7 @@ public class UnitsDisplayer : MonoBehaviour
 
     private IEnumerator AnimateMoveDemarcation(Vector3 position, float duration)
     {
-        if (!_unitsPositions.ContainsKey(_lastUnitInCycle))
+        if (!DemarcatesRounds || !_unitsPositions.ContainsKey(_lastUnitInCycle))
         {
             RoundDemarcation.SetActive(false);
             yield break;
@@ -87,7 +79,7 @@ public class UnitsDisplayer : MonoBehaviour
 
     private Vector3 GetRoundDemarcationPosition()
     {
-        if (!_unitsPositions.ContainsKey(_lastUnitInCycle)) return Vector3.negativeInfinity;
+        if (!DemarcatesRounds || !_unitsPositions.ContainsKey(_lastUnitInCycle)) return Vector3.negativeInfinity;
 
         Vector3 position = RoundDemarcation.transform.position;
         return new Vector3(
