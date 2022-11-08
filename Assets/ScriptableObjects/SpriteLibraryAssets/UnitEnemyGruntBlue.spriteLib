@@ -29,4 +29,15 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 21300000, guid: 7041a4c0630a748c692fba9de5a670d8, type: 3}
     m_FromMain: 0
     m_EntryOverrideCount: 2
+  - m_Name: Hurt
+    m_Hash: 1740614436
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: 1
+      m_Hash: -2082672713
+      m_Sprite: {fileID: 21300000, guid: ee50518da0c2a4bd2aab43ef0fdd1628, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: ee50518da0c2a4bd2aab43ef0fdd1628, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 1
   m_PrimaryLibraryGUID: 
