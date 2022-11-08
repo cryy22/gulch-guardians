@@ -49,6 +49,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 8e805d9df3b0f478397ada91b17dc75e, type: 3}
     - {fileID: 102900000, guid: 1d58e9b83747e4e238484f6a9e6c3c8d, type: 3}
     - {fileID: 102900000, guid: 3e16fcff50d2349c391b5fa976f5131f, type: 3}
+    - {fileID: 102900000, guid: fbec795f3a1154e11a11350de9dace88, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -76,6 +77,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 763e7fd6020dd4fe39d04c90e07ce557, type: 3}
   - {fileID: 21300000, guid: 56535a177b7544889985e99f184e607c, type: 3}
   - {fileID: 21300000, guid: e26cb7a7ec24b415d9ab6d84a23801c2, type: 3}
+  - {fileID: 21300000, guid: c60b8ab72880d40eaad0bd0c02b48ed7, type: 3}
   - {fileID: 21300000, guid: 5c288a28a894b49ac80a5b4e1bc4495c, type: 3}
   - {fileID: 21300000, guid: 87b2cae8da342445aacbada15a3e1fc8, type: 3}
   - {fileID: 21300000, guid: 4f6b9e298d964438b84633ccc9c5b790, type: 3}
@@ -119,6 +121,7 @@ SpriteAtlas:
   - sprite0003
   - sprite0003
   - sprite0001
+  - shadow
   - sprite0002
   - sprite0001
   - sprite0003
