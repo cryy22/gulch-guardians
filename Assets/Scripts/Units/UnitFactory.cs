@@ -20,7 +20,7 @@ namespace GulchGuardians
                     Health = Random.Range(minInclusive: config.MinHealth, maxExclusive: config.MaxHealth + 1),
                     IsBoss = config.IsBoss,
                     IsSturdy = config.IsSturdy,
-                    IsArcher = Random.value > 0.5f,
+                    IsArcher = config.IsArcher,
                 }
             );
 
