@@ -9,10 +9,30 @@ namespace Tooltip
     public class UnitTooltipDisplayer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         private Unit _unit;
+        private Bounds _bounds;
+        private Camera _camera;
 
-        public void Awake() { _unit = GetComponent<Unit>(); }
+        public void Awake()
+        {
+            _unit = GetComponent<Unit>();
+            _bounds = GetComponent<Collider2D>().bounds;
+            _camera = Camera.main;
+        }
 
         private static string TwoDigitNumber(int number) { return number.ToString("00"); }
+
+        private Vector2 GetTooltipPosition()
+        {
+            Vector3 worldPoint = transform.TransformPoint(
+                new Vector3(
+                    x: _bounds.center.x,
+                    y: _bounds.max.y - 0.33f,
+                    z: 0
+                )
+            );
+
+            return _camera.WorldToScreenPoint(worldPoint);
+        }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -24,6 +44,7 @@ namespace Tooltip
                 line2: $"health {TwoDigitNumber(_unit.Health)}",
                 line3: $"maxhlth {TwoDigitNumber(_unit.MaxHealth)}"
             );
+            Tooltip.Instance.SetPosition(GetTooltipPosition());
             Tooltip.Instance.Show();
         }
 

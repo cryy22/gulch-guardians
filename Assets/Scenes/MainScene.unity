@@ -1228,19 +1228,7 @@ MonoBehaviour:
     m_ActionId: 627adba2-5281-4720-bf20-635974898f9f
     m_ActionName: Player/Advance[/Keyboard/space,/Keyboard/enter]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 12542608}
-        m_TargetAssemblyTypeName: Tooltip.Tooltip, Assembly-CSharp
-        m_MethodName: OnPointerMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 267e8416-48f8-46a3-a0b5-d718fad180ba
     m_ActionName: Player/Point[/Mouse/position]
   - m_PersistentCalls:

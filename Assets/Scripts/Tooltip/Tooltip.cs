@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Tooltip
 {
@@ -11,8 +10,6 @@ namespace Tooltip
         [SerializeField] private TMP_Text Line1Text;
         [SerializeField] private TMP_Text Line2Text;
         [SerializeField] private TMP_Text Line3Text;
-
-        private Camera _camera;
 
         public static Tooltip Instance { get; private set; }
 
@@ -25,7 +22,6 @@ namespace Tooltip
             }
 
             Instance = this;
-            _camera = Camera.main;
         }
 
         public void Show() { Container.SetActive(true); }
@@ -39,16 +35,9 @@ namespace Tooltip
             Line3Text.text = line3;
         }
 
-        public void OnPointerMove(InputAction.CallbackContext context)
+        public void SetPosition(Vector2 position)
         {
-            if (context.performed == false) return;
-
-            var mousePosition = context.ReadValue<Vector2>();
-            Container.transform.position = new Vector3(
-                x: mousePosition.x,
-                y: mousePosition.y + 40f,
-                z: transform.position.z
-            );
+            Container.transform.position = new Vector3(x: position.x, y: position.y, z: Container.transform.position.z);
         }
     }
 }
