@@ -1,15 +1,19 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Tooltip
 {
-    public class Tooltip : MonoBehaviour
+    public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField] private GameObject Container;
+        [SerializeField] private RectTransform Container;
         [SerializeField] private TMP_Text TitleText;
         [SerializeField] private TMP_Text Line1Text;
         [SerializeField] private TMP_Text Line2Text;
         [SerializeField] private TMP_Text Line3Text;
+
+        private bool _showRequested;
+        private bool _pointerIsOver;
 
         public static Tooltip Instance { get; private set; }
 
@@ -24,8 +28,9 @@ namespace Tooltip
             Instance = this;
         }
 
-        public void Show() { Container.SetActive(true); }
-        public void Hide() { Container.SetActive(false); }
+        public void Show() { Container.gameObject.SetActive(true); }
+
+        public void Hide() { Container.gameObject.SetActive(false); }
 
         public void SetContent(string title, string line1, string line2, string line3)
         {
@@ -37,7 +42,11 @@ namespace Tooltip
 
         public void SetPosition(Vector2 position)
         {
-            Container.transform.position = new Vector3(x: position.x, y: position.y, z: Container.transform.position.z);
+            Container.position = new Vector3(x: position.x, y: position.y, z: Container.position.z);
         }
+
+        public void OnPointerEnter(PointerEventData eventData) { Container.gameObject.SetActive(true); }
+
+        public void OnPointerExit(PointerEventData eventData) { Container.gameObject.SetActive(false); }
     }
 }
