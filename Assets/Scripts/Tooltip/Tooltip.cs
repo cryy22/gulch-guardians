@@ -41,10 +41,12 @@ namespace Tooltip
 
         public void OnPointerMove(InputAction.CallbackContext context)
         {
-            Vector3 mousePosition = _camera.ScreenToWorldPoint(context.ReadValue<Vector2>());
-            transform.position = new Vector3(
+            if (context.performed == false) return;
+
+            var mousePosition = context.ReadValue<Vector2>();
+            Container.transform.position = new Vector3(
                 x: mousePosition.x,
-                y: mousePosition.y + 0.1f,
+                y: mousePosition.y + 40f,
                 z: transform.position.z
             );
         }
