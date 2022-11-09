@@ -26,7 +26,7 @@ namespace Tooltip
             Vector3 worldPoint = transform.TransformPoint(
                 new Vector3(
                     x: _bounds.center.x,
-                    y: _bounds.max.y - 0.33f,
+                    y: _bounds.max.y - 0.25f,
                     z: 0
                 )
             );
@@ -44,6 +44,7 @@ namespace Tooltip
                 line2: $"health {TwoDigitNumber(_unit.Health)}",
                 line3: $"maxhlth {TwoDigitNumber(_unit.MaxHealth)}"
             );
+            Tooltip.Instance.SetAbilities(isSturdy: _unit.IsSturdy, isArcher: _unit.IsArcher);
             Tooltip.Instance.SetPosition(GetTooltipPosition());
             Tooltip.Instance.Show();
         }
