@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using Abilities;
 using UnityEngine;
 
 namespace GulchGuardians
@@ -18,13 +19,13 @@ namespace GulchGuardians
         public override bool CanBeAppliedTo(Context context)
         {
             Team playerTeam = context.PlayerTeam;
-            return playerTeam != null && playerTeam.Units.Any(u => !u.IsSturdy);
+            return playerTeam != null && playerTeam.Units.Any(u => !u.HasAbility(Ability.Sturdy));
         }
 
         public override IEnumerator Apply(Context context)
         {
             yield return base.Apply(context);
-            yield return context.Unit!.AddSturdy();
+            yield return context.Unit!.AddAbility(Ability.Sturdy);
         }
     }
 }

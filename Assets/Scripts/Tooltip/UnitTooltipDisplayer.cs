@@ -1,3 +1,4 @@
+using Abilities;
 using GulchGuardians;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -44,7 +45,10 @@ namespace Tooltip
                 line2: $"health {TwoDigitNumber(_unit.Health)}",
                 line3: $"maxhlth {TwoDigitNumber(_unit.MaxHealth)}"
             );
-            Tooltip.Instance.SetAbilities(isSturdy: _unit.IsSturdy, isArcher: _unit.IsArcher);
+            Tooltip.Instance.SetAbilities(
+                isSturdy: _unit.HasAbility(Ability.Sturdy),
+                isArcher: _unit.HasAbility(Ability.Archer)
+            );
             Tooltip.Instance.SetPosition(GetTooltipPosition());
             Tooltip.Instance.Show();
         }

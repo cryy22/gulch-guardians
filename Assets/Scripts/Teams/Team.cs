@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Abilities;
 using UnityEngine;
 
 namespace GulchGuardians
@@ -57,7 +58,7 @@ namespace GulchGuardians
 
         public void ResetUnitsOnDeck()
         {
-            UnitsInCombatCycle = FrontUnit && FrontUnit.IsBoss
+            UnitsInCombatCycle = FrontUnit && FrontUnit.HasAbility(Ability.Boss)
                 ? 1
                 : Mathf.Min(a: UnitsPerCombatCycle, b: Units.Count);
 

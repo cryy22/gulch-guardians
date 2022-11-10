@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Abilities;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -9,6 +12,8 @@ namespace GulchGuardians
     [RequireComponent(typeof(UnitDisplayer))]
     public class Unit : MonoBehaviour
     {
+        private readonly Dictionary<Ability, bool> _abilities = new();
+
         private ClickReporter _clickReporter;
         private UnitDisplayer _displayer;
 
@@ -26,9 +31,6 @@ namespace GulchGuardians
         public int Attack { get; private set; }
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
-        public bool IsBoss { get; private set; }
-        public bool IsSturdy { get; private set; }
-        public bool IsArcher { get; private set; }
 
         public bool TooltipEnabled { get; set; } = true;
 
@@ -38,16 +40,9 @@ namespace GulchGuardians
             _displayer = GetComponent<UnitDisplayer>();
         }
 
-        public IEnumerator AddSturdy()
+        public IEnumerator AddAbility(Ability ability)
         {
-            IsSturdy = true;
-            _displayer.UpdateAttributes(BuildAttributes());
-            yield return _displayer.AnimateStatsChange(animateAbilities: true);
-        }
-
-        public IEnumerator AddArcher()
-        {
-            IsArcher = true;
+            _abilities[ability] = true;
             _displayer.UpdateAttributes(BuildAttributes());
             yield return _displayer.AnimateStatsChange(animateAbilities: true);
         }
@@ -63,9 +58,8 @@ namespace GulchGuardians
             Attack = attributes.Attack;
             Health = attributes.Health;
             MaxHealth = Mathf.Max(a: Health, b: attributes.MaxHealth);
-            IsBoss = attributes.IsBoss;
-            IsSturdy = attributes.IsSturdy;
-            IsArcher = attributes.IsArcher;
+
+            foreach (Ability ability in attributes.Abilities) _abilities[ability] = true;
 
             _displayer.Setup(spriteLibraryAsset: spriteLibraryAsset, attributes: BuildAttributes());
 
@@ -95,7 +89,7 @@ namespace GulchGuardians
             yield return _displayer.AnimateToPosition(position: position, duration: duration);
         }
 
-        public bool WillAttack(int index) { return index == (IsArcher ? 1 : 0); }
+        public bool WillAttack(int index) { return index == (_abilities[Ability.Archer] ? 1 : 0); }
 
         public IEnumerator AttackUnit(Unit target)
         {
@@ -103,13 +97,15 @@ namespace GulchGuardians
             yield return target.TakeDamage(Attack);
         }
 
+        public bool HasAbility(Ability ability) { return _abilities[ability]; }
+
         private IEnumerator TakeDamage(int damage)
         {
             var abilitiesChanged = false;
-            if (IsSturdy && damage >= Health)
+            if (_abilities[Ability.Sturdy] && damage >= Health)
             {
                 damage = Health - 1;
-                IsSturdy = false;
+                _abilities[Ability.Sturdy] = false;
                 abilitiesChanged = true;
             }
 
@@ -138,9 +134,7 @@ namespace GulchGuardians
                 Attack = Attack,
                 Health = Health,
                 MaxHealth = MaxHealth,
-                IsBoss = IsBoss,
-                IsSturdy = IsSturdy,
-                IsArcher = IsArcher,
+                Abilities = _abilities.Where(pair => pair.Value).Select(pair => pair.Key),
             };
         }
 
@@ -151,9 +145,7 @@ namespace GulchGuardians
             public int Attack;
             public int Health;
             public int MaxHealth;
-            public bool IsBoss;
-            public bool IsSturdy;
-            public bool IsArcher;
+            public IEnumerable<Ability> Abilities;
         }
     }
 }

@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Linq;
+using Abilities;
 using GulchGuardians.Constants;
 using TMPro;
 using UnityEngine;
@@ -31,7 +33,7 @@ namespace GulchGuardians
             NameText.text = attributes.FirstName;
             UpdateAttributes(attributes);
 
-            if (attributes.IsBoss) Renderer.transform.localScale *= 1.33f;
+            if (attributes.Abilities.Contains(Ability.Boss)) Renderer.transform.localScale *= 1.33f;
         }
 
         public void UpdateAttributes(Unit.Attributes attributes)
@@ -171,22 +173,25 @@ namespace GulchGuardians
 
         private void UpdateAbilities(Unit.Attributes attributes)
         {
-            if (attributes.IsSturdy && !_isSturdyCurrently)
+            bool isSturdy = attributes.Abilities.Contains(Ability.Sturdy);
+            bool isArcher = attributes.Abilities.Contains(Ability.Archer);
+
+            if (isSturdy && !_isSturdyCurrently)
             {
                 _sturdyIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
                 _sturdyIcon.GetComponent<TMP_Text>().text = "S";
                 _isSturdyCurrently = true;
             }
 
-            if (attributes.IsArcher && !_isArcherCurrently)
+            if (isArcher && !_isArcherCurrently)
             {
                 _archerIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
                 _archerIcon.GetComponent<TMP_Text>().text = "A";
                 _isArcherCurrently = true;
             }
 
-            if (!attributes.IsSturdy) Destroy(_sturdyIcon);
-            if (!attributes.IsArcher) Destroy(_archerIcon);
+            if (!isSturdy) Destroy(_sturdyIcon);
+            if (!isArcher) Destroy(_archerIcon);
         }
     }
 }
