@@ -134,7 +134,8 @@ namespace GulchGuardians
             foreach (Unit attacker in playerAttackers)
             {
                 Unit defender = enemy.FrontUnit;
-                yield return attacker.AttackUnit(defender);
+
+                yield return attacker.AttackUnit(target: defender, unitTeam: player);
                 yield return WaitForPlayer();
 
                 if (defender != null && !defender.IsDefeated) continue;
@@ -150,7 +151,7 @@ namespace GulchGuardians
             {
                 Unit defender = player.FrontUnit;
 
-                yield return attacker.AttackUnit(defender);
+                yield return attacker.AttackUnit(target: defender, unitTeam: enemy);
                 yield return WaitForPlayer();
 
                 if (defender != null && !defender.IsDefeated) continue;

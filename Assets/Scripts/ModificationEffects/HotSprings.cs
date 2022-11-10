@@ -21,7 +21,7 @@ namespace GulchGuardians
         public override IEnumerator Apply(Context context)
         {
             yield return base.Apply(context);
-            yield return context.Unit!.FullHeal();
+            yield return context.Unit!.Heal();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace GulchGuardians
     {
         [SerializeField] private AbilityType SturdyType;
         [SerializeField] private AbilityType ArcherType;
+        [SerializeField] private AbilityType HealerType;
 
         private readonly Dictionary<AbilityType, bool> _abilities = new();
 
@@ -82,9 +83,9 @@ namespace GulchGuardians
             yield return _displayer.AnimateStatsChange(animateAttack: attack != 0, animateHealth: health != 0);
         }
 
-        public IEnumerator FullHeal()
+        public IEnumerator Heal(int amount = int.MaxValue)
         {
-            Health = MaxHealth;
+            Health += Mathf.Min(a: amount, b: MaxHealth - Health);
 
             _displayer.UpdateAttributes(BuildAttributes());
             yield return _displayer.AnimateStatsChange(animateHealth: true);
@@ -97,8 +98,14 @@ namespace GulchGuardians
 
         public bool WillAttack(int index) { return index == (HasAbility(ArcherType) ? 1 : 0); }
 
-        public IEnumerator AttackUnit(Unit target)
+        public IEnumerator AttackUnit(Unit target, Team unitTeam)
         {
+            if (HasAbility(HealerType))
+            {
+                yield return CoroutineHelper.RunConcurrently(behaviours: unitTeam.Units!, u => u.Heal(amount: Attack));
+                yield break;
+            }
+
             yield return _displayer.AnimateAttack(target);
             yield return target.TakeDamage(Attack);
         }
