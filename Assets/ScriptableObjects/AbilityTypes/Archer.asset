@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baefec0c32eb4cfcbc46046a1ffe714d, type: 3}
   m_Name: Archer
   m_EditorClassIdentifier: 
-  Ability: 1
   Name: Archer
   Description: Attacks from 2nd position instead of 1st.
+  Icon: {fileID: 21300000, guid: 9cc3114acd2394db59fb7defa4fb53d4, type: 3}

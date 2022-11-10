@@ -6,6 +6,7 @@ using GulchGuardians.Constants;
 using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using UnityEngine.UI;
 
 namespace GulchGuardians
 {
@@ -171,19 +172,18 @@ namespace GulchGuardians
 
         private void UpdateAbilities(Unit.Attributes attributes)
         {
-            IEnumerable<AbilityType> activeAbilities = attributes.ActiveAbilities;
+            IEnumerable<AbilityType> activeAbilities = attributes.ActiveAbilities.ToList();
             foreach (AbilityType ability in activeAbilities)
             {
                 if (_abilityIcons.ContainsKey(ability)) continue;
 
                 GameObject abilityIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
-                abilityIcon.GetComponent<TMP_Text>().text = ability.Name[..1];
+                abilityIcon.GetComponent<Image>().sprite = ability.Icon;
 
                 _abilityIcons.Add(key: ability, value: abilityIcon);
             }
 
-            foreach (AbilityType ability in _abilityIcons.Keys.Except(activeAbilities))
-                Destroy(_abilityIcons[ability]);
+            foreach (AbilityType ability in _abilityIcons.Keys.Except(activeAbilities)) Destroy(_abilityIcons[ability]);
         }
     }
 }

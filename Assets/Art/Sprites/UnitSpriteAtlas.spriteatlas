@@ -50,6 +50,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 1d58e9b83747e4e238484f6a9e6c3c8d, type: 3}
     - {fileID: 102900000, guid: 3e16fcff50d2349c391b5fa976f5131f, type: 3}
     - {fileID: 102900000, guid: fbec795f3a1154e11a11350de9dace88, type: 3}
+    - {fileID: 102900000, guid: e989520a3f25d48e3bfa26da57b03ddd, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -60,6 +61,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ec5ee9a11f4f54a0287ac8f4a81d09a0, type: 3}
   - {fileID: 21300000, guid: 09365d32298844644aea9facf31aa0e8, type: 3}
   - {fileID: 21300000, guid: 0be970921f3234b1997fbc148f388927, type: 3}
+  - {fileID: 21300000, guid: 2c92aca3c3a3e47acbbc2678f18c04b3, type: 3}
+  - {fileID: 21300000, guid: 109b16e33fc254598823363d0f3405e4, type: 3}
   - {fileID: 21300000, guid: dabca31483e5c478e85f8058ea206d68, type: 3}
   - {fileID: 21300000, guid: df1e0714059264e0e99c5473ca3b2f8b, type: 3}
   - {fileID: 21300000, guid: 141a7c54068a94b329004926f3dffbf7, type: 3}
@@ -85,7 +88,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f80cd3b9f551d4863b46e9e288622b99, type: 3}
   - {fileID: 21300000, guid: a26750e9242a44957822587032cef61f, type: 3}
   - {fileID: 21300000, guid: 32fa0e2ab11954255b86363ebc2bca1d, type: 3}
+  - {fileID: 21300000, guid: 9cc3114acd2394db59fb7defa4fb53d4, type: 3}
   - {fileID: 21300000, guid: 59a7f5aaae5fe40958943cce3821bfa3, type: 3}
+  - {fileID: 21300000, guid: a62f19aaa308a471eaa5926b38a28c89, type: 3}
   - {fileID: 21300000, guid: 83ca1dba9cc6e4e43b55550c76729ef7, type: 3}
   - {fileID: 21300000, guid: 9b1a1e1b640584a58bc5305abc737b8f, type: 3}
   - {fileID: 21300000, guid: fbe51e2b1b2bb469391b351081baf371, type: 3}
@@ -104,6 +109,8 @@ SpriteAtlas:
   - sprite0003
   - sprite0001
   - sprite0001
+  - Healer
+  - Boss
   - sprite0002
   - sprite0003
   - sprite0003
@@ -129,7 +136,9 @@ SpriteAtlas:
   - sprite0001
   - sprite0003
   - sprite0001
+  - Archer
   - sprite0001
+  - Sturdy
   - sprite0001
   - sprite0003
   - sprite0001

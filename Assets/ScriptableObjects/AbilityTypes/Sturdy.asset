@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baefec0c32eb4cfcbc46046a1ffe714d, type: 3}
   m_Name: Sturdy
   m_EditorClassIdentifier: 
-  Ability: 3
   Name: Sturdy
   Description: '"Nice try, but I''m not going down that easily."'
+  Icon: {fileID: 21300000, guid: a62f19aaa308a471eaa5926b38a28c89, type: 3}
