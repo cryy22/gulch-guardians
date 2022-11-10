@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3267d11712a74947bed43644bbdea636, type: 3}
-  m_Name: ShareStories
+  m_Script: {fileID: 11500000, guid: 2cc1d7be32b346b6ba63f345c529430f, type: 3}
+  m_Name: PathOfLife
   m_EditorClassIdentifier: 
-  Name: Share Stories
-  Description: All your units gain 1 attack.
-  AttackChange: 1
-  HealthChange: 0
-  IntendedTarget: 1
+  Name: Path of Life
+  Description: Select a unit to forswear the ladle.
+  Ability: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}

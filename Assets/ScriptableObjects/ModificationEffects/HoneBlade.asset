@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3267d11712a74947bed43644bbdea636, type: 3}
   m_Name: HoneBlade
   m_EditorClassIdentifier: 
-  Name: 
+  Name: Hone Blade
   Description: Select a unit to gain 2 attack.
   AttackChange: 2
   HealthChange: 0
-  TargetType: 0
+  IntendedTarget: 0

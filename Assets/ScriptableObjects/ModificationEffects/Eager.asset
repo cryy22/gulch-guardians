@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f3d94ed224459b97b4aae451923c4c, type: 3}
   m_Name: Eager
   m_EditorClassIdentifier: 
+  Name: Eager
   Description: Select a unit to move closer to the action.

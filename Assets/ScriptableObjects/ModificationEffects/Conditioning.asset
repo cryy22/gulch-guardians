@@ -16,4 +16,4 @@ MonoBehaviour:
   Description: All your units gain 1 health.
   AttackChange: 0
   HealthChange: 1
-  TargetType: 1
+  IntendedTarget: 1

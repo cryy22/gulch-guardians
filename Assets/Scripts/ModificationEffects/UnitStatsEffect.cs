@@ -14,15 +14,15 @@ namespace GulchGuardians
         [SerializeField] private int AttackChange;
         [SerializeField] private int HealthChange;
 
-        [SerializeField] private TargetType TargetType;
+        [SerializeField] private TargetType IntendedTarget;
 
-        public override TargetType Target => TargetType;
+        public override TargetType Target => IntendedTarget;
 
         public override IEnumerator Apply(Context context)
         {
             yield return base.Apply(context);
 
-            IEnumerable<Unit> targets = TargetType switch
+            IEnumerable<Unit> targets = IntendedTarget switch
             {
                 TargetType.Unit              => new List<Unit> { context.Unit! },
                 TargetType.PlayerTeam        => context.PlayerTeam.Units!,

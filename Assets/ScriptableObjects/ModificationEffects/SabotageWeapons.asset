@@ -16,4 +16,4 @@ MonoBehaviour:
   Description: All enemy units in the next round lose 1 attack.
   AttackChange: -1
   HealthChange: 0
-  TargetType: 2
+  IntendedTarget: 2

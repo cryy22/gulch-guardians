@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 893c344610764105b9db3ab9ca4e4f2c, type: 3}
   m_Name: NewUnit
   m_EditorClassIdentifier: 
+  Name: New Friend
   Description: 
   UnitSet: {fileID: 11400000, guid: bfd8c297f251c403084cf761966795ec, type: 2}
