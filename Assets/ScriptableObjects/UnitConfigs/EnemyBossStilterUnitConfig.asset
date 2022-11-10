@@ -16,7 +16,8 @@ MonoBehaviour:
   MaxAttack: 16
   MinHealth: 10
   MaxHealth: 12
-  IsBoss: 1
-  IsSturdy: 1
   SpriteLibraryAssets:
   - {fileID: 7108339969198208228, guid: 24102bf8cae574eb4a8a87d6cedd6daf, type: 3}
+  AbilityTypes:
+  - {fileID: 11400000, guid: b1c74edd376d24b228d41d2f07d3f69d, type: 2}
+  - {fileID: 11400000, guid: c276d3f8fec7f4009a160d357a5f2cc1, type: 2}

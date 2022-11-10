@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Abilities;
 using GulchGuardians.Constants;
 using TMPro;
@@ -17,16 +19,9 @@ namespace GulchGuardians
         [SerializeField] private Animator Animator;
         [SerializeField] private Transform AbilityIcons;
         [SerializeField] private GameObject AbilityIconPrefab;
-
-        [SerializeField] private AbilityType ArcherType;
         [SerializeField] private AbilityType BossType;
-        [SerializeField] private AbilityType SturdyType;
 
-        private bool _isSturdyCurrently;
-        private bool _isArcherCurrently;
-
-        private GameObject _sturdyIcon;
-        private GameObject _archerIcon;
+        private readonly Dictionary<AbilityType, GameObject> _abilityIcons = new();
 
         public void Setup(SpriteLibraryAsset spriteLibraryAsset, Unit.Attributes attributes)
         {
@@ -176,25 +171,19 @@ namespace GulchGuardians
 
         private void UpdateAbilities(Unit.Attributes attributes)
         {
-            bool isSturdy = attributes.HasAbility(SturdyType);
-            bool isArcher = attributes.HasAbility(ArcherType);
-
-            if (attributes.HasAbility(SturdyType) && !_isSturdyCurrently)
+            IEnumerable<AbilityType> activeAbilities = attributes.ActiveAbilities;
+            foreach (AbilityType ability in activeAbilities)
             {
-                _sturdyIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
-                _sturdyIcon.GetComponent<TMP_Text>().text = "S";
-                _isSturdyCurrently = true;
+                if (_abilityIcons.ContainsKey(ability)) continue;
+
+                GameObject abilityIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
+                abilityIcon.GetComponent<TMP_Text>().text = ability.Name[..1];
+
+                _abilityIcons.Add(key: ability, value: abilityIcon);
             }
 
-            if (isArcher && !_isArcherCurrently)
-            {
-                _archerIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
-                _archerIcon.GetComponent<TMP_Text>().text = "A";
-                _isArcherCurrently = true;
-            }
-
-            if (!isSturdy) Destroy(_sturdyIcon);
-            if (!isArcher) Destroy(_archerIcon);
+            foreach (AbilityType ability in _abilityIcons.Keys.Except(activeAbilities))
+                Destroy(_abilityIcons[ability]);
         }
     }
 }

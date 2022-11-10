@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Abilities;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -11,11 +13,13 @@ namespace GulchGuardians
         public int MaxAttack;
         public int MinHealth;
         public int MaxHealth;
-        public bool IsBoss;
-        public bool IsSturdy;
-        public bool IsArcher;
 
         public List<SpriteLibraryAsset> SpriteLibraryAssets;
+
+        [SerializeField] private List<AbilityType> AbilityTypes;
+
+        public IReadOnlyDictionary<AbilityType, bool> Abilities =>
+            AbilityTypes.ToDictionary(a => a, _ => true);
 
         public SpriteLibraryAsset GetSpriteLibraryAsset()
         {

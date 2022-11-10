@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Abilities;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -148,6 +149,9 @@ namespace GulchGuardians
             public int Health;
             public int MaxHealth;
             public IReadOnlyDictionary<AbilityType, bool> Abilities;
+
+            public IEnumerable<AbilityType> ActiveAbilities =>
+                Abilities.Where(pair => pair.Value).Select(pair => pair.Key);
 
             public bool HasAbility(AbilityType ability) { return Abilities.GetValueOrDefault(ability); }
         }
