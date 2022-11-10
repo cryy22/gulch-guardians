@@ -1,4 +1,3 @@
-using Abilities;
 using GulchGuardians;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,9 +8,6 @@ namespace Tooltip
     [RequireComponent(typeof(Unit))]
     public class UnitTooltipDisplayer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField] private AbilityType SturdyType;
-        [SerializeField] private AbilityType ArcherType;
-
         private Unit _unit;
         private Bounds _bounds;
         private Camera _camera;
@@ -48,10 +44,7 @@ namespace Tooltip
                 line2: $"health {TwoDigitNumber(_unit.Health)}",
                 line3: $"maxhlth {TwoDigitNumber(_unit.MaxHealth)}"
             );
-            Tooltip.Instance.SetAbilities(
-                isSturdy: _unit.HasAbility(SturdyType),
-                isArcher: _unit.HasAbility(ArcherType)
-            );
+            Tooltip.Instance.SetAbilities(_unit.ActiveAbilities);
             Tooltip.Instance.SetPosition(GetTooltipPosition());
             Tooltip.Instance.Show();
         }

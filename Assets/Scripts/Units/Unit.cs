@@ -30,6 +30,9 @@ namespace GulchGuardians
 
         public bool IsDefeated => Health <= 0;
 
+        public IEnumerable<AbilityType> ActiveAbilities =>
+            _abilities.Where(pair => pair.Value).Select(pair => pair.Key);
+
         public string FirstName { get; private set; }
         public int Attack { get; private set; }
         public int Health { get; private set; }

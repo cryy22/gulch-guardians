@@ -21,7 +21,7 @@ namespace Tooltip
 
         [SerializeField] private UIAbilityTooltip AbilityTooltip;
 
-        private readonly List<Ability> _abilities = new();
+        private readonly List<AbilityType> _abilities = new();
 
         private bool _showRequested;
         private bool _pointerIsOver;
@@ -75,17 +75,16 @@ namespace Tooltip
             Line3Text.text = line3;
         }
 
-        public void SetAbilities(bool isSturdy, bool isArcher)
+        public void SetAbilities(IEnumerable<AbilityType> abilities)
         {
             _abilities.Clear();
-            if (isSturdy) _abilities.Add(Ability.Sturdy);
-            if (isArcher) _abilities.Add(Ability.Archer);
+            _abilities.AddRange(abilities);
 
             foreach ((UIAbilityTooltipItem item, int i) in TooltipItems.Select((el, i) => (el, i)))
                 if (i >= _abilities.Count)
                     item.SetTitle("----");
                 else
-                    item.SetTitle(_abilities[i].ToString());
+                    item.SetTitle(_abilities[i].Name);
         }
 
         public void SetPosition(Vector2 position)
@@ -107,11 +106,5 @@ namespace Tooltip
         public void OnPointerEnter(PointerEventData eventData) { Container.gameObject.SetActive(true); }
 
         public void OnPointerExit(PointerEventData eventData) { Container.gameObject.SetActive(false); }
-
-        public enum Ability
-        {
-            Sturdy,
-            Archer,
-        }
     }
 }
