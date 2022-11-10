@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3dfb8a999c24198b4fc0a7da4b6801a, type: 3}
+  m_Script: {fileID: 11500000, guid: 3267d11712a74947bed43644bbdea636, type: 3}
   m_Name: Conditioning
   m_EditorClassIdentifier: 
+  Name: Conditioning
   Description: All your units gain 1 health.
+  AttackChange: 0
+  HealthChange: 1
+  TargetType: 1

@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b43617ab7b0443199647b86f4dd8c44, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cc1d7be32b346b6ba63f345c529430f, type: 3}
   m_Name: ArcheryTraining
   m_EditorClassIdentifier: 
-  Description: Select a unit to attack in the 2nd spot instead.
-  ArcherType: {fileID: 11400000, guid: 9fbc68c9d73b0487baec45477fd8e09c, type: 2}
+  Name: ArcheryTrng
+  Description: Attacks from the 2nd position instead of the 1st.
+  Ability: {fileID: 11400000, guid: 9fbc68c9d73b0487baec45477fd8e09c, type: 2}

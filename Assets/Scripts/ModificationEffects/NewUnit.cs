@@ -8,13 +8,10 @@ namespace GulchGuardians
     [CreateAssetMenu(fileName = "NewUnit", menuName = "Scriptable Objects/Modification Effects/New Unit")]
     public class NewUnit : ModificationEffect
     {
-        private const string _name = "New Unit";
-
         [SerializeField] private UnitSet UnitSet;
 
         [DoNotSerialize] private Unit _unit;
 
-        public override string Name => _name;
         public override TargetType Target => TargetType.PlayerTeam;
 
         public override bool CanBeAppliedTo(Context context)

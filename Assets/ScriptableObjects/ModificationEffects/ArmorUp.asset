@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5620605c05344b29e33e5d5bdedec46, type: 3}
+  m_Script: {fileID: 11500000, guid: 3267d11712a74947bed43644bbdea636, type: 3}
   m_Name: ArmorUp
   m_EditorClassIdentifier: 
+  Name: Armor Up
   Description: Select a unit to gain 2 health.
+  AttackChange: 0
+  HealthChange: 2

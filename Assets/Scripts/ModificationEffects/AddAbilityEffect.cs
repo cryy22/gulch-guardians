@@ -6,28 +6,25 @@ using UnityEngine;
 namespace GulchGuardians
 {
     [CreateAssetMenu(
-        fileName = "ShieldUp",
-        menuName = "Scriptable Objects/Modification Effects/Shield Up"
+        fileName = "New AddAbilityEffect",
+        menuName = "Scriptable Objects/Modification Effects/Add Ability"
     )]
-    public class ShieldUp : ModificationEffect
+    public class AddAbilityEffect : ModificationEffect
     {
-        private const string _name = "Shield Up";
-        [SerializeField] private AbilityType SturdyType;
-
-        public override string Name => _name;
+        [SerializeField] private AbilityType Ability;
 
         public override TargetType Target => TargetType.Unit;
 
         public override bool CanBeAppliedTo(Context context)
         {
             Team playerTeam = context.PlayerTeam;
-            return playerTeam != null && playerTeam.Units.Any(u => !u.HasAbility(SturdyType));
+            return playerTeam != null && playerTeam.Units.Any(u => !u.HasAbility(Ability));
         }
 
         public override IEnumerator Apply(Context context)
         {
             yield return base.Apply(context);
-            yield return context.Unit!.AddAbility(SturdyType);
+            yield return context.Unit!.AddAbility(Ability);
         }
     }
 }

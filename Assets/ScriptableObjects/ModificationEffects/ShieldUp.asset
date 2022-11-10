@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72c6e6c8912a4a78b37de19843417435, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cc1d7be32b346b6ba63f345c529430f, type: 3}
   m_Name: ShieldUp
   m_EditorClassIdentifier: 
-  Description: Select a unit to survive one defeat.
-  SturdyType: {fileID: 11400000, guid: c276d3f8fec7f4009a160d357a5f2cc1, type: 2}
+  Name: ShieldUp
+  Description: '"Nice try, but I''m ain''t goin'' down that easily."'
+  Ability: {fileID: 11400000, guid: c276d3f8fec7f4009a160d357a5f2cc1, type: 2}

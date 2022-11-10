@@ -6,9 +6,9 @@ namespace GulchGuardians
 {
     public abstract class ModificationEffect : ScriptableObject
     {
+        public string Name;
         [TextArea] public string Description;
 
-        public abstract string Name { get; }
         public abstract TargetType Target { get; }
 
         public virtual bool CanBeAppliedTo(Context context) { return true; }

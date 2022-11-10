@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 619bea14c1c34aa4a39179815ede2950, type: 3}
+  m_Script: {fileID: 11500000, guid: 3267d11712a74947bed43644bbdea636, type: 3}
   m_Name: ShareStories
   m_EditorClassIdentifier: 
+  Name: Share Stories
   Description: All your units gain 1 attack.
+  AttackChange: 1
+  HealthChange: 0
+  TargetType: 1

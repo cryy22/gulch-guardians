@@ -9,9 +9,6 @@ namespace GulchGuardians
     )]
     public class Eager : ModificationEffect
     {
-        private const string _name = "Eager";
-
-        public override string Name => _name;
         public override TargetType Target => TargetType.UnitAndPlayerTeam;
 
         public override bool CanBeAppliedTo(Context context)

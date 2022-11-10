@@ -10,9 +10,6 @@ namespace GulchGuardians
     )]
     public class HotSprings : ModificationEffect
     {
-        private const string _name = "Hot Springs";
-
-        public override string Name => _name;
         public override TargetType Target => TargetType.Unit;
 
         public override bool CanBeAppliedTo(Context context)
