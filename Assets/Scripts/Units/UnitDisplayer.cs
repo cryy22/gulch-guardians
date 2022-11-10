@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Linq;
 using Abilities;
 using GulchGuardians.Constants;
 using TMPro;
@@ -19,6 +18,10 @@ namespace GulchGuardians
         [SerializeField] private Transform AbilityIcons;
         [SerializeField] private GameObject AbilityIconPrefab;
 
+        [SerializeField] private AbilityType ArcherType;
+        [SerializeField] private AbilityType BossType;
+        [SerializeField] private AbilityType SturdyType;
+
         private bool _isSturdyCurrently;
         private bool _isArcherCurrently;
 
@@ -33,7 +36,7 @@ namespace GulchGuardians
             NameText.text = attributes.FirstName;
             UpdateAttributes(attributes);
 
-            if (attributes.Abilities.Contains(Ability.Boss)) Renderer.transform.localScale *= 1.33f;
+            if (attributes.HasAbility(BossType)) Renderer.transform.localScale *= 1.33f;
         }
 
         public void UpdateAttributes(Unit.Attributes attributes)
@@ -173,10 +176,10 @@ namespace GulchGuardians
 
         private void UpdateAbilities(Unit.Attributes attributes)
         {
-            bool isSturdy = attributes.Abilities.Contains(Ability.Sturdy);
-            bool isArcher = attributes.Abilities.Contains(Ability.Archer);
+            bool isSturdy = attributes.HasAbility(SturdyType);
+            bool isArcher = attributes.HasAbility(ArcherType);
 
-            if (isSturdy && !_isSturdyCurrently)
+            if (attributes.HasAbility(SturdyType) && !_isSturdyCurrently)
             {
                 _sturdyIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
                 _sturdyIcon.GetComponent<TMP_Text>().text = "S";

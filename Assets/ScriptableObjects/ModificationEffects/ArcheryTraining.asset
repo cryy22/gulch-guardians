@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: ArcheryTraining
   m_EditorClassIdentifier: 
   Description: Select a unit to attack in the 2nd spot instead.
+  ArcherType: {fileID: 11400000, guid: 9fbc68c9d73b0487baec45477fd8e09c, type: 2}

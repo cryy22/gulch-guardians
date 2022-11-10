@@ -12,6 +12,8 @@ namespace GulchGuardians
     public class ShieldUp : ModificationEffect
     {
         private const string _name = "Shield Up";
+        [SerializeField] private AbilityType SturdyType;
+
         public override string Name => _name;
 
         public override TargetType Target => TargetType.Unit;
@@ -19,13 +21,13 @@ namespace GulchGuardians
         public override bool CanBeAppliedTo(Context context)
         {
             Team playerTeam = context.PlayerTeam;
-            return playerTeam != null && playerTeam.Units.Any(u => !u.HasAbility(Ability.Sturdy));
+            return playerTeam != null && playerTeam.Units.Any(u => !u.HasAbility(SturdyType));
         }
 
         public override IEnumerator Apply(Context context)
         {
             yield return base.Apply(context);
-            yield return context.Unit!.AddAbility(Ability.Sturdy);
+            yield return context.Unit!.AddAbility(SturdyType);
         }
     }
 }

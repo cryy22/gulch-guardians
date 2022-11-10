@@ -318,6 +318,7 @@ MonoBehaviour:
   MaxUnits: 99
   UnitsPerCombatCycle: 3
   UnitSets: []
+  BossType: {fileID: 11400000, guid: b1c74edd376d24b228d41d2f07d3f69d, type: 2}
 --- !u!114 &3575982119089321520
 MonoBehaviour:
   m_ObjectHideFlags: 0

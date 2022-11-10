@@ -16,6 +16,8 @@ namespace GulchGuardians
 
         [SerializeField] private List<UnitSet> UnitSets;
 
+        [SerializeField] private AbilityType BossType;
+
         private UnitsDisplayer _unitsDisplayer;
 
         public event EventHandler UnitsChanged;
@@ -58,7 +60,7 @@ namespace GulchGuardians
 
         public void ResetUnitsOnDeck()
         {
-            UnitsInCombatCycle = FrontUnit && FrontUnit.HasAbility(Ability.Boss)
+            UnitsInCombatCycle = FrontUnit && FrontUnit.HasAbility(BossType)
                 ? 1
                 : Mathf.Min(a: UnitsPerCombatCycle, b: Units.Count);
 

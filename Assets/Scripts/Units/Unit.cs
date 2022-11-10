@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Abilities;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -12,7 +11,10 @@ namespace GulchGuardians
     [RequireComponent(typeof(UnitDisplayer))]
     public class Unit : MonoBehaviour
     {
-        private readonly Dictionary<Ability, bool> _abilities = new();
+        [SerializeField] private AbilityType SturdyType;
+        [SerializeField] private AbilityType ArcherType;
+
+        private readonly Dictionary<AbilityType, bool> _abilities = new();
 
         private ClickReporter _clickReporter;
         private UnitDisplayer _displayer;
@@ -40,7 +42,7 @@ namespace GulchGuardians
             _displayer = GetComponent<UnitDisplayer>();
         }
 
-        public IEnumerator AddAbility(Ability ability)
+        public IEnumerator AddAbility(AbilityType ability)
         {
             _abilities[ability] = true;
             _displayer.UpdateAttributes(BuildAttributes());
@@ -59,7 +61,7 @@ namespace GulchGuardians
             Health = attributes.Health;
             MaxHealth = Mathf.Max(a: Health, b: attributes.MaxHealth);
 
-            foreach (Ability ability in attributes.Abilities) _abilities[ability] = true;
+            foreach (KeyValuePair<AbilityType, bool> pair in attributes.Abilities) _abilities[pair.Key] = pair.Value;
 
             _displayer.Setup(spriteLibraryAsset: spriteLibraryAsset, attributes: BuildAttributes());
 
@@ -89,7 +91,7 @@ namespace GulchGuardians
             yield return _displayer.AnimateToPosition(position: position, duration: duration);
         }
 
-        public bool WillAttack(int index) { return index == (_abilities[Ability.Archer] ? 1 : 0); }
+        public bool WillAttack(int index) { return index == (HasAbility(ArcherType) ? 1 : 0); }
 
         public IEnumerator AttackUnit(Unit target)
         {
@@ -97,15 +99,15 @@ namespace GulchGuardians
             yield return target.TakeDamage(Attack);
         }
 
-        public bool HasAbility(Ability ability) { return _abilities[ability]; }
+        public bool HasAbility(AbilityType ability) { return _abilities.GetValueOrDefault(ability); }
 
         private IEnumerator TakeDamage(int damage)
         {
             var abilitiesChanged = false;
-            if (_abilities[Ability.Sturdy] && damage >= Health)
+            if (HasAbility(SturdyType) && damage >= Health)
             {
                 damage = Health - 1;
-                _abilities[Ability.Sturdy] = false;
+                _abilities.Remove(SturdyType);
                 abilitiesChanged = true;
             }
 
@@ -134,7 +136,7 @@ namespace GulchGuardians
                 Attack = Attack,
                 Health = Health,
                 MaxHealth = MaxHealth,
-                Abilities = _abilities.Where(pair => pair.Value).Select(pair => pair.Key),
+                Abilities = _abilities,
             };
         }
 
@@ -145,7 +147,9 @@ namespace GulchGuardians
             public int Attack;
             public int Health;
             public int MaxHealth;
-            public IEnumerable<Ability> Abilities;
+            public IReadOnlyDictionary<AbilityType, bool> Abilities;
+
+            public bool HasAbility(AbilityType ability) { return Abilities.GetValueOrDefault(ability); }
         }
     }
 }

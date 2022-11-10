@@ -10,14 +10,18 @@ namespace GulchGuardians
     {
         [SerializeField] private Unit UnitPrefab;
 
+        [SerializeField] private AbilityType ArcherType;
+        [SerializeField] private AbilityType BossType;
+        [SerializeField] private AbilityType SturdyType;
+
         public Unit CreateFromConfig(UnitConfig config)
         {
             Unit unit = Instantiate(UnitPrefab);
 
-            List<Ability> abilities = new();
-            if (config.IsArcher) abilities.Add(Ability.Archer);
-            if (config.IsBoss) abilities.Add(Ability.Boss);
-            if (config.IsSturdy) abilities.Add(Ability.Sturdy);
+            Dictionary<AbilityType, bool> abilities = new();
+            if (config.IsArcher) abilities[ArcherType] = true;
+            if (config.IsBoss) abilities[BossType] = true;
+            if (config.IsSturdy) abilities[SturdyType] = true;
 
             unit.Initialize(
                 spriteLibraryAsset: config.GetSpriteLibraryAsset(),

@@ -12,6 +12,8 @@ namespace GulchGuardians
     public class ArcheryTraining : ModificationEffect
     {
         private const string _name = "Archery Trng";
+        [SerializeField] private AbilityType ArcherType;
+
         public override string Name => _name;
 
         public override TargetType Target => TargetType.Unit;
@@ -19,13 +21,13 @@ namespace GulchGuardians
         public override bool CanBeAppliedTo(Context context)
         {
             Team playerTeam = context.PlayerTeam;
-            return playerTeam != null && playerTeam.Units.Any(u => !u.HasAbility(Ability.Archer));
+            return playerTeam != null && playerTeam.Units.Any(u => !u.HasAbility(ArcherType));
         }
 
         public override IEnumerator Apply(Context context)
         {
             yield return base.Apply(context);
-            yield return context.Unit!.AddAbility(Ability.Archer);
+            yield return context.Unit!.AddAbility(ArcherType);
         }
     }
 }

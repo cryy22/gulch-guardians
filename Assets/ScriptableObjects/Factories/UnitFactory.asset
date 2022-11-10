@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: UnitFactory
   m_EditorClassIdentifier: 
   UnitPrefab: {fileID: 6608307905624749109, guid: c719fc16d577f434aae58957cea96210, type: 3}
-  PlayerTeamUnitConfigs:
-  - {fileID: 11400000, guid: 332c1c95c1b52459694579c1e1e62015, type: 2}
-  EnemyTeamUnitConfigs:
-  - {fileID: 11400000, guid: 90d633533490445b291afa881f18e685, type: 2}
-  - {fileID: 11400000, guid: d1d07a90ec477454687a65d2509270df, type: 2}
-  - {fileID: 11400000, guid: 8bc192206cfa045cb8693fbad65ed87d, type: 2}
+  ArcherType: {fileID: 11400000, guid: 9fbc68c9d73b0487baec45477fd8e09c, type: 2}
+  BossType: {fileID: 11400000, guid: b1c74edd376d24b228d41d2f07d3f69d, type: 2}
+  SturdyType: {fileID: 11400000, guid: c276d3f8fec7f4009a160d357a5f2cc1, type: 2}
