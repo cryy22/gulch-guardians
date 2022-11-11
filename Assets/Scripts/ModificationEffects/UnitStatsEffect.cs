@@ -18,6 +18,21 @@ namespace GulchGuardians
 
         public override TargetType Target => IntendedTarget;
 
+        public override bool CanBeAppliedTo(Context context)
+        {
+            switch (IntendedTarget)
+            {
+                case TargetType.PlayerTeam:
+                case TargetType.UnitAndPlayerTeam:
+                    Team playerTeam = context.PlayerTeam;
+                    return playerTeam != null && playerTeam.Units.Count > 1;
+                case TargetType.Unit:
+                case TargetType.EnemyTeam:
+                default:
+                    return true;
+            }
+        }
+
         public override IEnumerator Apply(Context context)
         {
             yield return base.Apply(context);
