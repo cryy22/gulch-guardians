@@ -21,8 +21,18 @@ namespace GulchGuardians
         [SerializeField] private Transform AbilityIcons;
         [SerializeField] private GameObject AbilityIconPrefab;
         [SerializeField] private AbilityType BossType;
+        [SerializeField] private ParticleSystem AttackParticleSystem;
 
         private readonly Dictionary<AbilityType, GameObject> _abilityIcons = new();
+
+        private Quaternion _leftParticleRotation;
+        private Quaternion _rightParticleRotation;
+
+        private void Awake()
+        {
+            _leftParticleRotation = AttackParticleSystem.transform.rotation;
+            _rightParticleRotation = Quaternion.Euler(x: 0, y: 0, z: 180) * _leftParticleRotation;
+        }
 
         public void Setup(SpriteLibraryAsset spriteLibraryAsset, Unit.Attributes attributes)
         {
@@ -77,8 +87,12 @@ namespace GulchGuardians
             transform.position = startPosition;
         }
 
-        public IEnumerator AnimateDamage(int damage = 1)
+        public IEnumerator AnimateDamage(int damage, DamageDirection direction)
         {
+            AttackParticleSystem.transform.rotation =
+                direction == DamageDirection.Left ? _leftParticleRotation : _rightParticleRotation;
+            AttackParticleSystem.Play();
+
             yield return CoroutineHelper.RunConcurrently(
                 StartCoroutine(AnimateSineShake()),
                 StartCoroutine(AnimateHurtAnimation()),
@@ -184,6 +198,12 @@ namespace GulchGuardians
             }
 
             foreach (AbilityType ability in _abilityIcons.Keys.Except(activeAbilities)) Destroy(_abilityIcons[ability]);
+        }
+
+        public enum DamageDirection
+        {
+            Left,
+            Right,
         }
     }
 }

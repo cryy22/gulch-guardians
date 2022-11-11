@@ -107,12 +107,16 @@ namespace GulchGuardians
             }
 
             yield return _displayer.AnimateAttack(target);
-            yield return target.TakeDamage(Attack);
+
+            UnitDisplayer.DamageDirection direction = transform.position.x < target.transform.position.x
+                ? UnitDisplayer.DamageDirection.Left
+                : UnitDisplayer.DamageDirection.Right;
+            yield return target.TakeDamage(damage: Attack, direction: direction);
         }
 
         public bool HasAbility(AbilityType ability) { return _abilities.GetValueOrDefault(ability); }
 
-        private IEnumerator TakeDamage(int damage)
+        private IEnumerator TakeDamage(int damage, UnitDisplayer.DamageDirection direction)
         {
             var abilitiesChanged = false;
             if (HasAbility(SturdyType) && damage >= Health)
@@ -125,7 +129,7 @@ namespace GulchGuardians
             Health -= damage;
 
             _displayer.UpdateAttributes(BuildAttributes());
-            yield return _displayer.AnimateDamage(damage);
+            yield return _displayer.AnimateDamage(damage: damage, direction: direction);
             yield return _displayer.AnimateStatsChange(animateHealth: true, animateAbilities: abilitiesChanged);
 
             if (IsDefeated) StartCoroutine(HandleDefeat());
