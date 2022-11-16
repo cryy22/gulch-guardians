@@ -18,6 +18,7 @@ namespace Tooltip
 
         [SerializeField] private UIAbilityTooltipItem AbilityTooltipItem1;
         [SerializeField] private UIAbilityTooltipItem AbilityTooltipItem2;
+        [SerializeField] private UIAbilityTooltipItem AbilityTooltipItem3;
 
         [SerializeField] private UIAbilityTooltip AbilityTooltip;
 
@@ -32,6 +33,7 @@ namespace Tooltip
         {
             AbilityTooltipItem1,
             AbilityTooltipItem2,
+            AbilityTooltipItem3,
         };
 
         public void Awake()
