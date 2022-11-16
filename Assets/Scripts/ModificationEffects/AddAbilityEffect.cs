@@ -18,7 +18,10 @@ namespace GulchGuardians
         public override bool CanBeAppliedTo(Context context)
         {
             Team playerTeam = context.PlayerTeam;
-            return playerTeam != null && playerTeam.Units.Any(u => !u.HasAbility(Ability));
+            if (playerTeam == null) return false;
+
+            if (Ability.IsBadForSoloTeam && playerTeam.Units.Count <= 1) return false;
+            return playerTeam.Units.Any(u => !u.HasAbility(Ability));
         }
 
         public override IEnumerator Apply(Context context)

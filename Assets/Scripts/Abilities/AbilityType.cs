@@ -8,5 +8,6 @@ namespace Abilities
         public string Name;
         [TextArea] public string Description;
         public Sprite Icon;
+        public bool IsBadForSoloTeam;
     }
 }

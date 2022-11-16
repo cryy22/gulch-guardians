@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: Healer
   Description: Heals team members instead of attacking.
   Icon: {fileID: 21300000, guid: 2c92aca3c3a3e47acbbc2678f18c04b3, type: 3}
+  IsBadForSoloTeam: 1
