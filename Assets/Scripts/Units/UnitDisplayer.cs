@@ -197,7 +197,11 @@ namespace GulchGuardians
                 _abilityIcons.Add(key: ability, value: abilityIcon);
             }
 
-            foreach (AbilityType ability in _abilityIcons.Keys.Except(activeAbilities)) Destroy(_abilityIcons[ability]);
+            foreach (AbilityType ability in _abilityIcons.Keys.Except(activeAbilities).ToList())
+            {
+                Destroy(_abilityIcons[ability]);
+                _abilityIcons.Remove(key: ability);
+            }
         }
 
         public enum DamageDirection

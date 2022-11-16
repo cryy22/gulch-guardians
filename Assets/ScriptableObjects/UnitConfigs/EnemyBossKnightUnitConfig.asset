@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
   m_Name: EnemyBossKnightUnitConfig
   m_EditorClassIdentifier: 
-  MinAttack: 7
-  MaxAttack: 8
+  MinAttack: 5
+  MaxAttack: 6
   MinHealth: 9
   MaxHealth: 10
   SpriteLibraryAssets:
