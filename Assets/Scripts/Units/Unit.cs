@@ -102,7 +102,10 @@ namespace GulchGuardians
         {
             if (HasAbility(HealerType))
             {
-                yield return CoroutineHelper.RunConcurrently(behaviours: unitTeam.Units!, u => u.Heal(amount: Attack));
+                yield return CoroutineHelper.RunConcurrently(
+                    behaviours: unitTeam.Units!,
+                    u => u.Heal(amount: Attack / 2)
+                );
                 yield break;
             }
 
