@@ -130,6 +130,8 @@ namespace GulchGuardians
 
         private IEnumerator RunAttackCycle(Team player, Team enemy)
         {
+            Unit frontUnit = player.FrontUnit;
+
             IEnumerable<Unit> playerAttackers = player.Units.Where((u, index) => u.WillAttack(index));
             foreach (Unit attacker in playerAttackers)
             {
@@ -162,7 +164,7 @@ namespace GulchGuardians
                 yield return WaitForPlayer(0.25f);
             }
 
-            if (player.UnitsInCombatCycle <= 1) yield break;
+            if (frontUnit == null || frontUnit.IsDefeated || player.UnitsInCombatCycle <= 1) yield break;
 
             yield return player.SetUnitIndex(unit: player.FrontUnit, index: player.UnitsInCombatCycle - 1);
             yield return WaitForPlayer();
