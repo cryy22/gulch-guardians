@@ -4,10 +4,7 @@ using UnityEngine;
 
 namespace GulchGuardians
 {
-    [CreateAssetMenu(
-        fileName = "HotSprings",
-        menuName = "Scriptable Objects/Modification Effects/Hot Springs"
-    )]
+    [CreateAssetMenu(fileName = "HotSprings", menuName = "Modification Effects/Hot Springs")]
     public class HotSprings : ModificationEffect
     {
         public override TargetType Target => TargetType.Unit;

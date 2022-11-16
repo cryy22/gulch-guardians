@@ -6,7 +6,7 @@ using UnityEngine.U2D.Animation;
 
 namespace GulchGuardians
 {
-    [CreateAssetMenu(fileName = "NewUnitConfig", menuName = "Scriptable Objects/Config/Unit Config")]
+    [CreateAssetMenu(fileName = "NewUnitConfig", menuName = "Config/Unit")]
     public class UnitConfig : ScriptableObject
     {
         public int MinAttack;

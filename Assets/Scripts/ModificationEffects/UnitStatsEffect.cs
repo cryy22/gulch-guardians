@@ -5,10 +5,7 @@ using UnityEngine;
 
 namespace GulchGuardians
 {
-    [CreateAssetMenu(
-        fileName = "New UnitStatsEffect",
-        menuName = "Scriptable Objects/Modification Effects/Unit Stats"
-    )]
+    [CreateAssetMenu(fileName = "New UnitStatsEffect", menuName = "Modification Effects/Unit Stats")]
     public class UnitStatsEffect : ModificationEffect
     {
         [SerializeField] private int AttackChange;

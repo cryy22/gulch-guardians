@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GulchGuardians
 {
-    [CreateAssetMenu(fileName = "NewUnit", menuName = "Scriptable Objects/Modification Effects/New Unit")]
+    [CreateAssetMenu(fileName = "NewUnit", menuName = "Modification Effects/New Unit")]
     public class NewUnit : ModificationEffect
     {
         [SerializeField] private UnitSet UnitSet;

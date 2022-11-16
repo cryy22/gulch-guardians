@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Settings
 {
-    [CreateAssetMenu(fileName = "UserSettings", menuName = "Scriptable Objects/User Settings")]
+    [CreateAssetMenu(fileName = "UserSettings", menuName = "Config/User Settings")]
     public class UserSettings : ScriptableObject
     {
         public event EventHandler Changed;

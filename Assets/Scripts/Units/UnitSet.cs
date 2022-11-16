@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace GulchGuardians
 {
-    [CreateAssetMenu(fileName = "NewUnitSet", menuName = "Scriptable Objects/Config/Unit Set")]
+    [CreateAssetMenu(fileName = "NewUnitSet", menuName = "Config/Unit Set")]
     public class UnitSet : ScriptableObject
     {
         [SerializeField] private List<UnitConfigQuantity> UnitConfigQuantities;

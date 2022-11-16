@@ -5,10 +5,7 @@ using UnityEngine;
 
 namespace GulchGuardians
 {
-    [CreateAssetMenu(
-        fileName = "New AddAbilityEffect",
-        menuName = "Scriptable Objects/Modification Effects/Add Ability"
-    )]
+    [CreateAssetMenu(fileName = "New AddAbilityEffect", menuName = "Modification Effects/Add Ability")]
     public class AddAbilityEffect : ModificationEffect
     {
         [SerializeField] private AbilityType Ability;

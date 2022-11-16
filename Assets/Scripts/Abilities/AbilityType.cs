@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Abilities
 {
-    [CreateAssetMenu(fileName = "New AbilityType", menuName = "Scriptable Objects/Types/Ability")]
+    [CreateAssetMenu(fileName = "New AbilityType", menuName = "Types/Ability")]
     public class AbilityType : ScriptableObject
     {
         public string Name;

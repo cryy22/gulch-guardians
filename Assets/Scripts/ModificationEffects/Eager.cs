@@ -3,10 +3,7 @@ using UnityEngine;
 
 namespace GulchGuardians
 {
-    [CreateAssetMenu(
-        fileName = "Eager",
-        menuName = "Scriptable Objects/Modification Effects/Eager"
-    )]
+    [CreateAssetMenu(fileName = "Eager", menuName = "Modification Effects/Eager")]
     public class Eager : ModificationEffect
     {
         public override TargetType Target => TargetType.UnitAndPlayerTeam;

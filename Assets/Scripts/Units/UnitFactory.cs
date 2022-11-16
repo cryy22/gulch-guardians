@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GulchGuardians
 {
-    [CreateAssetMenu(fileName = "UnitFactory", menuName = "Scriptable Objects/Factories/Unit Factory")]
+    [CreateAssetMenu(fileName = "UnitFactory", menuName = "Factories/Unit Factory")]
     public class UnitFactory : ScriptableObject
     {
         [SerializeField] private Unit UnitPrefab;
