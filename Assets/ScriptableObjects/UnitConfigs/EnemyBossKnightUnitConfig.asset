@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinAttack: 5
   MaxAttack: 6
-  MinHealth: 9
-  MaxHealth: 10
+  MinHealth: 8
+  MaxHealth: 9
   SpriteLibraryAssets:
   - {fileID: 7108339969198208228, guid: c1c1eee55e99e47949a752d252894cbf, type: 3}
   AbilityTypes:
