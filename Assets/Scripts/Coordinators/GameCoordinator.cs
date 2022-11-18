@@ -136,11 +136,13 @@ namespace GulchGuardians.Coordinators
         {
             Unit frontUnit = player.FrontUnit;
 
-            IEnumerable<Unit> playerAttackers = player.Units.Where((u, index) => u.WillAttack(index));
-            yield return RunAttack(attackingTeam: player, defendingTeam: enemy, attackers: playerAttackers);
+            yield return RunAttack(attackingTeam: player, defendingTeam: enemy);
+            if (enemy.UnitsInCombatCycle <= 0) yield break;
+            yield return WaitForPlayer(0.25f);
 
-            IEnumerable<Unit> enemyAttackers = enemy.Units.Where((u, index) => u.WillAttack(index));
-            yield return RunAttack(attackingTeam: enemy, defendingTeam: player, attackers: enemyAttackers);
+            yield return RunAttack(attackingTeam: enemy, defendingTeam: player);
+            if (player.UnitsInCombatCycle <= 0) yield break;
+            yield return WaitForPlayer(0.25f);
 
             if (frontUnit == null || frontUnit.IsDefeated || player.UnitsInCombatCycle <= 1) yield break;
 
@@ -148,8 +150,9 @@ namespace GulchGuardians.Coordinators
             yield return WaitForPlayer();
         }
 
-        private IEnumerator RunAttack(Team attackingTeam, Team defendingTeam, IEnumerable<Unit> attackers)
+        private IEnumerator RunAttack(Team attackingTeam, Team defendingTeam)
         {
+            IEnumerable<Unit> attackers = attackingTeam.Units.Where((u, index) => u.WillAttack(index));
             foreach (Unit attacker in attackers)
             {
                 Unit defender = defendingTeam.FrontUnit;
@@ -157,12 +160,7 @@ namespace GulchGuardians.Coordinators
                 yield return attacker.AttackUnit(target: defender, unitTeam: attackingTeam);
                 yield return WaitForPlayer();
 
-                if (defender != null && !defender.IsDefeated) continue;
-
-                yield return defendingTeam.HandleUnitDefeat(defender);
-                if (defendingTeam.UnitsInCombatCycle <= 0) yield break;
-
-                yield return WaitForPlayer(0.25f);
+                if (defender.IsDefeated || defender == null) yield return defendingTeam.HandleUnitDefeat(defender);
             }
         }
 
