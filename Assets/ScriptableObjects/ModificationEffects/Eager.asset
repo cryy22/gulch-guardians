@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Eager
   m_EditorClassIdentifier: 
   Name: Eager
-  Description: Select a unit to move to the front and gain 1 health.
+  Description: Select a unit to move to the front and gain 1 attack.
