@@ -27,6 +27,8 @@ namespace GulchGuardians.Teams
         private int _actionsRemaining;
         private bool _isModifying;
 
+        public bool IsRoundActive { get; private set; }
+
         private void Awake() { _effectOptions = GetComponent<UIEffectOptionsDisplayer>(); }
 
         private void OnEnable()
@@ -44,6 +46,8 @@ namespace GulchGuardians.Teams
         public void BeginModificationRound()
         {
             gameObject.SetActive(true);
+            IsRoundActive = true;
+
             _actionsRemaining = ActionsPerRound;
             UpdateActionsRemainingText();
 
@@ -56,6 +60,8 @@ namespace GulchGuardians.Teams
 
             CleanUpOfferedEffects();
             _effectOptions.CleanUpEffectOptions();
+
+            IsRoundActive = false;
             gameObject.SetActive(false);
         }
 

@@ -50,7 +50,7 @@ namespace GulchGuardians.Coordinators
         public void OnAdvance(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            if (_currentPhase != Phase.Combat) return;
+            if (_currentPhase == Phase.Preparation && TeamModifier.IsRoundActive) return;
 
             OnAdvanceButtonClicked();
 
