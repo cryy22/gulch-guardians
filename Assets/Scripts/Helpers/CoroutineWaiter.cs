@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace GulchGuardians
+namespace GulchGuardians.Helpers
 {
-    public static class CoroutineHelper
+    public static class CoroutineWaiter
     {
         public static IEnumerator RunConcurrently<T>(
             IEnumerable<T> behaviours,

@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Abilities;
+using GulchGuardians.Abilities;
+using GulchGuardians.Audio;
 using GulchGuardians.Constants;
+using GulchGuardians.Helpers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
 
-namespace GulchGuardians
+namespace GulchGuardians.Units
 {
-    public class UnitDisplayer : MonoBehaviour
+    public class UIUnitDisplayer : MonoBehaviour
     {
         [SerializeField] private TMP_Text AttackText;
         [SerializeField] private TMP_Text HealthText;
@@ -93,7 +95,7 @@ namespace GulchGuardians
                 direction == DamageDirection.Left ? _leftParticleRotation : _rightParticleRotation;
             AttackParticleSystem.Play();
 
-            yield return CoroutineHelper.RunConcurrently(
+            yield return CoroutineWaiter.RunConcurrently(
                 StartCoroutine(AnimateSineShake()),
                 StartCoroutine(AnimateHurtAnimation()),
                 StartCoroutine(AnimateFlash(damage > 0 ? Color.red : Color.gray))

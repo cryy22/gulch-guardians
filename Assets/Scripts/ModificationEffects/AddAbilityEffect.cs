@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Linq;
-using Abilities;
+using GulchGuardians.Abilities;
+using GulchGuardians.Teams;
 using UnityEngine;
 
-namespace GulchGuardians
+namespace GulchGuardians.ModificationEffects
 {
     [CreateAssetMenu(fileName = "New AddAbilityEffect", menuName = "Modification Effects/Add Ability")]
     public class AddAbilityEffect : ModificationEffect

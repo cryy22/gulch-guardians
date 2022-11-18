@@ -1,8 +1,7 @@
-using Abilities;
 using TMPro;
 using UnityEngine;
 
-namespace Tooltip
+namespace GulchGuardians.Abilities
 {
     public class UIAbilityTooltip : MonoBehaviour
     {

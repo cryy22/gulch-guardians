@@ -1,29 +1,31 @@
 using System;
-using GulchGuardians;
 using TMPro;
 using UnityEngine;
 
-public class UIEnemyUnitCount : MonoBehaviour
+namespace GulchGuardians.Teams
 {
-    [SerializeField] private Team EnemyTeam;
-
-    [SerializeField] private TMP_Text CounterText;
-    [SerializeField] private TMP_Text SuffixText;
-
-    private void OnEnable()
+    public class UIEnemyUnitCount : MonoBehaviour
     {
-        EnemyTeam.UnitsChanged += UnitsChangedEventHandler;
-        UnitsChangedEventHandler(sender: this, e: EventArgs.Empty);
-    }
+        [SerializeField] private Team EnemyTeam;
 
-    private void OnDisable() { EnemyTeam.UnitsChanged -= UnitsChangedEventHandler; }
+        [SerializeField] private TMP_Text CounterText;
+        [SerializeField] private TMP_Text SuffixText;
 
-    private void UnitsChangedEventHandler(object sender, EventArgs e) { UpdateCounter(); }
+        private void OnEnable()
+        {
+            EnemyTeam.UnitsChanged += UnitsChangedEventHandler;
+            UnitsChangedEventHandler(sender: this, e: EventArgs.Empty);
+        }
 
-    private void UpdateCounter()
-    {
-        int unitCount = EnemyTeam.Units.Count;
-        CounterText.text = unitCount.ToString();
-        SuffixText.text = unitCount == 1 ? "enemy unit remaining" : "enemy units remaining";
+        private void OnDisable() { EnemyTeam.UnitsChanged -= UnitsChangedEventHandler; }
+
+        private void UnitsChangedEventHandler(object sender, EventArgs e) { UpdateCounter(); }
+
+        private void UpdateCounter()
+        {
+            int unitCount = EnemyTeam.Units.Count;
+            CounterText.text = unitCount.ToString();
+            SuffixText.text = unitCount == 1 ? "enemy unit remaining" : "enemy units remaining";
+        }
     }
 }

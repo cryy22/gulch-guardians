@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
-using Settings;
+using GulchGuardians.System;
 using UnityEngine;
 
-namespace GulchGuardians
+namespace GulchGuardians.Audio
 {
     public class BGMPlayer : MonoBehaviour
     {

@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Abilities;
+using GulchGuardians.Abilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Tooltip
+namespace GulchGuardians.Units
 {
-    public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class UIUnitTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private RectTransform Container;
         [SerializeField] private TMP_Text TitleText;
@@ -27,7 +27,7 @@ namespace Tooltip
         private bool _showRequested;
         private bool _pointerIsOver;
 
-        public static Tooltip Instance { get; private set; }
+        public static UIUnitTooltip Instance { get; private set; }
 
         private List<UIAbilityTooltipItem> TooltipItems => new()
         {

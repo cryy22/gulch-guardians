@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Linq;
+using GulchGuardians.Teams;
+using GulchGuardians.Units;
 using Unity.VisualScripting;
 using UnityEngine;
+using Unit = GulchGuardians.Units.Unit;
 
-namespace GulchGuardians
+namespace GulchGuardians.ModificationEffects
 {
     [CreateAssetMenu(fileName = "NewUnit", menuName = "Modification Effects/New Unit")]
     public class NewUnit : ModificationEffect

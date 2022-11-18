@@ -1,12 +1,11 @@
-using GulchGuardians;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Tooltip
+namespace GulchGuardians.Units
 {
     [RequireComponent(typeof(Collider2D))]
     [RequireComponent(typeof(Unit))]
-    public class UnitTooltipDisplayer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class UIUnitTooltipDisplayer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         private Unit _unit;
         private Bounds _bounds;
@@ -38,17 +37,17 @@ namespace Tooltip
         {
             if (_unit.TooltipEnabled == false) return;
 
-            Tooltip.Instance.SetContent(
+            UIUnitTooltip.Instance.SetContent(
                 title: _unit.FirstName,
                 line1: $"attack {TwoDigitNumber(_unit.Attack)}",
                 line2: $"health {TwoDigitNumber(_unit.Health)}",
                 line3: $"maxhlth {TwoDigitNumber(_unit.MaxHealth)}"
             );
-            Tooltip.Instance.SetAbilities(_unit.ActiveAbilities);
-            Tooltip.Instance.SetPosition(GetTooltipPosition());
-            Tooltip.Instance.Show();
+            UIUnitTooltip.Instance.SetAbilities(_unit.ActiveAbilities);
+            UIUnitTooltip.Instance.SetPosition(GetTooltipPosition());
+            UIUnitTooltip.Instance.Show();
         }
 
-        public void OnPointerExit(PointerEventData eventData) { Tooltip.Instance.Hide(); }
+        public void OnPointerExit(PointerEventData eventData) { UIUnitTooltip.Instance.Hide(); }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GulchGuardians.Constants
 {
-    public class Name
+    public static class Names
     {
         private static readonly List<string> _names = new()
         {

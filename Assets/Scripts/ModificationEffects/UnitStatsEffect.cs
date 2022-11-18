@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GulchGuardians.Helpers;
+using GulchGuardians.Teams;
+using GulchGuardians.Units;
 using UnityEngine;
 
-namespace GulchGuardians
+namespace GulchGuardians.ModificationEffects
 {
     [CreateAssetMenu(fileName = "New UnitStatsEffect", menuName = "Modification Effects/Unit Stats")]
     public class UnitStatsEffect : ModificationEffect
@@ -43,7 +46,7 @@ namespace GulchGuardians
                 _                            => new List<Unit>(),
             };
 
-            yield return CoroutineHelper.RunConcurrently(
+            yield return CoroutineWaiter.RunConcurrently(
                 behaviours: targets,
                 u => u.Upgrade(attack: AttackChange, health: HealthChange)
             );

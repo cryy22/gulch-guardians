@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Abilities
+namespace GulchGuardians.Abilities
 {
     public class UIAbilityTooltipItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {

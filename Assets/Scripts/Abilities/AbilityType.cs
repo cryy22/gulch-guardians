@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Abilities
+namespace GulchGuardians.Abilities
 {
     [CreateAssetMenu(fileName = "New AbilityType", menuName = "Types/Ability")]
     public class AbilityType : ScriptableObject

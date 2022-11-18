@@ -1,7 +1,10 @@
 using System.Collections;
+using GulchGuardians.Helpers;
+using GulchGuardians.Teams;
+using GulchGuardians.Units;
 using UnityEngine;
 
-namespace GulchGuardians
+namespace GulchGuardians.ModificationEffects
 {
     [CreateAssetMenu(fileName = "Eager", menuName = "Modification Effects/Eager")]
     public class Eager : ModificationEffect
@@ -21,7 +24,7 @@ namespace GulchGuardians
             Team playerTeam = context.PlayerTeam!;
             Unit unit = context.Unit!;
 
-            yield return CoroutineHelper.RunConcurrently(
+            yield return CoroutineWaiter.RunConcurrently(
                 playerTeam.StartCoroutine(playerTeam.SetUnitIndex(unit: unit, index: 0)),
                 unit.StartCoroutine(unit.Upgrade(attack: 1, health: 0))
             );

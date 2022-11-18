@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Abilities;
+using GulchGuardians.Abilities;
+using GulchGuardians.Units;
 using UnityEngine;
 
-namespace GulchGuardians
+namespace GulchGuardians.Teams
 {
-    [RequireComponent(typeof(UnitsDisplayer))]
+    [RequireComponent(typeof(UIUnitsDisplayer))]
     public class Team : MonoBehaviour
     {
         public List<Unit> Units = new();
@@ -18,7 +19,7 @@ namespace GulchGuardians
 
         [SerializeField] private AbilityType BossType;
 
-        private UnitsDisplayer _unitsDisplayer;
+        private UIUnitsDisplayer _unitsDisplayer;
 
         public event EventHandler UnitsChanged;
         public event EventHandler<UnitClickedEventArgs> UnitClicked;
@@ -27,7 +28,7 @@ namespace GulchGuardians
         public int UnitsInCombatCycle { get; private set; }
         private Unit LastUnitInCycle => UnitsInCombatCycle > 0 ? Units[UnitsInCombatCycle - 1] : null;
 
-        private void Awake() { _unitsDisplayer = GetComponent<UnitsDisplayer>(); }
+        private void Awake() { _unitsDisplayer = GetComponent<UIUnitsDisplayer>(); }
 
         private void Start()
         {

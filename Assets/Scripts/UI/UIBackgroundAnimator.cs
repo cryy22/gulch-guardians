@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Background
+namespace GulchGuardians.UI
 {
-    public class BackgroundAnimator : MonoBehaviour
+    public class UIBackgroundAnimator : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer Background0;
         [SerializeField] private SpriteRenderer Background1;

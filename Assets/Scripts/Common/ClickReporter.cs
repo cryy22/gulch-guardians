@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Object = UnityEngine.Object;
 
-namespace GulchGuardians
+namespace GulchGuardians.Common
 {
     [RequireComponent(typeof(Collider2D))]
     public class ClickReporter : MonoBehaviour, IPointerClickHandler

@@ -2,13 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GulchGuardians.ModificationEffects;
+using GulchGuardians.Units;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace GulchGuardians
+namespace GulchGuardians.Teams
 {
-    [RequireComponent(typeof(EffectOptionsDisplayer))]
+    [RequireComponent(typeof(UIEffectOptionsDisplayer))]
     public class TeamModifier : MonoBehaviour
     {
         [SerializeField] private int ActionsPerRound = 2;
@@ -21,11 +23,11 @@ namespace GulchGuardians
         [SerializeField] private TMP_Text ChooseATargetText;
         private readonly List<ModificationEffect> _offeredEffects = new();
 
-        private EffectOptionsDisplayer _effectOptions;
+        private UIEffectOptionsDisplayer _effectOptions;
         private int _actionsRemaining;
         private bool _isModifying;
 
-        private void Awake() { _effectOptions = GetComponent<EffectOptionsDisplayer>(); }
+        private void Awake() { _effectOptions = GetComponent<UIEffectOptionsDisplayer>(); }
 
         private void OnEnable()
         {

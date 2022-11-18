@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using GulchGuardians.Teams;
+using GulchGuardians.Units;
 using UnityEngine;
 
-namespace GulchGuardians
+namespace GulchGuardians.ModificationEffects
 {
     public abstract class ModificationEffect : ScriptableObject
     {

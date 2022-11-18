@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
+using GulchGuardians.Constants;
+using GulchGuardians.Helpers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Scene = GulchGuardians.Constants.Scene;
 
-namespace GulchGuardians
+namespace GulchGuardians.SceneControls
 {
     public class UITitleScene : MonoBehaviour
     {
@@ -68,7 +69,7 @@ namespace GulchGuardians
 
         private IEnumerator StartGame()
         {
-            yield return CoroutineHelper.RunConcurrently(
+            yield return CoroutineWaiter.RunConcurrently(
                 StartCoroutine(
                     FadeOutAlpha(
                         a => OverlayPanel.SetAlpha(1 - (_overlayPanelTotalAlphaReduction * a)),
@@ -78,7 +79,7 @@ namespace GulchGuardians
                 StartCoroutine(FadeOutAlpha(alphaSetter: TitleText.SetAlpha, duration: 0.5f)),
                 StartCoroutine(FadeOutAlpha(a => StartButton.alpha = a, duration: 0.5f))
             );
-            SceneManager.LoadScene(Scene.MainScene);
+            SceneManager.LoadScene(Scenes.MainIndex);
         }
 
         private IEnumerator FadeInElements()

@@ -2,14 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Abilities;
+using GulchGuardians.Abilities;
+using GulchGuardians.Common;
+using GulchGuardians.Helpers;
+using GulchGuardians.Teams;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-namespace GulchGuardians
+namespace GulchGuardians.Units
 {
     [RequireComponent(typeof(ClickReporter))]
-    [RequireComponent(typeof(UnitDisplayer))]
+    [RequireComponent(typeof(UIUnitDisplayer))]
     public class Unit : MonoBehaviour
     {
         [SerializeField] private AbilityType SturdyType;
@@ -19,7 +22,7 @@ namespace GulchGuardians
         private readonly Dictionary<AbilityType, bool> _abilities = new();
 
         private ClickReporter _clickReporter;
-        private UnitDisplayer _displayer;
+        private UIUnitDisplayer _displayer;
 
         private bool _isInitialized;
         private int _attack;
@@ -51,7 +54,7 @@ namespace GulchGuardians
         private void Awake()
         {
             _clickReporter = GetComponent<ClickReporter>();
-            _displayer = GetComponent<UnitDisplayer>();
+            _displayer = GetComponent<UIUnitDisplayer>();
         }
 
         public IEnumerator AddAbility(AbilityType ability)
@@ -109,7 +112,7 @@ namespace GulchGuardians
         {
             if (HasAbility(HealerType))
             {
-                yield return CoroutineHelper.RunConcurrently(
+                yield return CoroutineWaiter.RunConcurrently(
                     behaviours: unitTeam.Units!,
                     u => u.Heal(amount: Attack / 2)
                 );
@@ -118,15 +121,15 @@ namespace GulchGuardians
 
             yield return _displayer.AnimateAttack(target);
 
-            UnitDisplayer.DamageDirection direction = transform.position.x < target.transform.position.x
-                ? UnitDisplayer.DamageDirection.Left
-                : UnitDisplayer.DamageDirection.Right;
+            UIUnitDisplayer.DamageDirection direction = transform.position.x < target.transform.position.x
+                ? UIUnitDisplayer.DamageDirection.Left
+                : UIUnitDisplayer.DamageDirection.Right;
             yield return target.TakeDamage(damage: Attack, direction: direction);
         }
 
         public bool HasAbility(AbilityType ability) { return _abilities.GetValueOrDefault(ability); }
 
-        private IEnumerator TakeDamage(int damage, UnitDisplayer.DamageDirection direction)
+        private IEnumerator TakeDamage(int damage, UIUnitDisplayer.DamageDirection direction)
         {
             var abilitiesChanged = false;
             if (HasAbility(SturdyType) && damage >= Health)

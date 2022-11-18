@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Abilities;
+using GulchGuardians.Abilities;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-namespace GulchGuardians
+namespace GulchGuardians.Units
 {
     [CreateAssetMenu(fileName = "NewUnitConfig", menuName = "Config/Unit")]
     public class UnitConfig : ScriptableObject

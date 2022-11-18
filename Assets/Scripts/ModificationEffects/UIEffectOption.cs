@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using GulchGuardians.Units;
 using TMPro;
 using UnityEngine;
 
-namespace GulchGuardians
+namespace GulchGuardians.ModificationEffects
 {
-    public class EffectOption : MonoBehaviour
+    public class UIEffectOption : MonoBehaviour
     {
         [SerializeField] private TMP_Text EffectNameText;
         [SerializeField] private RectTransform EffectDescriptionPanel;

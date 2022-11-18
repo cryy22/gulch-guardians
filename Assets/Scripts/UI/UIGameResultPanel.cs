@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace GulchGuardians
+namespace GulchGuardians.UI
 {
     public class UIGameResultPanel : MonoBehaviour
     {

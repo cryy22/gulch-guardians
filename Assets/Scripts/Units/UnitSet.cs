@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace GulchGuardians
+namespace GulchGuardians.Units
 {
     [CreateAssetMenu(fileName = "NewUnitSet", menuName = "Config/Unit Set")]
     public class UnitSet : ScriptableObject

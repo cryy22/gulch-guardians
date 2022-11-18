@@ -1,7 +1,7 @@
-using Settings;
+using GulchGuardians.System;
 using UnityEngine;
 
-namespace GulchGuardians
+namespace GulchGuardians.Audio
 {
     [RequireComponent(typeof(AudioSource))]
     public class SoundFXPlayer : MonoBehaviour

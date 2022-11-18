@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Linq;
+using GulchGuardians.Teams;
 using UnityEngine;
 
-namespace GulchGuardians
+namespace GulchGuardians.ModificationEffects
 {
     [CreateAssetMenu(fileName = "HotSprings", menuName = "Modification Effects/Hot Springs")]
     public class HotSprings : ModificationEffect

@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GulchGuardians.Audio;
+using GulchGuardians.Constants;
+using GulchGuardians.Teams;
+using GulchGuardians.UI;
+using GulchGuardians.Units;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Scene = GulchGuardians.Constants.Scene;
 
-namespace GulchGuardians
+namespace GulchGuardians.Coordinators
 {
     public class GameCoordinator : MonoBehaviour
     {
@@ -118,7 +122,7 @@ namespace GulchGuardians
             {
                 yield return GameResultPanel.DisplayResult(PlayerTeam.Units.Count > 0);
 
-                SceneManager.LoadScene(Scene.TitleScene);
+                SceneManager.LoadScene(Scenes.TitleIndex);
                 yield break;
             }
 

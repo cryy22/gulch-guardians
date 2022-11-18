@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Settings
+namespace GulchGuardians.System
 {
     [CreateAssetMenu(fileName = "UserSettings", menuName = "Config/User Settings")]
     public class UserSettings : ScriptableObject
