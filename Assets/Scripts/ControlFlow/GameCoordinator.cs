@@ -10,7 +10,7 @@ using Scene = GulchGuardians.Constants.Scene;
 
 namespace GulchGuardians
 {
-    public class Referee : MonoBehaviour
+    public class GameCoordinator : MonoBehaviour
     {
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private Team EnemyTeam;

@@ -985,7 +985,7 @@ GameObject:
   - component: {fileID: 230742417}
   - component: {fileID: 230742418}
   m_Layer: 0
-  m_Name: Referee
+  m_Name: GameCoordinator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
