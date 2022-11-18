@@ -137,41 +137,33 @@ namespace GulchGuardians.Coordinators
             Unit frontUnit = player.FrontUnit;
 
             IEnumerable<Unit> playerAttackers = player.Units.Where((u, index) => u.WillAttack(index));
-            foreach (Unit attacker in playerAttackers)
-            {
-                Unit defender = enemy.FrontUnit;
-
-                yield return attacker.AttackUnit(target: defender, unitTeam: player);
-                yield return WaitForPlayer();
-
-                if (defender != null && !defender.IsDefeated) continue;
-
-                yield return enemy.HandleUnitDefeat(defender);
-                if (enemy.UnitsInCombatCycle <= 0) yield break;
-
-                yield return WaitForPlayer(0.25f);
-            }
+            yield return RunAttack(attackingTeam: player, defendingTeam: enemy, attackers: playerAttackers);
 
             IEnumerable<Unit> enemyAttackers = enemy.Units.Where((u, index) => u.WillAttack(index));
-            foreach (Unit attacker in enemyAttackers)
-            {
-                Unit defender = player.FrontUnit;
-
-                yield return attacker.AttackUnit(target: defender, unitTeam: enemy);
-                yield return WaitForPlayer();
-
-                if (defender != null && !defender.IsDefeated) continue;
-
-                yield return player.HandleUnitDefeat(defender);
-                if (player.UnitsInCombatCycle <= 0) yield break;
-
-                yield return WaitForPlayer(0.25f);
-            }
+            yield return RunAttack(attackingTeam: enemy, defendingTeam: player, attackers: enemyAttackers);
 
             if (frontUnit == null || frontUnit.IsDefeated || player.UnitsInCombatCycle <= 1) yield break;
 
             yield return player.SetUnitIndex(unit: player.FrontUnit, index: player.UnitsInCombatCycle - 1);
             yield return WaitForPlayer();
+        }
+
+        private IEnumerator RunAttack(Team attackingTeam, Team defendingTeam, IEnumerable<Unit> attackers)
+        {
+            foreach (Unit attacker in attackers)
+            {
+                Unit defender = defendingTeam.FrontUnit;
+
+                yield return attacker.AttackUnit(target: defender, unitTeam: attackingTeam);
+                yield return WaitForPlayer();
+
+                if (defender != null && !defender.IsDefeated) continue;
+
+                yield return defendingTeam.HandleUnitDefeat(defender);
+                if (defendingTeam.UnitsInCombatCycle <= 0) yield break;
+
+                yield return WaitForPlayer(0.25f);
+            }
         }
 
         private IEnumerator WaitForPlayer(float autoAdvanceDelay = 0f)
