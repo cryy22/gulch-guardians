@@ -22,6 +22,7 @@ namespace GulchGuardians
         private UnitDisplayer _displayer;
 
         private bool _isInitialized;
+        private int _attack;
 
         public event EventHandler Clicked
         {
@@ -35,7 +36,13 @@ namespace GulchGuardians
             _abilities.Where(pair => pair.Value).Select(pair => pair.Key);
 
         public string FirstName { get; private set; }
-        public int Attack { get; private set; }
+
+        public int Attack
+        {
+            get => _attack;
+            private set => _attack = Mathf.Max(a: 0, b: value);
+        }
+
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
 
