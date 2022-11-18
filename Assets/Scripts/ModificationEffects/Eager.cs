@@ -21,10 +21,10 @@ namespace GulchGuardians
             Team playerTeam = context.PlayerTeam!;
             Unit unit = context.Unit!;
 
-            int targetIndex = playerTeam!.Units.IndexOf(unit) - 1;
-            if (targetIndex < 0) targetIndex = playerTeam.Units.Count - 1;
-
-            yield return playerTeam.SetUnitIndex(unit: unit, index: targetIndex);
+            yield return CoroutineHelper.RunConcurrently(
+                playerTeam.StartCoroutine(playerTeam.SetUnitIndex(unit: unit, index: 0)),
+                unit.StartCoroutine(unit.Upgrade(attack: 1, health: 0))
+            );
         }
     }
 }
