@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Crysc.Common;
 using Crysc.Helpers;
+using Crysc.Initialization;
 using GulchGuardians.Abilities;
 using GulchGuardians.Common;
 using GulchGuardians.Teams;
@@ -13,7 +13,7 @@ namespace GulchGuardians.Units
 {
     [RequireComponent(typeof(ClickReporter))]
     [RequireComponent(typeof(UIUnitDisplayer))]
-    public class Unit : InitializedBehaviour<UnitInitParams>
+    public class Unit : InitializationBehaviour<UnitInitParams>
     {
         [SerializeField] private AbilityType SturdyType;
         [SerializeField] private AbilityType ArcherType;

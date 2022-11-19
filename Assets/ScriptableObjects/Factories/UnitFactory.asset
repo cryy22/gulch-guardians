@@ -12,7 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53ea4856ae5c4057bc7474852427453a, type: 3}
   m_Name: UnitFactory
   m_EditorClassIdentifier: 
-  UnitPrefab: {fileID: 6608307905624749109, guid: c719fc16d577f434aae58957cea96210, type: 3}
-  ArcherType: {fileID: 11400000, guid: 9fbc68c9d73b0487baec45477fd8e09c, type: 2}
-  BossType: {fileID: 11400000, guid: b1c74edd376d24b228d41d2f07d3f69d, type: 2}
-  SturdyType: {fileID: 11400000, guid: c276d3f8fec7f4009a160d357a5f2cc1, type: 2}
+  Prefab: {fileID: 6608307905624749109, guid: c719fc16d577f434aae58957cea96210, type: 3}
