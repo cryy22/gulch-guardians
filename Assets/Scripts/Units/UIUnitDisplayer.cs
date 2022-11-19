@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Crysc.Helpers;
 using GulchGuardians.Abilities;
 using GulchGuardians.Audio;
 using GulchGuardians.Constants;
-using GulchGuardians.Helpers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;

@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
+using Crysc.Helpers;
 using GulchGuardians.Constants;
-using GulchGuardians.Helpers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

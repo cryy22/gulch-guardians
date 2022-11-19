@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "art.cryy22.crysc": {
+      "version": "file:/Users/c/games/packages/crysc",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "7.0.8",
       "depth": 1,
