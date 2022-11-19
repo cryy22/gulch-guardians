@@ -8,7 +8,7 @@ namespace GulchGuardians.Units
     {
         [SerializeField] private Unit UnitPrefab;
 
-        public Unit CreateFromConfig(UnitConfig config)
+        public Unit Create(UnitConfig config)
         {
             Unit unit = Instantiate(UnitPrefab);
 

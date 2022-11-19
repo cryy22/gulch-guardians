@@ -100,6 +100,7 @@ namespace GulchGuardians.Teams
         private void AddUnitInternal(Unit unit)
         {
             Units.Add(unit);
+            unit.Team = this;
             unit.Clicked += OnUnitClickedEventHandler;
         }
 

@@ -19,7 +19,7 @@ namespace GulchGuardians.Units
                 for (var i = 0; i < configQuantity.Quantity; i++)
                     units.Insert(
                         index: Random.Range(minInclusive: 0, maxExclusive: units.Count + 1),
-                        item: UnitFactory.CreateFromConfig(configQuantity.UnitConfig)
+                        item: UnitFactory.Create(configQuantity.UnitConfig)
                     );
 
             return units;

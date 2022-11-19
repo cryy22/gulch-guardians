@@ -27,6 +27,8 @@ namespace GulchGuardians.Units
         private bool _isInitialized;
         private int _attack;
 
+        public event EventHandler Destroyed;
+
         public event EventHandler Clicked
         {
             add => _clickReporter.Clicked += value;
@@ -37,6 +39,8 @@ namespace GulchGuardians.Units
 
         public IEnumerable<AbilityType> ActiveAbilities =>
             _abilities.Where(pair => pair.Value).Select(pair => pair.Key);
+
+        public Team Team { get; set; }
 
         public string FirstName { get; private set; }
 
@@ -56,6 +60,13 @@ namespace GulchGuardians.Units
             _clickReporter = GetComponent<ClickReporter>();
             _displayer = GetComponent<UIUnitDisplayer>();
         }
+
+        private void Start()
+        {
+            if (UnitsRegistry.Instance != null) UnitsRegistry.Instance.Register(this);
+        }
+
+        private void OnDestroy() { Destroyed?.Invoke(sender: this, e: EventArgs.Empty); }
 
         public IEnumerator AddAbility(AbilityType ability)
         {
