@@ -16,11 +16,11 @@ namespace GulchGuardians.UI
 
         private void Awake() { Container.gameObject.SetActive(false); }
 
-        private void OnEnable() { UnitsRegistry.Instance.Destroyed += DestroyedEventHandler; }
+        private void OnEnable() { UnitsRegistry.I.Destroying += DestroyingEventHandler; }
 
-        private void OnDisable() { UnitsRegistry.Instance.Destroyed -= DestroyedEventHandler; }
+        private void OnDisable() { UnitsRegistry.I.Destroying -= DestroyingEventHandler; }
 
-        private void DestroyedEventHandler(object sender, EventArgs _)
+        private void DestroyingEventHandler(object sender, EventArgs _)
         {
             var unit = (Unit) sender;
             if (unit.Team != PlayerTeam) return;
