@@ -159,8 +159,10 @@ namespace GulchGuardians.Coordinators
 
                 yield return attacker.AttackUnit(target: defender, unitTeam: attackingTeam);
                 yield return WaitForPlayer();
+                if (defender != null && !defender.IsDefeated) continue;
 
-                if (defender.IsDefeated || defender == null) yield return defendingTeam.HandleUnitDefeat(defender);
+                yield return defendingTeam.HandleUnitDefeat(defender);
+                if (defendingTeam.UnitsInCombatCycle <= 0) yield break;
             }
         }
 
