@@ -2,18 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Crysc.Common;
 using Crysc.Helpers;
 using GulchGuardians.Abilities;
 using GulchGuardians.Common;
 using GulchGuardians.Teams;
 using UnityEngine;
-using UnityEngine.U2D.Animation;
 
 namespace GulchGuardians.Units
 {
     [RequireComponent(typeof(ClickReporter))]
     [RequireComponent(typeof(UIUnitDisplayer))]
-    public class Unit : MonoBehaviour
+    public class Unit : InitializedBehaviour<UnitInitParams>
     {
         [SerializeField] private AbilityType SturdyType;
         [SerializeField] private AbilityType ArcherType;
@@ -24,7 +24,6 @@ namespace GulchGuardians.Units
         private ClickReporter _clickReporter;
         private UIUnitDisplayer _displayer;
 
-        private bool _isInitialized;
         private int _attack;
 
         public event EventHandler Destroyed;
@@ -40,9 +39,9 @@ namespace GulchGuardians.Units
         public IEnumerable<AbilityType> ActiveAbilities =>
             _abilities.Where(pair => pair.Value).Select(pair => pair.Key);
 
-        public Team Team { get; set; }
+        public string FirstName => InitParams.FirstName;
 
-        public string FirstName { get; private set; }
+        public Team Team { get; set; }
 
         public int Attack
         {
@@ -75,23 +74,17 @@ namespace GulchGuardians.Units
             yield return _displayer.AnimateStatsChange(animateAbilities: true);
         }
 
-        public void Initialize(
-            SpriteLibraryAsset spriteLibraryAsset,
-            Attributes attributes
-        )
+        public override void Initialize(UnitInitParams initParams)
         {
-            if (_isInitialized) throw new Exception("Unit is already initialized");
+            base.Initialize(initParams);
 
-            FirstName = attributes.FirstName;
-            Attack = attributes.Attack;
-            Health = attributes.Health;
-            MaxHealth = Mathf.Max(a: Health, b: attributes.MaxHealth);
+            Attack = initParams.Attack;
+            Health = initParams.Health;
+            MaxHealth = Mathf.Max(a: Health, b: initParams.MaxHealth);
 
-            foreach (KeyValuePair<AbilityType, bool> pair in attributes.Abilities) _abilities[pair.Key] = pair.Value;
+            foreach (KeyValuePair<AbilityType, bool> pair in initParams.Abilities) _abilities[pair.Key] = pair.Value;
 
-            _displayer.Setup(spriteLibraryAsset: spriteLibraryAsset, attributes: BuildAttributes());
-
-            _isInitialized = true;
+            _displayer.Setup(spriteLibraryAsset: initParams.SpriteLibraryAsset, initParams: BuildAttributes());
         }
 
         public IEnumerator Upgrade(int attack, int health)
@@ -167,9 +160,9 @@ namespace GulchGuardians.Units
             Destroy(gameObject);
         }
 
-        private Attributes BuildAttributes()
+        private UnitInitParams BuildAttributes()
         {
-            return new Attributes
+            return new UnitInitParams
             {
                 FirstName = FirstName,
                 Attack = Attack,
@@ -177,21 +170,6 @@ namespace GulchGuardians.Units
                 MaxHealth = MaxHealth,
                 Abilities = _abilities,
             };
-        }
-
-        [Serializable]
-        public struct Attributes
-        {
-            public string FirstName;
-            public int Attack;
-            public int Health;
-            public int MaxHealth;
-            public IReadOnlyDictionary<AbilityType, bool> Abilities;
-
-            public IEnumerable<AbilityType> ActiveAbilities =>
-                Abilities.Where(pair => pair.Value).Select(pair => pair.Key);
-
-            public bool HasAbility(AbilityType ability) { return Abilities.GetValueOrDefault(ability); }
         }
     }
 }

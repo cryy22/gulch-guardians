@@ -36,24 +36,24 @@ namespace GulchGuardians.Units
             _rightParticleRotation = Quaternion.Euler(x: 0, y: 0, z: 180) * _leftParticleRotation;
         }
 
-        public void Setup(SpriteLibraryAsset spriteLibraryAsset, Unit.Attributes attributes)
+        public void Setup(SpriteLibraryAsset spriteLibraryAsset, UnitInitParams initParams)
         {
             SpriteLibrary.spriteLibraryAsset = spriteLibraryAsset;
             Animator.Play(stateNameHash: 0, layer: 0, normalizedTime: Random.Range(minInclusive: 0f, maxInclusive: 1f));
 
-            NameText.text = attributes.FirstName;
-            UpdateAttributes(attributes);
+            NameText.text = initParams.FirstName;
+            UpdateAttributes(initParams);
 
-            if (attributes.HasAbility(BossType)) Renderer.transform.localScale *= 1.33f;
+            if (initParams.HasAbility(BossType)) Renderer.transform.localScale *= 1.33f;
         }
 
-        public void UpdateAttributes(Unit.Attributes attributes)
+        public void UpdateAttributes(UnitInitParams unitInitParams)
         {
-            AttackText.text = attributes.Attack.ToString();
-            HealthText.text = attributes.Health.ToString();
-            HealthText.color = attributes.Health == attributes.MaxHealth ? Color.white : Color.red;
+            AttackText.text = unitInitParams.Attack.ToString();
+            HealthText.text = unitInitParams.Health.ToString();
+            HealthText.color = unitInitParams.Health == unitInitParams.MaxHealth ? Color.white : Color.red;
 
-            UpdateAbilities(attributes);
+            UpdateAbilities(unitInitParams);
         }
 
         public IEnumerator AnimateToPosition(Vector3 position, float duration = 0.25f)
@@ -186,9 +186,9 @@ namespace GulchGuardians.Units
             Animator.SetTrigger(AnimatorProperties.OnIdleTrigger);
         }
 
-        private void UpdateAbilities(Unit.Attributes attributes)
+        private void UpdateAbilities(UnitInitParams unitInitParams)
         {
-            IEnumerable<AbilityType> activeAbilities = attributes.ActiveAbilities.ToList();
+            IEnumerable<AbilityType> activeAbilities = unitInitParams.ActiveAbilities.ToList();
             foreach (AbilityType ability in activeAbilities)
             {
                 if (_abilityIcons.ContainsKey(ability)) continue;
