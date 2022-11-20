@@ -1,16 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Crysc.UI;
 using GulchGuardians.Abilities;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace GulchGuardians.Units
 {
-    public class UIUnitTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class UIUnitTooltip : UITooltip<Unit>
     {
-        [SerializeField] private RectTransform Container;
         [SerializeField] private TMP_Text TitleText;
         [SerializeField] private TMP_Text Line1Text;
         [SerializeField] private TMP_Text Line2Text;
@@ -24,10 +23,7 @@ namespace GulchGuardians.Units
 
         private readonly List<AbilityType> _abilities = new();
 
-        private bool _showRequested;
-        private bool _pointerIsOver;
-
-        public static UIUnitTooltip Instance { get; private set; }
+        private Camera _camera;
 
         private List<UIAbilityTooltipItem> TooltipItems => new()
         {
@@ -36,19 +32,12 @@ namespace GulchGuardians.Units
             AbilityTooltipItem3,
         };
 
-        public void Awake()
-        {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
+        private void Awake() { _camera = Camera.main; }
 
-            Instance = this;
-        }
-
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
+
             foreach (UIAbilityTooltipItem tooltipItem in TooltipItems)
             {
                 tooltipItem.PointerEntered += AbilityTooltipItemPointerEnteredEventHandler;
@@ -56,8 +45,10 @@ namespace GulchGuardians.Units
             }
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
+
             foreach (UIAbilityTooltipItem tooltipItem in TooltipItems)
             {
                 tooltipItem.PointerEntered -= AbilityTooltipItemPointerEnteredEventHandler;
@@ -65,22 +56,31 @@ namespace GulchGuardians.Units
             }
         }
 
-        public void Show() { Container.gameObject.SetActive(true); }
-
-        public void Hide() { Container.gameObject.SetActive(false); }
-
-        public void SetContent(string title, string line1, string line2, string line3)
+        protected override void ShowTooltip(Unit unit)
         {
-            TitleText.text = title;
-            Line1Text.text = line1;
-            Line2Text.text = line2;
-            Line3Text.text = line3;
+            if (unit.TooltipEnabled == false) return;
+
+            base.ShowTooltip(unit);
+
+            SetContent(unit);
+            SetAbilities(unit);
+            SetPosition(unit);
         }
 
-        public void SetAbilities(IEnumerable<AbilityType> abilities)
+        private static string TwoDigitNumber(int number) { return number.ToString("00"); }
+
+        private void SetContent(Unit unit)
+        {
+            TitleText.text = unit.FirstName;
+            Line1Text.text = $"attack {TwoDigitNumber(unit.Attack)}";
+            Line2Text.text = $"health {TwoDigitNumber(unit.Health)}";
+            Line3Text.text = $"maxhlth {TwoDigitNumber(unit.MaxHealth)}";
+        }
+
+        private void SetAbilities(Unit unit)
         {
             _abilities.Clear();
-            _abilities.AddRange(abilities);
+            _abilities.AddRange(unit.ActiveAbilities);
 
             foreach ((UIAbilityTooltipItem item, int i) in TooltipItems.Select((el, i) => (el, i)))
                 if (i >= _abilities.Count)
@@ -89,9 +89,19 @@ namespace GulchGuardians.Units
                     item.SetTitle(_abilities[i].Name);
         }
 
-        public void SetPosition(Vector2 position)
+        private void SetPosition(Unit unit)
         {
-            Container.position = new Vector3(x: position.x, y: position.y, z: Container.position.z);
+            var worldPoint = new Vector3(
+                x: unit.Bounds.center.x,
+                y: unit.Bounds.max.y - 0.25f,
+                z: 0
+            );
+            Vector3 screenPoint = _camera.WorldToScreenPoint(worldPoint);
+            Container.transform.position = new Vector3(
+                x: screenPoint.x,
+                y: screenPoint.y,
+                z: Container.transform.position.z
+            );
         }
 
         private void AbilityTooltipItemPointerEnteredEventHandler(object sender, EventArgs e)
@@ -104,9 +114,5 @@ namespace GulchGuardians.Units
         }
 
         private void AbilityTooltipItemPointerExitedEventHandler(object sender, EventArgs e) { AbilityTooltip.Hide(); }
-
-        public void OnPointerEnter(PointerEventData eventData) { Container.gameObject.SetActive(true); }
-
-        public void OnPointerExit(PointerEventData eventData) { Container.gameObject.SetActive(false); }
     }
 }

@@ -14,6 +14,7 @@ namespace GulchGuardians.Units
     [RequireComponent(typeof(ClickReporter))]
     [RequireComponent(typeof(UIUnitDisplayer))]
     [RequireComponent(typeof(UnitRegistrar))]
+    [RequireComponent(typeof(Collider2D))]
     public class Unit : InitializationBehaviour<UnitInitParams>
     {
         [SerializeField] private AbilityType SturdyType;
@@ -24,6 +25,7 @@ namespace GulchGuardians.Units
 
         private ClickReporter _clickReporter;
         private UIUnitDisplayer _displayer;
+        private Collider2D _collider;
 
         private int _attack;
 
@@ -41,6 +43,7 @@ namespace GulchGuardians.Units
             _abilities.Where(pair => pair.Value).Select(pair => pair.Key);
 
         public string FirstName => InitParams.FirstName;
+        public Bounds Bounds => _collider.bounds;
 
         public Team Team { get; set; }
 
@@ -59,6 +62,7 @@ namespace GulchGuardians.Units
         {
             _clickReporter = GetComponent<ClickReporter>();
             _displayer = GetComponent<UIUnitDisplayer>();
+            _collider = GetComponent<Collider2D>();
         }
 
         private void OnDestroy() { Destroying?.Invoke(sender: this, e: EventArgs.Empty); }
