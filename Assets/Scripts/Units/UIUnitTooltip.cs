@@ -23,16 +23,12 @@ namespace GulchGuardians.Units
 
         private readonly List<AbilityType> _abilities = new();
 
-        private Camera _camera;
-
         private List<UIAbilityTooltipItem> TooltipItems => new()
         {
             AbilityTooltipItem1,
             AbilityTooltipItem2,
             AbilityTooltipItem3,
         };
-
-        private void Awake() { _camera = Camera.main; }
 
         protected override void OnEnable()
         {
@@ -64,7 +60,6 @@ namespace GulchGuardians.Units
 
             SetContent(unit);
             SetAbilities(unit);
-            SetPosition(unit);
         }
 
         private static string TwoDigitNumber(int number) { return number.ToString("00"); }
@@ -87,21 +82,6 @@ namespace GulchGuardians.Units
                     item.SetTitle("----");
                 else
                     item.SetTitle(_abilities[i].Name);
-        }
-
-        private void SetPosition(Unit unit)
-        {
-            var worldPoint = new Vector3(
-                x: unit.Bounds.center.x,
-                y: unit.Bounds.max.y - 0.25f,
-                z: 0
-            );
-            Vector3 screenPoint = _camera.WorldToScreenPoint(worldPoint);
-            Container.transform.position = new Vector3(
-                x: screenPoint.x,
-                y: screenPoint.y,
-                z: Container.transform.position.z
-            );
         }
 
         private void AbilityTooltipItemPointerEnteredEventHandler(object sender, EventArgs e)

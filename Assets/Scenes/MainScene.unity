@@ -1329,6 +1329,7 @@ MonoBehaviour:
   Registry: {fileID: 11400000, guid: e0c06b7c40c66416da3582c1c37a34f6, type: 2}
   Container: {fileID: 53386510}
   PersistsOnTooltipHover: 1
+  MoveToTargetPosition: 1
   TitleText: {fileID: 536724188}
   Line1Text: {fileID: 1141665755}
   Line2Text: {fileID: 928321556}
