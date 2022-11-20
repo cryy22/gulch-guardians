@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Crysc.Helpers;
 using Crysc.Initialization;
-using Crysc.Registries;
 using GulchGuardians.Abilities;
 using GulchGuardians.Common;
 using GulchGuardians.Teams;
@@ -14,7 +13,8 @@ namespace GulchGuardians.Units
 {
     [RequireComponent(typeof(ClickReporter))]
     [RequireComponent(typeof(UIUnitDisplayer))]
-    public class Unit : InitializationBehaviour<UnitInitParams>, IRegisterable
+    [RequireComponent(typeof(UnitRegistrar))]
+    public class Unit : InitializationBehaviour<UnitInitParams>
     {
         [SerializeField] private AbilityType SturdyType;
         [SerializeField] private AbilityType ArcherType;
@@ -32,6 +32,8 @@ namespace GulchGuardians.Units
             add => _clickReporter.Clicked += value;
             remove => _clickReporter.Clicked -= value;
         }
+
+        public event EventHandler Destroying;
 
         public bool IsDefeated => Health <= 0;
 
@@ -57,11 +59,6 @@ namespace GulchGuardians.Units
         {
             _clickReporter = GetComponent<ClickReporter>();
             _displayer = GetComponent<UIUnitDisplayer>();
-        }
-
-        private void Start()
-        {
-            if (UnitsRegistry.I != null) UnitsRegistry.I.Register(this);
         }
 
         private void OnDestroy() { Destroying?.Invoke(sender: this, e: EventArgs.Empty); }
@@ -170,7 +167,5 @@ namespace GulchGuardians.Units
                 Abilities = _abilities,
             };
         }
-
-        public event EventHandler Destroying;
     }
 }

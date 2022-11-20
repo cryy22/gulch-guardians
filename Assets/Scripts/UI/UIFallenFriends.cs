@@ -9,6 +9,7 @@ namespace GulchGuardians.UI
     public class UIFallenFriends : MonoBehaviour
     {
         [SerializeField] private Team PlayerTeam;
+        [SerializeField] private UnitRegistry UnitRegistry;
 
         [SerializeField] private GameObject NameTagPrefab;
         [SerializeField] private Transform Container;
@@ -16,9 +17,9 @@ namespace GulchGuardians.UI
 
         private void Awake() { Container.gameObject.SetActive(false); }
 
-        private void OnEnable() { UnitsRegistry.I.Destroying += DestroyingEventHandler; }
+        private void OnEnable() { UnitRegistry.Destroying += DestroyingEventHandler; }
 
-        private void OnDisable() { UnitsRegistry.I.Destroying -= DestroyingEventHandler; }
+        private void OnDisable() { UnitRegistry.Destroying -= DestroyingEventHandler; }
 
         private void DestroyingEventHandler(object sender, EventArgs _)
         {

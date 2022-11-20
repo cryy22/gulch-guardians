@@ -4982,6 +4982,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4943982857873706237}
   - component: {fileID: 6608307905624749109}
+  - component: {fileID: 1340140432095252761}
   - component: {fileID: -5873586629161309623}
   - component: {fileID: -8309591086784092033}
   - component: {fileID: 625448820951458483}
@@ -5027,6 +5028,19 @@ MonoBehaviour:
   SturdyType: {fileID: 11400000, guid: c276d3f8fec7f4009a160d357a5f2cc1, type: 2}
   ArcherType: {fileID: 11400000, guid: 9fbc68c9d73b0487baec45477fd8e09c, type: 2}
   HealerType: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
+--- !u!114 &1340140432095252761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4943982857873706236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f199ccbec2437d940de41287399776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Registry: {fileID: 11400000, guid: e0c06b7c40c66416da3582c1c37a34f6, type: 2}
 --- !u!114 &-5873586629161309623
 MonoBehaviour:
   m_ObjectHideFlags: 0
