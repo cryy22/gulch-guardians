@@ -1,21 +1,21 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace GulchGuardians.Abilities
 {
-    public class UIAbilityTooltipItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class UIAbilityTooltipItem : MonoBehaviour, IAbilityProvider
     {
         [SerializeField] private TMP_Text Name;
 
-        public event EventHandler PointerEntered;
-        public event EventHandler PointerExited;
+        private void Awake() { SetAbility(null); }
 
-        public void SetTitle(string title) { Name.text = title; }
+        public void SetAbility(AbilityType ability)
+        {
+            Ability = ability;
+            Name.text = ability != null ? ability.Name : "----";
+        }
 
-        public void OnPointerEnter(PointerEventData _) { PointerEntered?.Invoke(sender: this, e: EventArgs.Empty); }
-
-        public void OnPointerExit(PointerEventData _) { PointerExited?.Invoke(sender: this, e: EventArgs.Empty); }
+        // IAbilityProvider
+        public AbilityType Ability { get; private set; }
     }
 }

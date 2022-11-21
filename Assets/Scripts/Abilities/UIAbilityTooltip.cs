@@ -1,21 +1,26 @@
+using Crysc.UI;
 using TMPro;
 using UnityEngine;
 
 namespace GulchGuardians.Abilities
 {
-    public class UIAbilityTooltip : MonoBehaviour
+    public class UIAbilityTooltip : UITooltip<AbilityType>
     {
         [SerializeField] private TMP_Text TitleText;
         [SerializeField] private TMP_Text DescriptionText;
 
-        public void SetAbility(AbilityType ability)
+        protected override void ShowTooltip(AbilityType target)
+        {
+            if (target == null) return;
+
+            base.ShowTooltip(target);
+            SetAbility(target);
+        }
+
+        private void SetAbility(AbilityType ability)
         {
             TitleText.text = ability.Name;
             DescriptionText.text = ability.Description;
         }
-
-        public void Show() { gameObject.SetActive(true); }
-
-        public void Hide() { gameObject.SetActive(false); }
     }
 }

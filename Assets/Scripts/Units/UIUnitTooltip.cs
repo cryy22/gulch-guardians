@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Crysc.UI;
@@ -19,8 +18,6 @@ namespace GulchGuardians.Units
         [SerializeField] private UIAbilityTooltipItem AbilityTooltipItem2;
         [SerializeField] private UIAbilityTooltipItem AbilityTooltipItem3;
 
-        [SerializeField] private UIAbilityTooltip AbilityTooltip;
-
         private readonly List<AbilityType> _abilities = new();
 
         private List<UIAbilityTooltipItem> TooltipItems => new()
@@ -30,34 +27,11 @@ namespace GulchGuardians.Units
             AbilityTooltipItem3,
         };
 
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-
-            foreach (UIAbilityTooltipItem tooltipItem in TooltipItems)
-            {
-                tooltipItem.PointerEntered += AbilityTooltipItemPointerEnteredEventHandler;
-                tooltipItem.PointerExited += AbilityTooltipItemPointerExitedEventHandler;
-            }
-        }
-
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-
-            foreach (UIAbilityTooltipItem tooltipItem in TooltipItems)
-            {
-                tooltipItem.PointerEntered -= AbilityTooltipItemPointerEnteredEventHandler;
-                tooltipItem.PointerExited -= AbilityTooltipItemPointerExitedEventHandler;
-            }
-        }
-
         protected override void ShowTooltip(Unit unit)
         {
             if (unit.TooltipEnabled == false) return;
 
             base.ShowTooltip(unit);
-
             SetContent(unit);
             SetAbilities(unit);
         }
@@ -78,21 +52,7 @@ namespace GulchGuardians.Units
             _abilities.AddRange(unit.ActiveAbilities);
 
             foreach ((UIAbilityTooltipItem item, int i) in TooltipItems.Select((el, i) => (el, i)))
-                if (i >= _abilities.Count)
-                    item.SetTitle("----");
-                else
-                    item.SetTitle(_abilities[i].Name);
+                item.SetAbility(_abilities.ElementAtOrDefault(i));
         }
-
-        private void AbilityTooltipItemPointerEnteredEventHandler(object sender, EventArgs e)
-        {
-            int index = TooltipItems.IndexOf((UIAbilityTooltipItem) sender);
-            if (index >= _abilities.Count) return;
-
-            AbilityTooltip.SetAbility(_abilities[index]);
-            AbilityTooltip.Show();
-        }
-
-        private void AbilityTooltipItemPointerExitedEventHandler(object sender, EventArgs e) { AbilityTooltip.Hide(); }
     }
 }
