@@ -56,13 +56,12 @@ SpriteAtlas:
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: d4667cb0e1d464193af34489f11f7e4d, type: 3}
   - {fileID: 21300000, guid: 7041a4c0630a748c692fba9de5a670d8, type: 3}
   - {fileID: 21300000, guid: aad70d01d9a294039ac7cbb714536689, type: 3}
   - {fileID: 21300000, guid: ec5ee9a11f4f54a0287ac8f4a81d09a0, type: 3}
   - {fileID: 21300000, guid: 09365d32298844644aea9facf31aa0e8, type: 3}
   - {fileID: 21300000, guid: 0be970921f3234b1997fbc148f388927, type: 3}
-  - {fileID: 21300000, guid: 2c92aca3c3a3e47acbbc2678f18c04b3, type: 3}
-  - {fileID: 21300000, guid: 109b16e33fc254598823363d0f3405e4, type: 3}
   - {fileID: 21300000, guid: dabca31483e5c478e85f8058ea206d68, type: 3}
   - {fileID: 21300000, guid: df1e0714059264e0e99c5473ca3b2f8b, type: 3}
   - {fileID: 21300000, guid: 141a7c54068a94b329004926f3dffbf7, type: 3}
@@ -71,6 +70,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 65c23115c5fbc400fbf5ef6ce716375d, type: 3}
   - {fileID: 21300000, guid: 80ea3b15e20244ffda739a0fd022467e, type: 3}
   - {fileID: 21300000, guid: 62fb0855c3f854af3aab8100ebbd14c7, type: 3}
+  - {fileID: 21300000, guid: b525da95b158d45d68d9384fa4404518, type: 3}
   - {fileID: 21300000, guid: a6aac1c5aaa7844fbb9878ea4614c148, type: 3}
   - {fileID: 21300000, guid: ca5891066a77b4ab38b6fe3de013a921, type: 3}
   - {fileID: 21300000, guid: 332b6f06a7d8e4c45a0eaee9ea1e6a43, type: 3}
@@ -88,12 +88,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f80cd3b9f551d4863b46e9e288622b99, type: 3}
   - {fileID: 21300000, guid: a26750e9242a44957822587032cef61f, type: 3}
   - {fileID: 21300000, guid: 32fa0e2ab11954255b86363ebc2bca1d, type: 3}
-  - {fileID: 21300000, guid: 9cc3114acd2394db59fb7defa4fb53d4, type: 3}
   - {fileID: 21300000, guid: 59a7f5aaae5fe40958943cce3821bfa3, type: 3}
-  - {fileID: 21300000, guid: a62f19aaa308a471eaa5926b38a28c89, type: 3}
   - {fileID: 21300000, guid: 83ca1dba9cc6e4e43b55550c76729ef7, type: 3}
+  - {fileID: 21300000, guid: 474bcf0b0600d4b778193cfeee3d5bfb, type: 3}
   - {fileID: 21300000, guid: 9b1a1e1b640584a58bc5305abc737b8f, type: 3}
   - {fileID: 21300000, guid: fbe51e2b1b2bb469391b351081baf371, type: 3}
+  - {fileID: 21300000, guid: 2d01aedb3fcba4848bc6945a3e5d3a6e, type: 3}
   - {fileID: 21300000, guid: eb7afffbc6d964aaea81e67de34abb37, type: 3}
   - {fileID: 21300000, guid: 614047ac3a76449c1a4870771ec2625a, type: 3}
   - {fileID: 21300000, guid: 609bea2d1b2604691beeadbcc25dc9eb, type: 3}
@@ -104,13 +104,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d883553ec1f8a45358f10791d535ecde, type: 3}
   - {fileID: 21300000, guid: 2754f53e81eb24b8db40650864ef62a1, type: 3}
   m_PackedSpriteNamesToIndex:
-  - sprite0002
-  - sprite0003
-  - sprite0003
-  - sprite0001
-  - sprite0001
   - Healer
-  - Boss
+  - sprite0002
+  - sprite0003
+  - sprite0003
+  - sprite0001
+  - sprite0001
   - sprite0002
   - sprite0003
   - sprite0003
@@ -119,6 +118,7 @@ SpriteAtlas:
   - sprite0002
   - sprite0002
   - sprite0002
+  - Sturdy
   - sprite0002
   - sprite0003
   - sprite0001
@@ -136,12 +136,12 @@ SpriteAtlas:
   - sprite0001
   - sprite0003
   - sprite0001
-  - Archer
   - sprite0001
-  - Sturdy
   - sprite0001
+  - Boss
   - sprite0003
   - sprite0001
+  - Archer
   - sprite0003
   - sprite0002
   - sprite0002

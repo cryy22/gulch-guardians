@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Boss
   Description: Big.
-  Icon: {fileID: 21300000, guid: 109b16e33fc254598823363d0f3405e4, type: 3}
+  Icon: {fileID: 21300000, guid: 474bcf0b0600d4b778193cfeee3d5bfb, type: 3}
+  IsBadForSoloTeam: 0

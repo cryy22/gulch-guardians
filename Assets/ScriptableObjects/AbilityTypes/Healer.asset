@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Healer
   Description: Heals team members for 1/2 atk instead of attacking.
-  Icon: {fileID: 21300000, guid: 2c92aca3c3a3e47acbbc2678f18c04b3, type: 3}
+  Icon: {fileID: 21300000, guid: d4667cb0e1d464193af34489f11f7e4d, type: 3}
   IsBadForSoloTeam: 1

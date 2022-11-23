@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Archer
   Description: Attacks from 2nd position instead of 1st.
-  Icon: {fileID: 21300000, guid: 9cc3114acd2394db59fb7defa4fb53d4, type: 3}
+  Icon: {fileID: 21300000, guid: 2d01aedb3fcba4848bc6945a3e5d3a6e, type: 3}
   IsBadForSoloTeam: 1
