@@ -23,12 +23,13 @@ namespace GulchGuardians.Units
         [SerializeField] private Transform AbilityIcons;
         [SerializeField] private GameObject AbilityIconPrefab;
         [SerializeField] private AbilityType BossType;
+        [SerializeField] private AbilityType HealerType;
         [SerializeField] private ParticleSystem AttackParticleSystem;
 
         private readonly Dictionary<AbilityType, GameObject> _abilityIcons = new();
-
         private Quaternion _leftParticleRotation;
         private Quaternion _rightParticleRotation;
+        private UnitSpriteAssetMap _spriteAssetMap;
 
         private void Awake()
         {
@@ -36,9 +37,10 @@ namespace GulchGuardians.Units
             _rightParticleRotation = Quaternion.Euler(x: 0, y: 0, z: 180) * _leftParticleRotation;
         }
 
-        public void Setup(SpriteLibraryAsset spriteLibraryAsset, UnitInitParams initParams)
+        public void Setup(UnitSpriteAssetMap spriteAssetMap, UnitInitParams initParams)
         {
-            SpriteLibrary.spriteLibraryAsset = spriteLibraryAsset;
+            _spriteAssetMap = spriteAssetMap;
+            SpriteLibrary.spriteLibraryAsset = _spriteAssetMap.Default;
             Animator.Play(stateNameHash: 0, layer: 0, normalizedTime: Random.Range(minInclusive: 0f, maxInclusive: 1f));
 
             NameText.text = initParams.FirstName;
@@ -54,6 +56,7 @@ namespace GulchGuardians.Units
             HealthText.color = unitInitParams.Health == unitInitParams.MaxHealth ? Color.white : Color.red;
 
             UpdateAbilities(unitInitParams);
+            UpdateSpriteLibraryAsset(unitInitParams);
         }
 
         public IEnumerator AnimateToPosition(Vector3 position, float duration = 0.25f)
@@ -143,6 +146,13 @@ namespace GulchGuardians.Units
             AbilityIcons.localScale = abilityIconsCurrentScale;
         }
 
+        private void UpdateSpriteLibraryAsset(UnitInitParams initParams)
+        {
+            SpriteLibrary.spriteLibraryAsset = initParams.HasAbility(HealerType)
+                ? _spriteAssetMap.Healer
+                : _spriteAssetMap.Default;
+        }
+
         private IEnumerator AnimateSineShake(float duration = 0.08f, float period = 0.04f, float magnitude = 0.25f)
         {
             Vector3 startPosition = transform.position;
@@ -189,6 +199,7 @@ namespace GulchGuardians.Units
         private void UpdateAbilities(UnitInitParams unitInitParams)
         {
             IEnumerable<AbilityType> activeAbilities = unitInitParams.ActiveAbilities.ToList();
+
             foreach (AbilityType ability in activeAbilities)
             {
                 if (_abilityIcons.ContainsKey(ability)) continue;

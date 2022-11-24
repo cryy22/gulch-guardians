@@ -16,8 +16,9 @@ MonoBehaviour:
   MaxAttack: 8
   MinHealth: 2
   MaxHealth: 3
-  IsBoss: 0
-  IsSturdy: 0
-  SpriteLibraryAssets:
-  - {fileID: 7108339969198208228, guid: 2a9ea1ae14fb346bba69fedc5a6cc970, type: 3}
-  - {fileID: 7108339969198208228, guid: ac241875bd07b4a92937492da4561720, type: 3}
+  SpriteAssetMaps:
+  - Default: {fileID: 7108339969198208228, guid: ac241875bd07b4a92937492da4561720, type: 3}
+    Healer: {fileID: 0}
+  - Default: {fileID: 7108339969198208228, guid: 2a9ea1ae14fb346bba69fedc5a6cc970, type: 3}
+    Healer: {fileID: 0}
+  AbilityTypes: []

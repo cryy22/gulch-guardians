@@ -84,7 +84,7 @@ namespace GulchGuardians.Units
 
             foreach (KeyValuePair<AbilityType, bool> pair in initParams.Abilities) _abilities[pair.Key] = pair.Value;
 
-            _displayer.Setup(spriteLibraryAsset: initParams.SpriteLibraryAsset, initParams: BuildAttributes());
+            _displayer.Setup(spriteAssetMap: initParams.SpriteAssetMap, initParams: BuildAttributes());
         }
 
         public IEnumerator Upgrade(int attack, int health)

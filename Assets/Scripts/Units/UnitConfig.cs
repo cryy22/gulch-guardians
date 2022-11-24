@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using GulchGuardians.Abilities;
 using UnityEngine;
-using UnityEngine.U2D.Animation;
 
 namespace GulchGuardians.Units
 {
@@ -14,18 +13,18 @@ namespace GulchGuardians.Units
         public int MinHealth;
         public int MaxHealth;
 
-        public List<SpriteLibraryAsset> SpriteLibraryAssets;
+        public List<UnitSpriteAssetMap> SpriteAssetMaps;
 
         [SerializeField] private List<AbilityType> AbilityTypes;
 
         public IReadOnlyDictionary<AbilityType, bool> Abilities =>
             AbilityTypes.ToDictionary(a => a, _ => true);
 
-        public SpriteLibraryAsset GetSpriteLibraryAsset()
+        public UnitSpriteAssetMap GetSpriteAssetMap()
         {
-            return SpriteLibraryAssets[Random.Range(
+            return SpriteAssetMaps[Random.Range(
                 minInclusive: 0,
-                maxExclusive: SpriteLibraryAssets.Count
+                maxExclusive: SpriteAssetMaps.Count
             )];
         }
     }

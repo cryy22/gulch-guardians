@@ -16,10 +16,13 @@ MonoBehaviour:
   MaxAttack: 3
   MinHealth: 5
   MaxHealth: 8
-  IsPlayerUnit: 1
-  SpriteLibraryAssets:
-  - {fileID: 7108339969198208228, guid: bc19b9d0557d0496bb40a77d6d45498b, type: 3}
-  - {fileID: 7108339969198208228, guid: 1fc5c702e9c004b6c8c4e7772a785f2e, type: 3}
-  - {fileID: 7108339969198208228, guid: 15a714c8b75e4419a9e707132a3d15bc, type: 3}
-  - {fileID: 7108339969198208228, guid: cf79b1d45699e4c2a9937308c2d922f3, type: 3}
+  SpriteAssetMaps:
+  - Default: {fileID: 7108339969198208228, guid: 15a714c8b75e4419a9e707132a3d15bc, type: 3}
+    Healer: {fileID: 7108339969198208228, guid: d3de28f5ae17d4a98abb245eae5ce1dd, type: 3}
+  - Default: {fileID: 7108339969198208228, guid: bc19b9d0557d0496bb40a77d6d45498b, type: 3}
+    Healer: {fileID: 7108339969198208228, guid: 4415c05fdcfcf48ab8af0b34dc4d2bcb, type: 3}
+  - Default: {fileID: 7108339969198208228, guid: 1fc5c702e9c004b6c8c4e7772a785f2e, type: 3}
+    Healer: {fileID: 7108339969198208228, guid: e6b2be5ca1fc042e790b8ecd385cfb14, type: 3}
+  - Default: {fileID: 7108339969198208228, guid: cf79b1d45699e4c2a9937308c2d922f3, type: 3}
+    Healer: {fileID: 7108339969198208228, guid: c614efef52a1948a3958c57cf9172902, type: 3}
   AbilityTypes: []

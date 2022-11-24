@@ -15,7 +15,7 @@ namespace GulchGuardians.Units
                 Attack = Random.Range(minInclusive: config.MinAttack, maxExclusive: config.MaxAttack + 1),
                 Health = Random.Range(minInclusive: config.MinHealth, maxExclusive: config.MaxHealth + 1),
                 Abilities = config.Abilities,
-                SpriteLibraryAsset = config.GetSpriteLibraryAsset(),
+                SpriteAssetMap = config.GetSpriteAssetMap(),
             };
         }
     }

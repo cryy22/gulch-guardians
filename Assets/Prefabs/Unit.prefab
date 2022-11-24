@@ -5100,6 +5100,7 @@ MonoBehaviour:
   AbilityIcons: {fileID: 4138898325063143908}
   AbilityIconPrefab: {fileID: 4619343982268000320, guid: 5c972a823c14f4a2aa2ae254c404fce6, type: 3}
   BossType: {fileID: 11400000, guid: b1c74edd376d24b228d41d2f07d3f69d, type: 2}
+  HealerType: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
   AttackParticleSystem: {fileID: 211717413201965041}
 --- !u!1 &4943982858057783517
 GameObject:

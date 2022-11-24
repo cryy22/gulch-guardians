@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GulchGuardians.Abilities;
-using UnityEngine.U2D.Animation;
 
 namespace GulchGuardians.Units
 {
@@ -13,7 +12,7 @@ namespace GulchGuardians.Units
         public int Attack;
         public int Health;
         public int MaxHealth;
-        public SpriteLibraryAsset SpriteLibraryAsset;
+        public UnitSpriteAssetMap SpriteAssetMap;
         public IReadOnlyDictionary<AbilityType, bool> Abilities;
 
         public IEnumerable<AbilityType> ActiveAbilities =>
