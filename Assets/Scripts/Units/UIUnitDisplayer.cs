@@ -195,23 +195,23 @@ namespace GulchGuardians.Units
             Animator.SetTrigger(AnimatorProperties.OnIdleTrigger);
         }
 
-        private void UpdateAbilities(UnitInitParams unitInitParams)
+        private void UpdateAbilities(UnitInitParams initParams)
         {
-            IEnumerable<AbilityType> activeAbilities = unitInitParams.ActiveAbilities.ToList();
+            IEnumerable<AbilityType> activeAbilities = initParams.ActiveAbilities.ToList();
 
             foreach (AbilityType ability in activeAbilities)
             {
                 if (_abilityIcons.ContainsKey(ability)) continue;
 
-                UIAbilityIconItem abilityIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
-                abilityIcon.SetAbility(ability);
+                UIAbilityIconItem iconItem = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
+                iconItem.SetAbility(ability);
 
-                _abilityIcons.Add(key: ability, value: abilityIcon);
+                _abilityIcons.Add(key: ability, value: iconItem);
             }
 
             foreach (AbilityType ability in _abilityIcons.Keys.Except(activeAbilities).ToList())
             {
-                Destroy(_abilityIcons[ability]);
+                Destroy(_abilityIcons[ability].gameObject);
                 _abilityIcons.Remove(key: ability);
             }
         }
