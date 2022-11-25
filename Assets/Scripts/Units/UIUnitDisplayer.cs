@@ -30,6 +30,8 @@ namespace GulchGuardians.Units
         private Quaternion _rightParticleRotation;
         private UnitSpriteAssetMap _spriteAssetMap;
 
+        private bool _isHealer;
+
         private void Awake()
         {
             _leftParticleRotation = AttackParticleSystem.transform.rotation;
@@ -55,7 +57,7 @@ namespace GulchGuardians.Units
             HealthText.color = unitInitParams.Health == unitInitParams.MaxHealth ? Color.white : Color.red;
 
             UpdateAbilities(unitInitParams);
-            UpdateSpriteLibraryAsset(unitInitParams);
+            UpdateHealerStatus(unitInitParams);
         }
 
         public IEnumerator AnimateToPosition(Vector3 position, float duration = 0.25f)
@@ -75,6 +77,7 @@ namespace GulchGuardians.Units
         public IEnumerator AnimateAttack(Unit target)
         {
             const float duration = 0.0833f;
+            Animator.SetTrigger(AnimatorProperties.OnActTrigger);
 
             Vector3 startPosition = transform.position;
             Vector3 endPosition = target.transform.position;
@@ -89,6 +92,14 @@ namespace GulchGuardians.Units
 
             SoundFXPlayer.Instance.PlayAttackSound();
             transform.position = startPosition;
+            Animator.SetTrigger(AnimatorProperties.OnIdleTrigger);
+        }
+
+        public IEnumerator AnimateHeal()
+        {
+            Animator.SetTrigger(AnimatorProperties.OnActTrigger);
+            yield return AnimateSine(duration: 0.5f, period: 0.5f, magnitude: 0.25f);
+            Animator.SetTrigger(AnimatorProperties.OnIdleTrigger);
         }
 
         public IEnumerator AnimateDamage(int damage, DamageDirection direction)
@@ -98,7 +109,7 @@ namespace GulchGuardians.Units
             AttackParticleSystem.Play();
 
             yield return CoroutineWaiter.RunConcurrently(
-                StartCoroutine(AnimateSineShake()),
+                StartCoroutine(AnimateSine()),
                 StartCoroutine(AnimateHurtAnimation()),
                 StartCoroutine(AnimateFlash(damage > 0 ? Color.red : Color.gray))
             );
@@ -145,14 +156,13 @@ namespace GulchGuardians.Units
             AbilityIcons.localScale = abilityIconsCurrentScale;
         }
 
-        private void UpdateSpriteLibraryAsset(UnitInitParams initParams)
+        private void UpdateHealerStatus(UnitInitParams initParams)
         {
-            SpriteLibrary.spriteLibraryAsset = initParams.HasAbility(HealerType)
-                ? _spriteAssetMap.Healer
-                : _spriteAssetMap.Default;
+            _isHealer = initParams.HasAbility(HealerType);
+            SpriteLibrary.spriteLibraryAsset = _isHealer ? _spriteAssetMap.Healer : _spriteAssetMap.Default;
         }
 
-        private IEnumerator AnimateSineShake(float duration = 0.08f, float period = 0.04f, float magnitude = 0.25f)
+        private IEnumerator AnimateSine(float duration = 0.08f, float period = 0.04f, float magnitude = 0.25f)
         {
             Vector3 startPosition = transform.position;
             var t = 0f;

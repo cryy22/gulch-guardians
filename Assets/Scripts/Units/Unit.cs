@@ -116,6 +116,7 @@ namespace GulchGuardians.Units
         {
             if (HasAbility(HealerType))
             {
+                yield return _displayer.AnimateHeal();
                 yield return CoroutineWaiter.RunConcurrently(
                     behaviours: unitTeam.Units!,
                     u => u.Heal(amount: Attack / 2)

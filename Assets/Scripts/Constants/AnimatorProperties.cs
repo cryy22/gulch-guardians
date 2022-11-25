@@ -4,5 +4,6 @@ namespace GulchGuardians.Constants
     {
         public const string OnIdleTrigger = "OnIdle";
         public const string OnHurtTrigger = "OnHurt";
+        public const string OnActTrigger = "OnAct";
     }
 }

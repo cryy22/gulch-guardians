@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
+  m_Name: PlayerHealerUnitConfig
+  m_EditorClassIdentifier: 
+  MinAttack: 2
+  MaxAttack: 3
+  MinHealth: 5
+  MaxHealth: 8
+  SpriteAssetMaps:
+  - Default: {fileID: 7108339969198208228, guid: 15a714c8b75e4419a9e707132a3d15bc, type: 3}
+    Healer: {fileID: 7108339969198208228, guid: d3de28f5ae17d4a98abb245eae5ce1dd, type: 3}
+  - Default: {fileID: 7108339969198208228, guid: bc19b9d0557d0496bb40a77d6d45498b, type: 3}
+    Healer: {fileID: 7108339969198208228, guid: 4415c05fdcfcf48ab8af0b34dc4d2bcb, type: 3}
+  - Default: {fileID: 7108339969198208228, guid: 1fc5c702e9c004b6c8c4e7772a785f2e, type: 3}
+    Healer: {fileID: 7108339969198208228, guid: e6b2be5ca1fc042e790b8ecd385cfb14, type: 3}
+  - Default: {fileID: 7108339969198208228, guid: cf79b1d45699e4c2a9937308c2d922f3, type: 3}
+    Healer: {fileID: 7108339969198208228, guid: c614efef52a1948a3958c57cf9172902, type: 3}
+  AbilityTypes:
+  - {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}

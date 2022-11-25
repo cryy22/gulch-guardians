@@ -5218,7 +5218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CategoryHash: 0
   m_labelHash: 0
-  m_SpriteKey: -6.320269e-16
+  m_SpriteKey: -0.00000062350796
 --- !u!95 &8312982018863316174
 Animator:
   serializedVersion: 4
@@ -5251,6 +5251,7 @@ GameObject:
   - component: {fileID: 4943982858519393665}
   - component: {fileID: 4943982858519393664}
   - component: {fileID: 4943982858519393695}
+  - component: {fileID: 4198495051842237430}
   m_Layer: 6
   m_Name: NametagCanvas
   m_TagString: Untagged
@@ -5340,6 +5341,26 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!95 &4198495051842237430
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4943982858519393693}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aee25bbb637b64d62bafe3315496a4a8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7445111781109418599
 GameObject:
   m_ObjectHideFlags: 0
