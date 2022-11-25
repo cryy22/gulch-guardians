@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
-  m_Name: PlayerHealerUnitConfig
+  m_Name: PlayerAllAbilitiesUnitConfig
   m_EditorClassIdentifier: 
   MinAttack: 2
   MaxAttack: 3
@@ -27,3 +27,6 @@ MonoBehaviour:
     Healer: {fileID: 7108339969198208228, guid: c614efef52a1948a3958c57cf9172902, type: 3}
   AbilityTypes:
   - {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
+  - {fileID: 11400000, guid: c276d3f8fec7f4009a160d357a5f2cc1, type: 2}
+  - {fileID: 11400000, guid: b1c74edd376d24b228d41d2f07d3f69d, type: 2}
+  - {fileID: 11400000, guid: 9fbc68c9d73b0487baec45477fd8e09c, type: 2}

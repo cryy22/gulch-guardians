@@ -14,18 +14,10 @@ namespace GulchGuardians.Units
         [SerializeField] private TMP_Text Line2Text;
         [SerializeField] private TMP_Text Line3Text;
 
-        [SerializeField] private UIAbilityTextItem AbilityTextItem1;
-        [SerializeField] private UIAbilityTextItem AbilityTextItem2;
-        [SerializeField] private UIAbilityTextItem AbilityTextItem3;
+        [SerializeField] private Transform AbilityTextItemParent;
+        [SerializeField] private UIAbilityTextItem AbilityTextItemPrefab;
 
-        private readonly List<AbilityType> _abilities = new();
-
-        private List<UIAbilityTextItem> TooltipItems => new()
-        {
-            AbilityTextItem1,
-            AbilityTextItem2,
-            AbilityTextItem3,
-        };
+        private readonly Dictionary<AbilityType, UIAbilityTextItem> _abilitiesItems = new();
 
         protected override void ShowTooltip(Unit unit)
         {
@@ -48,11 +40,22 @@ namespace GulchGuardians.Units
 
         private void SetAbilities(Unit unit)
         {
-            _abilities.Clear();
-            _abilities.AddRange(unit.ActiveAbilities);
+            List<AbilityType> abilities = unit.ActiveAbilities.ToList();
 
-            foreach ((UIAbilityTextItem item, int i) in TooltipItems.Select((el, i) => (el, i)))
-                item.SetAbility(_abilities.ElementAtOrDefault(i));
+            foreach (AbilityType ability in abilities)
+            {
+                if (_abilitiesItems.ContainsKey(ability)) continue;
+
+                UIAbilityTextItem item = Instantiate(original: AbilityTextItemPrefab, parent: AbilityTextItemParent);
+                item.SetAbility(ability);
+                _abilitiesItems.Add(key: ability, value: item);
+            }
+
+            foreach (AbilityType ability in _abilitiesItems.Keys.Except(abilities).ToList())
+            {
+                Destroy(_abilitiesItems[ability].gameObject);
+                _abilitiesItems.Remove(ability);
+            }
         }
     }
 }
