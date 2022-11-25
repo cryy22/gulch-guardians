@@ -53,7 +53,7 @@ namespace GulchGuardians.Units
 
         private void SetAbilities(Unit unit)
         {
-            List<AbilityType> abilities = unit.ActiveAbilities.ToList();
+            List<AbilityType> abilities = unit.Abilities.ToList();
 
             foreach (AbilityType ability in abilities)
             {

@@ -7,8 +7,6 @@ namespace GulchGuardians.Abilities
     {
         [SerializeField] private TMP_Text Name;
 
-        private void Awake() { SetAbility(null); }
-
         public void SetAbility(AbilityType ability)
         {
             Ability = ability;

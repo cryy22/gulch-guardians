@@ -14,18 +14,16 @@ namespace GulchGuardians.Units
     [RequireComponent(typeof(ClickReporter))]
     [RequireComponent(typeof(UIUnitDisplayer))]
     [RequireComponent(typeof(UnitRegistrar))]
-    [RequireComponent(typeof(Collider2D))]
     public class Unit : InitializationBehaviour<UnitInitParams>
     {
         [SerializeField] private AbilityType SturdyType;
         [SerializeField] private AbilityType ArcherType;
         [SerializeField] private AbilityType HealerType;
 
-        private readonly Dictionary<AbilityType, bool> _abilities = new();
+        private readonly HashSet<AbilityType> _abilities = new();
 
         private ClickReporter _clickReporter;
         private UIUnitDisplayer _displayer;
-        private Collider2D _collider;
 
         private int _attack;
 
@@ -39,11 +37,9 @@ namespace GulchGuardians.Units
 
         public bool IsDefeated => Health <= 0;
 
-        public IEnumerable<AbilityType> ActiveAbilities =>
-            _abilities.Where(pair => pair.Value).Select(pair => pair.Key);
+        public IEnumerable<AbilityType> Abilities => _abilities;
 
         public string FirstName => InitParams.FirstName;
-        public Bounds Bounds => _collider.bounds;
 
         public Team Team { get; set; }
 
@@ -62,7 +58,6 @@ namespace GulchGuardians.Units
         {
             _clickReporter = GetComponent<ClickReporter>();
             _displayer = GetComponent<UIUnitDisplayer>();
-            _collider = GetComponent<Collider2D>();
         }
 
         public override void Initialize(UnitInitParams initParams)
@@ -73,14 +68,13 @@ namespace GulchGuardians.Units
             Health = initParams.Health;
             MaxHealth = Mathf.Max(a: Health, b: initParams.MaxHealth);
 
-            foreach (KeyValuePair<AbilityType, bool> pair in initParams.Abilities) _abilities[pair.Key] = pair.Value;
-
+            _abilities.UnionWith(initParams.Abilities.Where(p => p.Value).Select(p => p.Key));
             _displayer.Setup(spriteAssetMap: initParams.SpriteAssetMap, initParams: BuildAttributes());
         }
 
         public IEnumerator AddAbility(AbilityType ability)
         {
-            _abilities[ability] = true;
+            _abilities.Add(ability);
 
             _displayer.UpdateAttributes(BuildAttributes());
             Changed?.Invoke(sender: this, e: EventArgs.Empty);
@@ -137,7 +131,7 @@ namespace GulchGuardians.Units
             yield return target.TakeDamage(damage: Attack, direction: direction);
         }
 
-        public bool HasAbility(AbilityType ability) { return _abilities.GetValueOrDefault(ability); }
+        public bool HasAbility(AbilityType ability) { return _abilities.Contains(ability); }
 
         private IEnumerator TakeDamage(int damage, UIUnitDisplayer.DamageDirection direction)
         {
@@ -176,7 +170,7 @@ namespace GulchGuardians.Units
                 Attack = Attack,
                 Health = Health,
                 MaxHealth = MaxHealth,
-                Abilities = _abilities,
+                Abilities = _abilities.ToDictionary(a => a, _ => true),
             };
         }
     }
