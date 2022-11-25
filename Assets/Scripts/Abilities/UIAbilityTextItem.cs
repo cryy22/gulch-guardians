@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GulchGuardians.Abilities
 {
-    public class UIAbilityTooltipItem : MonoBehaviour, IAbilityProvider
+    public class UIAbilityTextItem : MonoBehaviour, IAbilityProvider
     {
         [SerializeField] private TMP_Text Name;
 

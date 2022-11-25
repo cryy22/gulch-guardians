@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 6598142899373277864}
   - component: {fileID: 2665134076140232197}
   - component: {fileID: 4993540663897819351}
+  - component: {fileID: 1016766620694162878}
+  - component: {fileID: 6898963728122015151}
   m_Layer: 6
-  m_Name: AbilityIcon
+  m_Name: AbilityIconItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,3 +78,29 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1016766620694162878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4619343982268000320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78576a3fd6c04681b812978278e7ee8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IconImage: {fileID: 4993540663897819351}
+--- !u!114 &6898963728122015151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4619343982268000320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 894abf37d415478386a8163b296d4404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Registry: {fileID: 11400000, guid: 53c39a9864e9a4fd6a0f07334fc1b1f5, type: 2}

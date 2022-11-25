@@ -8,7 +8,6 @@ using GulchGuardians.Constants;
 using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
-using UnityEngine.UI;
 
 namespace GulchGuardians.Units
 {
@@ -21,12 +20,12 @@ namespace GulchGuardians.Units
         [SerializeField] private SpriteLibrary SpriteLibrary;
         [SerializeField] private Animator Animator;
         [SerializeField] private Transform AbilityIcons;
-        [SerializeField] private GameObject AbilityIconPrefab;
+        [SerializeField] private UIAbilityIconItem AbilityIconPrefab;
         [SerializeField] private AbilityType BossType;
         [SerializeField] private AbilityType HealerType;
         [SerializeField] private ParticleSystem AttackParticleSystem;
 
-        private readonly Dictionary<AbilityType, GameObject> _abilityIcons = new();
+        private readonly Dictionary<AbilityType, UIAbilityIconItem> _abilityIcons = new();
         private Quaternion _leftParticleRotation;
         private Quaternion _rightParticleRotation;
         private UnitSpriteAssetMap _spriteAssetMap;
@@ -204,8 +203,8 @@ namespace GulchGuardians.Units
             {
                 if (_abilityIcons.ContainsKey(ability)) continue;
 
-                GameObject abilityIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
-                abilityIcon.GetComponent<Image>().sprite = ability.Icon;
+                UIAbilityIconItem abilityIcon = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
+                abilityIcon.SetAbility(ability);
 
                 _abilityIcons.Add(key: ability, value: abilityIcon);
             }

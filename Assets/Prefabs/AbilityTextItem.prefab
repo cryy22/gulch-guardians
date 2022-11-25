@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6511387808020532380}
   - component: {fileID: -2803056413644960016}
   m_Layer: 5
-  m_Name: AbilityTooltipItem
+  m_Name: AbilityTextItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

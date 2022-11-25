@@ -14,17 +14,17 @@ namespace GulchGuardians.Units
         [SerializeField] private TMP_Text Line2Text;
         [SerializeField] private TMP_Text Line3Text;
 
-        [SerializeField] private UIAbilityTooltipItem AbilityTooltipItem1;
-        [SerializeField] private UIAbilityTooltipItem AbilityTooltipItem2;
-        [SerializeField] private UIAbilityTooltipItem AbilityTooltipItem3;
+        [SerializeField] private UIAbilityTextItem AbilityTextItem1;
+        [SerializeField] private UIAbilityTextItem AbilityTextItem2;
+        [SerializeField] private UIAbilityTextItem AbilityTextItem3;
 
         private readonly List<AbilityType> _abilities = new();
 
-        private List<UIAbilityTooltipItem> TooltipItems => new()
+        private List<UIAbilityTextItem> TooltipItems => new()
         {
-            AbilityTooltipItem1,
-            AbilityTooltipItem2,
-            AbilityTooltipItem3,
+            AbilityTextItem1,
+            AbilityTextItem2,
+            AbilityTextItem3,
         };
 
         protected override void ShowTooltip(Unit unit)
@@ -51,7 +51,7 @@ namespace GulchGuardians.Units
             _abilities.Clear();
             _abilities.AddRange(unit.ActiveAbilities);
 
-            foreach ((UIAbilityTooltipItem item, int i) in TooltipItems.Select((el, i) => (el, i)))
+            foreach ((UIAbilityTextItem item, int i) in TooltipItems.Select((el, i) => (el, i)))
                 item.SetAbility(_abilities.ElementAtOrDefault(i));
         }
     }

@@ -1333,9 +1333,9 @@ MonoBehaviour:
   Line1Text: {fileID: 1141665755}
   Line2Text: {fileID: 928321556}
   Line3Text: {fileID: 67261879}
-  AbilityTooltipItem1: {fileID: 6077327719706189752}
-  AbilityTooltipItem2: {fileID: 935578267}
-  AbilityTooltipItem3: {fileID: 1906735098}
+  AbilityTextItem1: {fileID: 6077327719706189752}
+  AbilityTextItem2: {fileID: 935578267}
+  AbilityTextItem3: {fileID: 1906735098}
 --- !u!222 &290765161
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2623,7 +2623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6077327719145188142, guid: 53234956fde2342b7afedd2182376632, type: 3}
       propertyPath: m_Name
-      value: AbilityTooltipItem (1)
+      value: AbilityTextItem (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53234956fde2342b7afedd2182376632, type: 3}
@@ -5130,7 +5130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6077327719145188142, guid: 53234956fde2342b7afedd2182376632, type: 3}
       propertyPath: m_Name
-      value: AbilityTooltipItem (2)
+      value: AbilityTextItem (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53234956fde2342b7afedd2182376632, type: 3}
@@ -6058,7 +6058,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6077327719145188142, guid: 53234956fde2342b7afedd2182376632, type: 3}
       propertyPath: m_Name
-      value: AbilityTooltipItem (0)
+      value: AbilityTextItem (0)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53234956fde2342b7afedd2182376632, type: 3}
