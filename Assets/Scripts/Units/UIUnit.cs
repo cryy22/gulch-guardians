@@ -11,7 +11,7 @@ using UnityEngine.U2D.Animation;
 
 namespace GulchGuardians.Units
 {
-    public class UIUnitDisplayer : MonoBehaviour
+    public class UIUnit : MonoBehaviour
     {
         [SerializeField] private TMP_Text AttackText;
         [SerializeField] private TMP_Text HealthText;
@@ -28,9 +28,9 @@ namespace GulchGuardians.Units
         private readonly Dictionary<AbilityType, UIAbilityIconItem> _abilityIcons = new();
         private Quaternion _leftParticleRotation;
         private Quaternion _rightParticleRotation;
-        private UnitSpriteAssetMap _spriteAssetMap;
 
-        private bool _isHealer;
+        private UnitSpriteAssetMap _spriteAssetMap;
+        private bool _hasHealerSpriteAsset;
 
         private void Awake()
         {
@@ -38,39 +38,33 @@ namespace GulchGuardians.Units
             _rightParticleRotation = Quaternion.Euler(x: 0, y: 0, z: 180) * _leftParticleRotation;
         }
 
-        public void Setup(UnitSpriteAssetMap spriteAssetMap, UnitInitParams initParams)
+        public void Setup(UnitSpriteAssetMap spriteAssetMap, Unit unit)
         {
             _spriteAssetMap = spriteAssetMap;
+
             SpriteLibrary.spriteLibraryAsset = _spriteAssetMap.Default;
+            _hasHealerSpriteAsset = _spriteAssetMap.Healer != null;
             Animator.Play(stateNameHash: 0, layer: 0, normalizedTime: Random.Range(minInclusive: 0f, maxInclusive: 1f));
 
-            NameText.text = initParams.FirstName;
-            UpdateAttributes(initParams);
+            NameText.text = unit.FirstName;
+            if (unit.HasAbility(BossType)) Renderer.transform.localScale *= 2f;
 
-            if (initParams.HasAbility(BossType)) Renderer.transform.localScale *= 1.33f;
+            UpdateAttributes(unit);
         }
 
-        public void UpdateAttributes(UnitInitParams unitInitParams)
+        public void UpdateAttributes(Unit unit)
         {
-            AttackText.text = unitInitParams.Attack.ToString();
-            HealthText.text = unitInitParams.Health.ToString();
-            HealthText.color = unitInitParams.Health == unitInitParams.MaxHealth ? Color.white : Color.red;
+            AttackText.text = unit.Attack.ToString();
+            HealthText.text = unit.Health.ToString();
+            HealthText.color = unit.Health == unit.MaxHealth ? Color.white : Color.red;
 
-            UpdateAbilities(unitInitParams);
-            UpdateHealerStatus(unitInitParams);
+            UpdateAbilities(unit);
+            UpdateSpriteLibraryAsset(unit);
         }
 
         public IEnumerator AnimateToPosition(Vector3 position, float duration = 0.25f)
         {
-            Vector3 startPosition = transform.position;
-            var t = 0f;
-            while (t <= 1f)
-            {
-                t += Time.deltaTime / duration;
-                transform.position = Vector3.Lerp(a: startPosition, b: position, t: t);
-                yield return null;
-            }
-
+            yield return Mover.Move(transform: transform, end: position, duration: duration);
             transform.position = position;
         }
 
@@ -156,10 +150,33 @@ namespace GulchGuardians.Units
             AbilityIcons.localScale = abilityIconsCurrentScale;
         }
 
-        private void UpdateHealerStatus(UnitInitParams initParams)
+        private void UpdateSpriteLibraryAsset(Unit unit)
         {
-            _isHealer = initParams.HasAbility(HealerType);
-            SpriteLibrary.spriteLibraryAsset = _isHealer ? _spriteAssetMap.Healer : _spriteAssetMap.Default;
+            if (_hasHealerSpriteAsset && unit.HasAbility(HealerType))
+                SpriteLibrary.spriteLibraryAsset = _spriteAssetMap.Healer;
+            else
+                SpriteLibrary.spriteLibraryAsset = _spriteAssetMap.Default;
+        }
+
+        private void UpdateAbilities(Unit unit)
+        {
+            IEnumerable<AbilityType> activeAbilities = unit.Abilities.ToList();
+
+            foreach (AbilityType ability in activeAbilities)
+            {
+                if (_abilityIcons.ContainsKey(ability)) continue;
+
+                UIAbilityIconItem iconItem = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
+                iconItem.SetAbility(ability);
+
+                _abilityIcons.Add(key: ability, value: iconItem);
+            }
+
+            foreach (AbilityType ability in _abilityIcons.Keys.Except(activeAbilities).ToList())
+            {
+                Destroy(_abilityIcons[ability].gameObject);
+                _abilityIcons.Remove(key: ability);
+            }
         }
 
         private IEnumerator AnimateSine(float duration = 0.08f, float period = 0.04f, float magnitude = 0.25f)
@@ -203,27 +220,6 @@ namespace GulchGuardians.Units
             }
 
             Animator.SetTrigger(AnimatorProperties.OnIdleTrigger);
-        }
-
-        private void UpdateAbilities(UnitInitParams initParams)
-        {
-            IEnumerable<AbilityType> activeAbilities = initParams.ActiveAbilities.ToList();
-
-            foreach (AbilityType ability in activeAbilities)
-            {
-                if (_abilityIcons.ContainsKey(ability)) continue;
-
-                UIAbilityIconItem iconItem = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
-                iconItem.SetAbility(ability);
-
-                _abilityIcons.Add(key: ability, value: iconItem);
-            }
-
-            foreach (AbilityType ability in _abilityIcons.Keys.Except(activeAbilities).ToList())
-            {
-                Destroy(_abilityIcons[ability].gameObject);
-                _abilityIcons.Remove(key: ability);
-            }
         }
 
         public enum DamageDirection

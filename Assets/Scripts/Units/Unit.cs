@@ -12,7 +12,7 @@ using UnityEngine;
 namespace GulchGuardians.Units
 {
     [RequireComponent(typeof(ClickReporter))]
-    [RequireComponent(typeof(UIUnitDisplayer))]
+    [RequireComponent(typeof(UIUnit))]
     [RequireComponent(typeof(UnitRegistrar))]
     public class Unit : InitializationBehaviour<UnitInitParams>
     {
@@ -23,8 +23,7 @@ namespace GulchGuardians.Units
         private readonly HashSet<AbilityType> _abilities = new();
 
         private ClickReporter _clickReporter;
-        private UIUnitDisplayer _displayer;
-
+        private UIUnit _ui;
         private int _attack;
 
         public event EventHandler Clicked
@@ -57,7 +56,7 @@ namespace GulchGuardians.Units
         private void Awake()
         {
             _clickReporter = GetComponent<ClickReporter>();
-            _displayer = GetComponent<UIUnitDisplayer>();
+            _ui = GetComponent<UIUnit>();
         }
 
         public override void Initialize(UnitInitParams initParams)
@@ -69,17 +68,17 @@ namespace GulchGuardians.Units
             MaxHealth = Mathf.Max(a: Health, b: initParams.MaxHealth);
 
             _abilities.UnionWith(initParams.Abilities.Where(p => p.Value).Select(p => p.Key));
-            _displayer.Setup(spriteAssetMap: initParams.SpriteAssetMap, initParams: BuildAttributes());
+            _ui.Setup(spriteAssetMap: initParams.SpriteAssetMap, unit: this);
         }
 
         public IEnumerator AddAbility(AbilityType ability)
         {
             _abilities.Add(ability);
 
-            _displayer.UpdateAttributes(BuildAttributes());
+            _ui.UpdateAttributes(this);
             Changed?.Invoke(sender: this, e: EventArgs.Empty);
 
-            yield return _displayer.AnimateStatsChange(animateAbilities: true);
+            yield return _ui.AnimateStatsChange(animateAbilities: true);
         }
 
         public IEnumerator Upgrade(int attack, int health)
@@ -88,25 +87,25 @@ namespace GulchGuardians.Units
             Health += health;
             MaxHealth += health;
 
-            _displayer.UpdateAttributes(BuildAttributes());
+            _ui.UpdateAttributes(this);
             Changed?.Invoke(sender: this, e: EventArgs.Empty);
 
-            yield return _displayer.AnimateStatsChange(animateAttack: attack != 0, animateHealth: health != 0);
+            yield return _ui.AnimateStatsChange(animateAttack: attack != 0, animateHealth: health != 0);
         }
 
         public IEnumerator Heal(int amount = int.MaxValue)
         {
             Health += Mathf.Min(a: amount, b: MaxHealth - Health);
 
-            _displayer.UpdateAttributes(BuildAttributes());
+            _ui.UpdateAttributes(this);
             Changed?.Invoke(sender: this, e: EventArgs.Empty);
 
-            yield return _displayer.AnimateStatsChange(animateHealth: true);
+            yield return _ui.AnimateStatsChange(animateHealth: true);
         }
 
         public IEnumerator MoveToPosition(Vector3 position, float duration)
         {
-            yield return _displayer.AnimateToPosition(position: position, duration: duration);
+            yield return _ui.AnimateToPosition(position: position, duration: duration);
         }
 
         public bool WillAttack(int index) { return index == (HasAbility(ArcherType) ? 1 : 0); }
@@ -115,7 +114,7 @@ namespace GulchGuardians.Units
         {
             if (HasAbility(HealerType))
             {
-                yield return _displayer.AnimateHeal();
+                yield return _ui.AnimateHeal();
                 yield return CoroutineWaiter.RunConcurrently(
                     behaviours: unitTeam.Units!,
                     u => u.Heal(amount: Attack / 2)
@@ -123,17 +122,17 @@ namespace GulchGuardians.Units
                 yield break;
             }
 
-            yield return _displayer.AnimateAttack(target);
+            yield return _ui.AnimateAttack(target);
 
-            UIUnitDisplayer.DamageDirection direction = transform.position.x < target.transform.position.x
-                ? UIUnitDisplayer.DamageDirection.Left
-                : UIUnitDisplayer.DamageDirection.Right;
+            UIUnit.DamageDirection direction = transform.position.x < target.transform.position.x
+                ? UIUnit.DamageDirection.Left
+                : UIUnit.DamageDirection.Right;
             yield return target.TakeDamage(damage: Attack, direction: direction);
         }
 
         public bool HasAbility(AbilityType ability) { return _abilities.Contains(ability); }
 
-        private IEnumerator TakeDamage(int damage, UIUnitDisplayer.DamageDirection direction)
+        private IEnumerator TakeDamage(int damage, UIUnit.DamageDirection direction)
         {
             var abilitiesChanged = false;
             if (HasAbility(SturdyType) && damage >= Health)
@@ -145,11 +144,11 @@ namespace GulchGuardians.Units
 
             Health -= damage;
 
-            _displayer.UpdateAttributes(BuildAttributes());
+            _ui.UpdateAttributes(this);
             Changed?.Invoke(sender: this, e: EventArgs.Empty);
 
-            yield return _displayer.AnimateDamage(damage: damage, direction: direction);
-            yield return _displayer.AnimateStatsChange(animateHealth: true, animateAbilities: abilitiesChanged);
+            yield return _ui.AnimateDamage(damage: damage, direction: direction);
+            yield return _ui.AnimateStatsChange(animateHealth: true, animateAbilities: abilitiesChanged);
 
             if (IsDefeated) StartCoroutine(HandleDefeat());
         }
@@ -157,21 +156,9 @@ namespace GulchGuardians.Units
         private IEnumerator HandleDefeat()
         {
             yield return new WaitForEndOfFrame();
-            yield return _displayer.AnimateDefeat();
+            yield return _ui.AnimateDefeat();
 
             Destroy(gameObject);
-        }
-
-        private UnitInitParams BuildAttributes()
-        {
-            return new UnitInitParams
-            {
-                FirstName = FirstName,
-                Attack = Attack,
-                Health = Health,
-                MaxHealth = MaxHealth,
-                Abilities = _abilities.ToDictionary(a => a, _ => true),
-            };
         }
     }
 }
