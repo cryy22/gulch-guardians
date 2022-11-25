@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Crysc.UI;
@@ -19,16 +20,28 @@ namespace GulchGuardians.Units
 
         private readonly Dictionary<AbilityType, UIAbilityTextItem> _abilitiesItems = new();
 
-        protected override void ShowTooltip(Unit unit)
-        {
-            if (unit.TooltipEnabled == false) return;
+        protected override bool ShouldShowTooltip(Unit target) { return target.TooltipEnabled; }
 
-            base.ShowTooltip(unit);
-            SetContent(unit);
-            SetAbilities(unit);
+        protected override void UpdateTarget(Unit target, Unit previousTarget)
+        {
+            base.UpdateTarget(target: target, previousTarget: previousTarget);
+
+            SetContent(target);
+            SetAbilities(target);
+
+            if (previousTarget != null) previousTarget.Changed -= ChangedEventHandler;
+            target.Changed += ChangedEventHandler;
         }
 
         private static string TwoDigitNumber(int number) { return number.ToString("00"); }
+
+        private void ChangedEventHandler(object sender, EventArgs _)
+        {
+            var unit = (Unit) sender;
+
+            SetContent(unit);
+            SetAbilities(unit);
+        }
 
         private void SetContent(Unit unit)
         {

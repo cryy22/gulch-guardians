@@ -35,7 +35,7 @@ namespace GulchGuardians.Units
             remove => _clickReporter.Clicked -= value;
         }
 
-        public event EventHandler Destroying;
+        public event EventHandler Changed;
 
         public bool IsDefeated => Health <= 0;
 
@@ -65,15 +65,6 @@ namespace GulchGuardians.Units
             _collider = GetComponent<Collider2D>();
         }
 
-        private void OnDestroy() { Destroying?.Invoke(sender: this, e: EventArgs.Empty); }
-
-        public IEnumerator AddAbility(AbilityType ability)
-        {
-            _abilities[ability] = true;
-            _displayer.UpdateAttributes(BuildAttributes());
-            yield return _displayer.AnimateStatsChange(animateAbilities: true);
-        }
-
         public override void Initialize(UnitInitParams initParams)
         {
             base.Initialize(initParams);
@@ -87,6 +78,16 @@ namespace GulchGuardians.Units
             _displayer.Setup(spriteAssetMap: initParams.SpriteAssetMap, initParams: BuildAttributes());
         }
 
+        public IEnumerator AddAbility(AbilityType ability)
+        {
+            _abilities[ability] = true;
+
+            _displayer.UpdateAttributes(BuildAttributes());
+            Changed?.Invoke(sender: this, e: EventArgs.Empty);
+
+            yield return _displayer.AnimateStatsChange(animateAbilities: true);
+        }
+
         public IEnumerator Upgrade(int attack, int health)
         {
             Attack += attack;
@@ -94,6 +95,8 @@ namespace GulchGuardians.Units
             MaxHealth += health;
 
             _displayer.UpdateAttributes(BuildAttributes());
+            Changed?.Invoke(sender: this, e: EventArgs.Empty);
+
             yield return _displayer.AnimateStatsChange(animateAttack: attack != 0, animateHealth: health != 0);
         }
 
@@ -102,6 +105,8 @@ namespace GulchGuardians.Units
             Health += Mathf.Min(a: amount, b: MaxHealth - Health);
 
             _displayer.UpdateAttributes(BuildAttributes());
+            Changed?.Invoke(sender: this, e: EventArgs.Empty);
+
             yield return _displayer.AnimateStatsChange(animateHealth: true);
         }
 
@@ -147,6 +152,8 @@ namespace GulchGuardians.Units
             Health -= damage;
 
             _displayer.UpdateAttributes(BuildAttributes());
+            Changed?.Invoke(sender: this, e: EventArgs.Empty);
+
             yield return _displayer.AnimateDamage(damage: damage, direction: direction);
             yield return _displayer.AnimateStatsChange(animateHealth: true, animateAbilities: abilitiesChanged);
 

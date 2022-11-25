@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEditor.UI;
 
-namespace GulchGuardians.UI
+namespace GulchGuardians.UI.Editor
 {
     [CustomEditor(inspectedType: typeof(UIDynamicScrollRect), editorForChildClasses: true)]
     public class UIDynamicScrollRectEditor : ScrollRectEditor
