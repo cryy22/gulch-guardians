@@ -23,6 +23,7 @@ namespace GulchGuardians.Coordinators
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private Button AutoButton;
         [SerializeField] private TMP_Text TrySpacebarText;
+        [SerializeField] private UIGamePhaseAnnouncer GamePhaseAnnouncer;
         [SerializeField] private UIGameResultPanel GameResultPanel;
 
         private TMP_Text _advanceButtonText;
@@ -70,11 +71,13 @@ namespace GulchGuardians.Coordinators
         private void OnAdvanceButtonClicked()
         {
             if (_currentPhase == Phase.Combat) _didPlayerAdvance = true;
-            else if (_currentPhase == Phase.Preparation) EnterCombatPhase();
+            else if (_currentPhase == Phase.Preparation) StartCoroutine(EnterCombatPhase());
         }
 
-        private void EnterCombatPhase()
+        private IEnumerator EnterCombatPhase()
         {
+            yield return GamePhaseAnnouncer.AnnouncePhase(isPreparation: false);
+
             _currentPhase = Phase.Combat;
             _advanceButtonText.text = "next";
 
@@ -88,8 +91,10 @@ namespace GulchGuardians.Coordinators
             StartCoroutine(RunCombat());
         }
 
-        private void EnterPreparationPhase()
+        private IEnumerator EnterPreparationPhase()
         {
+            yield return GamePhaseAnnouncer.AnnouncePhase(isPreparation: true);
+
             _currentPhase = Phase.Preparation;
             _advanceButtonText.text = "fight!";
 
@@ -129,7 +134,7 @@ namespace GulchGuardians.Coordinators
             PlayerTeam.ResetUnitsOnDeck();
             EnemyTeam.ResetUnitsOnDeck();
 
-            EnterPreparationPhase();
+            yield return EnterPreparationPhase();
         }
 
         private IEnumerator RunAttackCycle(Team player, Team enemy)
