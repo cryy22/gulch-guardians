@@ -18,8 +18,7 @@ namespace GulchGuardians.Coordinators
     {
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private Team EnemyTeam;
-        [SerializeField] private TeamModifier TeamModifier;
-
+        [SerializeField] private PreparationCoordinator PreparationCoordinator;
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private Button AutoButton;
         [SerializeField] private TMP_Text TrySpacebarText;
@@ -45,13 +44,13 @@ namespace GulchGuardians.Coordinators
             AutoButton.onClick.AddListener(OnAutoButtonClicked);
 
             yield return new WaitForSeconds(1f);
-            TeamModifier.BeginModificationRound();
+            PreparationCoordinator.BeginModificationRound();
         }
 
         public void OnAdvance(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            if (_currentPhase == Phase.Preparation && TeamModifier.IsRoundActive) return;
+            if (_currentPhase == Phase.Preparation && PreparationCoordinator.IsRoundActive) return;
 
             OnAdvanceButtonClicked();
 
@@ -105,7 +104,7 @@ namespace GulchGuardians.Coordinators
 
             BGMPlayer.Instance.TransitionToPreparation();
 
-            TeamModifier.BeginModificationRound();
+            PreparationCoordinator.BeginModificationRound();
         }
 
         private IEnumerator RunCombat()
@@ -113,7 +112,7 @@ namespace GulchGuardians.Coordinators
             PlayerTeam.ResetUnitsOnDeck();
             EnemyTeam.ResetUnitsOnDeck();
 
-            yield return TeamModifier.EndModificationRound();
+            yield return PreparationCoordinator.EndModificationRound();
 
             yield return WaitForPlayer(1f);
 

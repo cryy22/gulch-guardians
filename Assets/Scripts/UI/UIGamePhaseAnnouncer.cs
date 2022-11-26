@@ -13,10 +13,6 @@ namespace GulchGuardians.UI
         [SerializeField] private AnimationCurve AnnouncementAnimationCurve;
         [SerializeField] private float AnnouncementDuration = 1.5f;
 
-        private Camera _camera;
-
-        private void Awake() { _camera = Camera.main; }
-
         public IEnumerator AnnouncePhase(bool isPreparation)
         {
             GamePhaseLabel.sprite = isPreparation ? PreparationSign : CombatSign;

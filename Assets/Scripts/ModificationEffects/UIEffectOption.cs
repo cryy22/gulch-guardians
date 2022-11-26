@@ -15,8 +15,11 @@ namespace GulchGuardians.ModificationEffects
         private static readonly Color _selectedColor = new(r: 0.3882353f, g: 0.6431373f, b: 0.7764707f, a: 1f);
 
         private ModificationEffect _effect;
+        private Camera _camera;
 
         public event EventHandler<EffectOptionClickedEventArgs> EffectOptionClicked;
+
+        private void Awake() { _camera = Camera.main; }
 
         public void SetEffect(ModificationEffect effect)
         {
@@ -54,12 +57,15 @@ namespace GulchGuardians.ModificationEffects
         private IEnumerator UpdateUnitPosition(Unit unit)
         {
             yield return new WaitForEndOfFrame();
+
+            Vector3 panelPosition = _camera.ScreenToWorldPoint(EffectDescriptionPanel.position);
+
             unit.transform.position = new Vector3(
-                x: EffectDescriptionPanel.position.x,
-                y: EffectDescriptionPanel.position.y - 1.5f,
+                x: panelPosition.x,
+                y: panelPosition.y - 1.3f,
                 z: unit.transform.position.z
             );
-            unit.transform.localScale = Vector3.one * 0.66f;
+            unit.transform.localScale = Vector3.one * 0.55f;
         }
 
         public class EffectOptionClickedEventArgs : EventArgs

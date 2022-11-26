@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GulchGuardians.ModificationEffects;
+using GulchGuardians.Teams;
 using GulchGuardians.Units;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace GulchGuardians.Teams
+namespace GulchGuardians.Coordinators
 {
-    [RequireComponent(typeof(UIEffectOptionsDisplayer))]
-    public class TeamModifier : MonoBehaviour
+    public class PreparationCoordinator : MonoBehaviour
     {
         [SerializeField] private int ActionsPerRound = 2;
         [SerializeField] private List<ModificationEffect> Effects = new();
@@ -19,33 +19,31 @@ namespace GulchGuardians.Teams
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private Team EnemyTeam;
 
+        [SerializeField] private UIEffectOptionsDisplayer EffectOptionsDisplayer;
         [SerializeField] private TMP_Text ActionsRemainingText;
         [SerializeField] private TMP_Text ChooseATargetText;
         private readonly List<ModificationEffect> _offeredEffects = new();
 
-        private UIEffectOptionsDisplayer _effectOptions;
         private int _actionsRemaining;
         private bool _isModifying;
 
         public bool IsRoundActive { get; private set; }
 
-        private void Awake() { _effectOptions = GetComponent<UIEffectOptionsDisplayer>(); }
-
         private void OnEnable()
         {
-            _effectOptions.EffectSelected += EffectSelectedEventHandler;
+            EffectOptionsDisplayer.EffectSelected += EffectSelectedEventHandler;
             PlayerTeam.UnitClicked += UnitClickedEventHandler;
         }
 
         private void OnDisable()
         {
-            _effectOptions.EffectSelected -= EffectSelectedEventHandler;
+            EffectOptionsDisplayer.EffectSelected -= EffectSelectedEventHandler;
             PlayerTeam.UnitClicked -= UnitClickedEventHandler;
         }
 
         public void BeginModificationRound()
         {
-            gameObject.SetActive(true);
+            EffectOptionsDisplayer.gameObject.SetActive(true);
             IsRoundActive = true;
 
             _actionsRemaining = ActionsPerRound;
@@ -59,21 +57,21 @@ namespace GulchGuardians.Teams
             yield return new WaitUntil(() => !_isModifying);
 
             CleanUpOfferedEffects();
-            _effectOptions.CleanUpEffectOptions();
+            EffectOptionsDisplayer.CleanUpEffectOptions();
 
             IsRoundActive = false;
-            gameObject.SetActive(false);
+            EffectOptionsDisplayer.gameObject.SetActive(false);
         }
 
         private void UnitClickedEventHandler(object sender, Team.UnitClickedEventArgs e)
         {
-            if (_effectOptions.SelectedEffect == null) return;
+            if (EffectOptionsDisplayer.SelectedEffect == null) return;
             StartCoroutine(ApplySelectedEffect(e.Unit));
         }
 
         private void EffectSelectedEventHandler(object sender, EventArgs e)
         {
-            switch (_effectOptions.SelectedEffect.Target)
+            switch (EffectOptionsDisplayer.SelectedEffect.Target)
             {
                 case ModificationEffect.TargetType.PlayerTeam:
                 case ModificationEffect.TargetType.EnemyTeam:
@@ -89,7 +87,7 @@ namespace GulchGuardians.Teams
         {
             _isModifying = true;
 
-            yield return _effectOptions.SelectedEffect.Apply(BuildContext(unit));
+            yield return EffectOptionsDisplayer.SelectedEffect.Apply(BuildContext(unit));
 
             _actionsRemaining--;
             UpdateActionsRemainingText();
@@ -108,7 +106,7 @@ namespace GulchGuardians.Teams
             _offeredEffects.AddRange(GetRandomEffects(3));
             foreach (ModificationEffect effect in _offeredEffects) effect.Prepare();
 
-            _effectOptions.DisplayEffectOptions(_offeredEffects);
+            EffectOptionsDisplayer.DisplayEffectOptions(_offeredEffects);
         }
 
         private void CleanUpOfferedEffects()
