@@ -138,11 +138,9 @@ namespace GulchGuardians.Coordinators
 
             yield return RunAttack(attackingTeam: player, defendingTeam: enemy);
             if (enemy.UnitsInCombatCycle <= 0) yield break;
-            yield return WaitForPlayer(0.25f);
 
             yield return RunAttack(attackingTeam: enemy, defendingTeam: player);
             if (player.UnitsInCombatCycle <= 0) yield break;
-            yield return WaitForPlayer(0.25f);
 
             if (frontUnit == null || frontUnit.IsDefeated || player.UnitsInCombatCycle <= 1) yield break;
 
@@ -163,6 +161,7 @@ namespace GulchGuardians.Coordinators
 
                 yield return defendingTeam.HandleUnitDefeat(defender);
                 if (defendingTeam.UnitsInCombatCycle <= 0) yield break;
+                yield return WaitForPlayer();
             }
         }
 
