@@ -47,7 +47,11 @@ namespace GulchGuardians.Units
             Animator.Play(stateNameHash: 0, layer: 0, normalizedTime: Random.Range(minInclusive: 0f, maxInclusive: 1f));
 
             NameText.text = unit.FirstName;
-            if (unit.HasAbility(BossType)) Renderer.transform.localScale *= 2f;
+            if (unit.HasAbility(BossType))
+            {
+                Renderer.transform.localScale *= 2f;
+                unit.SetNametagActive(false);
+            }
 
             UpdateAttributes(unit);
         }

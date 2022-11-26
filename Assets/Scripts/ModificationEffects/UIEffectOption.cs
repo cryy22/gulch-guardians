@@ -62,10 +62,10 @@ namespace GulchGuardians.ModificationEffects
 
             unit.transform.position = new Vector3(
                 x: panelPosition.x,
-                y: panelPosition.y - 1.3f,
+                y: panelPosition.y - 1.15f,
                 z: unit.transform.position.z
             );
-            unit.transform.localScale = Vector3.one * 0.55f;
+            unit.transform.localScale = Vector3.one * 0.75f;
         }
 
         public class EffectOptionClickedEventArgs : EventArgs

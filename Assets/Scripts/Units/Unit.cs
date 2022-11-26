@@ -20,6 +20,8 @@ namespace GulchGuardians.Units
         [SerializeField] private AbilityType ArcherType;
         [SerializeField] private AbilityType HealerType;
 
+        [SerializeField] private GameObject Nametag;
+
         private readonly HashSet<AbilityType> _abilities = new();
 
         private ClickReporter _clickReporter;
@@ -50,7 +52,6 @@ namespace GulchGuardians.Units
 
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
-
         public bool TooltipEnabled { get; set; } = true;
 
         private void Awake()
@@ -70,6 +71,8 @@ namespace GulchGuardians.Units
             _abilities.UnionWith(initParams.Abilities.Where(p => p.Value).Select(p => p.Key));
             _ui.Setup(spriteAssetMap: initParams.SpriteAssetMap, unit: this);
         }
+
+        public void SetNametagActive(bool active) { Nametag.SetActive(value: active); }
 
         public IEnumerator AddAbility(AbilityType ability)
         {
