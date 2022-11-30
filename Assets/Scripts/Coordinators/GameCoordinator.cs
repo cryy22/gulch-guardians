@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GulchGuardians.Abilities;
 using GulchGuardians.Audio;
 using GulchGuardians.Constants;
 using GulchGuardians.Teams;
@@ -24,6 +25,8 @@ namespace GulchGuardians.Coordinators
         [SerializeField] private TMP_Text TrySpacebarText;
         [SerializeField] private UIGamePhaseAnnouncer GamePhaseAnnouncer;
         [SerializeField] private UIGameResultPanel GameResultPanel;
+
+        [SerializeField] private AbilityType Evasive;
 
         private TMP_Text _advanceButtonText;
         private TMP_Text _autoButtonText;
@@ -58,6 +61,11 @@ namespace GulchGuardians.Coordinators
 
             _hasUsedSpacebar = true;
             TrySpacebarText.gameObject.SetActive(false);
+        }
+
+        private static IEnumerator RotateUnits(Team team)
+        {
+            yield return team.SetUnitIndex(unit: team.FrontUnit, index: team.UnitsInCombatCycle - 1);
         }
 
         private void OnAutoButtonClicked()
@@ -143,12 +151,14 @@ namespace GulchGuardians.Coordinators
             yield return RunAttack(attackingTeam: player, defendingTeam: enemy);
             if (enemy.UnitsInCombatCycle <= 0) yield break;
 
+            if (player.FrontUnit.HasAbility(Evasive)) yield return RotateUnits(player);
+
             yield return RunAttack(attackingTeam: enemy, defendingTeam: player);
             if (player.UnitsInCombatCycle <= 0) yield break;
 
             if (frontUnit == null || frontUnit.IsDefeated || player.UnitsInCombatCycle <= 1) yield break;
 
-            yield return player.SetUnitIndex(unit: player.FrontUnit, index: player.UnitsInCombatCycle - 1);
+            yield return RotateUnits(player);
             yield return WaitForPlayer();
         }
 

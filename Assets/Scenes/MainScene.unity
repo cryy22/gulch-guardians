@@ -1157,6 +1157,7 @@ MonoBehaviour:
   TrySpacebarText: {fileID: 1161815364}
   GamePhaseAnnouncer: {fileID: 763397400}
   GameResultPanel: {fileID: 542451868}
+  Evasive: {fileID: 11400000, guid: e19df26c49e244843ba207847bd7a69c, type: 2}
 --- !u!114 &230742419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1182,6 +1183,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 516558dc4e0bd491d9709c4a7b85f108, type: 2}
   - {fileID: 11400000, guid: d12561f895c3e4dffb180cbf11e778ce, type: 2}
   - {fileID: 11400000, guid: 7b6d72abb05e24d1ea2bd7c3b3227c82, type: 2}
+  - {fileID: 11400000, guid: 656c8f8ae4212458e9e03aca1fae1a67, type: 2}
   PlayerTeam: {fileID: 294015327}
   EnemyTeam: {fileID: 1087500376}
   EffectOptionsDisplayer: {fileID: 619993576}

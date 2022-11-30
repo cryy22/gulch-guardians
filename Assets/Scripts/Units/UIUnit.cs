@@ -74,6 +74,8 @@ namespace GulchGuardians.Units
 
         public IEnumerator AnimateAttack(Unit target)
         {
+            if (target == null) yield break;
+
             const float duration = 0.0833f;
             Animator.SetTrigger(AnimatorProperties.OnActTrigger);
 
