@@ -65,6 +65,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f05329f1bc5f94fa698d4eb6fbc9fe72, type: 3}
   - {fileID: 21300000, guid: 0be970921f3234b1997fbc148f388927, type: 3}
   - {fileID: 21300000, guid: b50a0d73fc65f44dcaa1e89bec786972, type: 3}
+  - {fileID: 21300000, guid: 0b4a5bb3ebd1b46a881150d747e25785, type: 3}
   - {fileID: 21300000, guid: 1ef89e44eed6547d19c08c71eecb6c97, type: 3}
   - {fileID: 21300000, guid: 55bd1005bec414880bd70a770fb89bc2, type: 3}
   - {fileID: 21300000, guid: 65c23115c5fbc400fbf5ef6ce716375d, type: 3}
@@ -126,6 +127,7 @@ SpriteAtlas:
   - sprite0001
   - sprite0001
   - sprite0004
+  - Evasive
   - sprite0006
   - sprite0001
   - sprite0002
