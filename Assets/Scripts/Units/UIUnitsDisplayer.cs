@@ -24,7 +24,7 @@ namespace GulchGuardians.Units
 
         private void Awake() { RoundDemarcation.SetActive(DemarcatesRounds); }
 
-        public IEnumerator AnimateUpdateDisplay(List<Unit> units)
+        public IEnumerator AnimateUpdateDisplay(IEnumerable<Unit> units)
         {
             bool hasChanged = UpdateUnitsAndPositions(units);
             if (!hasChanged) yield break;
@@ -42,7 +42,7 @@ namespace GulchGuardians.Units
             );
         }
 
-        public void UpdateDisplay(List<Unit> units)
+        public void UpdateDisplay(IEnumerable<Unit> units)
         {
             UpdateUnitsAndPositions(units);
             foreach (Unit unit in _unitsPositions.Keys) unit.transform.position = _unitsPositions[unit];
@@ -92,8 +92,9 @@ namespace GulchGuardians.Units
             );
         }
 
-        private bool UpdateUnitsAndPositions(List<Unit> units)
+        private bool UpdateUnitsAndPositions(IEnumerable<Unit> units)
         {
+            units = units.ToList();
             var hasChanged = false;
 
             var positionedUnits = 0;
