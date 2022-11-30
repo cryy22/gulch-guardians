@@ -484,8 +484,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279638555
-  m_fontColor: {r: 0.10588236, g: 0.10196079, b: 0.08627451, a: 1}
+    rgba: 4293590527
+  m_fontColor: {r: 1, g: 0.9921569, b: 0.9176471, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -755,7 +755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0.10980393, g: 0.09019608, b: 0.10588236, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -958,8 +958,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4293590527
+  m_fontColor: {r: 1, g: 0.9921569, b: 0.9176471, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -983,7 +983,7 @@ MonoBehaviour:
   m_fontSizeMin: 12
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1254,8 +1254,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4293590527
+  m_fontColor: {r: 1, g: 0.9921569, b: 0.9176471, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1279,7 +1279,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2552,14 +2552,32 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.04996312
     - serializedVersion: 3
-      time: 0.50150883
-      value: 0.50057864
-      inSlope: -0.24960342
-      outSlope: -0.24960342
+      time: 0.19931807
+      value: 0.40922952
+      inSlope: 0.78114927
+      outSlope: 0.78114927
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.10747693
-      outWeight: 0.11121288
+      inWeight: 0.7073354
+      outWeight: 0.374538
+    - serializedVersion: 3
+      time: 0.50150883
+      value: 0.50057864
+      inSlope: 0.101884864
+      outSlope: 0.101884864
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.68061477
+      outWeight: 0.6848985
+    - serializedVersion: 3
+      time: 0.7974035
+      value: 0.5853666
+      inSlope: 0.7909538
+      outSlope: 0.7909538
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.5269742
     - serializedVersion: 3
       time: 1
       value: 1
@@ -2572,7 +2590,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  AnnouncementDuration: 1
+  AnnouncementDuration: 1.5
 --- !u!1 &898150878
 GameObject:
   m_ObjectHideFlags: 0
@@ -3743,8 +3761,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4293590527
+  m_fontColor: {r: 1, g: 0.9921569, b: 0.9176471, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5865,8 +5883,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293063929
-  m_fontColor: {r: 0.97647065, g: 0.9568628, b: 0.8862746, a: 1}
+    rgba: 4279965468
+  m_fontColor: {r: 0.10980393, g: 0.09019608, b: 0.10588236, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5889,11 +5907,11 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -10
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
