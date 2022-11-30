@@ -83,9 +83,9 @@ namespace GulchGuardians.Coordinators
 
         private IEnumerator EnterCombatPhase()
         {
+            _currentPhase = Phase.Combat;
             yield return GamePhaseAnnouncer.AnnouncePhase(isPreparation: false);
 
-            _currentPhase = Phase.Combat;
             _advanceButtonText.text = "next";
 
             AdvanceButton.interactable = false;
