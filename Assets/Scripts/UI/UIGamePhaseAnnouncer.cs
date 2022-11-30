@@ -13,8 +13,11 @@ namespace GulchGuardians.UI
         [SerializeField] private AnimationCurve AnnouncementAnimationCurve;
         [SerializeField] private float AnnouncementDuration = 1.5f;
 
+        private void Start() { GamePhaseLabel.gameObject.SetActive(false); }
+
         public IEnumerator AnnouncePhase(bool isPreparation)
         {
+            GamePhaseLabel.gameObject.SetActive(true);
             GamePhaseLabel.sprite = isPreparation ? PreparationSign : CombatSign;
 
             Vector3 start = transform.position;
@@ -30,6 +33,7 @@ namespace GulchGuardians.UI
             }
 
             transform.position = start;
+            GamePhaseLabel.gameObject.SetActive(false);
         }
 
         private float GetLabelHeight()

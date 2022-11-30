@@ -84,33 +84,31 @@ namespace GulchGuardians.Coordinators
         private IEnumerator EnterCombatPhase()
         {
             _currentPhase = Phase.Combat;
+
+            BGMPlayer.Instance.TransitionToCombat();
             yield return GamePhaseAnnouncer.AnnouncePhase(isPreparation: false);
 
             _advanceButtonText.text = "next";
-
             AdvanceButton.interactable = false;
+
             AutoButton.gameObject.SetActive(true);
-
             TrySpacebarText.gameObject.SetActive(!_hasUsedSpacebar && !_isAutoAdvance);
-
-            BGMPlayer.Instance.TransitionToCombat();
 
             StartCoroutine(RunCombat());
         }
 
         private IEnumerator EnterPreparationPhase()
         {
-            yield return GamePhaseAnnouncer.AnnouncePhase(isPreparation: true);
-
             _currentPhase = Phase.Preparation;
-            _advanceButtonText.text = "fight!";
-
-            AdvanceButton.interactable = true;
-            AutoButton.gameObject.SetActive(false);
-
-            TrySpacebarText.gameObject.SetActive(false);
 
             BGMPlayer.Instance.TransitionToPreparation();
+            yield return GamePhaseAnnouncer.AnnouncePhase(isPreparation: true);
+
+            _advanceButtonText.text = "fight!";
+            AdvanceButton.interactable = true;
+
+            AutoButton.gameObject.SetActive(false);
+            TrySpacebarText.gameObject.SetActive(false);
 
             PreparationCoordinator.BeginModificationRound();
         }
