@@ -6205,6 +6205,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3250955122242830274, guid: 27b3dcf6a702b4e088ff3f8570015cc3, type: 3}
+      propertyPath: Layers.Array.data[0].Speed
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3250955122242830274, guid: 27b3dcf6a702b4e088ff3f8570015cc3, type: 3}
+      propertyPath: Layers.Array.data[1].Speed
+      value: 0.125
+      objectReference: {fileID: 0}
     - target: {fileID: 3351805840213958720, guid: 27b3dcf6a702b4e088ff3f8570015cc3, type: 3}
       propertyPath: m_Name
       value: Background
