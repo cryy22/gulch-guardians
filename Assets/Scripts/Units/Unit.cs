@@ -153,7 +153,7 @@ namespace GulchGuardians.Units
             yield return _ui.AnimateDamage(damage: damage, direction: direction);
             yield return _ui.AnimateStatsChange(animateHealth: true, animateAbilities: abilitiesChanged);
 
-            if (IsDefeated) StartCoroutine(HandleDefeat());
+            if (IsDefeated) yield return HandleDefeat();
         }
 
         private IEnumerator HandleDefeat()

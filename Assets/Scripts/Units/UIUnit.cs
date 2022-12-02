@@ -119,16 +119,36 @@ namespace GulchGuardians.Units
         {
             AttackText.color = Color.red;
             HealthText.color = Color.red;
+            Renderer.color = Color.red;
 
             SoundFXPlayer.Instance.PlayDefeatSound();
-            var duration = 0.2f;
-            var time = 0f;
+            Animator.SetTrigger(AnimatorProperties.OnHurtTrigger);
+
+            const float spinDuration = 0.33f;
+            const float spinPeriod = 0.33f;
+            const float shrinkDuration = 0.2f;
+
             Vector3 initialScale = transform.localScale;
 
-            while (time < duration)
+            var time = 0f;
+            while (time < spinDuration)
             {
-                transform.localScale = Vector3.Slerp(a: initialScale, b: Vector3.zero, t: time / duration);
                 time += Time.deltaTime;
+                transform.localScale = new Vector3(
+                    x: Mathf.Cos((time / spinPeriod) * Mathf.PI * 2) * initialScale.x,
+                    y: initialScale.y,
+                    z: initialScale.z
+                );
+
+                yield return null;
+            }
+
+            time = 0f;
+            while (time < shrinkDuration)
+            {
+                time += Time.deltaTime;
+
+                transform.localScale = Vector3.Slerp(a: initialScale, b: Vector3.zero, t: time / shrinkDuration);
                 yield return null;
             }
         }
