@@ -10,13 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 665fcda3e8824d1eb986c1d295d5963e, type: 3}
-  m_Name: EnemyUnitSetLvl1
+  m_Name: EnemyBossKnightSquadConfig
   m_EditorClassIdentifier: 
   UnitConfigQuantities:
-  - UnitConfig: {fileID: 11400000, guid: 90d633533490445b291afa881f18e685, type: 2}
-    Quantity: 6
-  - UnitConfig: {fileID: 11400000, guid: d1d07a90ec477454687a65d2509270df, type: 2}
-    Quantity: 0
-  - UnitConfig: {fileID: 11400000, guid: 8bc192206cfa045cb8693fbad65ed87d, type: 2}
-    Quantity: 0
+  - UnitConfig: {fileID: 11400000, guid: 62e56ef2b269b4132829e528fe2262f0, type: 2}
+    Quantity: 1
   UnitFactory: {fileID: 11400000, guid: 54544406e80754789ac74591d0238e76, type: 2}

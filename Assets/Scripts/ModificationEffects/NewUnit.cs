@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Linq;
 using GulchGuardians.Teams;
 using GulchGuardians.Units;
 using Unity.VisualScripting;
@@ -11,7 +10,8 @@ namespace GulchGuardians.ModificationEffects
     [CreateAssetMenu(fileName = "NewUnit", menuName = "Modification Effects/New Unit")]
     public class NewUnit : ModificationEffect
     {
-        [SerializeField] private UnitSet UnitSet;
+        [SerializeField] private UnitConfig UnitConfig;
+        [SerializeField] private UnitFactory UnitFactory;
 
         [DoNotSerialize] private Unit _unit;
 
@@ -26,7 +26,8 @@ namespace GulchGuardians.ModificationEffects
         public override void Prepare()
         {
             base.Prepare();
-            _unit = UnitSet.GenerateUnits().First();
+            _unit = UnitFactory.Create(UnitConfig);
+
             _unit.TooltipEnabled = false;
             _unit.SetNametagActive(false);
             _unit.gameObject.SetActive(false);

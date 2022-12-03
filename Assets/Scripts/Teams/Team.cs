@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GulchGuardians.Abilities;
+using GulchGuardians.Squads;
 using GulchGuardians.Units;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ namespace GulchGuardians.Teams
         public int MaxUnits = 99;
         public int UnitsPerCombatCycle = 3;
 
-        [SerializeField] private List<UnitSet> UnitSets;
+        [SerializeField] private List<SquadConfig> SquadConfigs;
+        [SerializeField] private SquadFactory SquadFactory;
         [SerializeField] private AbilityType BossType;
 
         private readonly List<Unit> _units = new();
@@ -34,7 +36,14 @@ namespace GulchGuardians.Teams
         private void Start()
         {
             List<Unit> units = new();
-            foreach (UnitSet unitSet in UnitSets) units.AddRange(unitSet.GenerateUnits());
+
+            foreach (SquadConfig squadConfig in SquadConfigs)
+            {
+                Squad squad = SquadFactory.Create(squadConfig);
+                units.AddRange(squad.Units);
+                Destroy(squad.gameObject);
+            }
+
             AddUnits(units); // doing this in Start avoids OnEnable adding EventHandlers a second time
 
             ResetUnitsOnDeck();
