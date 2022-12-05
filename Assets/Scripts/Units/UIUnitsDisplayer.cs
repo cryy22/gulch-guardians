@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Crysc.Helpers;
+using GulchGuardians.Squads;
 using GulchGuardians.Teams;
 using UnityEngine;
 
@@ -48,8 +49,11 @@ namespace GulchGuardians.Units
             foreach (Unit unit in _unitsPositions.Keys) unit.transform.position = _unitsPositions[unit];
         }
 
-        public void UpdateDemarcation(Unit lastUnitInCycle)
+        public void UpdateDemarcation(Squad frontSquad)
         {
+            if (frontSquad == null || frontSquad.Count <= 0) return;
+            Unit lastUnitInCycle = frontSquad.BackUnit;
+
             if (!DemarcatesRounds || !_unitsPositions.ContainsKey(lastUnitInCycle))
             {
                 RoundDemarcation.SetActive(false);

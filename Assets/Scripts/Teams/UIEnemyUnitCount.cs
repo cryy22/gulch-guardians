@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ namespace GulchGuardians.Teams
 
         private void UpdateCounter()
         {
-            int unitCount = EnemyTeam.Units.Count;
+            int unitCount = EnemyTeam.Units.Count();
             CounterText.text = unitCount.ToString();
             SuffixText.text = unitCount == 1 ? "enemy unit remaining" : "enemy units remaining";
         }

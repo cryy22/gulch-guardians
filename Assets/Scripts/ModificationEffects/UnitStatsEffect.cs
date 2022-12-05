@@ -25,7 +25,7 @@ namespace GulchGuardians.ModificationEffects
                 case TargetType.PlayerTeam:
                 case TargetType.UnitAndPlayerTeam:
                     Team playerTeam = context.PlayerTeam;
-                    return playerTeam != null && playerTeam.Units.Count > 1;
+                    return playerTeam != null && playerTeam.Units.Count() > 1;
                 case TargetType.Unit:
                 case TargetType.EnemyTeam:
                 default:
@@ -42,7 +42,7 @@ namespace GulchGuardians.ModificationEffects
                 TargetType.Unit              => new List<Unit> { context.Unit! },
                 TargetType.PlayerTeam        => context.PlayerTeam.Units!,
                 TargetType.UnitAndPlayerTeam => context.PlayerTeam.Units!,
-                TargetType.EnemyTeam         => context.EnemyTeam.Units!.Take(context.EnemyTeam.UnitsInCombatCycle),
+                TargetType.EnemyTeam         => context.EnemyTeam.FrontSquad.Units!,
                 _                            => new List<Unit>(),
             };
 

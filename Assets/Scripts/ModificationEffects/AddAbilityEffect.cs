@@ -18,7 +18,7 @@ namespace GulchGuardians.ModificationEffects
             Team playerTeam = context.PlayerTeam;
             if (playerTeam == null) return false;
 
-            if (Ability.IsBadForSoloTeam && playerTeam.Units.Count <= 1) return false;
+            if (Ability.IsBadForSoloTeam && playerTeam.Units.Count() <= 1) return false;
             return playerTeam.Units.Any(u => !u.HasAbility(Ability));
         }
 

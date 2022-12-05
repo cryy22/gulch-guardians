@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using GulchGuardians.Abilities;
 using GulchGuardians.Squads;
 using GulchGuardians.Units;
 using UnityEngine;
@@ -13,23 +12,18 @@ namespace GulchGuardians.Teams
     public class Team : MonoBehaviour
     {
         public int MaxUnits = 99;
-        public int UnitsPerCombatCycle = 3;
 
         [SerializeField] private List<SquadConfig> SquadConfigs;
         [SerializeField] private SquadFactory SquadFactory;
-        [SerializeField] private AbilityType BossType;
 
-        private readonly List<Unit> _units = new();
+        private readonly List<Squad> _squads = new();
         private UIUnitsDisplayer _unitsDisplayer;
 
         public event EventHandler UnitsChanged;
         public event EventHandler<UnitClickedEventArgs> UnitClicked;
 
-        public IReadOnlyList<Unit> Units => _units;
-        public Unit FrontUnit => _units.Count > 0 ? _units.First() : null;
-
-        public int UnitsInCombatCycle { get; private set; }
-        private Unit LastUnitInCycle => UnitsInCombatCycle > 0 ? _units[UnitsInCombatCycle - 1] : null;
+        public IEnumerable<Unit> Units => _squads.SelectMany(s => s.Units);
+        public Squad FrontSquad => _squads.Count > 0 ? _squads.First() : null;
 
         private void Awake() { _unitsDisplayer = GetComponent<UIUnitsDisplayer>(); }
 
@@ -40,76 +34,68 @@ namespace GulchGuardians.Teams
             foreach (SquadConfig squadConfig in SquadConfigs)
             {
                 Squad squad = SquadFactory.Create(squadConfig);
-                units.AddRange(squad.Units);
-                Destroy(squad.gameObject);
+                squad.Team = this;
+
+                _squads.Add(squad);
             }
 
             AddUnits(units); // doing this in Start avoids OnEnable adding EventHandlers a second time
-
             ResetUnitsOnDeck();
         }
 
         private void OnEnable()
         {
-            foreach (Unit unit in _units) unit.Clicked += OnUnitClickedEventHandler;
+            foreach (Unit unit in Units) unit.Clicked += OnUnitClickedEventHandler;
         }
 
         private void OnDisable()
         {
-            foreach (Unit unit in _units) unit.Clicked -= OnUnitClickedEventHandler;
+            foreach (Unit unit in Units) unit.Clicked -= OnUnitClickedEventHandler;
         }
 
         public IEnumerator AddUnit(Unit unit)
         {
-            if (_units.Count >= MaxUnits) throw new Exception("Team is full");
+            if (Units.Count() >= MaxUnits) throw new Exception("Team is full");
 
+            FrontSquad.AddUnit(unit);
             AddUnitInternal(unit);
 
-            yield return _unitsDisplayer.AnimateUpdateDisplay(units: _units);
+            yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
-        public void ResetUnitsOnDeck()
-        {
-            UnitsInCombatCycle = FrontUnit && FrontUnit.HasAbility(BossType)
-                ? 1
-                : Mathf.Min(a: UnitsPerCombatCycle, b: _units.Count);
-
-            _unitsDisplayer.UpdateDemarcation(LastUnitInCycle);
-        }
+        public void ResetUnitsOnDeck() { _unitsDisplayer.UpdateDemarcation(FrontSquad); }
 
         public IEnumerator SetUnitIndex(Unit unit, int index)
         {
-            if (!_units.Remove(unit)) yield break;
-            _units.Insert(index: index, item: unit);
-
-            yield return _unitsDisplayer.AnimateUpdateDisplay(units: _units);
+            yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
         public IEnumerator HandleUnitDefeat(Unit unit)
         {
-            if (!_units.Remove(unit)) yield break;
-            UnitsInCombatCycle--;
-
-            yield return _unitsDisplayer.AnimateUpdateDisplay(units: _units);
-
+            yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
-        private void AddUnits(IEnumerable<Unit> units)
+        public void HandleSquadDefeat(Squad squad)
         {
-            if (_units.Count + units.Count() > MaxUnits) throw new Exception("Team is full");
+            _squads.Remove(squad);
+            _unitsDisplayer.UpdateDemarcation(FrontSquad);
+        }
+
+        private void AddUnits(List<Unit> units)
+        {
+            if (Units.Count() + units.Count() > MaxUnits) throw new Exception("Team is full");
 
             foreach (Unit unit in units) AddUnitInternal(unit);
 
-            _unitsDisplayer.UpdateDisplay(units: _units);
+            _unitsDisplayer.UpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
         private void AddUnitInternal(Unit unit)
         {
-            _units.Add(unit);
             unit.Team = this;
             unit.Clicked += OnUnitClickedEventHandler;
         }

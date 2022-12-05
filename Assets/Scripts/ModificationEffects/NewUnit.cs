@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using GulchGuardians.Teams;
 using GulchGuardians.Units;
 using Unity.VisualScripting;
@@ -20,7 +21,7 @@ namespace GulchGuardians.ModificationEffects
         public override bool CanBeAppliedTo(Context context)
         {
             Team playerTeam = context.PlayerTeam;
-            return playerTeam != null && playerTeam.Units.Count < playerTeam.MaxUnits;
+            return playerTeam != null && playerTeam.Units.Count() < playerTeam.MaxUnits;
         }
 
         public override void Prepare()

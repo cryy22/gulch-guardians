@@ -6,6 +6,7 @@ using Crysc.Helpers;
 using Crysc.Initialization;
 using GulchGuardians.Abilities;
 using GulchGuardians.Common;
+using GulchGuardians.Squads;
 using GulchGuardians.Teams;
 using UnityEngine;
 
@@ -113,13 +114,13 @@ namespace GulchGuardians.Units
 
         public bool WillAttack(int index) { return index == (HasAbility(ArcherType) ? 1 : 0); }
 
-        public IEnumerator AttackUnit(Unit target, Team unitTeam)
+        public IEnumerator AttackUnit(Unit target, Squad unitSquad)
         {
             if (HasAbility(HealerType))
             {
                 yield return _ui.AnimateHeal();
                 yield return CoroutineWaiter.RunConcurrently(
-                    behaviours: unitTeam.Units!,
+                    behaviours: unitSquad.Units!,
                     u => u.Heal(amount: Attack / 2)
                 );
                 yield break;
