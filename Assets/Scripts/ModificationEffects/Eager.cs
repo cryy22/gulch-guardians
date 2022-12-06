@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using Crysc.Helpers;
+using GulchGuardians.Squads;
 using GulchGuardians.Teams;
 using GulchGuardians.Units;
 using UnityEngine;
@@ -22,11 +23,11 @@ namespace GulchGuardians.ModificationEffects
         {
             yield return base.Apply(context);
 
-            Team playerTeam = context.PlayerTeam!;
+            Squad playerSquad = context.PlayerTeam!.FrontSquad;
             Unit unit = context.Unit!;
 
             yield return CoroutineWaiter.RunConcurrently(
-                playerTeam.StartCoroutine(playerTeam.SetUnitIndex(unit: unit, index: 0)),
+                playerSquad.StartCoroutine(playerSquad.SetUnitIndex(unit: unit, index: 0)),
                 unit.StartCoroutine(unit.Upgrade(attack: 1, health: 0))
             );
         }
