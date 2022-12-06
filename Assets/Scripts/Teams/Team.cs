@@ -29,8 +29,6 @@ namespace GulchGuardians.Teams
 
         private void Start()
         {
-            List<Unit> units = new();
-
             foreach (SquadConfig squadConfig in SquadConfigs)
             {
                 Squad squad = SquadFactory.Create(squadConfig);
@@ -39,7 +37,7 @@ namespace GulchGuardians.Teams
                 _squads.Add(squad);
             }
 
-            AddUnits(units); // doing this in Start avoids OnEnable adding EventHandlers a second time
+            AddUnits(Units); // doing this in Start avoids OnEnable adding EventHandlers a second time
             ResetUnitsOnDeck();
         }
 
@@ -84,11 +82,12 @@ namespace GulchGuardians.Teams
             _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 
-        private void AddUnits(List<Unit> units)
+        private void AddUnits(IEnumerable<Unit> units)
         {
-            if (Units.Count() + units.Count() > MaxUnits) throw new Exception("Team is full");
+            IEnumerable<Unit> enumeratedUnits = units.ToArray();
+            if (Units.Count() + enumeratedUnits.Count() > MaxUnits) throw new Exception("Team is full");
 
-            foreach (Unit unit in units) AddUnitInternal(unit);
+            foreach (Unit unit in enumeratedUnits) AddUnitInternal(unit);
 
             _unitsDisplayer.UpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
