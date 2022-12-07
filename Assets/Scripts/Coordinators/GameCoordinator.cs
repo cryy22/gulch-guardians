@@ -54,7 +54,7 @@ namespace GulchGuardians.Coordinators
         public void OnAdvance(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            if (_currentPhase == Phase.Preparation && PreparationCoordinator.IsRoundActive) return;
+            if (_currentPhase == Phase.Transition || PreparationCoordinator.IsRoundActive) return;
 
             OnAdvanceButtonClicked();
 
@@ -78,13 +78,22 @@ namespace GulchGuardians.Coordinators
 
         private void OnAdvanceButtonClicked()
         {
-            if (_currentPhase == Phase.Combat) _didPlayerAdvance = true;
-            else if (_currentPhase == Phase.Preparation) StartCoroutine(EnterCombatPhase());
+            switch (_currentPhase)
+            {
+                case Phase.Transition:
+                    return;
+                case Phase.Combat:
+                    _didPlayerAdvance = true;
+                    break;
+                case Phase.Preparation:
+                    StartCoroutine(EnterCombatPhase());
+                    break;
+            }
         }
 
         private IEnumerator EnterCombatPhase()
         {
-            _currentPhase = Phase.Combat;
+            _currentPhase = Phase.Transition;
 
             BGMPlayer.Instance.TransitionToCombat();
             yield return GamePhaseAnnouncer.AnnouncePhase(isPreparation: false);
@@ -96,11 +105,12 @@ namespace GulchGuardians.Coordinators
             TrySpacebarText.gameObject.SetActive(!_hasUsedSpacebar && !_isAutoAdvance);
 
             StartCoroutine(RunCombat());
+            _currentPhase = Phase.Combat;
         }
 
         private IEnumerator EnterPreparationPhase()
         {
-            _currentPhase = Phase.Preparation;
+            _currentPhase = Phase.Transition;
 
             BGMPlayer.Instance.TransitionToPreparation();
             yield return GamePhaseAnnouncer.AnnouncePhase(isPreparation: true);
@@ -112,6 +122,7 @@ namespace GulchGuardians.Coordinators
             TrySpacebarText.gameObject.SetActive(false);
 
             PreparationCoordinator.BeginModificationRound();
+            _currentPhase = Phase.Preparation;
         }
 
         private IEnumerator RunCombat()
@@ -196,6 +207,7 @@ namespace GulchGuardians.Coordinators
         {
             Preparation,
             Combat,
+            Transition,
         }
     }
 }
