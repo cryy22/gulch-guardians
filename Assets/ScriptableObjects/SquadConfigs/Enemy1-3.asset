@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 665fcda3e8824d1eb986c1d295d5963e, type: 3}
-  m_Name: PlayerSingleSquadConfig
+  m_Name: Enemy1-3
   m_EditorClassIdentifier: 
   UnitConfigQuantities:
-  - UnitConfig: {fileID: 11400000, guid: 332c1c95c1b52459694579c1e1e62015, type: 2}
+  - UnitConfig: {fileID: 11400000, guid: 90d633533490445b291afa881f18e685, type: 2}
+    Quantity: 3
+  - UnitConfig: {fileID: 11400000, guid: d1d07a90ec477454687a65d2509270df, type: 2}
     Quantity: 1
-  - UnitConfig: {fileID: 11400000, guid: 332c1c95c1b52459694579c1e1e62015, type: 2}
-    Quantity: 1
+  - UnitConfig: {fileID: 11400000, guid: 8bc192206cfa045cb8693fbad65ed87d, type: 2}
+    Quantity: 0
