@@ -16,3 +16,4 @@ MonoBehaviour:
   Description: The next time they get knocked down, they get back up.
   Icon: {fileID: 21300000, guid: b525da95b158d45d68d9384fa4404518, type: 3}
   IsBadForSoloTeam: 0
+  MaxPerTeam: 99

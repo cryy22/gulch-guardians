@@ -9,5 +9,6 @@ namespace GulchGuardians.Abilities
         [TextArea] public string Description;
         public Sprite Icon;
         public bool IsBadForSoloTeam;
+        public int MaxPerTeam = 1;
     }
 }
