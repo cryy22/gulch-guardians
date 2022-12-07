@@ -14,7 +14,6 @@ namespace GulchGuardians.Units
 {
     [RequireComponent(typeof(ClickReporter))]
     [RequireComponent(typeof(UIUnit))]
-    [RequireComponent(typeof(UnitRegistrar))]
     public class Unit : InitializationBehaviour<UnitInitParams>
     {
         [SerializeField] private AbilityType SturdyType;

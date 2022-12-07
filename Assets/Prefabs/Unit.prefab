@@ -4982,10 +4982,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4943982857873706237}
   - component: {fileID: 6608307905624749109}
+  - component: {fileID: 6499838053706338678}
   - component: {fileID: 1340140432095252761}
+  - component: {fileID: -7722772078535010035}
   - component: {fileID: -5873586629161309623}
   - component: {fileID: -8309591086784092033}
-  - component: {fileID: 6499838053706338678}
   m_Layer: 6
   m_Name: Unit
   m_TagString: Untagged
@@ -5028,6 +5029,29 @@ MonoBehaviour:
   ArcherType: {fileID: 11400000, guid: 9fbc68c9d73b0487baec45477fd8e09c, type: 2}
   HealerType: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
   Nametag: {fileID: 4943982858519393693}
+--- !u!114 &6499838053706338678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4943982857873706236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb2d01fe14d5423180693d3aa7c25c05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackText: {fileID: 8324245100752936319}
+  HealthText: {fileID: 7323105098417310357}
+  NameText: {fileID: 2037156054689024240}
+  Renderer: {fileID: 4943982858057783518}
+  SpriteLibrary: {fileID: 2470079670227859713}
+  Animator: {fileID: 8312982018863316174}
+  AbilityIcons: {fileID: 4138898325063143908}
+  AbilityIconPrefab: {fileID: 1016766620694162878, guid: 5c972a823c14f4a2aa2ae254c404fce6, type: 3}
+  BossType: {fileID: 11400000, guid: b1c74edd376d24b228d41d2f07d3f69d, type: 2}
+  HealerType: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
+  AttackParticleSystem: {fileID: 211717413201965041}
 --- !u!114 &1340140432095252761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5038,6 +5062,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61f199ccbec2437d940de41287399776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Registry: {fileID: 11400000, guid: e0c06b7c40c66416da3582c1c37a34f6, type: 2}
+--- !u!114 &-7722772078535010035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4943982857873706236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697b66a548f94e3688e4a61336c3aaf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Registry: {fileID: 11400000, guid: e0c06b7c40c66416da3582c1c37a34f6, type: 2}
@@ -5080,29 +5117,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2.66}
   m_EdgeRadius: 0
---- !u!114 &6499838053706338678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4943982857873706236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb2d01fe14d5423180693d3aa7c25c05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttackText: {fileID: 8324245100752936319}
-  HealthText: {fileID: 7323105098417310357}
-  NameText: {fileID: 2037156054689024240}
-  Renderer: {fileID: 4943982858057783518}
-  SpriteLibrary: {fileID: 2470079670227859713}
-  Animator: {fileID: 8312982018863316174}
-  AbilityIcons: {fileID: 4138898325063143908}
-  AbilityIconPrefab: {fileID: 1016766620694162878, guid: 5c972a823c14f4a2aa2ae254c404fce6, type: 3}
-  BossType: {fileID: 11400000, guid: b1c74edd376d24b228d41d2f07d3f69d, type: 2}
-  HealerType: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
-  AttackParticleSystem: {fileID: 211717413201965041}
 --- !u!1 &4943982858057783517
 GameObject:
   m_ObjectHideFlags: 0
