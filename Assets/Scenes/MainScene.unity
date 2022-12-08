@@ -315,11 +315,11 @@ RectTransform:
   m_Father: {fileID: 1427754193}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -62}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 300, y: 0}
   m_SizeDelta: {x: 340, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &67261877
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,6 +929,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112605648}
   m_CullTransparentMesh: 1
+--- !u!1 &124071148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 124071149}
+  - component: {fileID: 124071150}
+  m_Layer: 5
+  m_Name: ConfirmationOverlay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &124071149
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124071148}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1445416948}
+  m_Father: {fileID: 2095317710}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &124071150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124071148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ed774dc62e45c8a7af22d3194d6bbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Container: {fileID: 1445416947}
+  ConfirmButton: {fileID: 1671173174}
+  CancelButton: {fileID: 283618190}
 --- !u!1 &221826658
 GameObject:
   m_ObjectHideFlags: 0
@@ -4043,6 +4096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf76aa19cac4406eab15948e17d77e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ConfirmationOverlay: {fileID: 124071150}
 --- !u!1 &1334005414
 GameObject:
   m_ObjectHideFlags: 0
@@ -4806,7 +4860,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1427754193}
   m_Layer: 5
-  m_Name: Container
+  m_Name: MessageBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4832,7 +4886,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 100}
+  m_SizeDelta: {x: 600, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1445416947
 GameObject:
@@ -4845,9 +4899,8 @@ GameObject:
   - component: {fileID: 1445416948}
   - component: {fileID: 1445416950}
   - component: {fileID: 1445416949}
-  - component: {fileID: 1445416951}
   m_Layer: 5
-  m_Name: ConfirmationOverlay
+  m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4860,19 +4913,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445416947}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1427754193}
-  m_Father: {fileID: 2095317710}
-  m_RootOrder: 12
+  m_Father: {fileID: 124071149}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 960, y: 540.3131}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1445416949
 MonoBehaviour:
@@ -4912,20 +4965,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445416947}
   m_CullTransparentMesh: 1
---- !u!114 &1445416951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1445416947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7ed774dc62e45c8a7af22d3194d6bbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConfirmButton: {fileID: 1671173174}
-  CancelButton: {fileID: 283618190}
 --- !u!1 &1445877993
 GameObject:
   m_ObjectHideFlags: 0
@@ -6926,7 +6965,7 @@ RectTransform:
   - {fileID: 290765159}
   - {fileID: 469749553}
   - {fileID: 763397399}
-  - {fileID: 1445416948}
+  - {fileID: 124071149}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
