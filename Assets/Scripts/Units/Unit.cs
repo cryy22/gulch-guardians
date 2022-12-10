@@ -37,8 +37,6 @@ namespace GulchGuardians.Units
 
         public event EventHandler Changed;
 
-        public bool IsDefeated => Health <= 0;
-
         public IEnumerable<AbilityType> Abilities => _abilities;
 
         public string FirstName => InitParams.FirstName;
@@ -60,6 +58,8 @@ namespace GulchGuardians.Units
             _clickReporter = GetComponent<ClickReporter>();
             _ui = GetComponent<UIUnit>();
         }
+
+        public static bool IsDefeated(Unit unit) { return unit == null || unit.Health <= 0; }
 
         public override void Initialize(UnitInitParams initParams)
         {
@@ -112,26 +112,27 @@ namespace GulchGuardians.Units
             yield return _ui.AnimateToPosition(position: position, duration: duration);
         }
 
-        public bool WillAttack(int index) { return index == (HasAbility(ArcherType) ? 1 : 0); }
+        public bool WillAct(int index) { return index == (HasAbility(ArcherType) ? 1 : 0); }
 
         public IEnumerator AttackUnit(Unit target)
         {
-            if (HasAbility(HealerType))
-            {
-                yield return _ui.AnimateHeal();
-                yield return CoroutineWaiter.RunConcurrently(
-                    behaviours: Squad.Units!,
-                    u => u.Heal(amount: Attack / 2)
-                );
-                yield break;
-            }
-
             yield return _ui.AnimateAttack(target);
 
             UIUnit.DamageDirection direction = transform.position.x < target.transform.position.x
                 ? UIUnit.DamageDirection.Left
                 : UIUnit.DamageDirection.Right;
             yield return target.TakeDamage(damage: Attack, direction: direction);
+        }
+
+        public IEnumerator HealSquad()
+        {
+            if (!HasAbility(HealerType)) yield break;
+
+            yield return _ui.AnimateHeal();
+            yield return CoroutineWaiter.RunConcurrently(
+                behaviours: Squad.Units!,
+                u => u.Heal(amount: Attack / 2)
+            );
         }
 
         public bool HasAbility(AbilityType ability) { return _abilities.Contains(ability); }
@@ -157,7 +158,7 @@ namespace GulchGuardians.Units
             yield return _ui.AnimateDamage(damage: damage, direction: direction);
             yield return _ui.AnimateStatsChange(animateHealth: true, animateAbilities: abilitiesChanged);
 
-            if (IsDefeated) yield return HandleDefeat();
+            if (IsDefeated(this)) yield return HandleDefeat();
         }
 
         private IEnumerator HandleDefeat()

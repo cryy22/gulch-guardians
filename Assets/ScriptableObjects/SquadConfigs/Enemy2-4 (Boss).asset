@@ -17,3 +17,4 @@ MonoBehaviour:
     Quantity: 1
   - UnitConfig: {fileID: 11400000, guid: d1d07a90ec477454687a65d2509270df, type: 2}
     Quantity: 1
+  UnitsRotate: 1

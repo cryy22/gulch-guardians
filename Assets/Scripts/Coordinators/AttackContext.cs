@@ -5,9 +5,17 @@ namespace GulchGuardians.Coordinators
 {
     public struct AttackContext
     {
-        public Unit Attacker;
-        public Unit Defender;
-        public Squad AttackerSquad;
-        public Squad DefenderSquad;
+        public readonly Unit Actor;
+        public readonly Unit Defender;
+        public readonly Squad AttackingSquad;
+        public readonly Squad DefendingSquad;
+
+        public AttackContext(Unit actor, Unit defender, Squad attackingSquad, Squad defendingSquad)
+        {
+            Actor = actor;
+            Defender = defender;
+            AttackingSquad = attackingSquad;
+            DefendingSquad = defendingSquad;
+        }
     }
 }

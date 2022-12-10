@@ -15,6 +15,7 @@ namespace GulchGuardians.Squads
         public int Count => _units.Count;
         public Unit FrontUnit => _units.Count > 0 ? _units.First() : null;
         public Unit BackUnit => _units.Count > 0 ? _units.Last() : null;
+        public bool UnitsRotate => InitParams.UnitsRotate;
         public Team Team { get; set; }
 
         public static bool IsDefeated(Squad squad) { return squad == null || squad.Count <= 0; }

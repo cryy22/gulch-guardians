@@ -9,6 +9,7 @@ namespace GulchGuardians.Squads
     public class SquadConfig : ScriptableObject
     {
         public List<UnitConfigQuantity> UnitConfigQuantities;
+        public bool UnitsRotate;
 
         [Serializable]
         public struct UnitConfigQuantity

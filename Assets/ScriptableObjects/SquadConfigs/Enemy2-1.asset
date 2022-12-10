@@ -19,3 +19,4 @@ MonoBehaviour:
     Quantity: 2
   - UnitConfig: {fileID: 11400000, guid: 8bc192206cfa045cb8693fbad65ed87d, type: 2}
     Quantity: 0
+  UnitsRotate: 1

@@ -1248,6 +1248,7 @@ MonoBehaviour:
   TrySpacebarText: {fileID: 1161815364}
   GamePhaseAnnouncer: {fileID: 763397400}
   GameResultPanel: {fileID: 542451868}
+  Healer: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
   Evasive: {fileID: 11400000, guid: e19df26c49e244843ba207847bd7a69c, type: 2}
 --- !u!114 &230742419
 MonoBehaviour:

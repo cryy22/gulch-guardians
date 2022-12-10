@@ -12,7 +12,10 @@ namespace GulchGuardians.Squads
 
         protected override SquadInitParams GetInitParams(SquadConfig config)
         {
-            return new SquadInitParams(GenerateUnits(config.UnitConfigQuantities));
+            return new SquadInitParams(
+                initialUnits: GenerateUnits(config.UnitConfigQuantities),
+                unitsRotate: config.UnitsRotate
+            );
         }
 
         private IEnumerable<Unit> GenerateUnits(IEnumerable<SquadConfig.UnitConfigQuantity> configQuantities)
