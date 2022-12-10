@@ -42,7 +42,7 @@ namespace GulchGuardians.Units
         public IEnumerable<AbilityType> Abilities => _abilities;
 
         public string FirstName => InitParams.FirstName;
-        public Team Team { get; set; }
+        public Team Team => Squad != null ? Squad.Team : null;
         public Squad Squad { get; set; }
 
         public int Attack

@@ -96,11 +96,7 @@ namespace GulchGuardians.Teams
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
-        private void AddUnitInternal(Unit unit)
-        {
-            unit.Team = this;
-            unit.Clicked += OnUnitClickedEventHandler;
-        }
+        private void AddUnitInternal(Unit unit) { unit.Clicked += OnUnitClickedEventHandler; }
 
         private void OnUnitClickedEventHandler(object sender, EventArgs e)
         {

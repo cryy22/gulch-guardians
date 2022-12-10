@@ -23,6 +23,7 @@ namespace GulchGuardians.Squads
         {
             base.Initialize(initParams);
             _units.AddRange(initParams.InitialUnits);
+            foreach (Unit unit in _units) unit.Squad = this;
         }
 
         public IEnumerator HandleUnitDefeat(Unit unit)
@@ -30,7 +31,7 @@ namespace GulchGuardians.Squads
             if (!_units.Remove(unit)) yield break;
             yield return Team.HandleUnitDefeat(unit);
 
-            if (Count > 0) yield break;
+            if (!IsDefeated(this)) yield break;
             Team.HandleSquadDefeat(this);
             Destroy(gameObject);
         }
