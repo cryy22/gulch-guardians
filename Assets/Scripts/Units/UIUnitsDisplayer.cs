@@ -21,7 +21,7 @@ namespace GulchGuardians.Units
         [SerializeField] private GameObject RoundDemarcation;
 
         private readonly Dictionary<Unit, Vector3> _unitsPositions = new();
-        private Unit _lastUnitInCycle;
+        private Squad _frontSquad;
 
         private void Awake() { RoundDemarcation.SetActive(DemarcatesRounds); }
 
@@ -37,9 +37,7 @@ namespace GulchGuardians.Units
                         unit => unit.MoveToPosition(position: _unitsPositions[unit], duration: 0.25f)
                     )
                 ),
-                StartCoroutine(
-                    AnimateMoveDemarcation(position: GetRoundDemarcationPosition(), duration: 0.25f)
-                )
+                StartCoroutine(AnimateMoveDemarcation(duration: 0.25f))
             );
         }
 
@@ -51,49 +49,43 @@ namespace GulchGuardians.Units
 
         public void UpdateDemarcation(Squad frontSquad)
         {
+            if (!DemarcatesRounds) return;
+
             if (frontSquad == null || frontSquad.Count <= 0) return;
-            Unit lastUnitInCycle = frontSquad.BackUnit;
+            _frontSquad = frontSquad;
 
-            if (!DemarcatesRounds || !_unitsPositions.ContainsKey(lastUnitInCycle))
-            {
-                RoundDemarcation.SetActive(false);
-                return;
-            }
+            (bool isFound, Vector3 position) = GetRoundDemarcationPosition();
+            RoundDemarcation.SetActive(isFound);
+            if (!isFound) return;
 
-            RoundDemarcation.SetActive(true);
-            _lastUnitInCycle = lastUnitInCycle;
-
-            RoundDemarcation.transform.position = GetRoundDemarcationPosition();
+            RoundDemarcation.transform.position = position;
         }
 
-        private IEnumerator AnimateMoveDemarcation(Vector3 position, float duration)
+        private IEnumerator AnimateMoveDemarcation(float duration)
         {
-            if (!DemarcatesRounds || !_unitsPositions.ContainsKey(_lastUnitInCycle))
-            {
-                RoundDemarcation.SetActive(false);
-                yield break;
-            }
+            if (!DemarcatesRounds) yield break;
 
-            Vector3 startPosition = RoundDemarcation.transform.position;
-            var t = 0f;
-            while (t <= 1f)
-            {
-                t += Time.deltaTime / duration;
-                RoundDemarcation.transform.position = Vector3.Lerp(a: startPosition, b: position, t: t);
-                yield return null;
-            }
+            (bool isFound, Vector3 position) = GetRoundDemarcationPosition();
+            RoundDemarcation.SetActive(isFound);
+            if (!isFound) yield break;
+
+            yield return Mover.Move(transform: RoundDemarcation.transform, end: position, duration: duration);
         }
 
-        private Vector3 GetRoundDemarcationPosition()
+        private (bool isFound, Vector3 position) GetRoundDemarcationPosition()
         {
-            if (!DemarcatesRounds || !_unitsPositions.ContainsKey(_lastUnitInCycle)) return Vector3.negativeInfinity;
+            if (!DemarcatesRounds) return (false, Vector3.negativeInfinity);
+
+            Unit lastUnitInCycle = _frontSquad.BackUnit;
+            if (lastUnitInCycle == null || !_unitsPositions.ContainsKey(lastUnitInCycle))
+                return (false, Vector3.negativeInfinity);
 
             Vector3 position = RoundDemarcation.transform.position;
-            return new Vector3(
-                x: _unitsPositions[_lastUnitInCycle].x + 0.95f,
+            return (true, new Vector3(
+                x: _unitsPositions[lastUnitInCycle].x + 0.95f,
                 y: position.y,
                 z: position.z
-            );
+            ));
         }
 
         private bool UpdateUnitsAndPositions(IEnumerable<Unit> units)

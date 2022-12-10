@@ -40,7 +40,7 @@ namespace GulchGuardians.Squads
             if (!_units.Remove(unit)) yield break;
             _units.Insert(index: index, item: unit);
 
-            yield return Team.SetUnitIndex(unit: unit, index: index, withHurtAnimation: withHurtAnimation);
+            yield return Team.SetUnitIndex(unit: unit, withHurtAnimation: withHurtAnimation);
         }
 
         public void AddUnit(Unit unit)
