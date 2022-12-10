@@ -100,6 +100,7 @@ namespace GulchGuardians.Coordinators
 
         private IEnumerator EnterCombatPhase()
         {
+            yield return PreparationCoordinator.EndModificationRound();
             _currentPhase = Phase.Transition;
 
             BGMPlayer.Instance.TransitionToCombat();
@@ -139,8 +140,6 @@ namespace GulchGuardians.Coordinators
 
             Squad playerSquad = PlayerTeam.FrontSquad;
             Squad enemySquad = EnemyTeam.FrontSquad;
-
-            yield return PreparationCoordinator.EndModificationRound();
 
             yield return WaitForPlayer(1f);
 
