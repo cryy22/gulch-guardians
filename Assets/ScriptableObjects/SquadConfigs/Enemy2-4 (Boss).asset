@@ -15,6 +15,6 @@ MonoBehaviour:
   UnitConfigQuantities:
   - UnitConfig: {fileID: 11400000, guid: 62e56ef2b269b4132829e528fe2262f0, type: 2}
     Quantity: 1
-  - UnitConfig: {fileID: 11400000, guid: d1d07a90ec477454687a65d2509270df, type: 2}
+  - UnitConfig: {fileID: 11400000, guid: 030d4e7364c9f494dac841c36f14a5ec, type: 2}
     Quantity: 1
   UnitsRotate: 1

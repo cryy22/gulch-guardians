@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6836477ab3404f38932f5ea6004820d5, type: 3}
+  m_Name: EnemyKnightHealerUnitConfig
+  m_EditorClassIdentifier: 
+  MinAttack: 6
+  MaxAttack: 6
+  MinHealth: 10
+  MaxHealth: 10
+  SpriteAssetMaps:
+  - Default: {fileID: 7108339969198208228, guid: 1702561239b7648c89bd7efc4e9c7ce6, type: 3}
+    Healer: {fileID: 7108339969198208228, guid: 1702561239b7648c89bd7efc4e9c7ce6, type: 3}
+  - Default: {fileID: 7108339969198208228, guid: e9079ebdec4e248ca99a332cf6f5955e, type: 3}
+    Healer: {fileID: 7108339969198208228, guid: e9079ebdec4e248ca99a332cf6f5955e, type: 3}
+  AbilityTypes:
+  - {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
