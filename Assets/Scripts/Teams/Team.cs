@@ -64,9 +64,12 @@ namespace GulchGuardians.Teams
 
         public void ResetUnitsOnDeck() { _unitsDisplayer.UpdateDemarcation(FrontSquad); }
 
-        public IEnumerator SetUnitIndex(Unit unit, int index)
+        public IEnumerator SetUnitIndex(Unit unit, int index, bool withHurtAnimation = false)
         {
+            if (withHurtAnimation) unit.SetHurtAnimation();
             yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
+            if (withHurtAnimation) unit.SetIdleAnimation();
+
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 

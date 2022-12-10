@@ -35,14 +35,18 @@ namespace GulchGuardians.Squads
             Destroy(gameObject);
         }
 
-        public IEnumerator SetUnitIndex(Unit unit, int index)
+        public IEnumerator SetUnitIndex(Unit unit, int index, bool withHurtAnimation = false)
         {
             if (!_units.Remove(unit)) yield break;
             _units.Insert(index: index, item: unit);
 
-            yield return Team.SetUnitIndex(unit: unit, index: index);
+            yield return Team.SetUnitIndex(unit: unit, index: index, withHurtAnimation: withHurtAnimation);
         }
 
-        public void AddUnit(Unit unit) { _units.Add(unit); }
+        public void AddUnit(Unit unit)
+        {
+            unit.Squad = this;
+            _units.Add(unit);
+        }
     }
 }

@@ -6,6 +6,7 @@ using Crysc.Helpers;
 using Crysc.Initialization;
 using GulchGuardians.Abilities;
 using GulchGuardians.Common;
+using GulchGuardians.Constants;
 using GulchGuardians.Squads;
 using GulchGuardians.Teams;
 using UnityEngine;
@@ -41,8 +42,8 @@ namespace GulchGuardians.Units
         public IEnumerable<AbilityType> Abilities => _abilities;
 
         public string FirstName => InitParams.FirstName;
-
         public Team Team { get; set; }
+        public Squad Squad { get; set; }
 
         public int Attack
         {
@@ -113,13 +114,13 @@ namespace GulchGuardians.Units
 
         public bool WillAttack(int index) { return index == (HasAbility(ArcherType) ? 1 : 0); }
 
-        public IEnumerator AttackUnit(Unit target, Squad unitSquad)
+        public IEnumerator AttackUnit(Unit target)
         {
             if (HasAbility(HealerType))
             {
                 yield return _ui.AnimateHeal();
                 yield return CoroutineWaiter.RunConcurrently(
-                    behaviours: unitSquad.Units!,
+                    behaviours: Squad.Units!,
                     u => u.Heal(amount: Attack / 2)
                 );
                 yield break;
@@ -134,6 +135,9 @@ namespace GulchGuardians.Units
         }
 
         public bool HasAbility(AbilityType ability) { return _abilities.Contains(ability); }
+
+        public void SetHurtAnimation() { _ui.SetAnimationTrigger(AnimatorProperties.OnHurtTrigger); }
+        public void SetIdleAnimation() { _ui.SetAnimationTrigger(AnimatorProperties.OnIdleTrigger); }
 
         private IEnumerator TakeDamage(int damage, UIUnit.DamageDirection direction)
         {

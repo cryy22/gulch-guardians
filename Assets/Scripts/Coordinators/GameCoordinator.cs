@@ -64,9 +64,16 @@ namespace GulchGuardians.Coordinators
             TrySpacebarText.gameObject.SetActive(false);
         }
 
-        private static IEnumerator RotateUnits(Squad squad)
+        private IEnumerator RotateSquad(Squad squad, bool withHurtAnimation = false)
         {
-            yield return squad.SetUnitIndex(unit: squad.FrontUnit, index: squad.Count - 1);
+            if (squad.Count <= 1) yield break;
+
+            yield return squad.SetUnitIndex(
+                unit: squad.FrontUnit,
+                index: squad.Count - 1,
+                withHurtAnimation: withHurtAnimation
+            );
+            yield return WaitForPlayer();
         }
 
         private void OnAutoButtonClicked()
@@ -159,38 +166,45 @@ namespace GulchGuardians.Coordinators
 
         private IEnumerator RunAttackCycle(Squad playerSquad, Squad enemySquad)
         {
-            Unit frontUnit = playerSquad.FrontUnit;
+            yield return RunSquadAttack(attackingSquad: playerSquad, defendingSquad: enemySquad);
 
-            yield return RunAttack(attackingSquad: playerSquad, defendingSquad: enemySquad);
             if (enemySquad.Count <= 0) yield break;
-
-            if (playerSquad.FrontUnit.HasAbility(Evasive)) yield return RotateUnits(playerSquad);
-
-            yield return RunAttack(attackingSquad: enemySquad, defendingSquad: playerSquad);
             if (playerSquad.Count <= 0) yield break;
 
-            if (frontUnit == null || frontUnit.IsDefeated || playerSquad.Count <= 1) yield break;
-
-            yield return RotateUnits(playerSquad);
-            yield return WaitForPlayer();
+            yield return RunSquadAttack(attackingSquad: enemySquad, defendingSquad: playerSquad);
         }
 
-        private IEnumerator RunAttack(Squad attackingSquad, Squad defendingSquad)
+        private IEnumerator RunSquadAttack(Squad attackingSquad, Squad defendingSquad)
         {
             IEnumerable<Unit> attackers = attackingSquad.Units.Where((u, index) => u.WillAttack(index));
             foreach (Unit attacker in attackers)
             {
+                yield return RotateEvasiveAwayFromFront(defendingSquad);
                 Unit defender = defendingSquad.FrontUnit;
 
-                yield return attacker.AttackUnit(target: defender, unitSquad: attackingSquad);
+                yield return attacker.AttackUnit(target: defender);
                 yield return WaitForPlayer();
 
-                if (defender != null && !defender.IsDefeated) continue;
+                if (defender != null && !defender.IsDefeated)
+                {
+                    yield return RotateSquad(squad: defendingSquad, withHurtAnimation: true);
+                    continue;
+                }
+
                 yield return defendingSquad.HandleUnitDefeat(defender);
 
                 if (defendingSquad.Count <= 0) yield break;
                 yield return WaitForPlayer();
             }
+        }
+
+        private IEnumerator RotateEvasiveAwayFromFront(Squad squad)
+        {
+            int evasiveCount = squad.Units.Count(u => u.HasAbility(Evasive));
+            if (evasiveCount == 0 || evasiveCount == squad.Count) yield break;
+
+            while (squad.FrontUnit.HasAbility(Evasive))
+                yield return RotateSquad(squad: squad, withHurtAnimation: false);
         }
 
         private IEnumerator WaitForPlayer(float autoAdvanceDelay = 0f)

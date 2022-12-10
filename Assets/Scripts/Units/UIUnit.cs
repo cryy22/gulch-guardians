@@ -176,6 +176,8 @@ namespace GulchGuardians.Units
             AbilityIcons.localScale = abilityIconsCurrentScale;
         }
 
+        public void SetAnimationTrigger(string animationName) { Animator.SetTrigger(animationName); }
+
         private void UpdateSpriteLibraryAsset(Unit unit)
         {
             if (_hasHealerSpriteAsset && unit.HasAbility(HealerType))
