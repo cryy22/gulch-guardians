@@ -23,3 +23,4 @@ MonoBehaviour:
     Healer: {fileID: 7108339969198208228, guid: e9079ebdec4e248ca99a332cf6f5955e, type: 3}
   AbilityTypes:
   - {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
+  - {fileID: 11400000, guid: e19df26c49e244843ba207847bd7a69c, type: 2}
