@@ -1206,8 +1206,9 @@ GameObject:
   - component: {fileID: 230742417}
   - component: {fileID: 230742418}
   - component: {fileID: 230742419}
+  - component: {fileID: 230742420}
   m_Layer: 0
-  m_Name: GameCoordinator
+  m_Name: Coordinator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1226,7 +1227,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &230742418
 MonoBehaviour:
@@ -1240,16 +1241,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 131bfdafab8f342159cb9d72390e2572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  State: {fileID: 11400000, guid: 4f37a456393e94204a5afdb90db2ef50, type: 2}
+  PreparationCoordinator: {fileID: 230742419}
+  CombatCoordinator: {fileID: 230742420}
   PlayerTeam: {fileID: 294015327}
   EnemyTeam: {fileID: 1087500376}
-  PreparationCoordinator: {fileID: 230742419}
   AdvanceButton: {fileID: 1386515120}
-  AutoButton: {fileID: 1617409816}
-  TrySpacebarText: {fileID: 1161815364}
   GamePhaseAnnouncer: {fileID: 763397400}
   GameResultPanel: {fileID: 542451868}
-  EvasiveType: {fileID: 11400000, guid: e19df26c49e244843ba207847bd7a69c, type: 2}
-  HealerType: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
 --- !u!114 &230742419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1281,6 +1280,26 @@ MonoBehaviour:
   EffectOptionsDisplayer: {fileID: 619993576}
   ActionsRemainingText: {fileID: 2088620647}
   ChooseATargetText: {fileID: 1962821024}
+--- !u!114 &230742420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230742416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab3260f8ef2b43eeb892d0f1dd87668d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  State: {fileID: 11400000, guid: 4f37a456393e94204a5afdb90db2ef50, type: 2}
+  PlayerTeam: {fileID: 294015327}
+  EnemyTeam: {fileID: 1087500376}
+  EvasiveType: {fileID: 11400000, guid: e19df26c49e244843ba207847bd7a69c, type: 2}
+  HealerType: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
+  AdvanceButton: {fileID: 1386515120}
+  AutoButton: {fileID: 1617409816}
+  TrySpacebarText: {fileID: 1161815364}
 --- !u!1 &252537363
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,7 +1465,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &259135715
 MonoBehaviour:
@@ -1477,7 +1496,20 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 230742418}
         m_TargetAssemblyTypeName: GulchGuardians.Referee, Assembly-CSharp
-        m_MethodName: OnAdvance
+        m_MethodName: OnAdvanceInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 230742420}
+        m_TargetAssemblyTypeName: GulchGuardians.Coordinators.CombatCoordinator,
+          Assembly-CSharp
+        m_MethodName: OnAdvanceInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

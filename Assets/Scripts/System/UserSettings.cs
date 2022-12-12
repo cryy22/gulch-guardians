@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GulchGuardians.System
 {
-    [CreateAssetMenu(fileName = "UserSettings", menuName = "Config/User Settings")]
+    [CreateAssetMenu(fileName = "UserSettings", menuName = "State/User Settings")]
     public class UserSettings : ScriptableObject
     {
         public event EventHandler Changed;
