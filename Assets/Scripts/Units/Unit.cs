@@ -17,11 +17,7 @@ namespace GulchGuardians.Units
     [RequireComponent(typeof(UIUnit))]
     public class Unit : InitializationBehaviour<UnitInitParams>
     {
-        [SerializeField] private AbilityType SturdyType;
-        [SerializeField] private AbilityType ArcherType;
-        [SerializeField] private AbilityType HealerType;
-        [SerializeField] private AbilityType SpikyType;
-
+        [SerializeField] private AbilityIndex AbilityIndex;
         [SerializeField] private GameObject Nametag;
 
         private readonly HashSet<AbilityType> _abilities = new();
@@ -113,7 +109,7 @@ namespace GulchGuardians.Units
             yield return _ui.AnimateToPosition(position: position, duration: duration);
         }
 
-        public bool WillAct(int index) { return index == (HasAbility(ArcherType) ? 1 : 0); }
+        public bool WillAct(int index) { return index == (HasAbility(AbilityIndex.Archer) ? 1 : 0); }
 
         public IEnumerator AttackUnit(Unit target)
         {
@@ -124,7 +120,7 @@ namespace GulchGuardians.Units
                 : UIUnit.DamageDirection.Right;
             yield return target.TakeDamage(damage: Attack, direction: direction);
 
-            if (!target.HasAbility(SpikyType)) yield break;
+            if (!target.HasAbility(AbilityIndex.Spiky)) yield break;
             UIUnit.DamageDirection spikeDirection = direction == UIUnit.DamageDirection.Left
                 ? UIUnit.DamageDirection.Right
                 : UIUnit.DamageDirection.Left;
@@ -133,7 +129,7 @@ namespace GulchGuardians.Units
 
         public IEnumerator HealSquad()
         {
-            if (!HasAbility(HealerType)) yield break;
+            if (!HasAbility(AbilityIndex.Healer)) yield break;
 
             yield return _ui.AnimateHeal();
             yield return CoroutineWaiter.RunConcurrently(
@@ -150,10 +146,10 @@ namespace GulchGuardians.Units
         private IEnumerator TakeDamage(int damage, UIUnit.DamageDirection direction)
         {
             var abilitiesChanged = false;
-            if (HasAbility(SturdyType) && damage >= Health)
+            if (HasAbility(AbilityIndex.Sturdy) && damage >= Health)
             {
                 damage = Health - 1;
-                _abilities.Remove(SturdyType);
+                _abilities.Remove(AbilityIndex.Sturdy);
                 abilitiesChanged = true;
             }
 

@@ -5025,6 +5025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00e6c0689f47c47c88890869c6fa1ca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AbilityIndex: {fileID: 11400000, guid: 2698c3d549e8b469dbddb3e50a3cc13c, type: 2}
   SturdyType: {fileID: 11400000, guid: c276d3f8fec7f4009a160d357a5f2cc1, type: 2}
   ArcherType: {fileID: 11400000, guid: 9fbc68c9d73b0487baec45477fd8e09c, type: 2}
   HealerType: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}

@@ -18,8 +18,7 @@ namespace GulchGuardians.Coordinators
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private Team EnemyTeam;
 
-        [SerializeField] private AbilityType EvasiveType;
-        [SerializeField] private AbilityType HealerType;
+        [SerializeField] private AbilityIndex AbilityIndex;
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private Button AutoButton;
         [SerializeField] private TMP_Text TrySpacebarText;
@@ -114,7 +113,7 @@ namespace GulchGuardians.Coordinators
             Unit actor = context.Actor;
             Unit defender = context.Defender;
 
-            bool actorIsHealer = actor.HasAbility(HealerType);
+            bool actorIsHealer = actor.HasAbility(AbilityIndex.Healer);
 
             if (actorIsHealer) yield return actor.HealSquad();
             else yield return actor.AttackUnit(target: defender);
@@ -137,10 +136,10 @@ namespace GulchGuardians.Coordinators
 
         private IEnumerator RotateEvasiveAwayFromFront(Squad squad)
         {
-            int evasiveCount = squad.Units.Count(u => u.HasAbility(EvasiveType));
+            int evasiveCount = squad.Units.Count(u => u.HasAbility(AbilityIndex.Evasive));
             if (evasiveCount == 0 || evasiveCount == squad.Count) yield break;
 
-            while (squad.FrontUnit.HasAbility(EvasiveType))
+            while (squad.FrontUnit.HasAbility(AbilityIndex.Evasive))
                 yield return RotateSquad(squad: squad, withHurtAnimation: false);
         }
 

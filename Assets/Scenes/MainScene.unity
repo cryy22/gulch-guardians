@@ -1296,8 +1296,7 @@ MonoBehaviour:
   State: {fileID: 11400000, guid: 4f37a456393e94204a5afdb90db2ef50, type: 2}
   PlayerTeam: {fileID: 294015327}
   EnemyTeam: {fileID: 1087500376}
-  EvasiveType: {fileID: 11400000, guid: e19df26c49e244843ba207847bd7a69c, type: 2}
-  HealerType: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
+  AbilityIndex: {fileID: 11400000, guid: 2698c3d549e8b469dbddb3e50a3cc13c, type: 2}
   AdvanceButton: {fileID: 1386515120}
   AutoButton: {fileID: 1617409816}
   TrySpacebarText: {fileID: 1161815364}
