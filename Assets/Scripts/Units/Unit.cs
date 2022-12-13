@@ -20,6 +20,7 @@ namespace GulchGuardians.Units
         [SerializeField] private AbilityType SturdyType;
         [SerializeField] private AbilityType ArcherType;
         [SerializeField] private AbilityType HealerType;
+        [SerializeField] private AbilityType SpikyType;
 
         [SerializeField] private GameObject Nametag;
 
@@ -122,6 +123,12 @@ namespace GulchGuardians.Units
                 ? UIUnit.DamageDirection.Left
                 : UIUnit.DamageDirection.Right;
             yield return target.TakeDamage(damage: Attack, direction: direction);
+
+            if (!target.HasAbility(SpikyType)) yield break;
+            UIUnit.DamageDirection spikeDirection = direction == UIUnit.DamageDirection.Left
+                ? UIUnit.DamageDirection.Right
+                : UIUnit.DamageDirection.Left;
+            yield return TakeDamage(damage: Attack, direction: spikeDirection);
         }
 
         public IEnumerator HealSquad()

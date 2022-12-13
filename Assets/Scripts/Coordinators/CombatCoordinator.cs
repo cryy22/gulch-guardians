@@ -118,12 +118,16 @@ namespace GulchGuardians.Coordinators
 
             if (actorIsHealer) yield return actor.HealSquad();
             else yield return actor.AttackUnit(target: defender);
-
             yield return WaitForPlayer();
 
-            if (Unit.IsDefeated(defender))
+            List<Unit> defeatedUnits = context.AttackingSquad.Units
+                .Concat(context.DefendingSquad.Units)
+                .Where(Unit.IsDefeated)
+                .ToList();
+
+            if (defeatedUnits.Count > 0)
             {
-                yield return context.DefendingSquad.HandleUnitDefeat(defender);
+                foreach (Unit unit in defeatedUnits) yield return unit.Squad.HandleUnitDefeat(unit);
                 yield break;
             }
 
