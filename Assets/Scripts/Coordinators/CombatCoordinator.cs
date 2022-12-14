@@ -21,7 +21,7 @@ namespace GulchGuardians.Coordinators
         [SerializeField] private AbilityIndex AbilityIndex;
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private Button AutoButton;
-        [SerializeField] private TMP_Text TrySpacebarText;
+        [SerializeField] private GameObject TrySpacebarMessage;
 
         private bool _didPlayerAdvance;
         private bool _isAutoAdvance;
@@ -39,7 +39,7 @@ namespace GulchGuardians.Coordinators
         public IEnumerator RunCombat()
         {
             AutoButton.gameObject.SetActive(true);
-            TrySpacebarText.gameObject.SetActive(!_hasUsedSpacebar && !_isAutoAdvance);
+            TrySpacebarMessage.SetActive(!_hasUsedSpacebar && !_isAutoAdvance);
 
             PlayerTeam.ResetUnitsOnDeck();
             EnemyTeam.ResetUnitsOnDeck();
@@ -59,7 +59,7 @@ namespace GulchGuardians.Coordinators
             }
 
             AutoButton.gameObject.SetActive(false);
-            TrySpacebarText.gameObject.SetActive(false);
+            TrySpacebarMessage.SetActive(false);
         }
 
         public void OnAdvanceInput(InputAction.CallbackContext context)
@@ -71,7 +71,7 @@ namespace GulchGuardians.Coordinators
 
             if (_hasUsedSpacebar) return;
             _hasUsedSpacebar = true;
-            TrySpacebarText.gameObject.SetActive(false);
+            TrySpacebarMessage.SetActive(false);
         }
 
         private void OnAdvanceButtonClicked()
@@ -86,7 +86,7 @@ namespace GulchGuardians.Coordinators
         {
             _isAutoAdvance = !_isAutoAdvance;
             _autoButtonText.text = _isAutoAdvance ? "Auto: On" : "Auto: Off";
-            TrySpacebarText.gameObject.SetActive(!_isAutoAdvance && !_hasUsedSpacebar);
+            TrySpacebarMessage.SetActive(!_isAutoAdvance && !_hasUsedSpacebar);
         }
 
         private IEnumerator RunSquadAttack(Squad attackingSquad, Squad defendingSquad)
