@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinAttack: 6
   MaxAttack: 6
-  MinHealth: 10
-  MaxHealth: 10
+  MinHealth: 6
+  MaxHealth: 6
   SpriteAssetMaps:
   - Default: {fileID: 7108339969198208228, guid: 1702561239b7648c89bd7efc4e9c7ce6, type: 3}
     Healer: {fileID: 7108339969198208228, guid: 1702561239b7648c89bd7efc4e9c7ce6, type: 3}
@@ -23,4 +23,4 @@ MonoBehaviour:
     Healer: {fileID: 7108339969198208228, guid: e9079ebdec4e248ca99a332cf6f5955e, type: 3}
   AbilityTypes:
   - {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
-  - {fileID: 11400000, guid: e19df26c49e244843ba207847bd7a69c, type: 2}
+  - {fileID: 11400000, guid: c276d3f8fec7f4009a160d357a5f2cc1, type: 2}
