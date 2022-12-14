@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baefec0c32eb4cfcbc46046a1ffe714d, type: 3}
+  m_Name: Trapper
+  m_EditorClassIdentifier: 
+  Name: Trapper
+  Description: Hold your opponent on the front lines.
+  Icon: {fileID: 21300000, guid: 678095381d851334fb550c5032ba1a81, type: 3}
+  IsBadForSoloTeam: 0
+  MaxPerTeam: 99

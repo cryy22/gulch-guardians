@@ -12,6 +12,7 @@ namespace GulchGuardians.Abilities
         [SerializeField] private AbilityType SpikyType;
         [SerializeField] private AbilityType SturdyType;
         [SerializeField] private AbilityType ToughType;
+        [SerializeField] private AbilityType TrapperType;
 
         public AbilityType Archer => ArcherType;
         public AbilityType Boss => BossType;
@@ -20,5 +21,6 @@ namespace GulchGuardians.Abilities
         public AbilityType Spiky => SpikyType;
         public AbilityType Sturdy => SturdyType;
         public AbilityType Tough => ToughType;
+        public AbilityType Trapper => TrapperType;
     }
 }
