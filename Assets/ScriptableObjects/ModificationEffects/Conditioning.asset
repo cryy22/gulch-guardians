@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Conditioning
   m_EditorClassIdentifier: 
   Name: Conditioning
-  RarityWeight: 3
+  RarityWeight: 4
   Description: All your units gain 1 health.
   AttackChange: 0
   HealthChange: 1

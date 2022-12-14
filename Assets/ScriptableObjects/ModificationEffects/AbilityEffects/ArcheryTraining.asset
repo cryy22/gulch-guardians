@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: ArcheryTraining
   m_EditorClassIdentifier: 
   Name: ArcheryTrng
+  RarityWeight: 2
   Description: Attacks from the 2nd position instead of the 1st.
   Ability: {fileID: 11400000, guid: 9fbc68c9d73b0487baec45477fd8e09c, type: 2}

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: PathOfLife
   m_EditorClassIdentifier: 
   Name: Path of Life
+  RarityWeight: 2
   Description: Select a unit to forswear the ladle.
   Ability: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
