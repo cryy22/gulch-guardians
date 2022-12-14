@@ -145,6 +145,7 @@ namespace GulchGuardians.Units
 
         private IEnumerator TakeDamage(int damage, UIUnit.DamageDirection direction)
         {
+            damage = HasAbility(AbilityIndex.Tough) ? damage / 2 : damage;
             var abilitiesChanged = false;
             if (HasAbility(AbilityIndex.Sturdy) && damage >= Health)
             {
