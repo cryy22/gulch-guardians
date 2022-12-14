@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: HoneBlade
   m_EditorClassIdentifier: 
   Name: Hone Blade
+  RarityWeight: 3
   Description: Select a unit to gain 2 attack.
   AttackChange: 2
   HealthChange: 0

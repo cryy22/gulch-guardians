@@ -9,6 +9,7 @@ namespace GulchGuardians.ModificationEffects
     public abstract class ModificationEffect : ScriptableObject
     {
         public string Name;
+        public int RarityWeight = 1;
         [TextArea] public string Description;
 
         public abstract TargetType Target { get; }

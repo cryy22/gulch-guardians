@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: ArmorUp
   m_EditorClassIdentifier: 
   Name: Armor Up
+  RarityWeight: 3
   Description: Select a unit to gain 2 health.
   AttackChange: 0
   HealthChange: 2
+  IntendedTarget: 0

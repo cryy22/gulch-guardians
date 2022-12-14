@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: NewUnit
   m_EditorClassIdentifier: 
   Name: New Friend
+  RarityWeight: 3
   Description: 
   UnitConfig: {fileID: 11400000, guid: 332c1c95c1b52459694579c1e1e62015, type: 2}
   UnitFactory: {fileID: 11400000, guid: 54544406e80754789ac74591d0238e76, type: 2}

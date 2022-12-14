@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ShareStories
   m_EditorClassIdentifier: 
   Name: Share Stories
+  RarityWeight: 3
   Description: All your units gain 1 attack.
   AttackChange: 1
   HealthChange: 0

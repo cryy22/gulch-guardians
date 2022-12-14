@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: HotSprings
   m_EditorClassIdentifier: 
   Name: Hot Springs
+  RarityWeight: 2
   Description: Select a unit to be healed back to full.

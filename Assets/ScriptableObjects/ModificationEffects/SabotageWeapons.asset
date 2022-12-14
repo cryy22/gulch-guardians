@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SabotageWeapons
   m_EditorClassIdentifier: 
   Name: SabotageWeps
+  RarityWeight: 3
   Description: All enemy units in the next round lose 1 attack.
   AttackChange: -1
   HealthChange: 0

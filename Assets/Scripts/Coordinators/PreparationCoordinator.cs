@@ -1,13 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Crysc.Helpers;
 using GulchGuardians.ModificationEffects;
 using GulchGuardians.Teams;
 using GulchGuardians.Units;
 using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace GulchGuardians.Coordinators
 {
@@ -119,10 +118,22 @@ namespace GulchGuardians.Coordinators
 
         private IEnumerable<ModificationEffect> GetRandomEffects(int numberOfEffects)
         {
-            return Effects
-                .Where(e => e.CanBeAppliedTo(BuildContext()))
-                .OrderBy(_ => Random.value)
-                .Take(Mathf.Min(a: numberOfEffects, b: Effects.Count));
+            List<ModificationEffect> chosenEffects = new();
+            List<ModificationEffect> availableEffects = new(Effects);
+
+            while (chosenEffects.Count < numberOfEffects)
+            {
+                if (availableEffects.Count == 0) break;
+                ModificationEffect effect = Randomizer.GetWeightedRandomElement(
+                    enumerable: availableEffects,
+                    e => e.RarityWeight
+                );
+
+                chosenEffects.Add(effect);
+                availableEffects.Remove(effect);
+            }
+
+            return chosenEffects;
         }
 
         private void UpdateActionsRemainingText()
