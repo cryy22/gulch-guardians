@@ -91,9 +91,12 @@ namespace GulchGuardians.Coordinators
 
         private IEnumerator RunSquadAttack(Squad attackingSquad, Squad defendingSquad)
         {
-            IEnumerable<Unit> actors = attackingSquad.Units.Where((u, index) => u.WillAct(index));
-            foreach (Unit actor in actors)
+            List<Unit> actors = attackingSquad.Units.Where((u, index) => u.WillAct(index)).ToList();
+            while (actors.Count > 0)
             {
+                Unit actor = actors.First();
+                actors.Remove(actor);
+
                 yield return RotateEvasiveAwayFromFront(defendingSquad);
 
                 var attackContext = new AttackContext(
@@ -104,7 +107,7 @@ namespace GulchGuardians.Coordinators
                 );
                 yield return RunUnitAttack(attackContext);
 
-                if (defendingSquad.Count <= 0) yield break;
+                if (Squad.IsDefeated(defendingSquad) || Squad.IsDefeated(attackingSquad)) yield break;
             }
         }
 
@@ -114,6 +117,7 @@ namespace GulchGuardians.Coordinators
             Unit defender = context.Defender;
 
             bool actorIsHealer = actor.HasAbility(AbilityIndex.Healer);
+            bool actorIsTrapper = actor.HasAbility(AbilityIndex.Trapper);
 
             if (actorIsHealer) yield return actor.HealSquad();
             else yield return actor.AttackUnit(target: defender);
@@ -123,14 +127,10 @@ namespace GulchGuardians.Coordinators
                 .Concat(context.DefendingSquad.Units)
                 .Where(Unit.IsDefeated)
                 .ToList();
+            foreach (Unit unit in defeatedUnits)
+                yield return unit.Squad.HandleUnitDefeat(unit);
 
-            if (defeatedUnits.Count > 0)
-            {
-                foreach (Unit unit in defeatedUnits) yield return unit.Squad.HandleUnitDefeat(unit);
-                yield break;
-            }
-
-            if (actorIsHealer || actor.HasAbility(AbilityIndex.Trapper)) yield break;
+            if (actorIsHealer || actorIsTrapper || Unit.IsDefeated(defender)) yield break;
             yield return RotateSquad(squad: context.DefendingSquad, withHurtAnimation: true);
         }
 
