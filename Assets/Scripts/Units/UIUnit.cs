@@ -21,8 +21,7 @@ namespace GulchGuardians.Units
         [SerializeField] private Animator Animator;
         [SerializeField] private Transform AbilityIcons;
         [SerializeField] private UIAbilityIconItem AbilityIconPrefab;
-        [SerializeField] private AbilityType BossType;
-        [SerializeField] private AbilityType HealerType;
+        [SerializeField] private AbilityIndex AbilityIndex;
         [SerializeField] private ParticleSystem AttackParticleSystem;
 
         private readonly Dictionary<AbilityType, UIAbilityIconItem> _abilityIcons = new();
@@ -47,7 +46,7 @@ namespace GulchGuardians.Units
             Animator.Play(stateNameHash: 0, layer: 0, normalizedTime: Random.Range(minInclusive: 0f, maxInclusive: 1f));
 
             NameText.text = unit.FirstName;
-            if (unit.HasAbility(BossType))
+            if (unit.HasAbility(AbilityIndex.Boss))
             {
                 Renderer.transform.localScale *= 2f;
                 unit.SetNametagActive(false);
@@ -180,7 +179,7 @@ namespace GulchGuardians.Units
 
         private void UpdateSpriteLibraryAsset(Unit unit)
         {
-            if (_hasHealerSpriteAsset && unit.HasAbility(HealerType))
+            if (_hasHealerSpriteAsset && unit.HasAbility(AbilityIndex.Healer))
                 SpriteLibrary.spriteLibraryAsset = _spriteAssetMap.Healer;
             else
                 SpriteLibrary.spriteLibraryAsset = _spriteAssetMap.Default;
