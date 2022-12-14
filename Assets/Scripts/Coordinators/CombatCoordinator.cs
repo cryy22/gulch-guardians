@@ -130,8 +130,7 @@ namespace GulchGuardians.Coordinators
                 yield break;
             }
 
-            if (context.DefendingSquad.UnitsRotate && !actorIsHealer)
-                yield return RotateSquad(squad: context.DefendingSquad, withHurtAnimation: true);
+            if (!actorIsHealer) yield return RotateSquad(squad: context.DefendingSquad, withHurtAnimation: true);
         }
 
         private IEnumerator RotateEvasiveAwayFromFront(Squad squad)
