@@ -19,3 +19,4 @@ MonoBehaviour:
   SpikyType: {fileID: 11400000, guid: fd994cee0e8254aadb9d0e2ee7606a54, type: 2}
   SturdyType: {fileID: 11400000, guid: c276d3f8fec7f4009a160d357a5f2cc1, type: 2}
   ToughType: {fileID: 11400000, guid: ac5b156c6f1674ba187642b59a9e7b58, type: 2}
+  TrapperType: {fileID: 11400000, guid: 34d0c937f590e420383f9afa0433f5d4, type: 2}
