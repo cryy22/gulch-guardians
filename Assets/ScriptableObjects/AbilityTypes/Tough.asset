@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Tough
   Description: Takes half damage.
-  Icon: {fileID: 21300000, guid: 6cc5103edc9f0dd4f80e8274c73dfeac, type: 3}
+  Icon: {fileID: 21300000, guid: dad44eaed52a6407b8e93e1bb0a40ecf, type: 3}
   IsBadForSoloTeam: 0
   MaxPerTeam: 99

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Trapper
   Description: Hold your opponent on the front lines.
-  Icon: {fileID: 21300000, guid: 678095381d851334fb550c5032ba1a81, type: 3}
+  Icon: {fileID: 21300000, guid: 59e379e181fa143768dacd649e76a08f, type: 3}
   IsBadForSoloTeam: 0
   MaxPerTeam: 99
