@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Crysc.Helpers;
 using GulchGuardians.ModificationEffects;
 using GulchGuardians.Teams;
@@ -119,7 +120,9 @@ namespace GulchGuardians.Coordinators
         private IEnumerable<ModificationEffect> GetRandomEffects(int numberOfEffects)
         {
             List<ModificationEffect> chosenEffects = new();
-            List<ModificationEffect> availableEffects = new(Effects);
+            ModificationEffect.Context context = BuildContext();
+            List<ModificationEffect> availableEffects =
+                Effects.Where(e => e.CanBeAppliedTo(context)).ToList();
 
             while (chosenEffects.Count < numberOfEffects)
             {

@@ -15,6 +15,7 @@ namespace GulchGuardians.Teams
 
         [SerializeField] private List<SquadConfig> SquadConfigs;
         [SerializeField] private SquadFactory SquadFactory;
+        [SerializeField] private Transform SquadsParent;
 
         private readonly List<Squad> _squads = new();
         private UIUnitsDisplayer _unitsDisplayer;
@@ -35,6 +36,7 @@ namespace GulchGuardians.Teams
                 Squad squad = SquadFactory.Create(squadConfig);
                 squad.Team = this;
 
+                squad.transform.SetParent(SquadsParent);
                 _squads.Add(squad);
             }
 
@@ -88,8 +90,8 @@ namespace GulchGuardians.Teams
 
         private void AddUnits(IEnumerable<Unit> units)
         {
-            IEnumerable<Unit> enumeratedUnits = units.ToArray();
-            if (Units.Count() + enumeratedUnits.Count() > MaxUnits) throw new Exception("Team is full");
+            List<Unit> enumeratedUnits = units.ToList();
+            if (Units.Count() > MaxUnits) throw new Exception("Team is full");
 
             foreach (Unit unit in enumeratedUnits) AddUnitInternal(unit);
 

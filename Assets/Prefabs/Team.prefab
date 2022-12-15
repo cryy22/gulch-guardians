@@ -29,7 +29,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7077939781010037160}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &564857642134773342
 GameObject:
@@ -297,6 +297,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7804354069736640822}
   - {fileID: 8730069270952273387}
   - {fileID: 1011822787667476388}
   m_Father: {fileID: 0}
@@ -315,10 +316,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxUnits: 99
-  UnitsPerCombatCycle: 3
   SquadConfigs: []
   SquadFactory: {fileID: 11400000, guid: 9f3763cf7a0c04e71ae9f73cd9318300, type: 2}
-  BossType: {fileID: 11400000, guid: b1c74edd376d24b228d41d2f07d3f69d, type: 2}
+  SquadsParent: {fileID: 7804354069736640822}
 --- !u!114 &3575982119089321520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +337,37 @@ MonoBehaviour:
   DemarcatesRounds: 0
   UnitsParent: {fileID: 8730069270952273387}
   RoundDemarcation: {fileID: 7312968144270021125}
+--- !u!1 &7131702136674887352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7804354069736640822}
+  m_Layer: 0
+  m_Name: SquadsParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7804354069736640822
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7131702136674887352}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7077939781010037160}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7312968144270021125
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +399,7 @@ Transform:
   - {fileID: 996083087459762123}
   - {fileID: 6290155613356251772}
   m_Father: {fileID: 7077939781010037160}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7521136309024874732
 GameObject:
