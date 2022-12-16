@@ -1204,9 +1204,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 230742417}
+  - component: {fileID: 230742422}
   - component: {fileID: 230742418}
   - component: {fileID: 230742419}
   - component: {fileID: 230742420}
+  - component: {fileID: 230742421}
   m_Layer: 0
   m_Name: Coordinator
   m_TagString: Untagged
@@ -1302,6 +1304,36 @@ MonoBehaviour:
   AdvanceButton: {fileID: 1386515120}
   AutoButton: {fileID: 1617409816}
   TrySpacebarMessage: {fileID: 487261072}
+--- !u!114 &230742421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230742416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 124f07ce3f7348539abe70f8768b8545, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Container: {fileID: 922594219}
+  AdvanceButton: {fileID: 1386515120}
+  State: {fileID: 11400000, guid: 4f37a456393e94204a5afdb90db2ef50, type: 2}
+--- !u!114 &230742422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230742416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a865c4b10f747b2be44d4e6dc1d8ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  State: {fileID: 11400000, guid: 4f37a456393e94204a5afdb90db2ef50, type: 2}
+  BattleCoordinator: {fileID: 230742418}
+  CampCoordinator: {fileID: 230742421}
 --- !u!1 &252537363
 GameObject:
   m_ObjectHideFlags: 0
@@ -3386,12 +3418,12 @@ GameObject:
   - component: {fileID: 922594222}
   - component: {fileID: 922594221}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: CampPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &922594220
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3709,7 +3741,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: fe81e4356a3264d4c88c5e39744c895d, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.size
-      value: 12
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[0]
@@ -3718,43 +3750,43 @@ PrefabInstance:
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: f67d0670e489540c6b957c96e29bd461, type: 2}
+      objectReference: {fileID: 11400000, guid: 67da235a62fc844189a25a60d1cd0e95, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 67da235a62fc844189a25a60d1cd0e95, type: 2}
+      objectReference: {fileID: 11400000, guid: 2e9643936e7704a24b12af48ed60b31c, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 2e9643936e7704a24b12af48ed60b31c, type: 2}
+      objectReference: {fileID: 11400000, guid: 32db8b402016341c28541cce72db33fd, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 32db8b402016341c28541cce72db33fd, type: 2}
+      objectReference: {fileID: 11400000, guid: f027cb230524f4ac49aaf2ba7b359023, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[5]
       value: 
-      objectReference: {fileID: 11400000, guid: f027cb230524f4ac49aaf2ba7b359023, type: 2}
+      objectReference: {fileID: 11400000, guid: 33c03013824554cb78fa08e6f5c95322, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[6]
       value: 
-      objectReference: {fileID: 11400000, guid: 33c03013824554cb78fa08e6f5c95322, type: 2}
+      objectReference: {fileID: 11400000, guid: dff8e47657e69492b9802cdd349e2ce4, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[7]
       value: 
-      objectReference: {fileID: 11400000, guid: dff8e47657e69492b9802cdd349e2ce4, type: 2}
+      objectReference: {fileID: 11400000, guid: 53fa3bd3180924f83a28436b98c0c979, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[8]
       value: 
-      objectReference: {fileID: 11400000, guid: 53fa3bd3180924f83a28436b98c0c979, type: 2}
+      objectReference: {fileID: 11400000, guid: cc08c1693bcc942fcb16ada724c6115e, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[9]
       value: 
-      objectReference: {fileID: 11400000, guid: cc08c1693bcc942fcb16ada724c6115e, type: 2}
+      objectReference: {fileID: 11400000, guid: 08f533b692d324bc4856705ef15f59d8, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[10]
       value: 
-      objectReference: {fileID: 11400000, guid: 08f533b692d324bc4856705ef15f59d8, type: 2}
+      objectReference: {fileID: 11400000, guid: fe81e4356a3264d4c88c5e39744c895d, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: SquadConfigs.Array.data[11]
       value: 
@@ -4168,7 +4200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1321969581
 RectTransform:
   m_ObjectHideFlags: 0

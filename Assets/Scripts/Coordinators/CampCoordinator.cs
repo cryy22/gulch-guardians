@@ -12,15 +12,16 @@ namespace GulchGuardians.Coordinators
         public bool IsActive { get; private set; }
         private bool IsCorrectPhase => State.NightPhase == NightPhase.Camp;
 
+        private void Awake() { Container.SetActive(false); }
         private void Start() { AdvanceButton.onClick.AddListener(OnAdvanceButtonClicked); }
 
-        public void StartPhase()
+        public void BeginCoordination()
         {
             Container.SetActive(true);
             IsActive = true;
         }
 
-        private void EndPhase()
+        private void EndCoordination()
         {
             IsActive = false;
             Container.SetActive(false);
@@ -29,7 +30,7 @@ namespace GulchGuardians.Coordinators
         private void OnAdvanceButtonClicked()
         {
             if (!IsCorrectPhase) return;
-            EndPhase();
+            EndCoordination();
         }
     }
 }

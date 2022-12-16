@@ -1,89 +1,38 @@
 using System.Collections;
-using GulchGuardians.Audio;
-using GulchGuardians.Constants;
-using GulchGuardians.Teams;
-using GulchGuardians.UI;
-using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace GulchGuardians.Coordinators
 {
     public class GameCoordinator : MonoBehaviour
     {
         [SerializeField] private GameState State;
-        [SerializeField] private PreparationCoordinator PreparationCoordinator;
-        [SerializeField] private CombatCoordinator CombatCoordinator;
-        [SerializeField] private Team PlayerTeam;
-        [SerializeField] private Team EnemyTeam;
+        [SerializeField] private BattleCoordinator BattleCoordinator;
+        [SerializeField] private CampCoordinator CampCoordinator;
 
-        [SerializeField] private Button AdvanceButton;
-        [SerializeField] private UIGamePhaseAnnouncer GamePhaseAnnouncer;
-        [SerializeField] private UIGameResultPanel GameResultPanel;
-
-        private TMP_Text _advanceButtonText;
-
-        private void Awake() { _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>(); }
-
-        private void Start()
+        private IEnumerator Start()
         {
-            AdvanceButton.onClick.AddListener(OnAdvanceButtonClicked);
-            StartCoroutine(EnterPreparationPhase());
+            yield return new WaitForSeconds(1);
+            StartCoroutine(Run());
         }
 
-        public void OnAdvanceInput(InputAction.CallbackContext context)
+        private IEnumerator Run()
         {
-            if (!context.performed) return;
-            if (State.BattlePhase != BattlePhase.Preparation || PreparationCoordinator.IsActive) return;
-            OnAdvance();
+            yield return EnterBattlePhase();
+            yield return EnterCampPhase();
         }
 
-        private void OnAdvanceButtonClicked()
+        private IEnumerator EnterBattlePhase()
         {
-            if (State.BattlePhase != BattlePhase.Preparation) return;
-            OnAdvance();
+            State.SetNightPhase(NightPhase.Battle);
+            BattleCoordinator.BeginCoordination();
+            yield return new WaitUntil(() => !BattleCoordinator.IsActive);
         }
 
-        private void OnAdvance() { StartCoroutine(RunCombatPhase()); }
-
-        private IEnumerator RunCombatPhase()
+        private IEnumerator EnterCampPhase()
         {
-            State.SetBattlePhase(BattlePhase.Transition);
-            yield return PreparationCoordinator.EndModificationRound();
-
-            BGMPlayer.Instance.TransitionToCombat();
-            yield return GamePhaseAnnouncer.AnnouncePhase(isPreparation: false);
-
-            _advanceButtonText.text = "next";
-            AdvanceButton.interactable = false;
-
-            State.SetBattlePhase(BattlePhase.Combat);
-            yield return CombatCoordinator.RunCombat();
-
-            bool isGameEnded = PlayerTeam.IsDefeated || EnemyTeam.IsDefeated;
-            StartCoroutine(isGameEnded ? HandleGameEnd() : EnterPreparationPhase());
-        }
-
-        private IEnumerator EnterPreparationPhase()
-        {
-            State.SetBattlePhase(BattlePhase.Transition);
-
-            BGMPlayer.Instance.TransitionToPreparation();
-            yield return GamePhaseAnnouncer.AnnouncePhase(isPreparation: true);
-
-            _advanceButtonText.text = "fight!";
-            AdvanceButton.interactable = true;
-
-            PreparationCoordinator.BeginModificationRound();
-            State.SetBattlePhase(BattlePhase.Preparation);
-        }
-
-        private IEnumerator HandleGameEnd()
-        {
-            yield return GameResultPanel.DisplayResult(EnemyTeam.IsDefeated);
-            SceneManager.LoadScene(Scenes.TitleIndex);
+            State.SetNightPhase(NightPhase.Camp);
+            CampCoordinator.BeginCoordination();
+            yield return new WaitUntil(() => !CampCoordinator.IsActive);
         }
     }
 }
