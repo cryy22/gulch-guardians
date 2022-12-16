@@ -13,6 +13,8 @@ using UnityEngine;
 
 namespace GulchGuardians.Units
 {
+    using Direction = UIUnit.DamageDirection;
+
     [RequireComponent(typeof(ClickReporter))]
     [RequireComponent(typeof(UIUnit))]
     public class Unit : InitializationBehaviour<UnitInitParams>
@@ -49,6 +51,18 @@ namespace GulchGuardians.Units
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
         public bool TooltipEnabled { get; set; } = true;
+
+        private int ActionMagnitude
+        {
+            get
+            {
+                var divisor = 1;
+                if (HasAbility(AbilityIndex.Archer)) divisor *= 2;
+                if (HasAbility(AbilityIndex.Healer)) divisor *= 2;
+
+                return Attack / divisor;
+            }
+        }
 
         private void Awake()
         {
@@ -109,22 +123,27 @@ namespace GulchGuardians.Units
             yield return _ui.AnimateToPosition(position: position, duration: duration);
         }
 
-        public bool WillAct(int index) { return index == (HasAbility(AbilityIndex.Archer) ? 1 : 0); }
+        public bool WillAct(int index)
+        {
+            return index switch
+            {
+                0 => true,
+                1 => HasAbility(AbilityIndex.Archer),
+                _ => false,
+            };
+        }
 
         public IEnumerator AttackUnit(Unit target)
         {
             yield return _ui.AnimateAttack(target);
 
-            UIUnit.DamageDirection direction = transform.position.x < target.transform.position.x
-                ? UIUnit.DamageDirection.Left
-                : UIUnit.DamageDirection.Right;
-            yield return target.TakeDamage(damage: Attack, direction: direction);
+            int damage = ActionMagnitude;
+            Direction direction = transform.position.x < target.transform.position.x ? Direction.Left : Direction.Right;
+            yield return target.TakeDamage(damage: damage, direction: direction);
 
             if (!target.HasAbility(AbilityIndex.Spiky)) yield break;
-            UIUnit.DamageDirection spikeDirection = direction == UIUnit.DamageDirection.Left
-                ? UIUnit.DamageDirection.Right
-                : UIUnit.DamageDirection.Left;
-            yield return TakeDamage(damage: Attack, direction: spikeDirection);
+            Direction spikeDirection = direction == Direction.Left ? Direction.Right : Direction.Left;
+            yield return TakeDamage(damage: damage, direction: spikeDirection);
         }
 
         public IEnumerator HealSquad()
@@ -134,7 +153,7 @@ namespace GulchGuardians.Units
             yield return _ui.AnimateHeal();
             yield return CoroutineWaiter.RunConcurrently(
                 behaviours: Squad.Units!,
-                u => u.Heal(amount: Attack / 2)
+                u => u.Heal(amount: ActionMagnitude)
             );
         }
 
@@ -143,7 +162,7 @@ namespace GulchGuardians.Units
         public void SetHurtAnimation() { _ui.SetAnimationTrigger(AnimatorProperties.OnHurtTrigger); }
         public void SetIdleAnimation() { _ui.SetAnimationTrigger(AnimatorProperties.OnIdleTrigger); }
 
-        private IEnumerator TakeDamage(int damage, UIUnit.DamageDirection direction)
+        private IEnumerator TakeDamage(int damage, Direction direction)
         {
             damage = HasAbility(AbilityIndex.Tough) ? damage / 2 : damage;
             var abilitiesChanged = false;
