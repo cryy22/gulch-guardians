@@ -17,18 +17,18 @@ namespace GulchGuardians.Coordinators
 
         private IEnumerator Run()
         {
-            yield return EnterBattlePhase();
-            yield return EnterCampPhase();
+            yield return RunBattlePhase();
+            yield return RunCampPhase();
         }
 
-        private IEnumerator EnterBattlePhase()
+        private IEnumerator RunBattlePhase()
         {
             State.SetNightPhase(NightPhase.Battle);
             BattleCoordinator.BeginCoordination();
             yield return new WaitUntil(() => !BattleCoordinator.IsActive);
         }
 
-        private IEnumerator EnterCampPhase()
+        private IEnumerator RunCampPhase()
         {
             State.SetNightPhase(NightPhase.Camp);
             CampCoordinator.BeginCoordination();

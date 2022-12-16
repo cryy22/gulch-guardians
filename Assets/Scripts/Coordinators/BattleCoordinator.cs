@@ -1,10 +1,12 @@
 using System.Collections;
 using GulchGuardians.Audio;
+using GulchGuardians.Constants;
 using GulchGuardians.Teams;
 using GulchGuardians.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace GulchGuardians.Coordinators
@@ -20,28 +22,38 @@ namespace GulchGuardians.Coordinators
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private UIGamePhaseAnnouncer GamePhaseAnnouncer;
         [SerializeField] private UIGameResultPanel GameResultPanel;
+        [SerializeField] private GameObject Container;
 
         private TMP_Text _advanceButtonText;
 
         public bool IsActive { get; private set; }
 
-        private void Awake() { _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>(); }
+        private void Awake()
+        {
+            Container.SetActive(false);
+            _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>();
+        }
 
         private void Start() { AdvanceButton.onClick.AddListener(OnAdvanceButtonClicked); }
 
         public void BeginCoordination()
         {
             IsActive = true;
+            Container.SetActive(true);
             StartCoroutine(EnterPreparationPhase());
         }
-
-        public void EndCoordination() { IsActive = false; }
 
         public void OnAdvanceInput(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
             if (State.BattlePhase != BattlePhase.Preparation || PreparationCoordinator.IsActive) return;
             OnAdvance();
+        }
+
+        private void EndCoordination()
+        {
+            Container.SetActive(false);
+            IsActive = false;
         }
 
         private void OnAdvanceButtonClicked()
@@ -86,7 +98,12 @@ namespace GulchGuardians.Coordinators
 
         private IEnumerator HandleBattleEnd()
         {
-            yield return GameResultPanel.DisplayResult(EnemyTeam.IsDefeated);
+            if (PlayerTeam.IsDefeated)
+            {
+                yield return GameResultPanel.DisplayResult(isWin: false);
+                SceneManager.LoadScene(Scenes.TitleIndex);
+            }
+
             EndCoordination();
         }
     }
