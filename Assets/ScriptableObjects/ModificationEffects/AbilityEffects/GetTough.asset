@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: GetTough
   m_EditorClassIdentifier: 
   Name: Get Tough!
+  RarityWeight: 1
   Description: Learn how to take a hit.
   Ability: {fileID: 11400000, guid: ac5b156c6f1674ba187642b59a9e7b58, type: 2}
+  IsBadForSoloTeam: 0
+  MaxPerTeam: 2

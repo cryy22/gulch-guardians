@@ -16,3 +16,5 @@ MonoBehaviour:
   RarityWeight: 2
   Description: '"Nice try, but I''m not goin'' down that easily."'
   Ability: {fileID: 11400000, guid: c276d3f8fec7f4009a160d357a5f2cc1, type: 2}
+  IsBadForSoloTeam: 0
+  MaxPerTeam: 99

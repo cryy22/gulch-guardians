@@ -10,6 +10,8 @@ namespace GulchGuardians.ModificationEffects
     public class AddAbilityEffect : ModificationEffect
     {
         [SerializeField] private AbilityType Ability;
+        [SerializeField] private bool IsBadForSoloTeam;
+        [SerializeField] private int MaxPerTeam = 1;
 
         public override TargetType Target => TargetType.Unit;
 
@@ -18,8 +20,8 @@ namespace GulchGuardians.ModificationEffects
             Team playerTeam = context.PlayerTeam;
             if (playerTeam == null) return false;
 
-            if (Ability.IsBadForSoloTeam && playerTeam.Units.Count() <= 1) return false;
-            if (playerTeam.Units.Count(u => u.HasAbility(Ability)) >= Ability.MaxPerTeam) return false;
+            if (IsBadForSoloTeam && playerTeam.Units.Count() <= 1) return false;
+            if (playerTeam.Units.Count(u => u.HasAbility(Ability)) >= MaxPerTeam) return false;
             return playerTeam.Units.Any(u => !u.HasAbility(Ability));
         }
 

@@ -16,3 +16,5 @@ MonoBehaviour:
   RarityWeight: 2
   Description: Learn to attack from far away, and to stab from up close.
   Ability: {fileID: 11400000, guid: 9fbc68c9d73b0487baec45477fd8e09c, type: 2}
+  IsBadForSoloTeam: 1
+  MaxPerTeam: 2

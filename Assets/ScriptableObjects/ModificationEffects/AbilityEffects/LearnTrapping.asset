@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: LearnTrapping
   m_EditorClassIdentifier: 
   Name: Learn Trapping
+  RarityWeight: 1
   Description: There's no escape from you!
   Ability: {fileID: 11400000, guid: 34d0c937f590e420383f9afa0433f5d4, type: 2}
+  IsBadForSoloTeam: 0
+  MaxPerTeam: 1

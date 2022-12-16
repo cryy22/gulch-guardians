@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: SpikeUp
   m_EditorClassIdentifier: 
   Name: Spike Up
+  RarityWeight: 1
   Description: Get a little prickly.
   Ability: {fileID: 11400000, guid: fd994cee0e8254aadb9d0e2ee7606a54, type: 2}
+  IsBadForSoloTeam: 0
+  MaxPerTeam: 2

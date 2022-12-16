@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: SmokeTrick
   m_EditorClassIdentifier: 
   Name: Smoke Trick
+  RarityWeight: 1
   Description: Select a unit to start looking out for number one.
   Ability: {fileID: 11400000, guid: e19df26c49e244843ba207847bd7a69c, type: 2}
+  IsBadForSoloTeam: 1
+  MaxPerTeam: 2

@@ -16,3 +16,5 @@ MonoBehaviour:
   RarityWeight: 2
   Description: Select a unit to forswear the ladle.
   Ability: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
+  IsBadForSoloTeam: 1
+  MaxPerTeam: 2
