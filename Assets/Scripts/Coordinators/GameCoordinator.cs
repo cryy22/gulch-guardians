@@ -36,13 +36,13 @@ namespace GulchGuardians.Coordinators
         public void OnAdvanceInput(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            if (State.Phase != Phase.Preparation || PreparationCoordinator.IsRoundActive) return;
+            if (State.BattlePhase != BattlePhase.Preparation || PreparationCoordinator.IsActive) return;
             OnAdvance();
         }
 
         private void OnAdvanceButtonClicked()
         {
-            if (State.Phase != Phase.Preparation) return;
+            if (State.BattlePhase != BattlePhase.Preparation) return;
             OnAdvance();
         }
 
@@ -50,7 +50,7 @@ namespace GulchGuardians.Coordinators
 
         private IEnumerator RunCombatPhase()
         {
-            State.SetPhase(Phase.Transition);
+            State.SetBattlePhase(BattlePhase.Transition);
             yield return PreparationCoordinator.EndModificationRound();
 
             BGMPlayer.Instance.TransitionToCombat();
@@ -59,7 +59,7 @@ namespace GulchGuardians.Coordinators
             _advanceButtonText.text = "next";
             AdvanceButton.interactable = false;
 
-            State.SetPhase(Phase.Combat);
+            State.SetBattlePhase(BattlePhase.Combat);
             yield return CombatCoordinator.RunCombat();
 
             bool isGameEnded = PlayerTeam.IsDefeated || EnemyTeam.IsDefeated;
@@ -68,7 +68,7 @@ namespace GulchGuardians.Coordinators
 
         private IEnumerator EnterPreparationPhase()
         {
-            State.SetPhase(Phase.Transition);
+            State.SetBattlePhase(BattlePhase.Transition);
 
             BGMPlayer.Instance.TransitionToPreparation();
             yield return GamePhaseAnnouncer.AnnouncePhase(isPreparation: true);
@@ -77,7 +77,7 @@ namespace GulchGuardians.Coordinators
             AdvanceButton.interactable = true;
 
             PreparationCoordinator.BeginModificationRound();
-            State.SetPhase(Phase.Preparation);
+            State.SetBattlePhase(BattlePhase.Preparation);
         }
 
         private IEnumerator HandleGameEnd()

@@ -1,6 +1,6 @@
 namespace GulchGuardians.Coordinators
 {
-    public enum Phase
+    public enum BattlePhase
     {
         Transition,
         Preparation,

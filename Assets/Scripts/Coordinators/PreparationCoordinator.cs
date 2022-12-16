@@ -27,7 +27,7 @@ namespace GulchGuardians.Coordinators
         private int _actionsRemaining;
         private bool _isModifying;
 
-        public bool IsRoundActive { get; private set; }
+        public bool IsActive { get; private set; }
 
         private void OnEnable()
         {
@@ -44,7 +44,7 @@ namespace GulchGuardians.Coordinators
         public void BeginModificationRound()
         {
             EffectOptionsDisplayer.gameObject.SetActive(true);
-            IsRoundActive = true;
+            IsActive = true;
 
             _actionsRemaining = ActionsPerRound;
             UpdateActionsRemainingText();
@@ -59,7 +59,7 @@ namespace GulchGuardians.Coordinators
             CleanUpOfferedEffects();
             EffectOptionsDisplayer.CleanUpEffectOptions();
 
-            IsRoundActive = false;
+            IsActive = false;
             EffectOptionsDisplayer.gameObject.SetActive(false);
         }
 
