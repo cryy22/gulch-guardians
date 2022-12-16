@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using Crysc.Coordination;
 using GulchGuardians.Audio;
 using GulchGuardians.Constants;
+using GulchGuardians.Squads;
 using GulchGuardians.Teams;
 using GulchGuardians.UI;
 using TMPro;
@@ -15,6 +18,11 @@ namespace GulchGuardians.Coordination
     public class BattleCoordinator : Coordinator
     {
         [SerializeField] private GameState State;
+
+        [SerializeField] private SquadConfig PlayerSquadConfig;
+        [SerializeField] private List<Platoon> EnemyPlatoons;
+        [SerializeField] private SquadFactory SquadFactory;
+
         [SerializeField] private PreparationCoordinator PreparationCoordinator;
         [SerializeField] private CombatCoordinator CombatCoordinator;
         [SerializeField] private Team PlayerTeam;
@@ -26,6 +34,8 @@ namespace GulchGuardians.Coordination
 
         private TMP_Text _advanceButtonText;
 
+        public int EnemyPlatoonCount => EnemyPlatoons.Count;
+
         private void Awake() { _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>(); }
 
         private void Start() { AdvanceButton.onClick.AddListener(OnAdvanceButtonClicked); }
@@ -33,6 +43,8 @@ namespace GulchGuardians.Coordination
         public override void BeginCoordination()
         {
             base.BeginCoordination();
+
+            PopulateTeams();
             StartCoroutine(EnterPreparationPhase());
         }
 
@@ -41,6 +53,23 @@ namespace GulchGuardians.Coordination
             if (!context.performed) return;
             if (State.BattlePhase != BattlePhase.Preparation || PreparationCoordinator.IsActive) return;
             OnAdvance();
+        }
+
+        private void PopulateTeams()
+        {
+            if (State.Night == 0)
+            {
+                Squad playerSquad = SquadFactory.Create(PlayerSquadConfig);
+                PlayerTeam.AddSquad(playerSquad);
+            }
+
+            if (State.Night >= EnemyPlatoons.Count) return;
+            Platoon enemyPlatoon = EnemyPlatoons[State.Night];
+            foreach (SquadConfig squadConfig in enemyPlatoon.SquadConfigs)
+            {
+                Squad squad = SquadFactory.Create(squadConfig);
+                EnemyTeam.AddSquad(squad);
+            }
         }
 
         private void OnAdvanceButtonClicked()
@@ -92,6 +121,12 @@ namespace GulchGuardians.Coordination
             }
 
             EndCoordination();
+        }
+
+        [Serializable]
+        private struct Platoon
+        {
+            public List<SquadConfig> SquadConfigs;
         }
     }
 }

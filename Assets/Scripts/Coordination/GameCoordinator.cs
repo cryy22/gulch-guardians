@@ -1,6 +1,10 @@
 using System.Collections;
 using Crysc.Coordination;
+using GulchGuardians.Constants;
+using GulchGuardians.Teams;
+using GulchGuardians.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GulchGuardians.Coordination
 {
@@ -9,6 +13,14 @@ namespace GulchGuardians.Coordination
         [SerializeField] private GameState State;
         [SerializeField] private BattleCoordinator BattleCoordinator;
         [SerializeField] private CampCoordinator CampCoordinator;
+
+        [SerializeField] private Team PlayerTeam;
+
+        [SerializeField] private UIGameResultPanel GameResultPanel;
+
+        private bool IsGameEnded => IsGameLost || IsGameWon;
+        private bool IsGameWon => State.Night >= BattleCoordinator.EnemyPlatoonCount;
+        private bool IsGameLost => PlayerTeam.IsDefeated;
 
         private IEnumerator Start()
         {
@@ -21,8 +33,15 @@ namespace GulchGuardians.Coordination
             BeginCoordination();
 
             yield return RunBattlePhase();
-            yield return RunCampPhase();
+            while (!IsGameEnded)
+            {
+                State.IncrementNight();
 
+                yield return RunCampPhase();
+                yield return RunBattlePhase();
+            }
+
+            yield return HandleGameEnd();
             EndCoordination();
         }
 
@@ -38,6 +57,12 @@ namespace GulchGuardians.Coordination
             State.SetNightPhase(NightPhase.Camp);
             CampCoordinator.BeginCoordination();
             yield return new WaitUntil(() => !CampCoordinator.IsActive);
+        }
+
+        private IEnumerator HandleGameEnd()
+        {
+            yield return GameResultPanel.DisplayResult(IsGameWon);
+            SceneManager.LoadScene(Scenes.TitleIndex);
         }
     }
 }

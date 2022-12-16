@@ -13,8 +13,6 @@ namespace GulchGuardians.Teams
     {
         public int MaxUnits = 99;
 
-        [SerializeField] private List<SquadConfig> SquadConfigs;
-        [SerializeField] private SquadFactory SquadFactory;
         [SerializeField] private Transform SquadsParent;
 
         private readonly List<Squad> _squads = new();
@@ -29,21 +27,6 @@ namespace GulchGuardians.Teams
 
         private void Awake() { _unitsDisplayer = GetComponent<UIUnitsDisplayer>(); }
 
-        private void Start()
-        {
-            foreach (SquadConfig squadConfig in SquadConfigs)
-            {
-                Squad squad = SquadFactory.Create(squadConfig);
-                squad.Team = this;
-
-                squad.transform.SetParent(SquadsParent);
-                _squads.Add(squad);
-            }
-
-            AddUnits(Units); // doing this in Start avoids OnEnable adding EventHandlers a second time
-            ResetUnitsOnDeck();
-        }
-
         private void OnEnable()
         {
             foreach (Unit unit in Units) unit.Clicked += OnUnitClickedEventHandler;
@@ -52,6 +35,16 @@ namespace GulchGuardians.Teams
         private void OnDisable()
         {
             foreach (Unit unit in Units) unit.Clicked -= OnUnitClickedEventHandler;
+        }
+
+        public void AddSquad(Squad squad)
+        {
+            squad.Team = this;
+            squad.transform.SetParent(SquadsParent);
+
+            _squads.Add(squad);
+            AddUnits(squad.Units);
+            _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 
         public IEnumerator AddUnit(Unit unit)
@@ -64,8 +57,6 @@ namespace GulchGuardians.Teams
             yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
-
-        public void ResetUnitsOnDeck() { _unitsDisplayer.UpdateDemarcation(FrontSquad); }
 
         public IEnumerator SetUnitIndex(Unit unit, bool withHurtAnimation = false)
         {

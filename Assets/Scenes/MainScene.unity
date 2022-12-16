@@ -1012,7 +1012,7 @@ RectTransform:
   m_Children:
   - {fileID: 922594220}
   m_Father: {fileID: 2095317710}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1280,7 +1280,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 131bfdafab8f342159cb9d72390e2572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Container: {fileID: 345596933}
   State: {fileID: 11400000, guid: 4f37a456393e94204a5afdb90db2ef50, type: 2}
+  PlayerSquadConfig: {fileID: 11400000, guid: bfd8c297f251c403084cf761966795ec, type: 2}
+  EnemyPlatoons:
+  - SquadConfigs:
+    - {fileID: 11400000, guid: 6332c5495ec9140d684ca7dc052979f7, type: 2}
+  - SquadConfigs:
+    - {fileID: 11400000, guid: 32db8b402016341c28541cce72db33fd, type: 2}
+  - SquadConfigs:
+    - {fileID: 11400000, guid: 53fa3bd3180924f83a28436b98c0c979, type: 2}
+  SquadFactory: {fileID: 11400000, guid: 9f3763cf7a0c04e71ae9f73cd9318300, type: 2}
   PreparationCoordinator: {fileID: 230742419}
   CombatCoordinator: {fileID: 230742420}
   PlayerTeam: {fileID: 294015327}
@@ -1288,7 +1298,6 @@ MonoBehaviour:
   AdvanceButton: {fileID: 1386515120}
   GamePhaseAnnouncer: {fileID: 763397400}
   GameResultPanel: {fileID: 542451868}
-  Container: {fileID: 345596933}
 --- !u!114 &230742419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1301,6 +1310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c6918fc55b4b0f8aec697cc412cfb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Container: {fileID: 0}
   ActionsPerRound: 2
   Effects:
   - {fileID: 11400000, guid: cbe96fb77aa0b475485bf80e31eea464, type: 2}
@@ -1335,6 +1345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab3260f8ef2b43eeb892d0f1dd87668d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Container: {fileID: 0}
   State: {fileID: 11400000, guid: 4f37a456393e94204a5afdb90db2ef50, type: 2}
   PlayerTeam: {fileID: 294015327}
   EnemyTeam: {fileID: 1087500376}
@@ -1369,9 +1380,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a865c4b10f747b2be44d4e6dc1d8ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Container: {fileID: 0}
   State: {fileID: 11400000, guid: 4f37a456393e94204a5afdb90db2ef50, type: 2}
   BattleCoordinator: {fileID: 230742418}
   CampCoordinator: {fileID: 230742421}
+  PlayerTeam: {fileID: 294015327}
+  GameResultPanel: {fileID: 542451868}
 --- !u!1 &252537363
 GameObject:
   m_ObjectHideFlags: 0
@@ -4563,7 +4577,7 @@ RectTransform:
   m_Children:
   - {fileID: 1416230589}
   m_Father: {fileID: 2095317710}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -4908,7 +4922,7 @@ RectTransform:
   m_Children:
   - {fileID: 345596934}
   m_Father: {fileID: 2095317710}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7365,9 +7379,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1386515119}
   - {fileID: 1406654035}
   - {fileID: 134140035}
+  - {fileID: 1386515119}
   - {fileID: 1321969581}
   - {fileID: 440161391}
   - {fileID: 542451865}
@@ -7701,6 +7715,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037161, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: IsInverted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7804354069736640822, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8730069270952273387, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}

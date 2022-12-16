@@ -8,7 +8,7 @@ namespace GulchGuardians.Coordination
     {
         [field: NonSerialized] public NightPhase NightPhase { get; private set; }
         [field: NonSerialized] public BattlePhase BattlePhase { get; private set; }
-        [field: NonSerialized] public int Night { get; private set; } = 1;
+        [field: NonSerialized] public int Night { get; private set; }
 
         public void SetNightPhase(NightPhase phase)
         {

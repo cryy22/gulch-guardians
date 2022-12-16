@@ -46,9 +46,6 @@ namespace GulchGuardians.Coordination
             AutoButton.gameObject.SetActive(true);
             TrySpacebarMessage.SetActive(!_hasUsedSpacebar && !_isAutoAdvance);
 
-            PlayerTeam.ResetUnitsOnDeck();
-            EnemyTeam.ResetUnitsOnDeck();
-
             Squad playerSquad = PlayerTeam.FrontSquad;
             Squad enemySquad = EnemyTeam.FrontSquad;
 
