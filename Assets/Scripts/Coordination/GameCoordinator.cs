@@ -33,10 +33,9 @@ namespace GulchGuardians.Coordination
             BeginCoordination();
 
             yield return RunBattlePhase();
+
             while (!IsGameEnded)
             {
-                State.IncrementNight();
-
                 yield return RunCampPhase();
                 yield return RunBattlePhase();
             }
@@ -48,13 +47,17 @@ namespace GulchGuardians.Coordination
         private IEnumerator RunBattlePhase()
         {
             State.SetNightPhase(NightPhase.Battle);
+
             BattleCoordinator.BeginCoordination();
             yield return new WaitUntil(() => !BattleCoordinator.IsActive);
+
+            State.IncrementNight();
         }
 
         private IEnumerator RunCampPhase()
         {
             State.SetNightPhase(NightPhase.Camp);
+
             CampCoordinator.BeginCoordination();
             yield return new WaitUntil(() => !CampCoordinator.IsActive);
         }
