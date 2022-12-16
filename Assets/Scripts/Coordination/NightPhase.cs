@@ -1,4 +1,4 @@
-namespace GulchGuardians.Coordinators
+namespace GulchGuardians.Coordination
 {
     public enum NightPhase
     {

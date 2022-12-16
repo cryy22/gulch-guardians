@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Crysc.Coordination;
 using Crysc.Helpers;
 using GulchGuardians.ModificationEffects;
 using GulchGuardians.Teams;
@@ -9,9 +10,9 @@ using GulchGuardians.Units;
 using TMPro;
 using UnityEngine;
 
-namespace GulchGuardians.Coordinators
+namespace GulchGuardians.Coordination
 {
-    public class PreparationCoordinator : MonoBehaviour
+    public class PreparationCoordinator : Coordinator
     {
         [SerializeField] private int ActionsPerRound = 2;
         [SerializeField] private List<ModificationEffect> Effects = new();
@@ -27,8 +28,6 @@ namespace GulchGuardians.Coordinators
         private int _actionsRemaining;
         private bool _isModifying;
 
-        public bool IsActive { get; private set; }
-
         private void OnEnable()
         {
             EffectOptionsDisplayer.EffectSelected += EffectSelectedEventHandler;
@@ -41,11 +40,11 @@ namespace GulchGuardians.Coordinators
             PlayerTeam.UnitClicked -= UnitClickedEventHandler;
         }
 
-        public void BeginModificationRound()
+        public override void BeginCoordination()
         {
-            EffectOptionsDisplayer.gameObject.SetActive(true);
-            IsActive = true;
+            base.BeginCoordination();
 
+            EffectOptionsDisplayer.gameObject.SetActive(true);
             _actionsRemaining = ActionsPerRound;
             UpdateActionsRemainingText();
 
@@ -58,9 +57,9 @@ namespace GulchGuardians.Coordinators
 
             CleanUpOfferedEffects();
             EffectOptionsDisplayer.CleanUpEffectOptions();
-
-            IsActive = false;
             EffectOptionsDisplayer.gameObject.SetActive(false);
+
+            EndCoordination();
         }
 
         private void UnitClickedEventHandler(object sender, Team.UnitClickedEventArgs e)

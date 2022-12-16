@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace GulchGuardians.Coordinators
+namespace GulchGuardians.Coordination
 {
     [CreateAssetMenu(fileName = "GameState", menuName = "State/Game State")]
     public class GameState : ScriptableObject

@@ -1,9 +1,10 @@
 using System.Collections;
+using Crysc.Coordination;
 using UnityEngine;
 
-namespace GulchGuardians.Coordinators
+namespace GulchGuardians.Coordination
 {
-    public class GameCoordinator : MonoBehaviour
+    public class GameCoordinator : Coordinator
     {
         [SerializeField] private GameState State;
         [SerializeField] private BattleCoordinator BattleCoordinator;
@@ -17,8 +18,12 @@ namespace GulchGuardians.Coordinators
 
         private IEnumerator Run()
         {
+            BeginCoordination();
+
             yield return RunBattlePhase();
             yield return RunCampPhase();
+
+            EndCoordination();
         }
 
         private IEnumerator RunBattlePhase()

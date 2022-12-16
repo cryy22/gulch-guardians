@@ -1,4 +1,5 @@
 using System.Collections;
+using Crysc.Coordination;
 using GulchGuardians.Audio;
 using GulchGuardians.Constants;
 using GulchGuardians.Teams;
@@ -9,9 +10,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace GulchGuardians.Coordinators
+namespace GulchGuardians.Coordination
 {
-    public class BattleCoordinator : MonoBehaviour
+    public class BattleCoordinator : Coordinator
     {
         [SerializeField] private GameState State;
         [SerializeField] private PreparationCoordinator PreparationCoordinator;
@@ -22,24 +23,16 @@ namespace GulchGuardians.Coordinators
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private UIGamePhaseAnnouncer GamePhaseAnnouncer;
         [SerializeField] private UIGameResultPanel GameResultPanel;
-        [SerializeField] private GameObject Container;
 
         private TMP_Text _advanceButtonText;
 
-        public bool IsActive { get; private set; }
-
-        private void Awake()
-        {
-            Container.SetActive(false);
-            _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>();
-        }
+        private void Awake() { _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>(); }
 
         private void Start() { AdvanceButton.onClick.AddListener(OnAdvanceButtonClicked); }
 
-        public void BeginCoordination()
+        public override void BeginCoordination()
         {
-            IsActive = true;
-            Container.SetActive(true);
+            base.BeginCoordination();
             StartCoroutine(EnterPreparationPhase());
         }
 
@@ -48,12 +41,6 @@ namespace GulchGuardians.Coordinators
             if (!context.performed) return;
             if (State.BattlePhase != BattlePhase.Preparation || PreparationCoordinator.IsActive) return;
             OnAdvance();
-        }
-
-        private void EndCoordination()
-        {
-            Container.SetActive(false);
-            IsActive = false;
         }
 
         private void OnAdvanceButtonClicked()
@@ -92,7 +79,7 @@ namespace GulchGuardians.Coordinators
             _advanceButtonText.text = "fight!";
             AdvanceButton.interactable = true;
 
-            PreparationCoordinator.BeginModificationRound();
+            PreparationCoordinator.BeginCoordination();
             State.SetBattlePhase(BattlePhase.Preparation);
         }
 

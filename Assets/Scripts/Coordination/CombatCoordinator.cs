@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Crysc.Coordination;
 using GulchGuardians.Abilities;
 using GulchGuardians.Squads;
 using GulchGuardians.Teams;
@@ -10,9 +11,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace GulchGuardians.Coordinators
+namespace GulchGuardians.Coordination
 {
-    public class CombatCoordinator : MonoBehaviour
+    public class CombatCoordinator : Coordinator
     {
         private const int _archeryRange = 2;
 
