@@ -277,7 +277,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7077939781010037160}
   - component: {fileID: 7077939781010037143}
-  - component: {fileID: 5131909779452970499}
   m_Layer: 0
   m_Name: Team
   m_TagString: Untagged
@@ -317,22 +316,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxUnits: 99
   SquadsParent: {fileID: 7804354069736640822}
---- !u!114 &5131909779452970499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7077939781010037142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eed6960a07e41ddab29ad7a95eae946, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ElementSpacing: {x: 1.8825, y: 0}
-  ElementStagger: {x: 0, y: 0.25}
-  InvertOrder: 0
-  ElementsParent: {fileID: 8730069270952273387}
 --- !u!1 &7131702136674887352
 GameObject:
   m_ObjectHideFlags: 0

@@ -3769,10 +3769,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: DemarcatesRounds
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037142, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: m_Name
       value: EnemyTeam
@@ -7607,14 +7603,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5131909779452970499, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
-      propertyPath: InvertOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: IsInverted
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4761605827293087177, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: IsInverted
       value: 1
@@ -7637,6 +7625,10 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 54544406e80754789ac74591d0238e76, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: IsPlayerTeam
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: IsUnitOrderInverted
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}

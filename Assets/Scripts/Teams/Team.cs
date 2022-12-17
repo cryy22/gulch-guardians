@@ -2,22 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Crysc.UI;
 using GulchGuardians.Squads;
 using GulchGuardians.Units;
 using UnityEngine;
 
 namespace GulchGuardians.Teams
 {
-    [RequireComponent(typeof(UIArrangement))]
     public class Team : MonoBehaviour
     {
         public int MaxUnits = 99;
 
         [SerializeField] private Transform SquadsParent;
+        [SerializeField] private bool IsUnitOrderInverted;
 
         private readonly List<Squad> _squads = new();
-        private UIArrangement _arrangement;
 
         public event EventHandler UnitsChanged;
         public event EventHandler<UnitClickedEventArgs> UnitClicked;
@@ -25,10 +23,6 @@ namespace GulchGuardians.Teams
         public IEnumerable<Unit> Units => _squads.SelectMany(s => s.Units);
         public Squad FrontSquad => _squads.Count > 0 ? _squads.First() : null;
         public bool IsDefeated => Units.Count() == 0;
-
-        private IEnumerable<Transform> UnitTransforms => Units.Select(u => u.transform);
-
-        private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
 
         private void OnEnable()
         {
@@ -43,7 +37,8 @@ namespace GulchGuardians.Teams
         public void AddSquad(Squad squad)
         {
             squad.Team = this;
-            squad.transform.SetParent(SquadsParent);
+            squad.transform.SetParent(parent: SquadsParent, worldPositionStays: false);
+            if (IsUnitOrderInverted) squad.InvertArrangementOrder();
 
             _squads.Add(squad);
             AddUnits(squad.Units);
@@ -54,27 +49,15 @@ namespace GulchGuardians.Teams
         {
             if (Units.Count() >= MaxUnits) throw new Exception("Team is full");
 
-            FrontSquad.AddUnit(unit);
+            yield return FrontSquad.AddUnit(unit);
             AddUnitInternal(unit);
 
-            yield return _arrangement.AnimateUpdateArrangement(UnitTransforms);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
-        public IEnumerator SetUnitIndex(Unit unit, bool withHurtAnimation = false)
-        {
-            if (withHurtAnimation) unit.SetHurtAnimation();
-            yield return _arrangement.AnimateUpdateArrangement(UnitTransforms);
-            if (withHurtAnimation) unit.SetIdleAnimation();
+        public void SetUnitIndex() { UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty); }
 
-            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
-        }
-
-        public IEnumerator HandleUnitDefeat(Unit unit)
-        {
-            yield return _arrangement.AnimateUpdateArrangement(UnitTransforms);
-            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
-        }
+        public void HandleUnitDefeat() { UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty); }
 
         public void HandleSquadDefeat(Squad squad)
         {
@@ -89,7 +72,6 @@ namespace GulchGuardians.Teams
 
             foreach (Unit unit in enumeratedUnits) AddUnitInternal(unit);
 
-            _arrangement.UpdateArrangement(UnitTransforms);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
