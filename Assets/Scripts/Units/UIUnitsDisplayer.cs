@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Crysc.Helpers;
 using GulchGuardians.Squads;
-using GulchGuardians.Teams;
 using UnityEngine;
 
 namespace GulchGuardians.Units
 {
-    [RequireComponent(typeof(Team))]
     public class UIUnitsDisplayer : MonoBehaviour
     {
         public float UnitSpacingX = 1.8825f;
@@ -43,7 +41,9 @@ namespace GulchGuardians.Units
 
         public void UpdateDisplay(IEnumerable<Unit> units)
         {
-            UpdateUnitsAndPositions(units);
+            bool hasChanged = UpdateUnitsAndPositions(units);
+            if (!hasChanged) return;
+
             foreach (Unit unit in _unitsPositions.Keys) unit.transform.position = _unitsPositions[unit];
         }
 

@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Crysc.UI;
 using GulchGuardians.Squads;
 using GulchGuardians.Units;
 using UnityEngine;
 
 namespace GulchGuardians.Teams
 {
-    [RequireComponent(typeof(UIUnitsDisplayer))]
+    [RequireComponent(typeof(UIArrangement))]
     public class Team : MonoBehaviour
     {
         public int MaxUnits = 99;
@@ -16,7 +17,7 @@ namespace GulchGuardians.Teams
         [SerializeField] private Transform SquadsParent;
 
         private readonly List<Squad> _squads = new();
-        private UIUnitsDisplayer _unitsDisplayer;
+        private UIArrangement _arrangement;
 
         public event EventHandler UnitsChanged;
         public event EventHandler<UnitClickedEventArgs> UnitClicked;
@@ -25,7 +26,9 @@ namespace GulchGuardians.Teams
         public Squad FrontSquad => _squads.Count > 0 ? _squads.First() : null;
         public bool IsDefeated => Units.Count() == 0;
 
-        private void Awake() { _unitsDisplayer = GetComponent<UIUnitsDisplayer>(); }
+        private IEnumerable<Transform> UnitTransforms => Units.Select(u => u.transform);
+
+        private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
 
         private void OnEnable()
         {
@@ -44,7 +47,7 @@ namespace GulchGuardians.Teams
 
             _squads.Add(squad);
             AddUnits(squad.Units);
-            _unitsDisplayer.UpdateDemarcation(FrontSquad);
+            // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 
         public IEnumerator AddUnit(Unit unit)
@@ -54,14 +57,14 @@ namespace GulchGuardians.Teams
             FrontSquad.AddUnit(unit);
             AddUnitInternal(unit);
 
-            yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
+            yield return _arrangement.AnimateUpdateArrangement(UnitTransforms);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
         public IEnumerator SetUnitIndex(Unit unit, bool withHurtAnimation = false)
         {
             if (withHurtAnimation) unit.SetHurtAnimation();
-            yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
+            yield return _arrangement.AnimateUpdateArrangement(UnitTransforms);
             if (withHurtAnimation) unit.SetIdleAnimation();
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
@@ -69,14 +72,14 @@ namespace GulchGuardians.Teams
 
         public IEnumerator HandleUnitDefeat(Unit unit)
         {
-            yield return _unitsDisplayer.AnimateUpdateDisplay(units: Units);
+            yield return _arrangement.AnimateUpdateArrangement(UnitTransforms);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
         public void HandleSquadDefeat(Squad squad)
         {
             _squads.Remove(squad);
-            _unitsDisplayer.UpdateDemarcation(FrontSquad);
+            // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 
         private void AddUnits(IEnumerable<Unit> units)
@@ -86,7 +89,7 @@ namespace GulchGuardians.Teams
 
             foreach (Unit unit in enumeratedUnits) AddUnitInternal(unit);
 
-            _unitsDisplayer.UpdateDisplay(units: Units);
+            _arrangement.UpdateArrangement(UnitTransforms);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 

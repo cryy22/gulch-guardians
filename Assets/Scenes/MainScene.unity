@@ -3769,7 +3769,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3575982119089321520, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+    - target: {fileID: 0}
       propertyPath: DemarcatesRounds
       value: 1
       objectReference: {fileID: 0}
@@ -7607,7 +7607,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3575982119089321520, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+    - target: {fileID: 5131909779452970499, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: InvertOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: IsInverted
       value: 1
       objectReference: {fileID: 0}

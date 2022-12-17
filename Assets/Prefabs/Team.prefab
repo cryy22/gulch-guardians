@@ -277,7 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7077939781010037160}
   - component: {fileID: 7077939781010037143}
-  - component: {fileID: 3575982119089321520}
+  - component: {fileID: 5131909779452970499}
   m_Layer: 0
   m_Name: Team
   m_TagString: Untagged
@@ -316,10 +316,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxUnits: 99
-  SquadConfigs: []
-  SquadFactory: {fileID: 11400000, guid: 9f3763cf7a0c04e71ae9f73cd9318300, type: 2}
   SquadsParent: {fileID: 7804354069736640822}
---- !u!114 &3575982119089321520
+--- !u!114 &5131909779452970499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -328,15 +326,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7077939781010037142}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a974efe4f31f4c9485d49749bb44aa6, type: 3}
+  m_Script: {fileID: 11500000, guid: 4eed6960a07e41ddab29ad7a95eae946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitSpacingX: 1.8825
-  UnitStaggerY: 0.25
-  IsInverted: 0
-  DemarcatesRounds: 0
-  UnitsParent: {fileID: 8730069270952273387}
-  RoundDemarcation: {fileID: 7312968144270021125}
+  ElementSpacing: {x: 1.8825, y: 0}
+  ElementStagger: {x: 0, y: 0.25}
+  InvertOrder: 0
+  ElementsParent: {fileID: 8730069270952273387}
 --- !u!1 &7131702136674887352
 GameObject:
   m_ObjectHideFlags: 0
