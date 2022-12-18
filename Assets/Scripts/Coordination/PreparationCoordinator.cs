@@ -62,7 +62,7 @@ namespace GulchGuardians.Coordination
             EndCoordination();
         }
 
-        private void UnitClickedEventHandler(object sender, Team.UnitClickedEventArgs e)
+        private void UnitClickedEventHandler(object sender, UnitClickedEventArgs e)
         {
             if (EffectOptionsDisplayer.SelectedEffect == null) return;
             StartCoroutine(ApplySelectedEffect(e.Unit));

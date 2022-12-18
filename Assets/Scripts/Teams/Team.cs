@@ -26,12 +26,20 @@ namespace GulchGuardians.Teams
 
         private void OnEnable()
         {
-            foreach (Unit unit in Units) unit.Clicked += OnUnitClickedEventHandler;
+            foreach (Squad squad in _squads)
+            {
+                squad.UnitsChanged += UnitsChangedEventHandler;
+                squad.UnitClicked += UnitClickedEventHandler;
+            }
         }
 
         private void OnDisable()
         {
-            foreach (Unit unit in Units) unit.Clicked -= OnUnitClickedEventHandler;
+            foreach (Squad squad in _squads)
+            {
+                squad.UnitsChanged -= UnitsChangedEventHandler;
+                squad.UnitClicked -= UnitClickedEventHandler;
+            }
         }
 
         public void AddSquad(Squad squad)
@@ -41,23 +49,17 @@ namespace GulchGuardians.Teams
             if (IsUnitOrderInverted) squad.InvertArrangementOrder();
 
             _squads.Add(squad);
-            AddUnits(squad.Units);
+            squad.UnitsChanged += UnitsChangedEventHandler;
+            squad.UnitClicked += UnitClickedEventHandler;
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 
         public IEnumerator AddUnit(Unit unit)
         {
             if (Units.Count() >= MaxUnits) throw new Exception("Team is full");
-
             yield return FrontSquad.AddUnit(unit);
-            AddUnitInternal(unit);
-
-            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
-
-        public void SetUnitIndex() { UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty); }
-
-        public void HandleUnitDefeat() { UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty); }
 
         public void HandleSquadDefeat(Squad squad)
         {
@@ -65,27 +67,14 @@ namespace GulchGuardians.Teams
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 
-        private void AddUnits(IEnumerable<Unit> units)
+        private void UnitsChangedEventHandler(object sender, EventArgs e)
         {
-            List<Unit> enumeratedUnits = units.ToList();
-            if (Units.Count() > MaxUnits) throw new Exception("Team is full");
-
-            foreach (Unit unit in enumeratedUnits) AddUnitInternal(unit);
-
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
-        private void AddUnitInternal(Unit unit) { unit.Clicked += OnUnitClickedEventHandler; }
-
-        private void OnUnitClickedEventHandler(object sender, EventArgs e)
+        private void UnitClickedEventHandler(object sender, UnitClickedEventArgs e)
         {
-            UnitClicked?.Invoke(sender: this, e: new UnitClickedEventArgs(unit: (Unit) sender));
-        }
-
-        public class UnitClickedEventArgs : EventArgs
-        {
-            public UnitClickedEventArgs(Unit unit) { Unit = unit; }
-            public Unit Unit { get; }
+            UnitClicked?.Invoke(sender: this, e: e);
         }
     }
 }

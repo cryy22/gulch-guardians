@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,9 @@ namespace GulchGuardians.Squads
 
         private UIArrangement _arrangement;
 
+        public event EventHandler UnitsChanged;
+        public event EventHandler<UnitClickedEventArgs> UnitClicked;
+
         public IEnumerable<Unit> Units => _units;
         public int Count => _units.Count;
         public Unit FrontUnit => _units.Count > 0 ? _units.First() : null;
@@ -26,6 +30,16 @@ namespace GulchGuardians.Squads
 
         private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
 
+        private void OnEnable()
+        {
+            foreach (Unit unit in _units) unit.Clicked += UnitClickedEventHandler;
+        }
+
+        private void OnDisable()
+        {
+            foreach (Unit unit in _units) unit.Clicked -= UnitClickedEventHandler;
+        }
+
         public static bool IsDefeated(Squad squad) { return squad == null || squad.Count <= 0; }
 
         public override void Initialize(SquadInitParams initParams)
@@ -33,7 +47,7 @@ namespace GulchGuardians.Squads
             base.Initialize(initParams);
 
             _units.AddRange(initParams.InitialUnits);
-            foreach (Unit unit in _units) unit.Squad = this;
+            foreach (Unit unit in _units) ConfigureUnit(unit);
             _arrangement.UpdateElements(UnitTransforms);
         }
 
@@ -43,7 +57,7 @@ namespace GulchGuardians.Squads
         {
             if (!_units.Remove(unit)) yield break;
             yield return _arrangement.AnimateUpdateElements(UnitTransforms);
-            Team.HandleUnitDefeat();
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
 
             if (!IsDefeated(this)) yield break;
             Team.HandleSquadDefeat(this);
@@ -59,15 +73,27 @@ namespace GulchGuardians.Squads
             yield return _arrangement.AnimateUpdateElements(UnitTransforms);
             if (withHurtAnimation) unit.SetIdleAnimation();
 
-            Team.SetUnitIndex();
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
         public IEnumerator AddUnit(Unit unit)
         {
-            unit.Squad = this;
+            ConfigureUnit(unit);
             _units.Add(unit);
 
             yield return _arrangement.AnimateUpdateElements(UnitTransforms);
+            UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
+        }
+
+        private void ConfigureUnit(Unit unit)
+        {
+            unit.Squad = this;
+            unit.Clicked += UnitClickedEventHandler;
+        }
+
+        private void UnitClickedEventHandler(object sender, EventArgs e)
+        {
+            UnitClicked?.Invoke(sender: this, e: new UnitClickedEventArgs(unit: (Unit) sender));
         }
     }
 }
