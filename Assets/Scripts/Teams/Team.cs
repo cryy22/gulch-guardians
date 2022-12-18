@@ -26,7 +26,6 @@ namespace GulchGuardians.Teams
         public IEnumerable<Unit> Units => _squads.SelectMany(s => s.Units);
         public Squad FrontSquad => _squads.Count > 0 ? _squads.First() : null;
         public bool IsDefeated => Units.Count() == 0;
-        private IEnumerable<Transform> SquadTransforms => _squads.Select(s => s.transform);
 
         private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
 
@@ -59,7 +58,7 @@ namespace GulchGuardians.Teams
             squad.UnitClicked += UnitClickedEventHandler;
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
-            _arrangement.UpdateElements(SquadTransforms);
+            _arrangement.UpdateElements(_squads);
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 
@@ -72,7 +71,7 @@ namespace GulchGuardians.Teams
         public IEnumerator HandleSquadDefeat(Squad squad)
         {
             _squads.Remove(squad);
-            yield return _arrangement.AnimateUpdateElements(SquadTransforms);
+            yield return _arrangement.AnimateUpdateElements(_squads);
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 

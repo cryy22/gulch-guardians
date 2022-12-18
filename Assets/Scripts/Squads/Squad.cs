@@ -11,7 +11,7 @@ using UnityEngine;
 namespace GulchGuardians.Squads
 {
     [RequireComponent(typeof(UIArrangement))]
-    public class Squad : InitializationBehaviour<SquadInitParams>
+    public class Squad : InitializationBehaviour<SquadInitParams>, IArrangementElement
     {
         private readonly List<Unit> _units = new();
 
@@ -25,8 +25,6 @@ namespace GulchGuardians.Squads
         public Unit FrontUnit => _units.Count > 0 ? _units.First() : null;
         public Unit BackUnit => _units.Count > 0 ? _units.Last() : null;
         public Team Team { get; set; }
-
-        private IEnumerable<Transform> UnitTransforms => _units.Select(u => u.transform);
 
         private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
 
@@ -48,7 +46,7 @@ namespace GulchGuardians.Squads
 
             _units.AddRange(initParams.InitialUnits);
             foreach (Unit unit in _units) ConfigureUnit(unit);
-            _arrangement.UpdateElements(UnitTransforms);
+            _arrangement.UpdateElements(Units);
         }
 
         public void InvertArrangementOrder() { _arrangement.InvertOrder(); }
@@ -56,7 +54,7 @@ namespace GulchGuardians.Squads
         public IEnumerator HandleUnitDefeat(Unit unit)
         {
             if (!_units.Remove(unit)) yield break;
-            yield return _arrangement.AnimateUpdateElements(UnitTransforms);
+            yield return _arrangement.AnimateUpdateElements(Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
 
             if (!IsDefeated(this)) yield break;
@@ -70,7 +68,7 @@ namespace GulchGuardians.Squads
             _units.Insert(index: index, item: unit);
 
             if (withHurtAnimation) unit.SetHurtAnimation();
-            yield return _arrangement.AnimateUpdateElements(UnitTransforms);
+            yield return _arrangement.AnimateUpdateElements(Units);
             if (withHurtAnimation) unit.SetIdleAnimation();
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
@@ -81,7 +79,7 @@ namespace GulchGuardians.Squads
             ConfigureUnit(unit);
             _units.Add(unit);
 
-            yield return _arrangement.AnimateUpdateElements(UnitTransforms);
+            yield return _arrangement.AnimateUpdateElements(Units);
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
@@ -95,5 +93,25 @@ namespace GulchGuardians.Squads
         {
             UnitClicked?.Invoke(sender: this, e: new UnitClickedEventArgs(unit: (Unit) sender));
         }
+
+        private Bounds GetBounds()
+        {
+            Vector3 min = Vector3.positiveInfinity;
+            Vector3 max = Vector3.negativeInfinity;
+
+            foreach (Unit unit in _units)
+            {
+                min = Vector3.Min(lhs: min, rhs: unit.transform.position);
+                max = Vector3.Max(lhs: max, rhs: unit.transform.position);
+            }
+
+            Bounds bounds = new();
+            bounds.SetMinMax(min: min, max: max);
+            return bounds;
+        }
+
+        // IArrangementElement
+        public Transform Transform => transform;
+        public Bounds Bounds => GetBounds();
     }
 }

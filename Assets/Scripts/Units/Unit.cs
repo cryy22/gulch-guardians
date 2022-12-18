@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Crysc.Common;
 using Crysc.Helpers;
 using Crysc.Initialization;
+using Crysc.UI;
 using GulchGuardians.Abilities;
 using GulchGuardians.Common;
 using GulchGuardians.Constants;
@@ -17,7 +19,7 @@ namespace GulchGuardians.Units
 
     [RequireComponent(typeof(ClickReporter))]
     [RequireComponent(typeof(UIUnit))]
-    public class Unit : InitializationBehaviour<UnitInitParams>
+    public class Unit : InitializationBehaviour<UnitInitParams>, IArrangementElement
     {
         [SerializeField] private AbilityIndex AbilityIndex;
         [SerializeField] private GameObject Nametag;
@@ -27,6 +29,7 @@ namespace GulchGuardians.Units
         private ClickReporter _clickReporter;
         private UIUnit _ui;
         private int _attack;
+        private BoundsCalculator _boundsCalculator;
 
         public event EventHandler Clicked
         {
@@ -37,7 +40,6 @@ namespace GulchGuardians.Units
         public event EventHandler Changed;
 
         public IEnumerable<AbilityType> Abilities => _abilities;
-
         public string FirstName => InitParams.FirstName;
         public Team Team => Squad != null ? Squad.Team : null;
         public Squad Squad { get; set; }
@@ -68,6 +70,7 @@ namespace GulchGuardians.Units
         {
             _clickReporter = GetComponent<ClickReporter>();
             _ui = GetComponent<UIUnit>();
+            _boundsCalculator = new BoundsCalculator(transform);
         }
 
         public static bool IsDefeated(Unit unit) { return unit == null || unit.Health <= 0; }
@@ -191,5 +194,9 @@ namespace GulchGuardians.Units
 
             Destroy(gameObject);
         }
+
+        // IArrangementElement
+        public Transform Transform => transform;
+        public Bounds Bounds => _boundsCalculator.Calculate();
     }
 }
