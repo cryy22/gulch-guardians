@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed6960a07e41ddab29ad7a95eae946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ElementSpacing: {x: 1.8875, y: 0}
+  Direction: {x: 0.875, y: 0}
   ElementStagger: {x: 0, y: 0.25}
-  InvertOrder: 0
+  IsOrderInverted: 0
   ElementsParent: {fileID: 2159787811155542356}

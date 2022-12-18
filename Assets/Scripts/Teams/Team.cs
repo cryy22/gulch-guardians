@@ -58,7 +58,8 @@ namespace GulchGuardians.Teams
             squad.UnitClicked += UnitClickedEventHandler;
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
-            _arrangement.UpdateElements(_squads);
+            StartCoroutine(UpdateArrangementElementsNextFrame());
+            // _arrangement.UpdateElements(_squads);
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 
@@ -73,6 +74,12 @@ namespace GulchGuardians.Teams
             _squads.Remove(squad);
             yield return _arrangement.AnimateUpdateElements(_squads);
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
+        }
+
+        private IEnumerator UpdateArrangementElementsNextFrame()
+        {
+            yield return null;
+            _arrangement.UpdateElements(_squads);
         }
 
         private void UnitsChangedEventHandler(object sender, EventArgs e)

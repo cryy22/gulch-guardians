@@ -94,24 +94,8 @@ namespace GulchGuardians.Squads
             UnitClicked?.Invoke(sender: this, e: new UnitClickedEventArgs(unit: (Unit) sender));
         }
 
-        private Bounds GetBounds()
-        {
-            Vector3 min = Vector3.positiveInfinity;
-            Vector3 max = Vector3.negativeInfinity;
-
-            foreach (Unit unit in _units)
-            {
-                min = Vector3.Min(lhs: min, rhs: unit.transform.position);
-                max = Vector3.Max(lhs: max, rhs: unit.transform.position);
-            }
-
-            Bounds bounds = new();
-            bounds.SetMinMax(min: min, max: max);
-            return bounds;
-        }
-
         // IArrangementElement
         public Transform Transform => transform;
-        public Bounds Bounds => GetBounds();
+        public Bounds Bounds => _arrangement.Bounds;
     }
 }
