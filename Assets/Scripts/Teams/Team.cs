@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Crysc.UI;
 using GulchGuardians.Squads;
 using GulchGuardians.Units;
 using UnityEngine;
 
 namespace GulchGuardians.Teams
 {
+    [RequireComponent(typeof(UIArrangement))]
     public class Team : MonoBehaviour
     {
         public int MaxUnits = 99;
@@ -16,6 +18,7 @@ namespace GulchGuardians.Teams
         [SerializeField] private bool IsUnitOrderInverted;
 
         private readonly List<Squad> _squads = new();
+        private UIArrangement _arrangement;
 
         public event EventHandler UnitsChanged;
         public event EventHandler<UnitClickedEventArgs> UnitClicked;
@@ -23,6 +26,9 @@ namespace GulchGuardians.Teams
         public IEnumerable<Unit> Units => _squads.SelectMany(s => s.Units);
         public Squad FrontSquad => _squads.Count > 0 ? _squads.First() : null;
         public bool IsDefeated => Units.Count() == 0;
+        private IEnumerable<Transform> SquadTransforms => _squads.Select(s => s.transform);
+
+        private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
 
         private void OnEnable()
         {
@@ -51,7 +57,9 @@ namespace GulchGuardians.Teams
             _squads.Add(squad);
             squad.UnitsChanged += UnitsChangedEventHandler;
             squad.UnitClicked += UnitClickedEventHandler;
+
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
+            _arrangement.UpdateElements(SquadTransforms);
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 
@@ -61,9 +69,10 @@ namespace GulchGuardians.Teams
             yield return FrontSquad.AddUnit(unit);
         }
 
-        public void HandleSquadDefeat(Squad squad)
+        public IEnumerator HandleSquadDefeat(Squad squad)
         {
             _squads.Remove(squad);
+            yield return _arrangement.AnimateUpdateElements(SquadTransforms);
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 

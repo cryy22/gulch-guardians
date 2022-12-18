@@ -60,7 +60,7 @@ namespace GulchGuardians.Squads
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
 
             if (!IsDefeated(this)) yield break;
-            Team.HandleSquadDefeat(this);
+            yield return Team.HandleSquadDefeat(this);
             Destroy(gameObject);
         }
 
