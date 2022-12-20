@@ -121,11 +121,6 @@ namespace GulchGuardians.Units
             yield return _ui.AnimateStatsChange(animateHealth: true);
         }
 
-        public IEnumerator MoveToPosition(Vector3 position, float duration)
-        {
-            yield return _ui.AnimateToPosition(position: position, duration: duration);
-        }
-
         public bool WillAct(int index)
         {
             return index switch

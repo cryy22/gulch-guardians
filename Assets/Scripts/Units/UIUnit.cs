@@ -65,12 +65,6 @@ namespace GulchGuardians.Units
             UpdateSpriteLibraryAsset(unit);
         }
 
-        public IEnumerator AnimateToPosition(Vector3 position, float duration = 0.25f)
-        {
-            yield return Mover.Move(transform: transform, end: position, duration: duration);
-            transform.position = position;
-        }
-
         public IEnumerator AnimateAttack(Unit target)
         {
             if (target == null) yield break;
