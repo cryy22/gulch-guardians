@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5231071849173982838}
   - component: {fileID: 5231071849173982825}
+  - component: {fileID: -8794281385185204524}
   - component: {fileID: 6724165264505976030}
   m_Layer: 0
   m_Name: Squad
@@ -75,6 +76,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5985d914b344949a0c46214083718fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8794281385185204524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5231071849173982824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed051078c0c548a0bde4aff4fcfe0fa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6724165264505976030

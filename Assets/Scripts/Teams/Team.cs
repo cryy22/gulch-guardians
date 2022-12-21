@@ -10,6 +10,7 @@ using UnityEngine;
 namespace GulchGuardians.Teams
 {
     [RequireComponent(typeof(UIArrangement))]
+    [RequireComponent(typeof(UITeam))]
     public class Team : MonoBehaviour
     {
         public int MaxUnits = 99;
@@ -26,8 +27,13 @@ namespace GulchGuardians.Teams
         public IEnumerable<Unit> Units => _squads.SelectMany(s => s.Units);
         public Squad FrontSquad => _squads.Count > 0 ? _squads.First() : null;
         public bool IsDefeated => Units.Count() == 0;
+        public UITeam UI { get; private set; }
 
-        private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
+        private void Awake()
+        {
+            UI = GetComponent<UITeam>();
+            _arrangement = GetComponent<UIArrangement>();
+        }
 
         private void OnEnable()
         {
@@ -51,7 +57,7 @@ namespace GulchGuardians.Teams
         {
             squad.Team = this;
             squad.transform.SetParent(parent: SquadsParent, worldPositionStays: false);
-            if (IsUnitOrderInverted) squad.InvertArrangementOrder();
+            if (IsUnitOrderInverted) squad.UI.InvertArrangementOrder();
 
             _squads.Add(squad);
             squad.UnitsChanged += UnitsChangedEventHandler;
