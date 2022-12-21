@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Crysc.Helpers;
+using Crysc.UI;
 using GulchGuardians.Abilities;
 using GulchGuardians.Audio;
 using GulchGuardians.Constants;
@@ -11,7 +12,7 @@ using UnityEngine.U2D.Animation;
 
 namespace GulchGuardians.Units
 {
-    public class UIUnit : MonoBehaviour
+    public class UIUnit : MonoBehaviour, IArrangementElement
     {
         [SerializeField] private TMP_Text AttackText;
         [SerializeField] private TMP_Text HealthText;
@@ -242,6 +243,9 @@ namespace GulchGuardians.Units
 
             Animator.SetTrigger(AnimatorProperties.OnIdleTrigger);
         }
+
+        // IArrangementElement
+        public Transform Transform => transform;
 
         public enum DamageDirection
         {

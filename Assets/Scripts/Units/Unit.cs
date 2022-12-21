@@ -5,7 +5,6 @@ using System.Linq;
 using Crysc.Common;
 using Crysc.Helpers;
 using Crysc.Initialization;
-using Crysc.UI;
 using GulchGuardians.Abilities;
 using GulchGuardians.Common;
 using GulchGuardians.Constants;
@@ -19,7 +18,7 @@ namespace GulchGuardians.Units
 
     [RequireComponent(typeof(ClickReporter))]
     [RequireComponent(typeof(UIUnit))]
-    public class Unit : InitializationBehaviour<UnitInitParams>, IArrangementElement
+    public class Unit : InitializationBehaviour<UnitInitParams>
     {
         [SerializeField] private AbilityIndex AbilityIndex;
         [SerializeField] private GameObject Nametag;
@@ -189,8 +188,5 @@ namespace GulchGuardians.Units
 
             Destroy(gameObject);
         }
-
-        // IArrangementElement
-        public Transform Transform => transform;
     }
 }

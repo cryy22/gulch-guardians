@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Crysc.Initialization;
-using Crysc.UI;
 using GulchGuardians.Teams;
 using GulchGuardians.Units;
 using UnityEngine;
@@ -11,7 +10,7 @@ using UnityEngine;
 namespace GulchGuardians.Squads
 {
     [RequireComponent(typeof(UISquad))]
-    public class Squad : InitializationBehaviour<SquadInitParams>, IArrangementElement
+    public class Squad : InitializationBehaviour<SquadInitParams>
     {
         private readonly List<Unit> _units = new();
 
@@ -91,8 +90,5 @@ namespace GulchGuardians.Squads
         {
             UnitClicked?.Invoke(sender: this, e: new UnitClickedEventArgs(unit: (Unit) sender));
         }
-
-        // IArrangementElement
-        public Transform Transform => transform;
     }
 }

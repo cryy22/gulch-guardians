@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Crysc.UI;
 using GulchGuardians.Squads;
 using UnityEngine;
@@ -23,10 +24,13 @@ namespace GulchGuardians.Teams
 
         public IEnumerator AnimateUpdateElements(IEnumerable<Squad> squads)
         {
-            yield return _arrangement.AnimateUpdateElements(squads);
+            yield return _arrangement.AnimateUpdateElements(squads.Select(s => s.UI));
         }
 
-        private void UpdateElements(IEnumerable<Squad> squads) { _arrangement.UpdateElements(squads); }
+        private void UpdateElements(IEnumerable<Squad> squads)
+        {
+            _arrangement.UpdateElements(squads.Select(s => s.UI));
+        }
 
         private IEnumerator UpdateArrangementElementsNextFrame(IEnumerable<Squad> squads)
         {
