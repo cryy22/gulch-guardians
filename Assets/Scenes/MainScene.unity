@@ -1287,6 +1287,8 @@ MonoBehaviour:
   - SquadConfigs:
     - {fileID: 11400000, guid: 6332c5495ec9140d684ca7dc052979f7, type: 2}
     - {fileID: 11400000, guid: 6332c5495ec9140d684ca7dc052979f7, type: 2}
+    - {fileID: 11400000, guid: 67da235a62fc844189a25a60d1cd0e95, type: 2}
+    - {fileID: 11400000, guid: f027cb230524f4ac49aaf2ba7b359023, type: 2}
   - SquadConfigs:
     - {fileID: 11400000, guid: 6332c5495ec9140d684ca7dc052979f7, type: 2}
   SquadFactory: {fileID: 11400000, guid: 9f3763cf7a0c04e71ae9f73cd9318300, type: 2}
@@ -7612,9 +7614,25 @@ PrefabInstance:
       propertyPath: Direction.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2005285011606082417, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: IsOrderInverted
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4761605827293087177, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: IsInverted
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590119691846833534, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: FrontSquadMaxSize.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590119691846833534, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: IsUnitOrderInverted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590119691846833534, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: OtherSquadsMaxSize.x
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037142, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: m_Name
@@ -7634,10 +7652,6 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 54544406e80754789ac74591d0238e76, type: 2}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: IsPlayerTeam
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
-      propertyPath: IsUnitOrderInverted
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037143, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
