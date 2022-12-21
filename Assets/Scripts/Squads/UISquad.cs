@@ -23,6 +23,8 @@ namespace GulchGuardians.Squads
             yield return _arrangement.AnimateUpdateElements(units.Select(u => u.UI));
         }
 
+        public void UpdateMaxSize(Vector2 maxSize) { _arrangement.UpdateMaxSize(maxSize); }
+
         public IEnumerator AnimateUpdateMaxSize(Vector2 maxSize)
         {
             yield return _arrangement.AnimateUpdateMaxSize(maxSize);

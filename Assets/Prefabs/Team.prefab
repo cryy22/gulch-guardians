@@ -297,6 +297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0786a56e09246c99d1e9a72d4fb1ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FrontSquadMaxSize: {x: 7, y: Infinity}
+  RemainingSquadsMaxSize: {x: 2.5, y: Infinity}
   IsUnitOrderInverted: 0
 --- !u!114 &2005285011606082417
 MonoBehaviour:
