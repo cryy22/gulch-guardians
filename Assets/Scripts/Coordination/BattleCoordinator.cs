@@ -44,7 +44,7 @@ namespace GulchGuardians.Coordination
         {
             base.BeginCoordination();
 
-            PopulateTeams();
+            PopulateEnemyTeam();
             StartCoroutine(EnterPreparationPhase());
         }
 
@@ -55,15 +55,16 @@ namespace GulchGuardians.Coordination
             OnAdvance();
         }
 
-        private void PopulateTeams()
+        public void PopulatePlayerTeam()
         {
-            if (State.Night == 0)
-            {
-                Squad playerSquad = SquadFactory.Create(PlayerSquadConfig);
-                PlayerTeam.AddSquad(playerSquad);
-            }
+            Squad playerSquad = SquadFactory.Create(PlayerSquadConfig);
+            PlayerTeam.AddSquad(playerSquad);
+        }
 
+        private void PopulateEnemyTeam()
+        {
             if (State.Night >= EnemyPlatoons.Count) return;
+
             Platoon enemyPlatoon = EnemyPlatoons[State.Night];
             foreach (SquadConfig squadConfig in enemyPlatoon.SquadConfigs)
             {

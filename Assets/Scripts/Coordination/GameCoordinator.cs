@@ -15,8 +15,9 @@ namespace GulchGuardians.Coordination
         [SerializeField] private CampCoordinator CampCoordinator;
 
         [SerializeField] private Team PlayerTeam;
-
         [SerializeField] private UIGameResultPanel GameResultPanel;
+
+        [SerializeField] private bool BeginInCampPhase;
 
         private bool IsGameEnded => IsGameLost || IsGameWon;
         private bool IsGameWon => State.Night >= BattleCoordinator.EnemyPlatoonCount;
@@ -32,6 +33,9 @@ namespace GulchGuardians.Coordination
         {
             BeginCoordination();
 
+            BattleCoordinator.PopulatePlayerTeam();
+
+            if (BeginInCampPhase) yield return RunCampPhase();
             yield return RunBattlePhase();
 
             while (!IsGameEnded)
