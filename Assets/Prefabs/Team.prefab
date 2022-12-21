@@ -311,8 +311,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ElementsParent: {fileID: 7804354069736640822}
-  BaseElementSize: {x: 4, y: 1}
-  PreferredSpaceRatio: {x: 1, y: 0}
+  BaseElementSpacing: {x: 3, y: 0}
+  PreferredOverhangRatio: {x: 0, y: 0}
   OddElementStagger: {x: 0, y: 0}
   InitialMaxSize: {x: Infinity, y: Infinity}
   IsOrderInverted: 0

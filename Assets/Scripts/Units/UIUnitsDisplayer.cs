@@ -32,7 +32,7 @@ namespace GulchGuardians.Units
                 StartCoroutine(
                     CoroutineWaiter.RunConcurrently(
                         behaviours: _unitsPositions.Keys,
-                        u => Mover.Move(transform: u.Transform, end: _unitsPositions[u], duration: 0.25f)
+                        u => Mover.Move(transform: u.transform, end: _unitsPositions[u], duration: 0.25f)
                     )
                 ),
                 StartCoroutine(AnimateMoveDemarcation(duration: 0.25f))

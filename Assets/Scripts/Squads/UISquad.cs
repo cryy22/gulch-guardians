@@ -36,6 +36,8 @@ namespace GulchGuardians.Squads
         }
 
         // IArrangementElement
-        public Transform Transform => transform;
+        public Transform Transform => _arrangement.Transform;
+        public Vector2 SpacingMultiplier => _arrangement.SpacingMultiplier;
+        public Vector2 Pivot => _arrangement.Pivot;
     }
 }
