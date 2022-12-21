@@ -107,4 +107,5 @@ MonoBehaviour:
   PreferredOverhangRatio: {x: 0.125, y: 0}
   OddElementStagger: {x: 0, y: 0.25}
   InitialMaxSize: {x: Infinity, y: Infinity}
+  CenterElements: 0
   IsOrderInverted: 0

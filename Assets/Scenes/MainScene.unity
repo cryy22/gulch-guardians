@@ -1286,6 +1286,8 @@ MonoBehaviour:
   EnemyPlatoons:
   - SquadConfigs:
     - {fileID: 11400000, guid: 6332c5495ec9140d684ca7dc052979f7, type: 2}
+    - {fileID: 11400000, guid: 6332c5495ec9140d684ca7dc052979f7, type: 2}
+    - {fileID: 11400000, guid: 6332c5495ec9140d684ca7dc052979f7, type: 2}
   - SquadConfigs:
     - {fileID: 11400000, guid: 6332c5495ec9140d684ca7dc052979f7, type: 2}
   SquadFactory: {fileID: 11400000, guid: 9f3763cf7a0c04e71ae9f73cd9318300, type: 2}
@@ -1384,7 +1386,7 @@ MonoBehaviour:
   CampCoordinator: {fileID: 230742421}
   PlayerTeam: {fileID: 294015327}
   GameResultPanel: {fileID: 542451868}
-  BeginInCampPhase: 1
+  BeginInCampPhase: 0
 --- !u!1 &252537363
 GameObject:
   m_ObjectHideFlags: 0
