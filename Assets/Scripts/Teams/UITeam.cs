@@ -28,6 +28,7 @@ namespace GulchGuardians.Teams
         public IEnumerator AnimateUpdateElements(IEnumerable<Squad> squads)
         {
             squads = squads.ToList();
+            if (squads.Count() == 0) yield break;
             Squad frontSquad = squads.First();
 
             List<Coroutine> coroutines = (
@@ -43,6 +44,7 @@ namespace GulchGuardians.Teams
         private void UpdateElements(IEnumerable<Squad> squads)
         {
             squads = squads.ToList();
+            if (squads.Count() == 0) return;
             Squad frontSquad = squads.First();
 
             foreach (Squad squad in squads)

@@ -1286,9 +1286,6 @@ MonoBehaviour:
   EnemyPlatoons:
   - SquadConfigs:
     - {fileID: 11400000, guid: 6332c5495ec9140d684ca7dc052979f7, type: 2}
-    - {fileID: 11400000, guid: 6332c5495ec9140d684ca7dc052979f7, type: 2}
-    - {fileID: 11400000, guid: 67da235a62fc844189a25a60d1cd0e95, type: 2}
-    - {fileID: 11400000, guid: f027cb230524f4ac49aaf2ba7b359023, type: 2}
   - SquadConfigs:
     - {fileID: 11400000, guid: 6332c5495ec9140d684ca7dc052979f7, type: 2}
   SquadFactory: {fileID: 11400000, guid: 9f3763cf7a0c04e71ae9f73cd9318300, type: 2}
