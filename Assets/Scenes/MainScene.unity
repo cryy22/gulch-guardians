@@ -7618,6 +7618,10 @@ PrefabInstance:
       propertyPath: IsOrderInverted
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2005285011606082417, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
+      propertyPath: BaseElementSize.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4761605827293087177, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: IsInverted
       value: 1

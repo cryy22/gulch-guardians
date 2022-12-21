@@ -94,6 +94,5 @@ namespace GulchGuardians.Squads
 
         // IArrangementElement
         public Transform Transform => transform;
-        public Bounds Bounds => UI.Bounds;
     }
 }

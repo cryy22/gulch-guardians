@@ -11,8 +11,6 @@ namespace GulchGuardians.Squads
     {
         private UIArrangement _arrangement;
 
-        public Bounds Bounds => _arrangement.Bounds;
-
         private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
 
         public void Setup(Squad squad) { _arrangement.UpdateElements(squad.Units); }

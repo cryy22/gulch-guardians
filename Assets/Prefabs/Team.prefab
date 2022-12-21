@@ -297,7 +297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0786a56e09246c99d1e9a72d4fb1ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SquadsParent: {fileID: 7804354069736640822}
   IsUnitOrderInverted: 0
 --- !u!114 &2005285011606082417
 MonoBehaviour:
@@ -311,11 +310,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed6960a07e41ddab29ad7a95eae946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PreferredDirection: {x: 1, y: 0}
-  ElementStagger: {x: 0, y: 0}
-  MaxSize: {x: Infinity, y: Infinity}
-  IsOrderInverted: 0
   ElementsParent: {fileID: 7804354069736640822}
+  BaseElementSize: {x: 4, y: 1}
+  PreferredSpaceRatio: {x: 1, y: 0}
+  OddElementStagger: {x: 0, y: 0}
+  InitialMaxSize: {x: Infinity, y: Infinity}
+  IsOrderInverted: 0
 --- !u!1 &7131702136674887352
 GameObject:
   m_ObjectHideFlags: 0

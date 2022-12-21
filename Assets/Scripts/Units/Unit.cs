@@ -192,6 +192,5 @@ namespace GulchGuardians.Units
 
         // IArrangementElement
         public Transform Transform => transform;
-        public Bounds Bounds => _boundsCalculator.Calculate();
     }
 }

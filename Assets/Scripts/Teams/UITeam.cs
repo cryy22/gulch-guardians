@@ -11,9 +11,6 @@ namespace GulchGuardians.Teams
     {
         [SerializeField] private bool IsUnitOrderInverted;
 
-        [SerializeField] private Vector2 FrontSquadMaxSize;
-        [SerializeField] private Vector2 OtherSquadsMaxSize;
-
         private UIArrangement _arrangement;
 
         private void Awake() { _arrangement = GetComponent<UIArrangement>(); }

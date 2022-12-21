@@ -102,8 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed6960a07e41ddab29ad7a95eae946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PreferredDirection: {x: 0.875, y: 0}
-  ElementStagger: {x: 0, y: 0.25}
-  MaxSize: {x: Infinity, y: Infinity}
-  IsOrderInverted: 0
   ElementsParent: {fileID: 2159787811155542356}
+  BaseElementSize: {x: 2, y: 1}
+  PreferredSpaceRatio: {x: 0.875, y: 0}
+  OddElementStagger: {x: 0, y: 0.25}
+  InitialMaxSize: {x: Infinity, y: Infinity}
+  IsOrderInverted: 0
