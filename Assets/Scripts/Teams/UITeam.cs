@@ -13,7 +13,7 @@ namespace GulchGuardians.Teams
     {
         [SerializeField] private Vector2 FrontSquadMaxSize;
         [SerializeField] private Vector2 RemainingSquadsMaxSize;
-        [SerializeField] private bool IsUnitOrderInverted;
+        [SerializeField] private bool IsOrderInverted;
 
         private UIArrangement _arrangement;
 
@@ -21,7 +21,7 @@ namespace GulchGuardians.Teams
 
         public void AddSquad(Squad squad, IEnumerable<Squad> squads)
         {
-            if (IsUnitOrderInverted) squad.UI.InvertArrangementOrder();
+            squad.UI.SetArrangementOrderInversion(IsOrderInverted);
             UpdateElements(squads);
         }
 

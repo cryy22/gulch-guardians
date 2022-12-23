@@ -16,7 +16,7 @@ namespace GulchGuardians.Squads
 
         public void Setup(Squad squad) { _arrangement.UpdateElements(squad.Units.Select(u => u.UI)); }
 
-        public void InvertArrangementOrder() { _arrangement.InvertOrder(); }
+        public void SetArrangementOrderInversion(bool isInverted) { _arrangement.SetOrderInversion(isInverted); }
 
         public IEnumerator AnimateUpdateElements(IEnumerable<Unit> units)
         {
