@@ -122,12 +122,14 @@ namespace GulchGuardians.Coordination
             Transform playerTransform = PlayerTeam.transform;
             playerTransform.SetParent(PlayerTeamContainer);
 
+            Squad frontSquad = PlayerTeam.FrontSquad;
+            frontSquad.UI.IsCentered = false;
+            frontSquad.UI.MaxSize = PlayerTeam.UI.FrontSquadMaxSize;
+
             List<Coroutine> coroutines = new()
             {
                 StartCoroutine(Mover.MoveLocal(transform: playerTransform, end: Vector3.zero, duration: 1f)),
-                StartCoroutine(
-                    PlayerTeam.FrontSquad.UI.AnimateUpdateCentersElements(centersElements: false, duration: 1f)
-                ),
+                StartCoroutine(frontSquad.UI.AnimateRearrange(1f)),
             };
 
             yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());

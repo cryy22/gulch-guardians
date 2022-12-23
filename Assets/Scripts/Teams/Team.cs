@@ -21,7 +21,7 @@ namespace GulchGuardians.Teams
         public IEnumerable<Unit> Units => _squads.SelectMany(s => s.Units);
         public Squad FrontSquad => _squads.Count > 0 ? _squads.First() : null;
         public bool IsDefeated => Units.Count() == 0;
-        private UITeam UI { get; set; }
+        public UITeam UI { get; private set; }
 
         private void Awake() { UI = GetComponent<UITeam>(); }
 

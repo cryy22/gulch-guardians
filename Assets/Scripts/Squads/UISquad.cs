@@ -8,7 +8,7 @@ using UnityEngine;
 namespace GulchGuardians.Squads
 {
     [RequireComponent(typeof(UIArrangement))]
-    public class UISquad : MonoBehaviour, IArrangementElement
+    public class UISquad : MonoBehaviour, IArrangement, IArrangementElement
     {
         private UIArrangement _arrangement;
 
@@ -16,41 +16,35 @@ namespace GulchGuardians.Squads
 
         public void Setup(Squad squad) { _arrangement.UpdateElements(squad.Units.Select(u => u.UI)); }
 
-        public void SetArrangementOrderInversion(bool isInverted)
-        {
-            _arrangement.IsInverted = isInverted;
-            _arrangement.Rearrange();
-        }
-
-        public IEnumerator AnimateUpdateElements(IEnumerable<Unit> units)
-        {
-            yield return _arrangement.AnimateUpdateElements(units.Select(u => u.UI));
-        }
-
-        public void UpdateMaxSize(Vector2 maxSize)
-        {
-            _arrangement.MaxSize = maxSize;
-            _arrangement.Rearrange();
-        }
-
-        public IEnumerator AnimateUpdateMaxSize(Vector2 maxSize, float duration = 0.25f)
-        {
-            _arrangement.MaxSize = maxSize;
-            yield return _arrangement.AnimateRearrange(duration);
-        }
-
         public IEnumerator AnimateUpdateUnitIndex(IEnumerable<Unit> units, Unit unit, bool withHurtAnimation = false)
         {
             if (withHurtAnimation) unit.SetHurtAnimation();
-            yield return AnimateUpdateElements(units);
+            yield return _arrangement.AnimateUpdateElements(units.Select(u => u.UI));
             if (withHurtAnimation) unit.SetIdleAnimation();
         }
 
-        public IEnumerator AnimateUpdateCentersElements(bool centersElements, float duration = 0.25f)
+        // IArrangement
+        public bool IsCentered
         {
-            _arrangement.IsCentered = centersElements;
-            yield return _arrangement.AnimateRearrange(duration);
+            get => _arrangement.IsCentered;
+            set => _arrangement.IsCentered = value;
         }
+
+        public bool IsInverted
+        {
+            get => _arrangement.IsInverted;
+            set => _arrangement.IsInverted = value;
+        }
+
+        public Vector2 MaxSize
+        {
+            get => _arrangement.MaxSize;
+            set => _arrangement.MaxSize = value;
+        }
+
+        public void SetElements(IEnumerable<IArrangementElement> elements) { _arrangement.SetElements(elements); }
+        public void Rearrange() { _arrangement.Rearrange(); }
+        public IEnumerator AnimateRearrange(float duration = 0.25f) { return _arrangement.AnimateRearrange(duration); }
 
         // IArrangementElement
         public Transform Transform => _arrangement.Transform;

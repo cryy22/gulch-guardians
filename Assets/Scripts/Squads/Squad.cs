@@ -51,7 +51,8 @@ namespace GulchGuardians.Squads
         {
             if (!_units.Remove(unit)) yield break;
 
-            yield return UI.AnimateUpdateElements(Units);
+            UI.SetElements(Units.Select(u => u.UI));
+            yield return UI.AnimateRearrange();
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
 
@@ -73,7 +74,8 @@ namespace GulchGuardians.Squads
         public IEnumerator AddUnit(Unit unit)
         {
             OnboardUnit(unit);
-            yield return UI.AnimateUpdateElements(Units);
+            UI.SetElements(Units.Select(u => u.UI));
+            yield return UI.AnimateRearrange();
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }

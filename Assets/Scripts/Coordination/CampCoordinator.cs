@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Crysc.Coordination;
 using Crysc.Helpers;
 using Crysc.UI;
+using GulchGuardians.Squads;
 using GulchGuardians.Teams;
 using TMPro;
 using UnityEngine;
@@ -61,15 +62,14 @@ namespace GulchGuardians.Coordination
             Transform playerTransform = PlayerTeam.transform;
             playerTransform.SetParent(PlayerTeamContainer);
 
+            Squad frontSquad = PlayerTeam.FrontSquad;
+            frontSquad.UI.IsCentered = true;
+            frontSquad.UI.MaxSize = _playerSquadMaxSize;
+
             List<Coroutine> coroutines = new()
             {
                 StartCoroutine(Mover.MoveLocal(transform: playerTransform, end: Vector3.zero, duration: 1f)),
-                StartCoroutine(
-                    PlayerTeam.FrontSquad.UI.AnimateUpdateCentersElements(centersElements: true, duration: 1f)
-                ),
-                StartCoroutine(
-                    PlayerTeam.FrontSquad.UI.AnimateUpdateMaxSize(maxSize: _playerSquadMaxSize, duration: 1f)
-                ),
+                StartCoroutine(frontSquad.UI.AnimateRearrange(1f)),
             };
 
             yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());

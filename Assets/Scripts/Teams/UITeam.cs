@@ -11,7 +11,7 @@ namespace GulchGuardians.Teams
     [RequireComponent(typeof(UIArrangement))]
     public class UITeam : MonoBehaviour
     {
-        [SerializeField] private Vector2 FrontSquadMaxSize;
+        [SerializeField] public Vector2 FrontSquadMaxSize;
         [SerializeField] private Vector2 RemainingSquadsMaxSize;
         [SerializeField] private bool IsOrderInverted;
 
@@ -21,7 +21,9 @@ namespace GulchGuardians.Teams
 
         public void AddSquad(Squad squad, IEnumerable<Squad> squads)
         {
-            squad.UI.SetArrangementOrderInversion(IsOrderInverted);
+            squad.UI.IsInverted = IsOrderInverted;
+            squad.UI.Rearrange();
+
             UpdateElements(squads);
         }
 
@@ -31,10 +33,18 @@ namespace GulchGuardians.Teams
             if (squads.Count() == 0) yield break;
             Squad frontSquad = squads.First();
 
+            // List<Coroutine> coroutines = (
+            //     from squad in squads
+            //     let maxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize
+            //     select StartCoroutine(squad.UI.AnimateUpdateMaxSize(maxSize))
+            // ).ToList();
+
+            foreach (Squad squad in squads)
+                squad.UI.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
+
             List<Coroutine> coroutines = (
                 from squad in squads
-                let maxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize
-                select StartCoroutine(squad.UI.AnimateUpdateMaxSize(maxSize))
+                select StartCoroutine(squad.UI.AnimateRearrange())
             ).ToList();
             coroutines.Add(StartCoroutine(_arrangement.AnimateUpdateElements(squads.Select(s => s.UI))));
 
@@ -48,7 +58,10 @@ namespace GulchGuardians.Teams
             Squad frontSquad = squads.First();
 
             foreach (Squad squad in squads)
-                squad.UI.UpdateMaxSize(squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize);
+            {
+                squad.UI.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
+                squad.UI.Rearrange();
+            }
 
             _arrangement.UpdateElements(squads.Select(s => s.UI));
         }
