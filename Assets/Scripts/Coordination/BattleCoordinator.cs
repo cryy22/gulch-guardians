@@ -3,14 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Crysc.Coordination;
 using GulchGuardians.Audio;
-using GulchGuardians.Constants;
 using GulchGuardians.Squads;
 using GulchGuardians.Teams;
 using GulchGuardians.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace GulchGuardians.Coordination
@@ -30,7 +28,6 @@ namespace GulchGuardians.Coordination
 
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private UIGamePhaseAnnouncer GamePhaseAnnouncer;
-        [SerializeField] private UIGameResultPanel GameResultPanel;
 
         private TMP_Text _advanceButtonText;
 
@@ -95,8 +92,8 @@ namespace GulchGuardians.Coordination
             State.SetBattlePhase(BattlePhase.Combat);
             yield return CombatCoordinator.RunCombat();
 
-            bool isGameEnded = PlayerTeam.IsDefeated || EnemyTeam.IsDefeated;
-            StartCoroutine(isGameEnded ? HandleBattleEnd() : EnterPreparationPhase());
+            if (PlayerTeam.IsDefeated || EnemyTeam.IsDefeated) EndCoordination();
+            else StartCoroutine(EnterPreparationPhase());
         }
 
         private IEnumerator EnterPreparationPhase()
@@ -111,17 +108,6 @@ namespace GulchGuardians.Coordination
 
             PreparationCoordinator.BeginCoordination();
             State.SetBattlePhase(BattlePhase.Preparation);
-        }
-
-        private IEnumerator HandleBattleEnd()
-        {
-            if (PlayerTeam.IsDefeated)
-            {
-                yield return GameResultPanel.DisplayResult(isWin: false);
-                SceneManager.LoadScene(Scenes.TitleIndex);
-            }
-
-            EndCoordination();
         }
 
         [Serializable]
