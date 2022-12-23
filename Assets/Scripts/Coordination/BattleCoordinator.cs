@@ -33,7 +33,11 @@ namespace GulchGuardians.Coordination
 
         public int EnemyPlatoonCount => EnemyPlatoons.Count;
 
-        private void Awake() { _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>(); }
+        protected override void Awake()
+        {
+            base.Awake();
+            _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>();
+        }
 
         private void Start() { AdvanceButton.onClick.AddListener(OnAdvanceButtonClicked); }
 

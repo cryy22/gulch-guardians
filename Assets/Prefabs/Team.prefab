@@ -317,6 +317,7 @@ MonoBehaviour:
   PreferredOverhangRatio: {x: 0, y: 0}
   OddElementStagger: {x: 0, y: 0}
   InitialMaxSize: {x: Infinity, y: Infinity}
+  CenterElements: 0
   IsOrderInverted: 0
 --- !u!1 &7131702136674887352
 GameObject:
