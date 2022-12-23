@@ -1,5 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using Crysc.Coordination;
+using Crysc.Helpers;
 using Crysc.UI;
+using GulchGuardians.Teams;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,14 +13,22 @@ namespace GulchGuardians.Coordination
     public class CampCoordinator : Coordinator
     {
         [SerializeField] private Button AdvanceButton;
+        [SerializeField] private Transform PlayerTeamContainer;
+        [SerializeField] private Team PlayerTeam;
         [SerializeField] private UIParallaxBackground Background;
         [SerializeField] private GameState State;
+
+        private static readonly Vector2 _playerSquadMaxSize = new(x: 12, y: float.PositiveInfinity);
 
         private TMP_Text _advanceButtonText;
 
         private bool IsCorrectPhase => State.NightPhase == NightPhase.Camp;
 
-        protected override void Awake() { _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>(); }
+        protected override void Awake()
+        {
+            base.Awake();
+            _advanceButtonText = AdvanceButton.GetComponentInChildren<TMP_Text>();
+        }
 
         private void Start() { AdvanceButton.onClick.AddListener(OnAdvanceButtonClicked); }
 
@@ -27,6 +39,8 @@ namespace GulchGuardians.Coordination
             _advanceButtonText.text = "battle";
             AdvanceButton.interactable = true;
             Background.SetCurtain(true);
+
+            StartCoroutine(OnboardPlayerTeam());
         }
 
         public override void EndCoordination()
@@ -40,6 +54,23 @@ namespace GulchGuardians.Coordination
         {
             if (!IsCorrectPhase) return;
             EndCoordination();
+        }
+
+        private IEnumerator OnboardPlayerTeam()
+        {
+            Transform playerTransform = PlayerTeam.transform;
+            playerTransform.SetParent(PlayerTeamContainer);
+
+            List<Coroutine> coroutines = new()
+            {
+                StartCoroutine(Mover.MoveLocal(transform: playerTransform, end: Vector3.zero, duration: 1f)),
+                StartCoroutine(
+                    PlayerTeam.FrontSquad.UI.AnimateUpdateCentersElements(centersElements: true, duration: 1f)
+                ),
+                StartCoroutine(PlayerTeam.FrontSquad.UI.AnimateUpdateMaxSize(_playerSquadMaxSize, 1f)),
+            };
+
+            yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());
         }
     }
 }

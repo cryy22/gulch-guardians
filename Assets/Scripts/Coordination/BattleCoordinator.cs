@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Crysc.Coordination;
+using Crysc.Helpers;
 using GulchGuardians.Audio;
 using GulchGuardians.Squads;
 using GulchGuardians.Teams;
@@ -23,6 +24,7 @@ namespace GulchGuardians.Coordination
 
         [SerializeField] private PreparationCoordinator PreparationCoordinator;
         [SerializeField] private CombatCoordinator CombatCoordinator;
+        [SerializeField] private Transform PlayerTeamContainer;
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private Team EnemyTeam;
 
@@ -46,6 +48,7 @@ namespace GulchGuardians.Coordination
             base.BeginCoordination();
 
             PopulateEnemyTeam();
+            StartCoroutine(OnboardPlayerTeam());
             StartCoroutine(EnterPreparationPhase());
         }
 
@@ -112,6 +115,22 @@ namespace GulchGuardians.Coordination
 
             PreparationCoordinator.BeginCoordination();
             State.SetBattlePhase(BattlePhase.Preparation);
+        }
+
+        private IEnumerator OnboardPlayerTeam()
+        {
+            Transform playerTransform = PlayerTeam.transform;
+            playerTransform.SetParent(PlayerTeamContainer);
+
+            List<Coroutine> coroutines = new()
+            {
+                StartCoroutine(Mover.MoveLocal(transform: playerTransform, end: Vector3.zero, duration: 1f)),
+                StartCoroutine(
+                    PlayerTeam.FrontSquad.UI.AnimateUpdateCentersElements(centersElements: false, duration: 1f)
+                ),
+            };
+
+            yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());
         }
 
         [Serializable]

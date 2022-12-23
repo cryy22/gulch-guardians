@@ -3520,7 +3520,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7077939780749871305}
+  - {fileID: 1843498048}
   - {fileID: 1087500375}
   - {fileID: 470401925}
   m_Father: {fileID: 1843395917}
@@ -3672,7 +3672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037160, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037160, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3742,7 +3742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1105971340}
   m_Layer: 0
-  m_Name: PlayerTeam
+  m_Name: PlayerTeamContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3756,7 +3756,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1105971339}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5373,6 +5373,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Container: {fileID: 676919994}
   AdvanceButton: {fileID: 1386515120}
+  PlayerTeamContainer: {fileID: 1105971340}
+  PlayerTeam: {fileID: 294015327}
   Background: {fileID: 3351805840536725044}
   State: {fileID: 11400000, guid: 4f37a456393e94204a5afdb90db2ef50, type: 2}
 --- !u!1 &1506181132
@@ -6551,6 +6553,7 @@ MonoBehaviour:
   SquadFactory: {fileID: 11400000, guid: 9f3763cf7a0c04e71ae9f73cd9318300, type: 2}
   PreparationCoordinator: {fileID: 1843395919}
   CombatCoordinator: {fileID: 1843395920}
+  PlayerTeamContainer: {fileID: 1843498048}
   PlayerTeam: {fileID: 294015327}
   EnemyTeam: {fileID: 1087500376}
   AdvanceButton: {fileID: 1386515120}
@@ -6610,6 +6613,38 @@ MonoBehaviour:
   AdvanceButton: {fileID: 1386515120}
   AutoButton: {fileID: 1617409816}
   TrySpacebarMessage: {fileID: 487261072}
+--- !u!1 &1843498047
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1843498048}
+  m_Layer: 0
+  m_Name: PlayerTeamContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1843498048
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843498047}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: -3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7077939780749871305}
+  m_Father: {fileID: 938538504}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1844113795
 GameObject:
   m_ObjectHideFlags: 0
@@ -7748,7 +7783,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 938538504}
+    m_TransformParent: {fileID: 1843498048}
     m_Modifications:
     - target: {fileID: 226939917041839154, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: m_IsActive
@@ -7840,11 +7875,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037160, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037160, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7077939781010037160, guid: 10f8e5f3e001f4b0ab71e5b9f1d82caf, type: 3}
       propertyPath: m_LocalPosition.z

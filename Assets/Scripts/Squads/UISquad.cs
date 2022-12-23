@@ -16,7 +16,7 @@ namespace GulchGuardians.Squads
 
         public void Setup(Squad squad) { _arrangement.UpdateElements(squad.Units.Select(u => u.UI)); }
 
-        public void SetArrangementOrderInversion(bool isInverted) { _arrangement.SetOrderInversion(isInverted); }
+        public void SetArrangementOrderInversion(bool isInverted) { _arrangement.UpdateIsOrderInverted(isInverted); }
 
         public IEnumerator AnimateUpdateElements(IEnumerable<Unit> units)
         {
@@ -25,9 +25,9 @@ namespace GulchGuardians.Squads
 
         public void UpdateMaxSize(Vector2 maxSize) { _arrangement.UpdateMaxSize(maxSize); }
 
-        public IEnumerator AnimateUpdateMaxSize(Vector2 maxSize)
+        public IEnumerator AnimateUpdateMaxSize(Vector2 maxSize, float duration = 0.25f)
         {
-            yield return _arrangement.AnimateUpdateMaxSize(maxSize);
+            yield return _arrangement.AnimateUpdateMaxSize(maxSize: maxSize, duration: duration);
         }
 
         public IEnumerator AnimateUpdateUnitIndex(IEnumerable<Unit> units, Unit unit, bool withHurtAnimation = false)
@@ -35,6 +35,14 @@ namespace GulchGuardians.Squads
             if (withHurtAnimation) unit.SetHurtAnimation();
             yield return AnimateUpdateElements(units);
             if (withHurtAnimation) unit.SetIdleAnimation();
+        }
+
+        public IEnumerator AnimateUpdateCentersElements(bool centersElements, float duration = 0.25f)
+        {
+            yield return _arrangement.AnimateUpdateCentersElements(
+                centersElements: centersElements,
+                duration: duration
+            );
         }
 
         // IArrangementElement

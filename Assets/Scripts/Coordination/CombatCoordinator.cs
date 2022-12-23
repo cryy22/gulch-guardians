@@ -33,7 +33,11 @@ namespace GulchGuardians.Coordination
 
         private bool IsCorrectPhase => State.NightPhase == NightPhase.Battle && State.BattlePhase == BattlePhase.Combat;
 
-        private void Awake() { _autoButtonText = AutoButton.GetComponentInChildren<TMP_Text>(); }
+        protected override void Awake()
+        {
+            base.Awake();
+            _autoButtonText = AutoButton.GetComponentInChildren<TMP_Text>();
+        }
 
         private void Start()
         {
