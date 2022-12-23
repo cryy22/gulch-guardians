@@ -67,7 +67,9 @@ namespace GulchGuardians.Coordination
                 StartCoroutine(
                     PlayerTeam.FrontSquad.UI.AnimateUpdateCentersElements(centersElements: true, duration: 1f)
                 ),
-                StartCoroutine(PlayerTeam.FrontSquad.UI.AnimateUpdateMaxSize(_playerSquadMaxSize, 1f)),
+                StartCoroutine(
+                    PlayerTeam.FrontSquad.UI.AnimateUpdateMaxSize(maxSize: _playerSquadMaxSize, duration: 1f)
+                ),
             };
 
             yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());
