@@ -31,6 +31,7 @@ namespace GulchGuardians.Coordination
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private UIGamePhaseAnnouncer GamePhaseAnnouncer;
 
+        private static readonly Vector2 _squadOverhangRatio = new(x: 0.125f, y: 0);
         private TMP_Text _advanceButtonText;
 
         public int EnemyPlatoonCount => EnemyPlatoons.Count;
@@ -125,11 +126,12 @@ namespace GulchGuardians.Coordination
             Squad frontSquad = PlayerTeam.FrontSquad;
             frontSquad.UI.IsCentered = false;
             frontSquad.UI.MaxSize = PlayerTeam.UI.FrontSquadMaxSize;
+            frontSquad.UI.PreferredOverhangRatio = _squadOverhangRatio;
 
             List<Coroutine> coroutines = new()
             {
-                StartCoroutine(Mover.MoveLocal(transform: playerTransform, end: Vector3.zero, duration: 1f)),
-                StartCoroutine(frontSquad.UI.AnimateRearrange(1f)),
+                StartCoroutine(Mover.MoveLocal(transform: playerTransform, end: Vector3.zero, duration: 0.5f)),
+                StartCoroutine(frontSquad.UI.AnimateRearrange(0.5f)),
             };
 
             yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());

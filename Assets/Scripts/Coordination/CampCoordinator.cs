@@ -19,7 +19,8 @@ namespace GulchGuardians.Coordination
         [SerializeField] private UIParallaxBackground Background;
         [SerializeField] private GameState State;
 
-        private static readonly Vector2 _playerSquadMaxSize = new(x: 12, y: float.PositiveInfinity);
+        private static readonly Vector2 _squadMaxSize = Vector2.positiveInfinity;
+        private static readonly Vector2 _squadOverhangRatio = new(x: -0.5f, y: 0);
 
         private TMP_Text _advanceButtonText;
 
@@ -64,12 +65,13 @@ namespace GulchGuardians.Coordination
 
             Squad frontSquad = PlayerTeam.FrontSquad;
             frontSquad.UI.IsCentered = true;
-            frontSquad.UI.MaxSize = _playerSquadMaxSize;
+            frontSquad.UI.MaxSize = _squadMaxSize;
+            frontSquad.UI.PreferredOverhangRatio = _squadOverhangRatio;
 
             List<Coroutine> coroutines = new()
             {
-                StartCoroutine(Mover.MoveLocal(transform: playerTransform, end: Vector3.zero, duration: 1f)),
-                StartCoroutine(frontSquad.UI.AnimateRearrange(1f)),
+                StartCoroutine(Mover.MoveLocal(transform: playerTransform, end: Vector3.zero, duration: 0.5f)),
+                StartCoroutine(frontSquad.UI.AnimateRearrange(0.5f)),
             };
 
             yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());

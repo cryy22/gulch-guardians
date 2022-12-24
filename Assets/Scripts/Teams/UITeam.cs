@@ -58,6 +58,12 @@ namespace GulchGuardians.Teams
             set => _arrangement.MaxSize = value;
         }
 
+        public Vector2 PreferredOverhangRatio
+        {
+            get => _arrangement.PreferredOverhangRatio;
+            set => _arrangement.PreferredOverhangRatio = value;
+        }
+
         public void SetElements(IEnumerable<UISquad> elements)
         {
             _squads.Clear();

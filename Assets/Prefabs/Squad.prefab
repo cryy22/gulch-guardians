@@ -104,8 +104,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ElementsParent: {fileID: 2159787811155542356}
   BaseElementSpacing: {x: 2, y: 0}
-  PreferredOverhangRatio: {x: 0.125, y: 0}
   OddElementStagger: {x: 0, y: 0.25}
-  InitialMaxSize: {x: Infinity, y: Infinity}
-  CenterElements: 0
-  IsOrderInverted: 0
+  <IsCentered>k__BackingField: 0
+  <IsInverted>k__BackingField: 0
+  <MaxSize>k__BackingField: {x: Infinity, y: Infinity}
+  <PreferredOverhangRatio>k__BackingField: {x: 0.125, y: 0}
