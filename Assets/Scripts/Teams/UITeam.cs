@@ -9,12 +9,13 @@ using UnityEngine;
 namespace GulchGuardians.Teams
 {
     [RequireComponent(typeof(UIArrangement))]
-    public class UITeam : MonoBehaviour
+    public class UITeam : MonoBehaviour, IArrangement<UISquad>
     {
         [SerializeField] public Vector2 FrontSquadMaxSize;
         [SerializeField] private Vector2 RemainingSquadsMaxSize;
         [SerializeField] private bool IsOrderInverted;
 
+        private readonly List<UISquad> _squads = new();
         private UIArrangement _arrangement;
 
         private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
@@ -32,12 +33,6 @@ namespace GulchGuardians.Teams
             squads = squads.ToList();
             if (squads.Count() == 0) yield break;
             Squad frontSquad = squads.First();
-
-            // List<Coroutine> coroutines = (
-            //     from squad in squads
-            //     let maxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize
-            //     select StartCoroutine(squad.UI.AnimateUpdateMaxSize(maxSize))
-            // ).ToList();
 
             foreach (Squad squad in squads)
                 squad.UI.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
@@ -63,7 +58,65 @@ namespace GulchGuardians.Teams
                 squad.UI.Rearrange();
             }
 
-            _arrangement.UpdateElements(squads.Select(s => s.UI));
+            SetElements(squads.Select(s => s.UI));
+            Rearrange();
+        }
+
+        private void ConfigureSquads()
+        {
+            if (_squads.Count == 0) return;
+
+            UISquad frontSquad = _squads.First();
+
+            foreach (UISquad squad in _squads)
+                squad.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
+        }
+
+        // IArrangement
+        public bool IsCentered
+        {
+            get => _arrangement.IsCentered;
+            set => _arrangement.IsCentered = value;
+        }
+
+        public bool IsInverted
+        {
+            get => _arrangement.IsInverted;
+            set => _arrangement.IsInverted = value;
+        }
+
+        public Vector2 MaxSize
+        {
+            get => _arrangement.MaxSize;
+            set => _arrangement.MaxSize = value;
+        }
+
+        public void SetElements(IEnumerable<UISquad> elements)
+        {
+            _squads.Clear();
+            _squads.AddRange(elements);
+
+            _arrangement.SetElements(elements);
+        }
+
+        public void Rearrange()
+        {
+            ConfigureSquads();
+            foreach (UISquad squad in _squads) squad.Rearrange();
+
+            _arrangement.Rearrange();
+        }
+
+        public IEnumerator AnimateRearrange(float duration = 0.25f)
+        {
+            ConfigureSquads();
+            List<Coroutine> coroutines = (
+                from squad in _squads
+                select StartCoroutine(squad.AnimateRearrange(duration))
+            ).ToList();
+            coroutines.Add(StartCoroutine(_arrangement.AnimateRearrange(duration)));
+
+            return CoroutineWaiter.RunConcurrently(coroutines.ToArray());
         }
     }
 }

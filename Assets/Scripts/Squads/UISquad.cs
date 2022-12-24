@@ -8,13 +8,17 @@ using UnityEngine;
 namespace GulchGuardians.Squads
 {
     [RequireComponent(typeof(UIArrangement))]
-    public class UISquad : MonoBehaviour, IArrangement, IArrangementElement
+    public class UISquad : MonoBehaviour, IArrangement<UIUnit>, IArrangementElement
     {
         private UIArrangement _arrangement;
 
         private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
 
-        public void Setup(Squad squad) { _arrangement.UpdateElements(squad.Units.Select(u => u.UI)); }
+        public void Setup(Squad squad)
+        {
+            SetElements(squad.Units.Select(u => u.UI));
+            Rearrange();
+        }
 
         public IEnumerator AnimateUpdateUnitIndex(IEnumerable<Unit> units, Unit unit, bool withHurtAnimation = false)
         {
@@ -42,7 +46,7 @@ namespace GulchGuardians.Squads
             set => _arrangement.MaxSize = value;
         }
 
-        public void SetElements(IEnumerable<IArrangementElement> elements) { _arrangement.SetElements(elements); }
+        public void SetElements(IEnumerable<UIUnit> elements) { _arrangement.SetElements(elements); }
         public void Rearrange() { _arrangement.Rearrange(); }
         public IEnumerator AnimateRearrange(float duration = 0.25f) { return _arrangement.AnimateRearrange(duration); }
 
