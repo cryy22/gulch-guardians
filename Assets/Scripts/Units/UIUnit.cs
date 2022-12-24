@@ -246,7 +246,7 @@ namespace GulchGuardians.Units
 
         // IArrangementElement
         public Transform Transform => transform;
-        public Vector2 SpacingMultiplier => Vector2.one;
+        public Vector2 SizeMultiplier => Vector2.one;
         public Vector2 Pivot => Vector2.one * 0.5f;
 
         public enum DamageDirection

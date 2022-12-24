@@ -11,18 +11,19 @@ namespace GulchGuardians.Teams
     [RequireComponent(typeof(UIArrangement))]
     public class UITeam : MonoBehaviour, IArrangement<UISquad>
     {
-        [SerializeField] public Vector2 FrontSquadMaxSize;
-        [SerializeField] private Vector2 RemainingSquadsMaxSize;
-        [SerializeField] private bool IsOrderInverted;
-
         private readonly List<UISquad> _squads = new();
         private UIArrangement _arrangement;
 
+        [field: SerializeField] public Vector2 FrontSquadMaxSize { get; set; }
+        [field: SerializeField] public Vector2 RemainingSquadsMaxSize { get; set; }
+
         private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
+
+        private void Start() { _arrangement.IsInverted = IsInverted; }
 
         public void AddSquad(Squad squad, IEnumerable<Squad> squads)
         {
-            squad.UI.IsInverted = IsOrderInverted;
+            squad.UI.IsInverted = IsInverted;
             squad.UI.Rearrange();
 
             SetElements(squads.Select(s => s.UI));
@@ -34,9 +35,11 @@ namespace GulchGuardians.Teams
             if (_squads.Count == 0) return;
 
             UISquad frontSquad = _squads.First();
-
             foreach (UISquad squad in _squads)
+            {
                 squad.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
+                squad.UpdateProperties();
+            }
         }
 
         // IArrangement
@@ -58,10 +61,10 @@ namespace GulchGuardians.Teams
             set => _arrangement.MaxSize = value;
         }
 
-        public Vector2 PreferredOverhangRatio
+        public Vector2 PreferredSpacingRatio
         {
-            get => _arrangement.PreferredOverhangRatio;
-            set => _arrangement.PreferredOverhangRatio = value;
+            get => _arrangement.PreferredSpacingRatio;
+            set => _arrangement.PreferredSpacingRatio = value;
         }
 
         public void SetElements(IEnumerable<UISquad> elements)

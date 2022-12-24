@@ -297,9 +297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0786a56e09246c99d1e9a72d4fb1ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FrontSquadMaxSize: {x: 7, y: Infinity}
-  RemainingSquadsMaxSize: {x: 2.5, y: Infinity}
-  IsUnitOrderInverted: 0
+  IsOrderInverted: 0
+  <FrontSquadMaxSize>k__BackingField: {x: 7, y: 0}
+  <RemainingSquadsMaxSize>k__BackingField: {x: 2.5, y: 0}
 --- !u!114 &2005285011606082417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,12 +313,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ElementsParent: {fileID: 7804354069736640822}
-  BaseElementSpacing: {x: 2, y: 0}
-  PreferredOverhangRatio: {x: 0, y: 0}
+  BaseElementSize: {x: 2, y: 0}
   OddElementStagger: {x: 0, y: 0}
-  InitialMaxSize: {x: Infinity, y: Infinity}
-  CenterElements: 0
-  IsOrderInverted: 0
+  <IsCentered>k__BackingField: 0
+  <IsInverted>k__BackingField: 0
+  <MaxSize>k__BackingField: {x: 0, y: 0}
+  <PreferredSpacingRatio>k__BackingField: {x: 0, y: 0}
 --- !u!1 &7131702136674887352
 GameObject:
   m_ObjectHideFlags: 0

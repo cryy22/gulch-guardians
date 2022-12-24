@@ -30,6 +30,8 @@ namespace GulchGuardians.Squads
             if (withHurtAnimation) unit.SetIdleAnimation();
         }
 
+        public void UpdateProperties() { _arrangement.UpdateProperties(); }
+
         // IArrangement
         public bool IsCentered
         {
@@ -49,10 +51,10 @@ namespace GulchGuardians.Squads
             set => _arrangement.MaxSize = value;
         }
 
-        public Vector2 PreferredOverhangRatio
+        public Vector2 PreferredSpacingRatio
         {
-            get => _arrangement.PreferredOverhangRatio;
-            set => _arrangement.PreferredOverhangRatio = value;
+            get => _arrangement.PreferredSpacingRatio;
+            set => _arrangement.PreferredSpacingRatio = value;
         }
 
         public void SetElements(IEnumerable<UIUnit> elements) { _arrangement.SetElements(elements); }
@@ -61,7 +63,7 @@ namespace GulchGuardians.Squads
 
         // IArrangementElement
         public Transform Transform => _arrangement.Transform;
-        public Vector2 SpacingMultiplier => _arrangement.SpacingMultiplier;
+        public Vector2 SizeMultiplier => _arrangement.SizeMultiplier;
         public Vector2 Pivot => _arrangement.Pivot;
     }
 }

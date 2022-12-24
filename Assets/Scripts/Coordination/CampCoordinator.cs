@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Crysc.Coordination;
 using Crysc.Helpers;
 using Crysc.UI;
-using GulchGuardians.Squads;
 using GulchGuardians.Teams;
 using TMPro;
 using UnityEngine;
@@ -19,8 +18,8 @@ namespace GulchGuardians.Coordination
         [SerializeField] private UIParallaxBackground Background;
         [SerializeField] private GameState State;
 
-        private static readonly Vector2 _squadMaxSize = Vector2.positiveInfinity;
-        private static readonly Vector2 _squadOverhangRatio = new(x: -0.5f, y: 0);
+        private static readonly Vector2 _squadMaxSize = Vector2.zero;
+        private static readonly Vector2 _squadSpacingRatio = new(x: 0.5f, y: 0);
 
         private TMP_Text _advanceButtonText;
 
@@ -60,18 +59,16 @@ namespace GulchGuardians.Coordination
 
         private IEnumerator OnboardPlayerTeam()
         {
-            Transform playerTransform = PlayerTeam.transform;
-            playerTransform.SetParent(PlayerTeamContainer);
+            PlayerTeam.transform.SetParent(PlayerTeamContainer);
 
-            Squad frontSquad = PlayerTeam.FrontSquad;
-            frontSquad.UI.IsCentered = true;
-            frontSquad.UI.MaxSize = _squadMaxSize;
-            frontSquad.UI.PreferredOverhangRatio = _squadOverhangRatio;
+            PlayerTeam.UI.FrontSquadMaxSize = _squadMaxSize;
+            PlayerTeam.UI.IsCentered = true;
+            PlayerTeam.FrontSquad.UI.PreferredSpacingRatio = _squadSpacingRatio;
 
             List<Coroutine> coroutines = new()
             {
-                StartCoroutine(Mover.MoveLocal(transform: playerTransform, end: Vector3.zero, duration: 0.5f)),
-                StartCoroutine(frontSquad.UI.AnimateRearrange(0.5f)),
+                StartCoroutine(Mover.MoveLocal(transform: PlayerTeam.transform, end: Vector3.zero, duration: 0.5f)),
+                StartCoroutine(PlayerTeam.UI.AnimateRearrange(0.5f)),
             };
 
             yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());
