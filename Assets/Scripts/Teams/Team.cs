@@ -59,13 +59,16 @@ namespace GulchGuardians.Teams
         public IEnumerator AddUnit(Unit unit)
         {
             if (Units.Count() >= MaxUnits) throw new Exception("Team is full");
-            yield return FrontSquad.AddUnit(unit);
+            return FrontSquad.AddUnit(unit);
         }
 
         public IEnumerator HandleSquadDefeat(Squad squad)
         {
             _squads.Remove(squad);
-            yield return UI.AnimateUpdateElements(_squads);
+
+            UI.SetElements(_squads.Select(s => s.UI));
+            return UI.AnimateRearrange();
+
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 

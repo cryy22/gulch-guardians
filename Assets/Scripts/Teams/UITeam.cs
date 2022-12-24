@@ -25,39 +25,6 @@ namespace GulchGuardians.Teams
             squad.UI.IsInverted = IsOrderInverted;
             squad.UI.Rearrange();
 
-            UpdateElements(squads);
-        }
-
-        public IEnumerator AnimateUpdateElements(IEnumerable<Squad> squads)
-        {
-            squads = squads.ToList();
-            if (squads.Count() == 0) yield break;
-            Squad frontSquad = squads.First();
-
-            foreach (Squad squad in squads)
-                squad.UI.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
-
-            List<Coroutine> coroutines = (
-                from squad in squads
-                select StartCoroutine(squad.UI.AnimateRearrange())
-            ).ToList();
-            coroutines.Add(StartCoroutine(_arrangement.AnimateUpdateElements(squads.Select(s => s.UI))));
-
-            yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());
-        }
-
-        private void UpdateElements(IEnumerable<Squad> squads)
-        {
-            squads = squads.ToList();
-            if (squads.Count() == 0) return;
-            Squad frontSquad = squads.First();
-
-            foreach (Squad squad in squads)
-            {
-                squad.UI.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
-                squad.UI.Rearrange();
-            }
-
             SetElements(squads.Select(s => s.UI));
             Rearrange();
         }

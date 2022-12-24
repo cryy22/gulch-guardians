@@ -23,7 +23,10 @@ namespace GulchGuardians.Squads
         public IEnumerator AnimateUpdateUnitIndex(IEnumerable<Unit> units, Unit unit, bool withHurtAnimation = false)
         {
             if (withHurtAnimation) unit.SetHurtAnimation();
-            yield return _arrangement.AnimateUpdateElements(units.Select(u => u.UI));
+
+            _arrangement.SetElements(units.Select(u => u.UI));
+            yield return _arrangement.AnimateRearrange();
+
             if (withHurtAnimation) unit.SetIdleAnimation();
         }
 
