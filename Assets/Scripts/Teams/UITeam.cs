@@ -38,6 +38,7 @@ namespace GulchGuardians.Teams
             foreach (UISquad squad in _squads)
             {
                 squad.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
+                squad.ShowUnitUIs(squad == frontSquad);
                 squad.UpdateProperties();
             }
         }

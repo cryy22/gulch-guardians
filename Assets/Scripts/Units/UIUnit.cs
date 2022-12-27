@@ -24,6 +24,7 @@ namespace GulchGuardians.Units
         [SerializeField] private UIAbilityIconItem AbilityIconPrefab;
         [SerializeField] private AbilityIndex AbilityIndex;
         [SerializeField] private ParticleSystem AttackParticleSystem;
+        [SerializeField] private List<GameObject> UIElements;
 
         private readonly Dictionary<AbilityType, UIAbilityIconItem> _abilityIcons = new();
         private Quaternion _leftParticleRotation;
@@ -171,6 +172,11 @@ namespace GulchGuardians.Units
         }
 
         public void SetAnimationTrigger(string animationName) { Animator.SetTrigger(animationName); }
+
+        public void ShowUI(bool show)
+        {
+            foreach (GameObject go in UIElements) go.SetActive(show);
+        }
 
         private void UpdateSpriteLibraryAsset(Unit unit)
         {

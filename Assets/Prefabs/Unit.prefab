@@ -5049,6 +5049,9 @@ MonoBehaviour:
   AbilityIconPrefab: {fileID: 1016766620694162878, guid: 5c972a823c14f4a2aa2ae254c404fce6, type: 3}
   AbilityIndex: {fileID: 11400000, guid: 2698c3d549e8b469dbddb3e50a3cc13c, type: 2}
   AttackParticleSystem: {fileID: 211717413201965041}
+  UIElements:
+  - {fileID: 4943982858519393693}
+  - {fileID: 1907269179733649745}
 --- !u!114 &1340140432095252761
 MonoBehaviour:
   m_ObjectHideFlags: 0

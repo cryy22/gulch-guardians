@@ -10,6 +10,7 @@ namespace GulchGuardians.Squads
     [RequireComponent(typeof(UIArrangement))]
     public class UISquad : MonoBehaviour, IArrangement<UIUnit>, IArrangementElement
     {
+        private readonly List<UIUnit> _units = new();
         private UIArrangement _arrangement;
 
         private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
@@ -28,6 +29,11 @@ namespace GulchGuardians.Squads
             yield return _arrangement.AnimateRearrange();
 
             if (withHurtAnimation) unit.SetIdleAnimation();
+        }
+
+        public void ShowUnitUIs(bool show)
+        {
+            foreach (UIUnit unit in _units) unit.ShowUI(show);
         }
 
         public void UpdateProperties() { _arrangement.UpdateProperties(); }
@@ -57,7 +63,14 @@ namespace GulchGuardians.Squads
             set => _arrangement.PreferredSpacingRatio = value;
         }
 
-        public void SetElements(IEnumerable<UIUnit> elements) { _arrangement.SetElements(elements); }
+        public void SetElements(IEnumerable<UIUnit> elements)
+        {
+            _units.Clear();
+            _units.AddRange(elements);
+
+            _arrangement.SetElements(elements);
+        }
+
         public void Rearrange() { _arrangement.Rearrange(); }
         public IEnumerator AnimateRearrange(float duration = 0.25f) { return _arrangement.AnimateRearrange(duration); }
 
