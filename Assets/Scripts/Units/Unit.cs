@@ -14,10 +14,10 @@ using UnityEngine;
 
 namespace GulchGuardians.Units
 {
-    using Direction = UIUnit.DamageDirection;
+    using Direction = UnitView.DamageDirection;
 
     [RequireComponent(typeof(ClickReporter))]
-    [RequireComponent(typeof(UIUnit))]
+    [RequireComponent(typeof(UnitView))]
     public class Unit : InitializationBehaviour<UnitInitParams>
     {
         [SerializeField] private AbilityIndex AbilityIndex;
@@ -40,7 +40,7 @@ namespace GulchGuardians.Units
         public IEnumerable<AbilityType> Abilities => _abilities;
         public string FirstName => InitParams.FirstName;
         public Team Team => Squad != null ? Squad.Team : null;
-        public UIUnit UI { get; private set; }
+        public UnitView View { get; private set; }
         public Squad Squad { get; set; }
 
         public int Attack
@@ -68,7 +68,7 @@ namespace GulchGuardians.Units
         private void Awake()
         {
             _clickReporter = GetComponent<ClickReporter>();
-            UI = GetComponent<UIUnit>();
+            View = GetComponent<UnitView>();
             _boundsCalculator = new BoundsCalculator(transform);
         }
 
@@ -83,7 +83,7 @@ namespace GulchGuardians.Units
             MaxHealth = Mathf.Max(a: Health, b: initParams.MaxHealth);
 
             _abilities.UnionWith(initParams.Abilities.Where(p => p.Value).Select(p => p.Key));
-            UI.Setup(spriteAssetMap: initParams.SpriteAssetMap, unit: this);
+            View.Setup(spriteAssetMap: initParams.SpriteAssetMap, unit: this);
         }
 
         public void SetNametagActive(bool active) { Nametag.SetActive(value: active); }
@@ -92,10 +92,10 @@ namespace GulchGuardians.Units
         {
             _abilities.Add(ability);
 
-            UI.UpdateAttributes(this);
+            View.UpdateAttributes(this);
             Changed?.Invoke(sender: this, e: EventArgs.Empty);
 
-            yield return UI.AnimateStatsChange(animateAbilities: true);
+            yield return View.AnimateStatsChange(animateAbilities: true);
         }
 
         public IEnumerator Upgrade(int attack, int health)
@@ -104,20 +104,20 @@ namespace GulchGuardians.Units
             Health += health;
             MaxHealth += health;
 
-            UI.UpdateAttributes(this);
+            View.UpdateAttributes(this);
             Changed?.Invoke(sender: this, e: EventArgs.Empty);
 
-            yield return UI.AnimateStatsChange(animateAttack: attack != 0, animateHealth: health != 0);
+            yield return View.AnimateStatsChange(animateAttack: attack != 0, animateHealth: health != 0);
         }
 
         public IEnumerator Heal(int amount = int.MaxValue)
         {
             Health += Mathf.Min(a: amount, b: MaxHealth - Health);
 
-            UI.UpdateAttributes(this);
+            View.UpdateAttributes(this);
             Changed?.Invoke(sender: this, e: EventArgs.Empty);
 
-            yield return UI.AnimateStatsChange(animateHealth: true);
+            yield return View.AnimateStatsChange(animateHealth: true);
         }
 
         public bool WillAct(int index)
@@ -132,7 +132,7 @@ namespace GulchGuardians.Units
 
         public IEnumerator AttackUnit(Unit target)
         {
-            yield return UI.AnimateAttack(target);
+            yield return View.AnimateAttack(target);
 
             int damage = ActionMagnitude;
             Direction direction = transform.position.x < target.transform.position.x ? Direction.Left : Direction.Right;
@@ -147,7 +147,7 @@ namespace GulchGuardians.Units
         {
             if (!HasAbility(AbilityIndex.Healer)) yield break;
 
-            yield return UI.AnimateHeal();
+            yield return View.AnimateHeal();
             yield return CoroutineWaiter.RunConcurrently(
                 behaviours: Squad.Units!,
                 u => u.Heal(amount: ActionMagnitude)
@@ -156,8 +156,8 @@ namespace GulchGuardians.Units
 
         public bool HasAbility(AbilityType ability) { return _abilities.Contains(ability); }
 
-        public void SetHurtAnimation() { UI.SetAnimationTrigger(AnimatorProperties.OnHurtTrigger); }
-        public void SetIdleAnimation() { UI.SetAnimationTrigger(AnimatorProperties.OnIdleTrigger); }
+        public void SetHurtAnimation() { View.SetAnimationTrigger(AnimatorProperties.OnHurtTrigger); }
+        public void SetIdleAnimation() { View.SetAnimationTrigger(AnimatorProperties.OnIdleTrigger); }
 
         private IEnumerator TakeDamage(int damage, Direction direction)
         {
@@ -172,11 +172,11 @@ namespace GulchGuardians.Units
 
             Health -= damage;
 
-            UI.UpdateAttributes(this);
+            View.UpdateAttributes(this);
             Changed?.Invoke(sender: this, e: EventArgs.Empty);
 
-            yield return UI.AnimateDamage(damage: damage, direction: direction);
-            yield return UI.AnimateStatsChange(animateHealth: true, animateAbilities: abilitiesChanged);
+            yield return View.AnimateDamage(damage: damage, direction: direction);
+            yield return View.AnimateStatsChange(animateHealth: true, animateAbilities: abilitiesChanged);
 
             if (IsDefeated(this)) yield return HandleDefeat();
         }
@@ -184,7 +184,7 @@ namespace GulchGuardians.Units
         private IEnumerator HandleDefeat()
         {
             yield return new WaitForEndOfFrame();
-            yield return UI.AnimateDefeat();
+            yield return View.AnimateDefeat();
 
             Destroy(gameObject);
         }

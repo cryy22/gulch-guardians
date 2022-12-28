@@ -123,14 +123,14 @@ namespace GulchGuardians.Coordination
         {
             PlayerTeam.transform.SetParent(PlayerTeamContainer);
 
-            PlayerTeam.UI.FrontSquadMaxSize = _squadMaxSize;
-            PlayerTeam.UI.IsCentered = false;
-            PlayerTeam.FrontSquad.UI.PreferredSpacingRatio = _squadSpacingRatio;
+            PlayerTeam.View.FrontSquadMaxSize = _squadMaxSize;
+            PlayerTeam.View.IsCentered = false;
+            PlayerTeam.FrontSquad.View.PreferredSpacingRatio = _squadSpacingRatio;
 
             List<Coroutine> coroutines = new()
             {
                 StartCoroutine(Mover.MoveLocal(transform: PlayerTeam.transform, end: Vector3.zero, duration: 0.5f)),
-                StartCoroutine(PlayerTeam.UI.AnimateRearrange(0.5f)),
+                StartCoroutine(PlayerTeam.View.AnimateRearrange(0.5f)),
             };
 
             yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());

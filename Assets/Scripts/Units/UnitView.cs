@@ -12,7 +12,7 @@ using UnityEngine.U2D.Animation;
 
 namespace GulchGuardians.Units
 {
-    public class UIUnit : MonoBehaviour, IArrangementElement
+    public class UnitView : MonoBehaviour, IArrangementElement
     {
         [SerializeField] private TMP_Text AttackText;
         [SerializeField] private TMP_Text HealthText;

@@ -9,9 +9,9 @@ using UnityEngine;
 namespace GulchGuardians.Teams
 {
     [RequireComponent(typeof(UIArrangement))]
-    public class UITeam : MonoBehaviour, IArrangement<UISquad>
+    public class TeamView : MonoBehaviour, IArrangement<SquadView>
     {
-        private readonly List<UISquad> _squads = new();
+        private readonly List<SquadView> _squads = new();
         private UIArrangement _arrangement;
 
         [field: SerializeField] public Vector2 FrontSquadMaxSize { get; set; }
@@ -23,10 +23,10 @@ namespace GulchGuardians.Teams
 
         public void AddSquad(Squad squad, IEnumerable<Squad> squads)
         {
-            squad.UI.IsInverted = IsInverted;
-            squad.UI.Rearrange();
+            squad.View.IsInverted = IsInverted;
+            squad.View.Rearrange();
 
-            SetElements(squads.Select(s => s.UI));
+            SetElements(squads.Select(s => s.View));
             Rearrange();
         }
 
@@ -34,8 +34,8 @@ namespace GulchGuardians.Teams
         {
             if (_squads.Count == 0) return;
 
-            UISquad frontSquad = _squads.First();
-            foreach (UISquad squad in _squads)
+            SquadView frontSquad = _squads.First();
+            foreach (SquadView squad in _squads)
             {
                 squad.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
                 squad.ShowUnitUIs(squad == frontSquad);
@@ -68,7 +68,7 @@ namespace GulchGuardians.Teams
             set => _arrangement.PreferredSpacingRatio = value;
         }
 
-        public void SetElements(IEnumerable<UISquad> elements)
+        public void SetElements(IEnumerable<SquadView> elements)
         {
             _squads.Clear();
             _squads.AddRange(elements);
@@ -79,7 +79,7 @@ namespace GulchGuardians.Teams
         public void Rearrange()
         {
             ConfigureSquads();
-            foreach (UISquad squad in _squads) squad.Rearrange();
+            foreach (SquadView squad in _squads) squad.Rearrange();
 
             _arrangement.Rearrange();
         }

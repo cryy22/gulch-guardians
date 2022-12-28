@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace GulchGuardians.Squads
 {
-    [RequireComponent(typeof(UISquad))]
+    [RequireComponent(typeof(SquadView))]
     public class Squad : InitializationBehaviour<SquadInitParams>
     {
         private readonly List<Unit> _units = new();
@@ -22,10 +22,10 @@ namespace GulchGuardians.Squads
         public Unit FrontUnit => _units.Count > 0 ? _units.First() : null;
         public Unit BackUnit => _units.Count > 0 ? _units.Last() : null;
 
-        public UISquad UI { get; private set; }
+        public SquadView View { get; private set; }
         public Team Team { get; set; }
 
-        private void Awake() { UI = GetComponent<UISquad>(); }
+        private void Awake() { View = GetComponent<SquadView>(); }
 
         private void OnEnable()
         {
@@ -44,15 +44,15 @@ namespace GulchGuardians.Squads
             base.Initialize(initParams);
 
             foreach (Unit unit in initParams.InitialUnits) OnboardUnit(unit);
-            UI.Setup(this);
+            View.Setup(this);
         }
 
         public IEnumerator HandleUnitDefeat(Unit unit)
         {
             if (!_units.Remove(unit)) yield break;
 
-            UI.SetElements(Units.Select(u => u.UI));
-            yield return UI.AnimateRearrange();
+            View.SetElements(Units.Select(u => u.View));
+            yield return View.AnimateRearrange();
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
 
@@ -66,7 +66,7 @@ namespace GulchGuardians.Squads
             if (!_units.Remove(unit)) yield break;
             _units.Insert(index: index, item: unit);
 
-            yield return UI.AnimateUpdateUnitIndex(units: Units, unit: unit, withHurtAnimation: withHurtAnimation);
+            yield return View.AnimateUpdateUnitIndex(units: Units, unit: unit, withHurtAnimation: withHurtAnimation);
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
@@ -74,8 +74,8 @@ namespace GulchGuardians.Squads
         public IEnumerator AddUnit(Unit unit)
         {
             OnboardUnit(unit);
-            UI.SetElements(Units.Select(u => u.UI));
-            yield return UI.AnimateRearrange();
+            View.SetElements(Units.Select(u => u.View));
+            yield return View.AnimateRearrange();
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }

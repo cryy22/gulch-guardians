@@ -8,16 +8,16 @@ using UnityEngine;
 namespace GulchGuardians.Squads
 {
     [RequireComponent(typeof(UIArrangement))]
-    public class UISquad : MonoBehaviour, IArrangement<UIUnit>, IArrangementElement
+    public class SquadView : MonoBehaviour, IArrangement<UnitView>, IArrangementElement
     {
-        private readonly List<UIUnit> _units = new();
+        private readonly List<UnitView> _units = new();
         private UIArrangement _arrangement;
 
         private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
 
         public void Setup(Squad squad)
         {
-            SetElements(squad.Units.Select(u => u.UI));
+            SetElements(squad.Units.Select(u => u.View));
             Rearrange();
         }
 
@@ -25,7 +25,7 @@ namespace GulchGuardians.Squads
         {
             if (withHurtAnimation) unit.SetHurtAnimation();
 
-            _arrangement.SetElements(units.Select(u => u.UI));
+            _arrangement.SetElements(units.Select(u => u.View));
             yield return _arrangement.AnimateRearrange();
 
             if (withHurtAnimation) unit.SetIdleAnimation();
@@ -33,7 +33,7 @@ namespace GulchGuardians.Squads
 
         public void ShowUnitUIs(bool show)
         {
-            foreach (UIUnit unit in _units) unit.ShowUI(show);
+            foreach (UnitView unit in _units) unit.ShowUI(show);
         }
 
         public void UpdateProperties() { _arrangement.UpdateProperties(); }
@@ -63,7 +63,7 @@ namespace GulchGuardians.Squads
             set => _arrangement.PreferredSpacingRatio = value;
         }
 
-        public void SetElements(IEnumerable<UIUnit> elements)
+        public void SetElements(IEnumerable<UnitView> elements)
         {
             _units.Clear();
             _units.AddRange(elements);

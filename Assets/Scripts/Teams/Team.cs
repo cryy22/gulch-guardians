@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace GulchGuardians.Teams
 {
-    [RequireComponent(typeof(UITeam))]
+    [RequireComponent(typeof(TeamView))]
     public class Team : MonoBehaviour
     {
         public int MaxUnits = 99;
@@ -21,9 +21,9 @@ namespace GulchGuardians.Teams
         public IEnumerable<Unit> Units => _squads.SelectMany(s => s.Units);
         public Squad FrontSquad => _squads.Count > 0 ? _squads.First() : null;
         public bool IsDefeated => Units.Count() == 0;
-        public UITeam UI { get; private set; }
+        public TeamView View { get; private set; }
 
-        private void Awake() { UI = GetComponent<UITeam>(); }
+        private void Awake() { View = GetComponent<TeamView>(); }
 
         private void OnEnable()
         {
@@ -47,7 +47,7 @@ namespace GulchGuardians.Teams
         {
             _squads.Add(squad);
             squad.Team = this;
-            UI.AddSquad(squad: squad, squads: _squads);
+            View.AddSquad(squad: squad, squads: _squads);
 
             squad.UnitsChanged += UnitsChangedEventHandler;
             squad.UnitClicked += UnitClickedEventHandler;
@@ -66,8 +66,8 @@ namespace GulchGuardians.Teams
         {
             _squads.Remove(squad);
 
-            UI.SetElements(_squads.Select(s => s.UI));
-            return UI.AnimateRearrange();
+            View.SetElements(_squads.Select(s => s.View));
+            return View.AnimateRearrange();
 
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
