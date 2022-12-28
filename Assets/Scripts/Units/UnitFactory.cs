@@ -1,5 +1,4 @@
 using Crysc.Initialization;
-using GulchGuardians.Constants;
 using UnityEngine;
 
 namespace GulchGuardians.Units
@@ -11,7 +10,7 @@ namespace GulchGuardians.Units
         {
             return new UnitInitParams
             {
-                FirstName = Names.RandomName(),
+                FirstName = "Colin",
                 Attack = Random.Range(minInclusive: config.MinAttack, maxExclusive: config.MaxAttack + 1),
                 Health = Random.Range(minInclusive: config.MinHealth, maxExclusive: config.MaxHealth + 1),
                 Abilities = config.Abilities,
