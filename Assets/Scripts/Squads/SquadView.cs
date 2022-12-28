@@ -33,7 +33,7 @@ namespace GulchGuardians.Squads
 
         public void ShowUnitUIs(bool show)
         {
-            foreach (UnitView unit in _units) unit.ShowUI(show);
+            foreach (UnitView unit in _units) unit.SetShowDetails(show);
         }
 
         public void UpdateProperties() { _arrangement.UpdateProperties(); }

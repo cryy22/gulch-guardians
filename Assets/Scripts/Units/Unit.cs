@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Crysc.Common;
 using Crysc.Helpers;
 using Crysc.Initialization;
 using GulchGuardians.Abilities;
@@ -21,13 +20,11 @@ namespace GulchGuardians.Units
     public class Unit : InitializationBehaviour<UnitInitParams>
     {
         [SerializeField] private AbilityIndex AbilityIndex;
-        [SerializeField] private GameObject Nametag;
 
         private readonly HashSet<AbilityType> _abilities = new();
 
         private ClickReporter _clickReporter;
         private int _attack;
-        private BoundsCalculator _boundsCalculator;
 
         public event EventHandler Clicked
         {
@@ -51,7 +48,6 @@ namespace GulchGuardians.Units
 
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
-        public bool TooltipEnabled { get; set; } = true;
 
         private int ActionMagnitude
         {
@@ -69,7 +65,6 @@ namespace GulchGuardians.Units
         {
             _clickReporter = GetComponent<ClickReporter>();
             View = GetComponent<UnitView>();
-            _boundsCalculator = new BoundsCalculator(transform);
         }
 
         public static bool IsDefeated(Unit unit) { return unit == null || unit.Health <= 0; }
@@ -85,8 +80,6 @@ namespace GulchGuardians.Units
             _abilities.UnionWith(initParams.Abilities.Where(p => p.Value).Select(p => p.Key));
             View.Setup(spriteAssetMap: initParams.SpriteAssetMap, unit: this);
         }
-
-        public void SetNametagActive(bool active) { Nametag.SetActive(value: active); }
 
         public IEnumerator AddAbility(AbilityType ability)
         {

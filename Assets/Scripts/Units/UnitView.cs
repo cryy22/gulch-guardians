@@ -16,6 +16,7 @@ namespace GulchGuardians.Units
     {
         [SerializeField] private TMP_Text AttackText;
         [SerializeField] private TMP_Text HealthText;
+        [SerializeField] private GameObject Nametag;
         [SerializeField] private TMP_Text NameText;
         [SerializeField] private SpriteRenderer Renderer;
         [SerializeField] private SpriteLibrary SpriteLibrary;
@@ -24,7 +25,7 @@ namespace GulchGuardians.Units
         [SerializeField] private UIAbilityIconItem AbilityIconPrefab;
         [SerializeField] private AbilityIndex AbilityIndex;
         [SerializeField] private ParticleSystem AttackParticleSystem;
-        [SerializeField] private List<GameObject> UIElements;
+        [SerializeField] private List<GameObject> DetailElements;
 
         private readonly Dictionary<AbilityType, UIAbilityIconItem> _abilityIcons = new();
         private Quaternion _leftParticleRotation;
@@ -32,6 +33,9 @@ namespace GulchGuardians.Units
 
         private UnitSpriteAssetMap _spriteAssetMap;
         private bool _hasHealerSpriteAsset;
+        private bool _shouldShowNametag = true;
+
+        public bool ShowTooltip { get; private set; } = true;
 
         private void Awake()
         {
@@ -51,7 +55,8 @@ namespace GulchGuardians.Units
             if (unit.HasAbility(AbilityIndex.Boss))
             {
                 Renderer.transform.localScale *= 2f;
-                unit.SetNametagActive(false);
+                _shouldShowNametag = false;
+                Nametag.SetActive(false);
             }
 
             UpdateAttributes(unit);
@@ -173,9 +178,13 @@ namespace GulchGuardians.Units
 
         public void SetAnimationTrigger(string animationName) { Animator.SetTrigger(animationName); }
 
-        public void ShowUI(bool show)
+        public void SetShowNametag(bool show) { Nametag.SetActive(_shouldShowNametag && show); }
+
+        public void SetShowDetails(bool show)
         {
-            foreach (GameObject go in UIElements) go.SetActive(show);
+            ShowTooltip = show;
+            SetShowNametag(show);
+            foreach (GameObject go in DetailElements) go.SetActive(show);
         }
 
         private void UpdateSpriteLibraryAsset(Unit unit)

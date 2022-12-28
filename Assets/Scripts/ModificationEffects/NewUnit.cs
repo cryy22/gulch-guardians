@@ -29,8 +29,7 @@ namespace GulchGuardians.ModificationEffects
             base.Prepare();
             _unit = UnitFactory.Create(UnitConfig);
 
-            _unit.TooltipEnabled = false;
-            _unit.SetNametagActive(false);
+            _unit.View.SetShowDetails(false);
             _unit.gameObject.SetActive(false);
         }
 
@@ -38,8 +37,7 @@ namespace GulchGuardians.ModificationEffects
         {
             yield return base.Apply(context);
             yield return context.PlayerTeam!.AddUnit(_unit);
-            _unit.TooltipEnabled = true;
-            _unit.SetNametagActive(true);
+            _unit.View.SetShowDetails(true);
             _unit = null;
         }
 

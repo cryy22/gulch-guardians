@@ -5026,7 +5026,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityIndex: {fileID: 11400000, guid: 2698c3d549e8b469dbddb3e50a3cc13c, type: 2}
-  Nametag: {fileID: 4943982858519393693}
 --- !u!114 &6499838053706338678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5041,6 +5040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackText: {fileID: 8324245100752936319}
   HealthText: {fileID: 7323105098417310357}
+  Nametag: {fileID: 7234383430622169901}
   NameText: {fileID: 2037156054689024240}
   Renderer: {fileID: 4943982858057783518}
   SpriteLibrary: {fileID: 2470079670227859713}
@@ -5049,7 +5049,7 @@ MonoBehaviour:
   AbilityIconPrefab: {fileID: 1016766620694162878, guid: 5c972a823c14f4a2aa2ae254c404fce6, type: 3}
   AbilityIndex: {fileID: 11400000, guid: 2698c3d549e8b469dbddb3e50a3cc13c, type: 2}
   AttackParticleSystem: {fileID: 211717413201965041}
-  UIElements:
+  DetailElements:
   - {fileID: 4943982858519393693}
   - {fileID: 1907269179733649745}
 --- !u!114 &1340140432095252761
@@ -5969,6 +5969,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Nametag
       objectReference: {fileID: 0}
+    - target: {fileID: 7135161194649368754, guid: f571d87807c4e44d186d30c9d6d035ea, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f571d87807c4e44d186d30c9d6d035ea, type: 3}
 --- !u!114 &2037156054689024240 stripped
@@ -5985,5 +5989,10 @@ MonoBehaviour:
 --- !u!224 &4436695862605098525 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4247687516234931586, guid: f571d87807c4e44d186d30c9d6d035ea, type: 3}
+  m_PrefabInstance: {fileID: 531598663836693407}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7234383430622169901 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7135161194649368754, guid: f571d87807c4e44d186d30c9d6d035ea, type: 3}
   m_PrefabInstance: {fileID: 531598663836693407}
   m_PrefabAsset: {fileID: 0}

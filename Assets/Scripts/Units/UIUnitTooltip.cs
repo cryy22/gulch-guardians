@@ -20,7 +20,7 @@ namespace GulchGuardians.Units
 
         private readonly Dictionary<AbilityType, UIAbilityTextItem> _abilitiesItems = new();
 
-        protected override bool ShouldShowTooltip(Unit target) { return target.TooltipEnabled; }
+        protected override bool ShouldShowTooltip(Unit target) { return target.View.ShowTooltip; }
 
         protected override void UpdateTarget(Unit target, Unit previousTarget)
         {
