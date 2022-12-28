@@ -129,7 +129,7 @@ namespace GulchGuardians.Coordination
 
             List<Coroutine> coroutines = new()
             {
-                StartCoroutine(Mover.MoveLocal(transform: PlayerTeam.transform, end: Vector3.zero, duration: 0.5f)),
+                StartCoroutine(Mover.MoveTo(transform: PlayerTeam.transform, end: Vector3.zero, duration: 0.5f)),
                 StartCoroutine(PlayerTeam.View.AnimateRearrange(0.5f)),
             };
 

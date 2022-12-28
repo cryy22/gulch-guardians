@@ -97,22 +97,30 @@ namespace GulchGuardians.Units
 
         public IEnumerator AnimateHeal()
         {
+            Vector3 start = transform.localPosition;
+
             Animator.SetTrigger(AnimatorProperties.OnActTrigger);
             yield return AnimateSine(duration: 0.5f, period: 0.5f, magnitude: 0.25f);
             Animator.SetTrigger(AnimatorProperties.OnIdleTrigger);
+
+            transform.localPosition = start;
         }
 
         public IEnumerator AnimateDamage(int damage, DamageDirection direction)
         {
+            Vector3 start = transform.localPosition;
+
             AttackParticleSystem.transform.rotation =
                 direction == DamageDirection.Left ? _leftParticleRotation : _rightParticleRotation;
             AttackParticleSystem.Play();
 
             yield return CoroutineWaiter.RunConcurrently(
-                StartCoroutine(AnimateSine()),
+                StartCoroutine(AnimateSine(duration: 0.08f, period: 0.08f, magnitude: 0.25f)),
                 StartCoroutine(AnimateHurtAnimation()),
                 StartCoroutine(AnimateFlash(damage > 0 ? Color.red : Color.gray))
             );
+
+            transform.localPosition = start;
         }
 
         public IEnumerator AnimateDefeat()
@@ -216,19 +224,10 @@ namespace GulchGuardians.Units
             }
         }
 
-        private IEnumerator AnimateSine(float duration = 0.08f, float period = 0.04f, float magnitude = 0.25f)
+        private IEnumerator AnimateSine(float duration = 0.08f, float period = 0.08f, float magnitude = 0.25f)
         {
-            Vector3 startPosition = transform.position;
-            var t = 0f;
-
-            while (t < duration)
-            {
-                t += Time.deltaTime;
-                transform.position = startPosition + (Vector3.up * (magnitude * Mathf.Sin((t / period) * Mathf.PI)));
-                yield return null;
-            }
-
-            transform.position = startPosition;
+            Vector3 delta = magnitude * Vector3.up;
+            return Mover.MoveSine(transform: transform, delta: delta, duration: duration, period: period);
         }
 
         private IEnumerator AnimateFlash(Color flashColor, float duration = 0.125f)

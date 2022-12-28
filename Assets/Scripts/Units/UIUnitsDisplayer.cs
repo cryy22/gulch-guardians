@@ -32,7 +32,7 @@ namespace GulchGuardians.Units
                 StartCoroutine(
                     CoroutineWaiter.RunConcurrently(
                         behaviours: _unitsPositions.Keys,
-                        u => Mover.Move(transform: u.transform, end: _unitsPositions[u], duration: 0.25f)
+                        u => Mover.MoveTo(transform: u.transform, end: _unitsPositions[u], duration: 0.25f)
                     )
                 ),
                 StartCoroutine(AnimateMoveDemarcation(duration: 0.25f))
@@ -69,7 +69,7 @@ namespace GulchGuardians.Units
             RoundDemarcation.SetActive(isFound);
             if (!isFound) yield break;
 
-            yield return Mover.Move(transform: RoundDemarcation.transform, end: position, duration: duration);
+            yield return Mover.MoveTo(transform: RoundDemarcation.transform, end: position, duration: duration);
         }
 
         private (bool isFound, Vector3 position) GetRoundDemarcationPosition()
