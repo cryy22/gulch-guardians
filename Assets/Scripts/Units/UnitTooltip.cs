@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace GulchGuardians.Units
 {
-    public class UIUnitTooltip : UITooltip<Unit>
+    public class UnitTooltip : Tooltip<Unit>
     {
         [SerializeField] private TMP_Text TitleText;
         [SerializeField] private TMP_Text Line1Text;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GulchGuardians.Abilities
 {
-    public class UIAbilityTooltip : UITooltip<AbilityType>
+    public class AbilityTooltip : Tooltip<AbilityType>
     {
         [SerializeField] private TMP_Text TitleText;
         [SerializeField] private TMP_Text DescriptionText;

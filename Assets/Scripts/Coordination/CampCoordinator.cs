@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Crysc.Coordination;
 using Crysc.Helpers;
-using Crysc.UI;
+using Crysc.Presentation;
 using GulchGuardians.Teams;
 using TMPro;
 using UnityEngine;
@@ -15,7 +15,7 @@ namespace GulchGuardians.Coordination
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private Transform PlayerTeamContainer;
         [SerializeField] private Team PlayerTeam;
-        [SerializeField] private UIParallaxBackground Background;
+        [SerializeField] private ParallaxBackground Background;
         [SerializeField] private GameState State;
 
         private static readonly Vector2 _squadMaxSize = Vector2.zero;
