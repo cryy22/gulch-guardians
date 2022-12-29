@@ -7,9 +7,9 @@ using UnityEngine.UI;
 namespace GulchGuardians.SceneControls
 {
     [RequireComponent(typeof(Button))]
-    public class UIRestartButton : MonoBehaviour
+    public class RestartButton : MonoBehaviour
     {
-        [SerializeField] private UIConfirmationOverlay ConfirmationOverlay;
+        [SerializeField] private ConfirmationOverlay ConfirmationOverlay;
 
         private Button _button;
 

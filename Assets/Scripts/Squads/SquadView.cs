@@ -2,19 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Crysc.Presentation;
-using Crysc.UI;
 using GulchGuardians.Units;
 using UnityEngine;
 
 namespace GulchGuardians.Squads
 {
-    [RequireComponent(typeof(UIArrangement))]
+    [RequireComponent(typeof(Arrangement))]
     public class SquadView : MonoBehaviour, IArrangement<UnitView>, IArrangementElement
     {
         private readonly List<UnitView> _units = new();
-        private UIArrangement _arrangement;
+        private Arrangement _arrangement;
 
-        private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
+        private void Awake() { _arrangement = GetComponent<Arrangement>(); }
 
         public void Setup(Squad squad)
         {

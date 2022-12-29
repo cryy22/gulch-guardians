@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GulchGuardians.UI
 {
-    public class UIFallenFriends : MonoBehaviour
+    public class FallenFriends : MonoBehaviour
     {
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private UnitRegistry UnitRegistry;

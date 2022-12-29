@@ -20,7 +20,7 @@ namespace GulchGuardians.Coordination
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private Team EnemyTeam;
 
-        [SerializeField] private UIEffectOptionsDisplayer EffectOptionsDisplayer;
+        [SerializeField] private EffectOptionsDisplayer EffectOptionsDisplayer;
         [SerializeField] private TMP_Text ActionsRemainingText;
         [SerializeField] private TMP_Text ChooseATargetText;
         private readonly List<ModificationEffect> _offeredEffects = new();

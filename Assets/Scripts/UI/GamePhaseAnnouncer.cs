@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace GulchGuardians.UI
 {
-    public class UIGamePhaseAnnouncer : MonoBehaviour
+    public class GamePhaseAnnouncer : MonoBehaviour
     {
         [SerializeField] private Sprite CombatSign;
         [SerializeField] private Sprite PreparationSign;

@@ -29,7 +29,7 @@ namespace GulchGuardians.Coordination
         [SerializeField] private Team EnemyTeam;
 
         [SerializeField] private Button AdvanceButton;
-        [SerializeField] private UIGamePhaseAnnouncer GamePhaseAnnouncer;
+        [SerializeField] private GamePhaseAnnouncer GamePhaseAnnouncer;
 
         private static readonly Vector2 _squadMaxSize = new(x: 7, y: 0);
         private static readonly Vector2 _squadSpacingRatio = new(x: -0.125f, y: 0);

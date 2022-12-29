@@ -15,7 +15,7 @@ namespace GulchGuardians.Coordination
         [SerializeField] private CampCoordinator CampCoordinator;
 
         [SerializeField] private Team PlayerTeam;
-        [SerializeField] private UIGameResultPanel GameResultPanel;
+        [SerializeField] private GameResultPanel GameResultPanel;
 
         [SerializeField] private bool BeginInCampPhase;
 

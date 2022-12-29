@@ -3,7 +3,7 @@ using UnityEditor.UI;
 
 namespace GulchGuardians.UI.Editor
 {
-    [CustomEditor(inspectedType: typeof(UIDynamicScrollRect), editorForChildClasses: true)]
+    [CustomEditor(inspectedType: typeof(DynamicScrollRect), editorForChildClasses: true)]
     public class UIDynamicScrollRectEditor : ScrollRectEditor
     {
         private SerializedProperty _maxHeight;

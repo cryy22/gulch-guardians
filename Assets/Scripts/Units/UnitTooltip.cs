@@ -16,9 +16,9 @@ namespace GulchGuardians.Units
         [SerializeField] private TMP_Text Line3Text;
 
         [SerializeField] private Transform AbilityTextItemParent;
-        [SerializeField] private UIAbilityTextItem AbilityTextItemPrefab;
+        [SerializeField] private AbilityTextItem AbilityTextItemPrefab;
 
-        private readonly Dictionary<AbilityType, UIAbilityTextItem> _abilitiesItems = new();
+        private readonly Dictionary<AbilityType, AbilityTextItem> _abilitiesItems = new();
 
         protected override bool ShouldShowTooltip(Unit target) { return target.View.ShowTooltip; }
 
@@ -59,7 +59,7 @@ namespace GulchGuardians.Units
             {
                 if (_abilitiesItems.ContainsKey(ability)) continue;
 
-                UIAbilityTextItem item = Instantiate(original: AbilityTextItemPrefab, parent: AbilityTextItemParent);
+                AbilityTextItem item = Instantiate(original: AbilityTextItemPrefab, parent: AbilityTextItemParent);
                 item.SetAbility(ability);
                 _abilitiesItems.Add(key: ability, value: item);
             }

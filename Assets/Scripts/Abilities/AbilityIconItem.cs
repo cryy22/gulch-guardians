@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace GulchGuardians.Abilities
 {
-    public class UIAbilityIconItem : MonoBehaviour, IAbilityProvider
+    public class AbilityIconItem : MonoBehaviour, IAbilityProvider
     {
         [SerializeField] private Image IconImage;
 

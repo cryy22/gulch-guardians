@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GulchGuardians.UI
 {
-    public class UIGameResultPanel : MonoBehaviour
+    public class GameResultPanel : MonoBehaviour
     {
         [SerializeField] private TMP_Text ResultText;
 

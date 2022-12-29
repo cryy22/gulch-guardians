@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace GulchGuardians.ModificationEffects
 {
-    public class UIEffectOptionsDisplayer : MonoBehaviour
+    public class EffectOptionsDisplayer : MonoBehaviour
     {
-        [SerializeField] private UIEffectOption EffectOptionPrefab;
+        [SerializeField] private EffectOption EffectOptionPrefab;
         [SerializeField] private Transform EffectOptionParent;
 
         public event EventHandler EffectSelected;
@@ -19,7 +19,7 @@ namespace GulchGuardians.ModificationEffects
 
             foreach (ModificationEffect effect in effects)
             {
-                UIEffectOption effectOption = Instantiate(original: EffectOptionPrefab, parent: EffectOptionParent);
+                EffectOption effectOption = Instantiate(original: EffectOptionPrefab, parent: EffectOptionParent);
                 effectOption.SetEffect(effect);
                 effectOption.EffectOptionClicked += EffectOptionClickedEventHandler;
             }
@@ -31,11 +31,11 @@ namespace GulchGuardians.ModificationEffects
             foreach (Transform child in EffectOptionParent) Destroy(child.gameObject);
         }
 
-        private void EffectOptionClickedEventHandler(object sender, UIEffectOption.EffectOptionClickedEventArgs e)
+        private void EffectOptionClickedEventHandler(object sender, EffectOption.EffectOptionClickedEventArgs e)
         {
             SelectedEffect = e.Effect;
-            foreach (UIEffectOption effectOption in EffectOptionParent.GetComponentsInChildren<UIEffectOption>())
-                effectOption.SetSelected(effectOption == (UIEffectOption) sender);
+            foreach (EffectOption effectOption in EffectOptionParent.GetComponentsInChildren<EffectOption>())
+                effectOption.SetSelected(effectOption == (EffectOption) sender);
             EffectSelected?.Invoke(sender: this, e: EventArgs.Empty);
         }
     }

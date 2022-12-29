@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace GulchGuardians.UI
 {
-    public class UIConfirmationOverlay : MonoBehaviour
+    public class ConfirmationOverlay : MonoBehaviour
     {
         [SerializeField] private GameObject Container;
         [SerializeField] private Button ConfirmButton;

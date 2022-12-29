@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace GulchGuardians.SceneControls
 {
-    public class UITitleScene : MonoBehaviour
+    public class TitleScene : MonoBehaviour
     {
         [SerializeField] private CanvasRenderer OverlayPanel;
         [SerializeField] private float OverlayPanelTargetAlpha = 0.5f;

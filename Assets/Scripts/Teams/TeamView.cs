@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using Crysc.Helpers;
 using Crysc.Presentation;
-using Crysc.UI;
 using GulchGuardians.Squads;
 using UnityEngine;
 
 namespace GulchGuardians.Teams
 {
-    [RequireComponent(typeof(UIArrangement))]
+    [RequireComponent(typeof(Arrangement))]
     public class TeamView : MonoBehaviour, IArrangement<SquadView>
     {
         private readonly List<SquadView> _squads = new();
-        private UIArrangement _arrangement;
+        private Arrangement _arrangement;
 
         [field: SerializeField] public Vector2 FrontSquadMaxSize { get; set; }
         [field: SerializeField] public Vector2 RemainingSquadsMaxSize { get; set; }
 
-        private void Awake() { _arrangement = GetComponent<UIArrangement>(); }
+        private void Awake() { _arrangement = GetComponent<Arrangement>(); }
 
         private void Start() { _arrangement.IsInverted = IsInverted; }
 

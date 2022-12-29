@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GulchGuardians.ModificationEffects
 {
-    public class UIEffectOption : MonoBehaviour
+    public class EffectOption : MonoBehaviour
     {
         [SerializeField] private TMP_Text EffectNameText;
         [SerializeField] private RectTransform EffectDescriptionPanel;

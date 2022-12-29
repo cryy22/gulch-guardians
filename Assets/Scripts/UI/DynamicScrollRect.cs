@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace GulchGuardians.UI
 {
     [ExecuteAlways]
-    public class UIDynamicScrollRect : ScrollRect
+    public class DynamicScrollRect : ScrollRect
     {
         [SerializeField] private float MaxHeight = 100;
 

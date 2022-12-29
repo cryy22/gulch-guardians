@@ -22,12 +22,12 @@ namespace GulchGuardians.Units
         [SerializeField] private SpriteLibrary SpriteLibrary;
         [SerializeField] private Animator Animator;
         [SerializeField] private Transform AbilityIcons;
-        [SerializeField] private UIAbilityIconItem AbilityIconPrefab;
+        [SerializeField] private AbilityIconItem AbilityIconPrefab;
         [SerializeField] private AbilityIndex AbilityIndex;
         [SerializeField] private ParticleSystem AttackParticleSystem;
         [SerializeField] private List<GameObject> DetailElements;
 
-        private readonly Dictionary<AbilityType, UIAbilityIconItem> _abilityIcons = new();
+        private readonly Dictionary<AbilityType, AbilityIconItem> _abilityIcons = new();
         private Quaternion _leftParticleRotation;
         private Quaternion _rightParticleRotation;
 
@@ -211,7 +211,7 @@ namespace GulchGuardians.Units
             {
                 if (_abilityIcons.ContainsKey(ability)) continue;
 
-                UIAbilityIconItem iconItem = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
+                AbilityIconItem iconItem = Instantiate(original: AbilityIconPrefab, parent: AbilityIcons);
                 iconItem.SetAbility(ability);
 
                 _abilityIcons.Add(key: ability, value: iconItem);

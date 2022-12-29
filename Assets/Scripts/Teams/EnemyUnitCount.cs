@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GulchGuardians.Teams
 {
-    public class UIEnemyUnitCount : MonoBehaviour
+    public class EnemyUnitCount : MonoBehaviour
     {
         [SerializeField] private Team EnemyTeam;
 
