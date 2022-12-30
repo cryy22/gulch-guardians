@@ -36,10 +36,12 @@ namespace GulchGuardians.Coordination
             Background.SetCurtain(true);
 
             StartCoroutine(PlayerTeam.View.RearrangeForCamp(PlayerTeamContainer));
+            PlayerTeam.FrontSquad.Reorderer.BeginReordering();
         }
 
         public override void EndCoordination()
         {
+            PlayerTeam.FrontSquad.Reorderer.EndReordering();
             Background.SetCurtain(false);
 
             base.EndCoordination();

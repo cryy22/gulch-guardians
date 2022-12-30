@@ -23,9 +23,14 @@ namespace GulchGuardians.Squads
         public Unit BackUnit => _units.Count > 0 ? _units.Last() : null;
 
         public SquadView View { get; private set; }
+        public SquadReorderer Reorderer { get; private set; }
         public Team Team { get; set; }
 
-        private void Awake() { View = GetComponent<SquadView>(); }
+        private void Awake()
+        {
+            View = GetComponent<SquadView>();
+            Reorderer = GetComponent<SquadReorderer>();
+        }
 
         private void OnEnable()
         {

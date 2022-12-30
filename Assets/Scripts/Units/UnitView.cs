@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Crysc.Controls;
 using Crysc.Helpers;
 using Crysc.Presentation;
 using GulchGuardians.Abilities;
@@ -36,14 +35,15 @@ namespace GulchGuardians.Units
         private bool _hasHealerSpriteAsset;
         private bool _shouldShowNametag = true;
 
-        public Draggable Draggable { get; private set; }
+        public UnitDraggable Draggable { get; private set; }
         public bool ShowTooltip { get; private set; } = true;
 
         private void Awake()
         {
             _leftParticleRotation = AttackParticleSystem.transform.rotation;
             _rightParticleRotation = Quaternion.Euler(x: 0, y: 0, z: 180) * _leftParticleRotation;
-            Draggable = GetComponent<Draggable>();
+
+            Draggable = GetComponent<UnitDraggable>();
         }
 
         public void Setup(UnitSpriteAssetMap spriteAssetMap, Unit unit)
