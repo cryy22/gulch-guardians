@@ -28,11 +28,11 @@ namespace GulchGuardians.Teams
             SquadView frontSquad = _squads.First();
             foreach (SquadView squad in _squads)
             {
-                squad.IsInverted = IsInverted;
-                squad.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
+                squad.Arrangement.IsInverted = IsInverted;
+                squad.Arrangement.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
 
                 squad.ShowUnitUIs(squad == frontSquad);
-                squad.UpdateProperties();
+                squad.Arrangement.UpdateProperties();
             }
         }
 
@@ -73,7 +73,7 @@ namespace GulchGuardians.Teams
         public void Rearrange()
         {
             ConfigureSquads();
-            foreach (SquadView squad in _squads) squad.Rearrange();
+            foreach (SquadView squad in _squads) squad.UpdateArrangement();
 
             _arrangement.Rearrange();
         }
@@ -83,7 +83,7 @@ namespace GulchGuardians.Teams
             ConfigureSquads();
             List<Coroutine> coroutines = (
                 from squad in _squads
-                select StartCoroutine(squad.AnimateRearrange(duration))
+                select StartCoroutine(squad.AnimateUpdateArrangement(duration))
             ).ToList();
             coroutines.Add(StartCoroutine(_arrangement.AnimateRearrange(duration)));
 

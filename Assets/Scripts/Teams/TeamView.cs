@@ -39,7 +39,7 @@ namespace GulchGuardians.Teams
 
             _arrangement.FrontSquadMaxSize = FrontSquadMaxSize;
             _arrangement.IsCentered = false;
-            _team.FrontSquad.View.PreferredSpacingRatio = SquadSpacingRatio;
+            _team.FrontSquad.View.Arrangement.PreferredSpacingRatio = SquadSpacingRatio;
 
             List<Coroutine> coroutines = new()
             {
@@ -57,7 +57,7 @@ namespace GulchGuardians.Teams
 
             _arrangement.FrontSquadMaxSize = CampSquadMaxSize;
             _arrangement.IsCentered = true;
-            _team.FrontSquad.View.PreferredSpacingRatio = CampSquadSpacingRatio;
+            _team.FrontSquad.View.Arrangement.PreferredSpacingRatio = CampSquadSpacingRatio;
 
             List<Coroutine> coroutines = new()
             {

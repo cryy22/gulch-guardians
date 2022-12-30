@@ -44,15 +44,14 @@ namespace GulchGuardians.Squads
             base.Initialize(initParams);
 
             foreach (Unit unit in initParams.InitialUnits) OnboardUnit(unit);
-            View.Setup(this);
+            View.UpdateArrangement();
         }
 
         public IEnumerator HandleUnitDefeat(Unit unit)
         {
             if (!_units.Remove(unit)) yield break;
 
-            View.SetElements(Units.Select(u => u.View));
-            yield return View.AnimateRearrange();
+            yield return View.AnimateUpdateArrangement();
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
 
@@ -66,7 +65,7 @@ namespace GulchGuardians.Squads
             if (!_units.Remove(unit)) yield break;
             _units.Insert(index: index, item: unit);
 
-            yield return View.AnimateUpdateUnitIndex(units: Units, unit: unit, withHurtAnimation: withHurtAnimation);
+            yield return View.AnimateUpdateUnitIndex(unit: unit, withHurtAnimation: withHurtAnimation);
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
@@ -74,8 +73,8 @@ namespace GulchGuardians.Squads
         public IEnumerator AddUnit(Unit unit)
         {
             OnboardUnit(unit);
-            View.SetElements(Units.Select(u => u.View));
-            yield return View.AnimateRearrange();
+
+            yield return View.AnimateUpdateArrangement();
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
