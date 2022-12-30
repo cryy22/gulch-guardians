@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using Crysc.Coordination;
-using Crysc.Helpers;
 using Crysc.Presentation;
 using GulchGuardians.Teams;
 using TMPro;
@@ -17,9 +14,6 @@ namespace GulchGuardians.Coordination
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private ParallaxBackground Background;
         [SerializeField] private GameState State;
-
-        private static readonly Vector2 _squadMaxSize = Vector2.zero;
-        private static readonly Vector2 _squadSpacingRatio = new(x: 0.5f, y: 0);
 
         private TMP_Text _advanceButtonText;
 
@@ -41,7 +35,7 @@ namespace GulchGuardians.Coordination
             AdvanceButton.interactable = true;
             Background.SetCurtain(true);
 
-            StartCoroutine(OnboardPlayerTeam());
+            StartCoroutine(PlayerTeam.View.RearrangeForCamp(PlayerTeamContainer));
         }
 
         public override void EndCoordination()
@@ -55,23 +49,6 @@ namespace GulchGuardians.Coordination
         {
             if (!IsCorrectPhase) return;
             EndCoordination();
-        }
-
-        private IEnumerator OnboardPlayerTeam()
-        {
-            PlayerTeam.transform.SetParent(PlayerTeamContainer);
-
-            PlayerTeam.View.FrontSquadMaxSize = _squadMaxSize;
-            PlayerTeam.View.IsCentered = true;
-            PlayerTeam.FrontSquad.View.PreferredSpacingRatio = _squadSpacingRatio;
-
-            List<Coroutine> coroutines = new()
-            {
-                StartCoroutine(Mover.MoveTo(transform: PlayerTeam.transform, end: Vector3.zero, duration: 0.5f)),
-                StartCoroutine(PlayerTeam.View.AnimateRearrange(0.5f)),
-            };
-
-            yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());
         }
     }
 }

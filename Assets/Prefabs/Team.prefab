@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 7077939781010037160}
   - component: {fileID: 7077939781010037143}
   - component: {fileID: 5590119691846833534}
+  - component: {fileID: 2234158071293504256}
   - component: {fileID: 2005285011606082417}
   m_Layer: 0
   m_Name: Team
@@ -297,9 +298,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0786a56e09246c99d1e9a72d4fb1ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsOrderInverted: 0
   <FrontSquadMaxSize>k__BackingField: {x: 7, y: 0}
   <RemainingSquadsMaxSize>k__BackingField: {x: 2.5, y: 0}
+  <SquadSpacingRatio>k__BackingField: {x: -0.125, y: 0}
+  <CampSquadMaxSize>k__BackingField: {x: 0, y: 0}
+  <CampSquadSpacingRatio>k__BackingField: {x: 0.5, y: 0}
+--- !u!114 &2234158071293504256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7077939781010037142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc109d6060d4194a7cc6cf8bd6a2744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2005285011606082417
 MonoBehaviour:
   m_ObjectHideFlags: 0

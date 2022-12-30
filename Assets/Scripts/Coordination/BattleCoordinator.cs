@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Crysc.Coordination;
-using Crysc.Helpers;
 using GulchGuardians.Audio;
 using GulchGuardians.Squads;
 using GulchGuardians.Teams;
@@ -31,8 +30,6 @@ namespace GulchGuardians.Coordination
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private GamePhaseAnnouncer GamePhaseAnnouncer;
 
-        private static readonly Vector2 _squadMaxSize = new(x: 7, y: 0);
-        private static readonly Vector2 _squadSpacingRatio = new(x: -0.125f, y: 0);
         private TMP_Text _advanceButtonText;
 
         public int EnemyPlatoonCount => EnemyPlatoons.Count;
@@ -50,7 +47,7 @@ namespace GulchGuardians.Coordination
             base.BeginCoordination();
 
             PopulateEnemyTeam();
-            StartCoroutine(OnboardPlayerTeam());
+            StartCoroutine(PlayerTeam.View.RearrangeForBattle(PlayerTeamContainer));
             StartCoroutine(EnterPreparationPhase());
         }
 
@@ -117,23 +114,6 @@ namespace GulchGuardians.Coordination
 
             PreparationCoordinator.BeginCoordination();
             State.SetBattlePhase(BattlePhase.Preparation);
-        }
-
-        private IEnumerator OnboardPlayerTeam()
-        {
-            PlayerTeam.transform.SetParent(PlayerTeamContainer);
-
-            PlayerTeam.View.FrontSquadMaxSize = _squadMaxSize;
-            PlayerTeam.View.IsCentered = false;
-            PlayerTeam.FrontSquad.View.PreferredSpacingRatio = _squadSpacingRatio;
-
-            List<Coroutine> coroutines = new()
-            {
-                StartCoroutine(Mover.MoveTo(transform: PlayerTeam.transform, end: Vector3.zero, duration: 0.5f)),
-                StartCoroutine(PlayerTeam.View.AnimateRearrange(0.5f)),
-            };
-
-            yield return CoroutineWaiter.RunConcurrently(coroutines.ToArray());
         }
 
         [Serializable]

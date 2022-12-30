@@ -18,8 +18,9 @@ namespace GulchGuardians.Teams
         public event EventHandler UnitsChanged;
         public event EventHandler<UnitClickedEventArgs> UnitClicked;
 
-        public IEnumerable<Unit> Units => _squads.SelectMany(s => s.Units);
+        public IEnumerable<Squad> Squads => _squads;
         public Squad FrontSquad => _squads.Count > 0 ? _squads.First() : null;
+        public IEnumerable<Unit> Units => _squads.SelectMany(s => s.Units);
         public bool IsDefeated => Units.Count() == 0;
         public TeamView View { get; private set; }
 
@@ -47,7 +48,8 @@ namespace GulchGuardians.Teams
         {
             _squads.Add(squad);
             squad.Team = this;
-            View.AddSquad(squad: squad, squads: _squads);
+
+            View.UpdateArrangement();
 
             squad.UnitsChanged += UnitsChangedEventHandler;
             squad.UnitClicked += UnitClickedEventHandler;
@@ -65,9 +67,7 @@ namespace GulchGuardians.Teams
         public IEnumerator HandleSquadDefeat(Squad squad)
         {
             _squads.Remove(squad);
-
-            View.SetElements(_squads.Select(s => s.View));
-            return View.AnimateRearrange();
+            return View.AnimateUpdateArrangement();
 
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }

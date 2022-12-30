@@ -1,99 +1,83 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Crysc.Helpers;
 using Crysc.Presentation;
-using GulchGuardians.Squads;
 using UnityEngine;
 
 namespace GulchGuardians.Teams
 {
     [RequireComponent(typeof(Arrangement))]
-    public class TeamView : MonoBehaviour, IArrangement<SquadView>
+    public class TeamView : MonoBehaviour
     {
-        private readonly List<SquadView> _squads = new();
-        private Arrangement _arrangement;
+        private Team _team;
+        private TeamArrangement _arrangement;
 
         [field: SerializeField] public Vector2 FrontSquadMaxSize { get; set; }
         [field: SerializeField] public Vector2 RemainingSquadsMaxSize { get; set; }
+        [field: SerializeField] public Vector2 SquadSpacingRatio { get; set; }
 
-        private void Awake() { _arrangement = GetComponent<Arrangement>(); }
+        [field: SerializeField] public Vector2 CampSquadMaxSize { get; set; }
+        [field: SerializeField] public Vector2 CampSquadSpacingRatio { get; set; }
 
-        private void Start() { _arrangement.IsInverted = IsInverted; }
-
-        public void AddSquad(Squad squad, IEnumerable<Squad> squads)
+        private void Awake()
         {
-            squad.View.IsInverted = IsInverted;
-            squad.View.Rearrange();
-
-            SetElements(squads.Select(s => s.View));
-            Rearrange();
+            _team = GetComponent<Team>();
+            _arrangement = GetComponent<TeamArrangement>();
         }
 
-        private void ConfigureSquads()
+        private void Start()
         {
-            if (_squads.Count == 0) return;
-
-            SquadView frontSquad = _squads.First();
-            foreach (SquadView squad in _squads)
-            {
-                squad.MaxSize = squad == frontSquad ? FrontSquadMaxSize : RemainingSquadsMaxSize;
-                squad.ShowUnitUIs(squad == frontSquad);
-                squad.UpdateProperties();
-            }
-        }
-
-        // IArrangement
-        public bool IsCentered
-        {
-            get => _arrangement.IsCentered;
-            set => _arrangement.IsCentered = value;
-        }
-
-        public bool IsInverted
-        {
-            get => _arrangement.IsInverted;
-            set => _arrangement.IsInverted = value;
-        }
-
-        public Vector2 MaxSize
-        {
-            get => _arrangement.MaxSize;
-            set => _arrangement.MaxSize = value;
-        }
-
-        public Vector2 PreferredSpacingRatio
-        {
-            get => _arrangement.PreferredSpacingRatio;
-            set => _arrangement.PreferredSpacingRatio = value;
-        }
-
-        public void SetElements(IEnumerable<SquadView> elements)
-        {
-            _squads.Clear();
-            _squads.AddRange(elements);
-
-            _arrangement.SetElements(elements);
-        }
-
-        public void Rearrange()
-        {
-            ConfigureSquads();
-            foreach (SquadView squad in _squads) squad.Rearrange();
-
+            _arrangement.FrontSquadMaxSize = FrontSquadMaxSize;
+            _arrangement.RemainingSquadsMaxSize = RemainingSquadsMaxSize;
             _arrangement.Rearrange();
         }
 
-        public IEnumerator AnimateRearrange(float duration = 0.25f)
+        public IEnumerator RearrangeForBattle(Transform campContainer)
         {
-            ConfigureSquads();
-            List<Coroutine> coroutines = (
-                from squad in _squads
-                select StartCoroutine(squad.AnimateRearrange(duration))
-            ).ToList();
-            coroutines.Add(StartCoroutine(_arrangement.AnimateRearrange(duration)));
+            Transform teamTransform = transform;
+            teamTransform.SetParent(campContainer);
+
+            _arrangement.FrontSquadMaxSize = FrontSquadMaxSize;
+            _arrangement.IsCentered = false;
+            _team.FrontSquad.View.PreferredSpacingRatio = SquadSpacingRatio;
+
+            List<Coroutine> coroutines = new()
+            {
+                StartCoroutine(Mover.MoveTo(transform: teamTransform, end: Vector3.zero, duration: 0.5f)),
+                StartCoroutine(AnimateUpdateArrangement(0.5f)),
+            };
 
             return CoroutineWaiter.RunConcurrently(coroutines.ToArray());
+        }
+
+        public IEnumerator RearrangeForCamp(Transform campContainer)
+        {
+            Transform teamTransform = transform;
+            teamTransform.SetParent(campContainer);
+
+            _arrangement.FrontSquadMaxSize = CampSquadMaxSize;
+            _arrangement.IsCentered = true;
+            _team.FrontSquad.View.PreferredSpacingRatio = CampSquadSpacingRatio;
+
+            List<Coroutine> coroutines = new()
+            {
+                StartCoroutine(Mover.MoveTo(transform: teamTransform, end: Vector3.zero, duration: 0.5f)),
+                StartCoroutine(AnimateUpdateArrangement(0.5f)),
+            };
+
+            return CoroutineWaiter.RunConcurrently(coroutines.ToArray());
+        }
+
+        public void UpdateArrangement()
+        {
+            _arrangement.SetElements(_team.Squads);
+            _arrangement.Rearrange();
+        }
+
+        public IEnumerator AnimateUpdateArrangement(float duration = 0.25f)
+        {
+            _arrangement.SetElements(_team.Squads);
+            return _arrangement.AnimateRearrange(duration);
         }
     }
 }
