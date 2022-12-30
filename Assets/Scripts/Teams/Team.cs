@@ -49,8 +49,6 @@ namespace GulchGuardians.Teams
             _squads.Add(squad);
             squad.Team = this;
 
-            View.UpdateArrangement();
-
             if (gameObject.activeInHierarchy)
             {
                 squad.UnitsChanged += UnitsChangedEventHandler;
@@ -58,6 +56,7 @@ namespace GulchGuardians.Teams
             }
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
+            View.UpdateArrangement();
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
         }
 

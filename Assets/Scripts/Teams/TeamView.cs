@@ -23,10 +23,7 @@ namespace GulchGuardians.Teams
         {
             _team = GetComponent<Team>();
             _arrangement = GetComponent<TeamArrangement>();
-        }
 
-        private void Start()
-        {
             _arrangement.FrontSquadMaxSize = FrontSquadMaxSize;
             _arrangement.RemainingSquadsMaxSize = RemainingSquadsMaxSize;
         }
