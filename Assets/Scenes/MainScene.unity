@@ -1470,7 +1470,7 @@ MonoBehaviour:
   CampCoordinator: {fileID: 1503060301}
   PlayerTeam: {fileID: 294015327}
   GameResultPanel: {fileID: 1521826481}
-  BeginInCampPhase: 1
+  BeginInCampPhase: 0
 --- !u!1 &252537363
 GameObject:
   m_ObjectHideFlags: 0

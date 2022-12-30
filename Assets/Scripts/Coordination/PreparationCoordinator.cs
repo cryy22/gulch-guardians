@@ -84,6 +84,7 @@ namespace GulchGuardians.Coordination
 
         private IEnumerator ApplySelectedEffect(Unit unit)
         {
+            yield return new WaitUntil(() => !_isModifying);
             _isModifying = true;
 
             yield return EffectOptionsDisplayer.SelectedEffect.Apply(BuildContext(unit));

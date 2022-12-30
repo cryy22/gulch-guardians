@@ -51,8 +51,11 @@ namespace GulchGuardians.Teams
 
             View.UpdateArrangement();
 
-            squad.UnitsChanged += UnitsChangedEventHandler;
-            squad.UnitClicked += UnitClickedEventHandler;
+            if (gameObject.activeInHierarchy)
+            {
+                squad.UnitsChanged += UnitsChangedEventHandler;
+                squad.UnitClicked += UnitClickedEventHandler;
+            }
 
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
             // _unitsDisplayer.UpdateDemarcation(FrontSquad);
