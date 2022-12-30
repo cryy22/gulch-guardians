@@ -64,7 +64,10 @@ namespace GulchGuardians.Squads
 
         private void DragBeganHandler(object sender, DraggableEventArgs<Unit> e)
         {
-            e.Target.View.SetShowDetails(false);
+            Unit unit = e.Target;
+
+            unit.View.SetShowDetails(false);
+            _arrangement.ExcludeFromRearrange(unit);
         }
 
         private void DragMovedHandler(object sender, DraggableEventArgs<Unit> e)
@@ -80,10 +83,11 @@ namespace GulchGuardians.Squads
 
         private void DragEndedHandler(object sender, DraggableEventArgs<Unit> e)
         {
-            e.Target.View.SetShowDetails(true);
-            ReturnToArrangement();
-        }
+            Unit unit = e.Target;
 
-        private void ReturnToArrangement() { _squad.View.UpdateArrangement(); }
+            _arrangement.IncludeInRearrange(unit);
+            unit.View.SetShowDetails(true);
+            _arrangement.Rearrange();
+        }
     }
 }

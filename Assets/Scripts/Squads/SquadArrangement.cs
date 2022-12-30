@@ -7,7 +7,9 @@ using UnityEngine;
 
 namespace GulchGuardians.Squads
 {
-    public class SquadArrangement : MonoBehaviour, IArrangement<Unit>, IArrangementElement
+    using IElement = IArrangementElement;
+
+    public class SquadArrangement : MonoBehaviour, IArrangement<Unit>, IElement
     {
         private Arrangement _arrangement;
 
@@ -16,6 +18,9 @@ namespace GulchGuardians.Squads
         public void UpdateProperties() { _arrangement.UpdateProperties(); }
 
         public int GetClosestIndex(Vector3 position) { return _arrangement.GetClosestIndex(position); }
+
+        public void ExcludeFromRearrange(Unit unit) { _arrangement.ExcludeFromRearrange(unit.View); }
+        public void IncludeInRearrange(Unit unit) { _arrangement.IncludeInRearrange(unit.View); }
 
         // IArrangement<Squad> implementation
         public bool IsCentered
