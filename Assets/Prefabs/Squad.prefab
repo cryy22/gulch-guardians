@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: -8794281385185204524}
   - component: {fileID: 2744003918848785184}
   - component: {fileID: 6724165264505976030}
+  - component: {fileID: 5454917793207608546}
   m_Layer: 0
   m_Name: Squad
   m_TagString: Untagged
@@ -122,3 +123,15 @@ MonoBehaviour:
   <IsInverted>k__BackingField: 0
   <MaxSize>k__BackingField: {x: 0, y: 0}
   <PreferredSpacingRatio>k__BackingField: {x: -0.125, y: 0}
+--- !u!114 &5454917793207608546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5231071849173982824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad19822ccac141f886e6965b9e11830b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

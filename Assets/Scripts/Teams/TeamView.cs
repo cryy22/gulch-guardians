@@ -29,7 +29,6 @@ namespace GulchGuardians.Teams
         {
             _arrangement.FrontSquadMaxSize = FrontSquadMaxSize;
             _arrangement.RemainingSquadsMaxSize = RemainingSquadsMaxSize;
-            _arrangement.Rearrange();
         }
 
         public IEnumerator RearrangeForBattle(Transform campContainer)
