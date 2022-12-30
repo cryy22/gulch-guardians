@@ -189,12 +189,10 @@ namespace GulchGuardians.Units
 
         public void SetAnimationTrigger(string animationName) { Animator.SetTrigger(animationName); }
 
-        public void SetShowNametag(bool show) { Nametag.SetActive(_shouldShowNametag && show); }
-
         public void SetShowDetails(bool show)
         {
             ShowTooltip = show;
-            SetShowNametag(show);
+            Nametag.SetActive(_shouldShowNametag && show);
             foreach (GameObject go in DetailElements) go.SetActive(show);
         }
 

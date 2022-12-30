@@ -15,6 +15,8 @@ namespace GulchGuardians.Squads
 
         public void UpdateProperties() { _arrangement.UpdateProperties(); }
 
+        public int GetClosestIndex(Vector3 position) { return _arrangement.GetClosestIndex(position); }
+
         // IArrangement<Squad> implementation
         public bool IsCentered
         {

@@ -84,6 +84,8 @@ namespace GulchGuardians.Squads
             UnitsChanged?.Invoke(sender: this, e: EventArgs.Empty);
         }
 
+        public int GetUnitIndex(Unit unit) { return _units.IndexOf(item: unit); }
+
         private void OnboardUnit(Unit unit)
         {
             unit.Squad = this;
