@@ -1,6 +1,8 @@
 using System.Collections;
 using Crysc.Coordination;
 using GulchGuardians.Constants;
+using GulchGuardians.Coordination.Battle;
+using GulchGuardians.Coordination.Camp;
 using GulchGuardians.Teams;
 using GulchGuardians.UI;
 using UnityEngine;
@@ -50,7 +52,7 @@ namespace GulchGuardians.Coordination
 
         private IEnumerator RunBattlePhase()
         {
-            State.SetNightPhase(NightPhase.Battle);
+            State.SetNightPhase(GamePhase.Battle);
 
             BattleCoordinator.BeginCoordination();
             yield return new WaitUntil(() => !BattleCoordinator.IsActive);
@@ -60,7 +62,7 @@ namespace GulchGuardians.Coordination
 
         private IEnumerator RunCampPhase()
         {
-            State.SetNightPhase(NightPhase.Camp);
+            State.SetNightPhase(GamePhase.Camp);
 
             CampCoordinator.BeginCoordination();
             yield return new WaitUntil(() => !CampCoordinator.IsActive);

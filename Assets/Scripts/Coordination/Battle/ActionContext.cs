@@ -1,7 +1,7 @@
 using GulchGuardians.Squads;
 using GulchGuardians.Units;
 
-namespace GulchGuardians.Coordination
+namespace GulchGuardians.Coordination.Battle
 {
     public struct ActionContext
     {

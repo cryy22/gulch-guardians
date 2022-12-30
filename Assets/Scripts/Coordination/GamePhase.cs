@@ -1,6 +1,6 @@
 namespace GulchGuardians.Coordination
 {
-    public enum NightPhase
+    public enum GamePhase
     {
         Battle,
         Camp,

@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace GulchGuardians.Coordination
+namespace GulchGuardians.Coordination.Battle
 {
     public class CombatCoordinator : Coordinator
     {
@@ -31,7 +31,7 @@ namespace GulchGuardians.Coordination
         private bool _hasUsedSpacebar;
         private TMP_Text _autoButtonText;
 
-        private bool IsCorrectPhase => State.NightPhase == NightPhase.Battle && State.BattlePhase == BattlePhase.Combat;
+        private bool IsCorrectPhase => State.GamePhase == GamePhase.Battle && State.BattlePhase == BattlePhase.Combat;
 
         protected override void Awake()
         {

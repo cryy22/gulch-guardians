@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GulchGuardians.Coordination
+namespace GulchGuardians.Coordination.Camp
 {
     public class CampCoordinator : Coordinator
     {
@@ -17,7 +17,7 @@ namespace GulchGuardians.Coordination
 
         private TMP_Text _advanceButtonText;
 
-        private bool IsCorrectPhase => State.NightPhase == NightPhase.Camp;
+        private bool IsCorrectPhase => State.GamePhase == GamePhase.Camp;
 
         protected override void Awake()
         {

@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace GulchGuardians.Coordination
+namespace GulchGuardians.Coordination.Battle
 {
     public class BattleCoordinator : Coordinator
     {

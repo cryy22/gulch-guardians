@@ -10,7 +10,7 @@ using GulchGuardians.Units;
 using TMPro;
 using UnityEngine;
 
-namespace GulchGuardians.Coordination
+namespace GulchGuardians.Coordination.Battle
 {
     public class PreparationCoordinator : Coordinator
     {
