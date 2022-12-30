@@ -9,7 +9,6 @@ namespace GulchGuardians.Squads
 {
     public class SquadArrangement : MonoBehaviour, IArrangement<Unit>, IArrangementElement
     {
-        private readonly List<UnitView> _units = new();
         private Arrangement _arrangement;
 
         private void Awake() { _arrangement = GetComponent<Arrangement>(); }
@@ -41,14 +40,7 @@ namespace GulchGuardians.Squads
             set => _arrangement.PreferredSpacingRatio = value;
         }
 
-        public void SetElements(IEnumerable<Unit> elements)
-        {
-            List<UnitView> unitViews = elements.Select(u => u.View).ToList();
-            _units.Clear();
-            _units.AddRange(unitViews);
-
-            _arrangement.SetElements(unitViews);
-        }
+        public void SetElements(IEnumerable<Unit> elements) { _arrangement.SetElements(elements.Select(u => u.View)); }
 
         public void Rearrange() { _arrangement.Rearrange(); }
 
