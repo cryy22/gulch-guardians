@@ -12,6 +12,12 @@ namespace GulchGuardians.Coordination.Camp
         [SerializeField] private TMP_Text InstructionText;
         [SerializeField] private Team PlayerTeam;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            InstructionText.gameObject.SetActive(false);
+        }
+
         private void OnEnable()
         {
             if (IsActive) RegisterForEvents();

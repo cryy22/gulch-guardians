@@ -31,8 +31,6 @@ namespace GulchGuardians.Coordination.Battle
         private bool _hasUsedSpacebar;
         private TMP_Text _autoButtonText;
 
-        private bool IsCorrectPhase => State.GamePhase == GamePhase.Battle && State.BattlePhase == BattlePhase.Combat;
-
         protected override void Awake()
         {
             base.Awake();
@@ -71,7 +69,7 @@ namespace GulchGuardians.Coordination.Battle
         public void OnAdvanceInput(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            if (!IsCorrectPhase) return;
+            if (!State.IsPhaseActive(BattlePhase.Combat)) return;
 
             OnAdvance();
 
@@ -82,7 +80,7 @@ namespace GulchGuardians.Coordination.Battle
 
         private void OnAdvanceButtonClicked()
         {
-            if (!IsCorrectPhase) return;
+            if (!State.IsPhaseActive(BattlePhase.Combat)) return;
             OnAdvance();
         }
 

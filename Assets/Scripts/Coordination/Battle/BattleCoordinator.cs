@@ -54,7 +54,8 @@ namespace GulchGuardians.Coordination.Battle
         public void OnAdvanceInput(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            if (State.BattlePhase != BattlePhase.Preparation || PreparationCoordinator.IsActive) return;
+            if (!State.IsPhaseActive(BattlePhase.Preparation) || PreparationCoordinator.IsActive) return;
+
             OnAdvance();
         }
 
@@ -78,7 +79,7 @@ namespace GulchGuardians.Coordination.Battle
 
         private void OnAdvanceButtonClicked()
         {
-            if (State.BattlePhase != BattlePhase.Preparation) return;
+            if (!State.IsPhaseActive(BattlePhase.Preparation)) return;
             OnAdvance();
         }
 

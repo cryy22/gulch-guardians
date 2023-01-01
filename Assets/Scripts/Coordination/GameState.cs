@@ -17,12 +17,16 @@ namespace GulchGuardians.Coordination
         {
             GamePhase = phase;
             if (phase == GamePhase.Battle) SetBattlePhase(BattlePhase.Preparation);
-            if (phase == GamePhase.Camp) SetCampPhase(CampPhase.Promote);
+            if (phase == GamePhase.Camp) SetCampPhase(CampPhase.Promotion);
         }
 
         public void IncrementNight() { Night++; }
 
         public void SetBattlePhase(BattlePhase phase) { BattlePhase = phase; }
         public void SetCampPhase(CampPhase phase) { CampPhase = phase; }
+
+        public bool IsPhaseActive(GamePhase phase) { return GamePhase == phase; }
+        public bool IsPhaseActive(BattlePhase phase) { return GamePhase == GamePhase.Battle && BattlePhase == phase; }
+        public bool IsPhaseActive(CampPhase phase) { return GamePhase == GamePhase.Camp && CampPhase == phase; }
     }
 }

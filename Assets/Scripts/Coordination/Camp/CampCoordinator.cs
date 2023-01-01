@@ -1,3 +1,4 @@
+using System.Collections;
 using Crysc.Coordination;
 using Crysc.Presentation;
 using GulchGuardians.Teams;
@@ -13,11 +14,11 @@ namespace GulchGuardians.Coordination.Camp
         [SerializeField] private Transform PlayerTeamContainer;
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private ParallaxBackground Background;
+
         [SerializeField] private GameState State;
+        [SerializeField] private PromotionCoordinator PromotionCoordinator;
 
         private TMP_Text _advanceButtonText;
-
-        private bool IsCorrectPhase => State.GamePhase == GamePhase.Camp;
 
         protected override void Awake()
         {
@@ -31,12 +32,10 @@ namespace GulchGuardians.Coordination.Camp
         {
             base.BeginCoordination();
 
-            _advanceButtonText.text = "battle";
-            AdvanceButton.interactable = true;
             Background.SetCurtain(true);
 
             StartCoroutine(PlayerTeam.View.RearrangeForCamp(PlayerTeamContainer));
-            PlayerTeam.FrontSquad.Reorderer.BeginReordering();
+            StartCoroutine(Run());
         }
 
         public override void EndCoordination()
@@ -49,8 +48,41 @@ namespace GulchGuardians.Coordination.Camp
 
         private void OnAdvanceButtonClicked()
         {
-            if (!IsCorrectPhase) return;
-            EndCoordination();
+            if (State.GamePhase != GamePhase.Camp) return;
+
+            switch (State.CampPhase)
+            {
+                case CampPhase.Promotion:
+                    PromotionCoordinator.EndCoordination();
+                    break;
+                case CampPhase.Reorder:
+                    EndCoordination();
+                    break;
+            }
+        }
+
+        private IEnumerator Run()
+        {
+            yield return RunPromotionPhase();
+            RunReorderPhase();
+        }
+
+        private IEnumerator RunPromotionPhase()
+        {
+            State.SetCampPhase(CampPhase.Promotion);
+
+            _advanceButtonText.text = "skip promo";
+            PromotionCoordinator.BeginCoordination();
+
+            yield return new WaitUntil(() => !PromotionCoordinator.IsActive);
+        }
+
+        private void RunReorderPhase()
+        {
+            State.SetCampPhase(CampPhase.Reorder);
+
+            _advanceButtonText.text = "battle!";
+            PlayerTeam.FrontSquad.Reorderer.BeginReordering();
         }
     }
 }
