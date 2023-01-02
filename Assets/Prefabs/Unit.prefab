@@ -5069,15 +5069,13 @@ MonoBehaviour:
   HealthText: {fileID: 7323105098417310357}
   Nametag: {fileID: 7234383430622169901}
   NameText: {fileID: 2037156054689024240}
-  Renderer: {fileID: 4943982858057783518}
-  SpriteLibrary: {fileID: 2470079670227859713}
-  Animator: {fileID: 8312982018863316174}
   AbilityIcons: {fileID: 4138898325063143908}
   AbilityIconPrefab: {fileID: 1016766620694162878, guid: 5c972a823c14f4a2aa2ae254c404fce6, type: 3}
   AbilityIndex: {fileID: 11400000, guid: 2698c3d549e8b469dbddb3e50a3cc13c, type: 2}
   AttackParticleSystem: {fileID: 211717413201965041}
   DetailElements:
   - {fileID: 4943982858519393693}
+  <SpriteView>k__BackingField: {fileID: 1970141919601968827}
 --- !u!114 &1340140432095252761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5139,6 +5137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4943982858057783519}
+  - component: {fileID: 1970141919601968827}
   - component: {fileID: 4943982858057783518}
   - component: {fileID: 2470079670227859713}
   - component: {fileID: 6202236101407084526}
@@ -5166,6 +5165,19 @@ Transform:
   m_Father: {fileID: 4943982857873706237}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1970141919601968827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4943982858057783517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180b8821ac4b4d0a81023493c3a9acc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityIndex: {fileID: 11400000, guid: 2698c3d549e8b469dbddb3e50a3cc13c, type: 2}
 --- !u!212 &4943982858057783518
 SpriteRenderer:
   m_ObjectHideFlags: 0

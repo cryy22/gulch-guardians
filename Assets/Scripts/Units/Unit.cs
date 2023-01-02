@@ -6,7 +6,6 @@ using Crysc.Helpers;
 using Crysc.Initialization;
 using GulchGuardians.Abilities;
 using GulchGuardians.Common;
-using GulchGuardians.Constants;
 using GulchGuardians.Squads;
 using GulchGuardians.Teams;
 using UnityEngine;
@@ -149,8 +148,8 @@ namespace GulchGuardians.Units
 
         public bool HasAbility(AbilityType ability) { return _abilities.Contains(ability); }
 
-        public void SetHurtAnimation() { View.SetAnimationTrigger(AnimatorProperties.OnHurtTrigger); }
-        public void SetIdleAnimation() { View.SetAnimationTrigger(AnimatorProperties.OnIdleTrigger); }
+        public void SetHurtAnimation() { View.SpriteView.SetHurtAnimation(); }
+        public void SetIdleAnimation() { View.SpriteView.SetIdleAnimation(); }
 
         private IEnumerator TakeDamage(int damage, Direction direction)
         {
