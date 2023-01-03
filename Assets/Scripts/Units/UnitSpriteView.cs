@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using GulchGuardians.Abilities;
 using GulchGuardians.Audio;
 using GulchGuardians.Constants;
@@ -25,7 +27,7 @@ namespace GulchGuardians.Units
             _animator = GetComponent<Animator>();
         }
 
-        public void Setup(UnitSpriteAssetMap assetMap, Unit unit)
+        public void Setup(UnitSpriteAssetMap assetMap, IEnumerable<AbilityType> abilities)
         {
             _assetMap = assetMap;
 
@@ -38,16 +40,16 @@ namespace GulchGuardians.Units
                 normalizedTime: Random.Range(minInclusive: 0f, maxInclusive: 1f)
             );
 
-            if (unit.HasAbility(AbilityIndex.Boss)) _renderer.transform.localScale *= 2f;
+            if (abilities.Contains(AbilityIndex.Boss)) _renderer.transform.localScale *= 2f;
         }
 
         public void SetIdleAnimation() { _animator.SetTrigger(AnimatorProperties.OnIdleTrigger); }
         public void SetActAnimation() { _animator.SetTrigger(AnimatorProperties.OnActTrigger); }
         public void SetHurtAnimation() { _animator.SetTrigger(AnimatorProperties.OnHurtTrigger); }
 
-        public void UpdateSprite(Unit unit)
+        public void UpdateSprite(IEnumerable<AbilityType> abilities)
         {
-            if (_hasHealerAsset && unit.HasAbility(AbilityIndex.Healer))
+            if (_hasHealerAsset && abilities.Contains(AbilityIndex.Healer))
                 _library.spriteLibraryAsset = _assetMap.Healer;
             else
                 _library.spriteLibraryAsset = _assetMap.Default;

@@ -42,7 +42,7 @@ namespace GulchGuardians.Units
 
         public void Setup(UnitSpriteAssetMap spriteAssetMap, Unit unit)
         {
-            SpriteView.Setup(assetMap: spriteAssetMap, unit: unit);
+            SpriteView.Setup(assetMap: spriteAssetMap, abilities: unit.Abilities);
 
             NameText.text = unit.FirstName;
             if (unit.HasAbility(AbilityIndex.Boss))
@@ -61,7 +61,7 @@ namespace GulchGuardians.Units
             HealthText.color = unit.Health == unit.MaxHealth ? Color.white : Color.red;
 
             UpdateAbilities(unit);
-            SpriteView.UpdateSprite(unit);
+            SpriteView.UpdateSprite(unit.Abilities);
         }
 
         public IEnumerator AnimateAttack(Unit target)
@@ -98,11 +98,12 @@ namespace GulchGuardians.Units
                 direction == DamageDirection.Left ? _leftParticleRotation : _rightParticleRotation;
             AttackParticleSystem.Play();
 
+            SpriteView.SetHurtAnimation();
             yield return CoroutineWaiter.RunConcurrently(
                 StartCoroutine(AnimateSine(duration: 0.08f, period: 0.08f, magnitude: 0.25f)),
-                StartCoroutine(AnimateHurtAnimation()),
                 StartCoroutine(SpriteView.AnimateFlash(damage > 0 ? Color.red : Color.gray))
             );
+            SpriteView.SetIdleAnimation();
 
             transform.localPosition = start;
         }
@@ -170,13 +171,6 @@ namespace GulchGuardians.Units
         {
             Vector3 delta = magnitude * Vector3.up;
             return Mover.MoveSine(transform: transform, delta: delta, duration: duration, period: period);
-        }
-
-        private IEnumerator AnimateHurtAnimation(float duration = 0.33f)
-        {
-            SpriteView.SetHurtAnimation();
-            yield return new WaitForSeconds(duration);
-            SpriteView.SetIdleAnimation();
         }
 
         // IArrangementElement
