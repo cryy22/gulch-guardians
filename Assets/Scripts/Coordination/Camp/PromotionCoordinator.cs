@@ -1,5 +1,8 @@
 using System;
+using System.Collections;
 using Crysc.Coordination;
+using GulchGuardians.Abilities;
+using GulchGuardians.Promotions;
 using GulchGuardians.Teams;
 using GulchGuardians.Units;
 using TMPro;
@@ -9,13 +12,18 @@ namespace GulchGuardians.Coordination.Camp
 {
     public class PromotionCoordinator : Coordinator
     {
-        [SerializeField] private TMP_Text InstructionText;
         [SerializeField] private Team PlayerTeam;
+        [SerializeField] private PromotionChooser PromotionChooser;
+        [SerializeField] private TMP_Text InstructionText;
+
+        private Unit _selectedUnit;
 
         protected override void Awake()
         {
             base.Awake();
+
             InstructionText.gameObject.SetActive(false);
+            PromotionChooser.gameObject.SetActive(false);
         }
 
         private void OnEnable()
@@ -39,6 +47,7 @@ namespace GulchGuardians.Coordination.Camp
         public override void EndCoordination()
         {
             InstructionText.gameObject.SetActive(false);
+            PromotionChooser.gameObject.SetActive(false);
             UnregisterFromEvents();
 
             base.EndCoordination();
@@ -47,19 +56,32 @@ namespace GulchGuardians.Coordination.Camp
         private void RegisterForEvents()
         {
             foreach (Unit unit in PlayerTeam.Units) unit.Clicked += UnitClickedHandler;
+            PromotionChooser.Selected += PromotionSelectedHandler;
         }
 
         private void UnregisterFromEvents()
         {
             foreach (Unit unit in PlayerTeam.Units) unit.Clicked -= UnitClickedHandler;
+            PromotionChooser.Selected -= PromotionSelectedHandler;
         }
 
         private void UnitClickedHandler(object sender, EventArgs _)
         {
-            var unit = sender as Unit;
-            if (unit == null) return;
+            _selectedUnit = sender as Unit;
+            if (_selectedUnit == null) return;
 
-            Debug.Log($"unit clicked: {unit.FirstName}");
+            PromotionChooser.gameObject.SetActive(true);
+        }
+
+        private void PromotionSelectedHandler(object sender, PromotionSelectedEventArgs e)
+        {
+            StartCoroutine(ApplyPromotion(e.Ability));
+        }
+
+        private IEnumerator ApplyPromotion(AbilityType ability)
+        {
+            yield return _selectedUnit.AddAbility(ability);
+            EndCoordination();
         }
     }
 }
