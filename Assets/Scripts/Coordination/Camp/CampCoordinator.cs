@@ -10,7 +10,10 @@ namespace GulchGuardians.Coordination.Camp
 {
     public class CampCoordinator : Coordinator
     {
+        private const string _reorderTeamText = "drag and drop to reorder the squad";
+
         [SerializeField] private Button AdvanceButton;
+        [SerializeField] private TMP_Text InstructionText;
         [SerializeField] private Transform PlayerTeamContainer;
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private ParallaxBackground Background;
@@ -33,6 +36,9 @@ namespace GulchGuardians.Coordination.Camp
             base.BeginCoordination();
 
             Background.SetCurtain(true);
+            AdvanceButton.gameObject.SetActive(true);
+            AdvanceButton.interactable = true;
+            InstructionText.gameObject.SetActive(true);
 
             StartCoroutine(PlayerTeam.View.RearrangeForCamp(PlayerTeamContainer));
             StartCoroutine(Run());
@@ -41,7 +47,10 @@ namespace GulchGuardians.Coordination.Camp
         public override void EndCoordination()
         {
             PlayerTeam.FrontSquad.Reorderer.EndReordering();
+
+            InstructionText.gameObject.SetActive(false);
             Background.SetCurtain(false);
+            AdvanceButton.gameObject.SetActive(false);
 
             base.EndCoordination();
         }
@@ -81,7 +90,9 @@ namespace GulchGuardians.Coordination.Camp
         {
             State.SetCampPhase(CampPhase.Reorder);
 
-            _advanceButtonText.text = "battle!";
+            _advanceButtonText.text = "to battle!";
+            InstructionText.text = _reorderTeamText;
+
             PlayerTeam.FrontSquad.Reorderer.BeginReordering();
         }
     }

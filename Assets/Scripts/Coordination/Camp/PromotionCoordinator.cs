@@ -12,6 +12,9 @@ namespace GulchGuardians.Coordination.Camp
 {
     public class PromotionCoordinator : Coordinator
     {
+        private const string _selectUnitText = "choose a unit to promote";
+        private const string _selectPromotionText = "choose a new job";
+
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private PromotionChooser PromotionChooser;
         [SerializeField] private TMP_Text InstructionText;
@@ -21,8 +24,6 @@ namespace GulchGuardians.Coordination.Camp
         protected override void Awake()
         {
             base.Awake();
-
-            InstructionText.gameObject.SetActive(false);
             PromotionChooser.gameObject.SetActive(false);
         }
 
@@ -41,12 +42,11 @@ namespace GulchGuardians.Coordination.Camp
             base.BeginCoordination();
 
             RegisterForEvents();
-            InstructionText.gameObject.SetActive(true);
+            InstructionText.text = _selectUnitText;
         }
 
         public override void EndCoordination()
         {
-            InstructionText.gameObject.SetActive(false);
             PromotionChooser.gameObject.SetActive(false);
             UnregisterFromEvents();
 
@@ -71,6 +71,7 @@ namespace GulchGuardians.Coordination.Camp
             if (_selectedUnit == null) return;
 
             PromotionChooser.gameObject.SetActive(true);
+            InstructionText.text = _selectPromotionText;
         }
 
         private void PromotionSelectedHandler(object sender, PromotionSelectedEventArgs e)

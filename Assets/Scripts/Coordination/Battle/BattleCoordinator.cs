@@ -47,8 +47,15 @@ namespace GulchGuardians.Coordination.Battle
             base.BeginCoordination();
 
             PopulateEnemyTeam();
+            AdvanceButton.gameObject.SetActive(true);
             StartCoroutine(PlayerTeam.View.RearrangeForBattle(PlayerTeamContainer));
             StartCoroutine(EnterPreparationPhase());
+        }
+
+        public override void EndCoordination()
+        {
+            base.EndCoordination();
+            AdvanceButton.gameObject.SetActive(false);
         }
 
         public void OnAdvanceInput(InputAction.CallbackContext context)

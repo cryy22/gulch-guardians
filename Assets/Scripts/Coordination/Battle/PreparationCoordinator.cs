@@ -14,6 +14,9 @@ namespace GulchGuardians.Coordination.Battle
 {
     public class PreparationCoordinator : Coordinator
     {
+        private const string _chooseEffectText = "choose an effect";
+        private const string _chooseUnitText = "choose a unit to apply the effect";
+
         [SerializeField] private int ActionsPerRound = 2;
         [SerializeField] private List<ModificationEffect> Effects = new();
 
@@ -22,7 +25,8 @@ namespace GulchGuardians.Coordination.Battle
 
         [SerializeField] private EffectOptionsDisplayer EffectOptionsDisplayer;
         [SerializeField] private TMP_Text ActionsRemainingText;
-        [SerializeField] private TMP_Text ChooseATargetText;
+        [SerializeField] private TMP_Text InstructionText;
+
         private readonly List<ModificationEffect> _offeredEffects = new();
 
         private int _actionsRemaining;
@@ -48,6 +52,7 @@ namespace GulchGuardians.Coordination.Battle
             _actionsRemaining = ActionsPerRound;
             UpdateActionsRemainingText();
 
+            InstructionText.gameObject.SetActive(true);
             OfferEffectOptions();
         }
 
@@ -58,6 +63,7 @@ namespace GulchGuardians.Coordination.Battle
             CleanUpOfferedEffects();
             EffectOptionsDisplayer.CleanUpEffectOptions();
             EffectOptionsDisplayer.gameObject.SetActive(false);
+            InstructionText.gameObject.SetActive(false);
 
             EndCoordination();
         }
@@ -77,7 +83,7 @@ namespace GulchGuardians.Coordination.Battle
                     StartCoroutine(ApplySelectedEffect(null));
                     break;
                 default:
-                    ChooseATargetText.gameObject.SetActive(true);
+                    InstructionText.text = _chooseUnitText;
                     break;
             }
         }
@@ -103,6 +109,8 @@ namespace GulchGuardians.Coordination.Battle
 
         private void OfferEffectOptions()
         {
+            InstructionText.text = _chooseEffectText;
+
             _offeredEffects.AddRange(GetRandomEffects(3));
             foreach (ModificationEffect effect in _offeredEffects) effect.Prepare();
 
@@ -111,8 +119,6 @@ namespace GulchGuardians.Coordination.Battle
 
         private void CleanUpOfferedEffects()
         {
-            ChooseATargetText.gameObject.SetActive(false);
-
             foreach (ModificationEffect effect in _offeredEffects) effect.CleanUp();
             _offeredEffects.Clear();
         }
