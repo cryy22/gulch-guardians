@@ -186,6 +186,8 @@ MonoBehaviour:
   Container: {fileID: 123782380}
   PersistsOnTooltipHover: 0
   MoveToTargetPosition: 1
+  XFromCenter: 0.5
+  YFromCenter: 0.5
   TitleText: {fileID: 1422426214}
   DescriptionText: {fileID: 1005884348}
 --- !u!1 &7803128
@@ -2721,6 +2723,8 @@ MonoBehaviour:
   Container: {fileID: 838753089}
   PersistsOnTooltipHover: 0
   MoveToTargetPosition: 1
+  XFromCenter: 0.5
+  YFromCenter: 0.5
   TitleText: {fileID: 1506181134}
   DescriptionText: {fileID: 24845050}
 --- !u!222 &697899226
@@ -8057,6 +8061,8 @@ MonoBehaviour:
   Container: {fileID: 1339562916}
   PersistsOnTooltipHover: 1
   MoveToTargetPosition: 1
+  XFromCenter: 0
+  YFromCenter: 0.5
   TitleText: {fileID: 165435684}
   Line1Text: {fileID: 1280248570}
   Line2Text: {fileID: 499867966}
