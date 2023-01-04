@@ -20,7 +20,6 @@ namespace GulchGuardians.Units
     public class Unit : InitializationBehaviour<UnitInitParams>
     {
         [SerializeField] private AbilityIndex AbilityIndex;
-        [SerializeField] private ClassIndex ClassIndex;
 
         private readonly HashSet<AbilityType> _abilities = new();
 
@@ -57,7 +56,7 @@ namespace GulchGuardians.Units
             {
                 var divisor = 1;
                 if (HasAbility(AbilityIndex.Archer)) divisor *= 2;
-                if (Class == ClassIndex.Healer) divisor *= 2;
+                if (Class == ClassIndex.I.Healer) divisor *= 2;
 
                 return Attack / divisor;
             }
@@ -117,6 +116,12 @@ namespace GulchGuardians.Units
             yield return View.AnimateStatsChange(animateHealth: true);
         }
 
+        public void SetClass(ClassType @class)
+        {
+            Class = @class;
+            View.SpriteView.UpdateSprite(Class);
+        }
+
         public bool WillAct(int index)
         {
             return index switch
@@ -129,20 +134,22 @@ namespace GulchGuardians.Units
 
         public IEnumerator AttackUnit(Unit target)
         {
+            if (Class == ClassIndex.I.Saguaro) yield break;
+
             yield return View.AnimateAttack(target);
 
             int damage = ActionMagnitude;
             Direction direction = transform.position.x < target.transform.position.x ? Direction.Left : Direction.Right;
             yield return target.TakeDamage(damage: damage, direction: direction);
 
-            if (!target.HasAbility(AbilityIndex.Spiky)) yield break;
+            if (target.Class != ClassIndex.I.Saguaro) yield break;
             Direction spikeDirection = direction == Direction.Left ? Direction.Right : Direction.Left;
             yield return TakeDamage(damage: damage, direction: spikeDirection);
         }
 
         public IEnumerator HealSquad()
         {
-            if (Class != ClassIndex.Healer) yield break;
+            if (Class != ClassIndex.I.Healer) yield break;
 
             yield return View.AnimateHeal();
             yield return CoroutineWaiter.RunConcurrently(

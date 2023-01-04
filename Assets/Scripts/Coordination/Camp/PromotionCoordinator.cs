@@ -1,6 +1,6 @@
 using System;
 using Crysc.Coordination;
-using GulchGuardians.Abilities;
+using GulchGuardians.Classes;
 using GulchGuardians.Promotions;
 using GulchGuardians.Teams;
 using GulchGuardians.Units;
@@ -73,14 +73,11 @@ namespace GulchGuardians.Coordination.Camp
             InstructionText.text = _selectPromotionText;
         }
 
-        private void PromotionSelectedHandler(object sender, PromotionSelectedEventArgs e)
-        {
-            ApplyPromotion(e.Ability);
-        }
+        private void PromotionSelectedHandler(object sender, PromotionSelectedEventArgs e) { ApplyPromotion(e.Class); }
 
-        private void ApplyPromotion(AbilityType ability)
+        private void ApplyPromotion(ClassType @class)
         {
-            StartCoroutine(_selectedUnit.AddAbility(ability));
+            _selectedUnit.SetClass(@class);
             EndCoordination();
         }
     }

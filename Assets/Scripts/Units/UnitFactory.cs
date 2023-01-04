@@ -7,8 +7,6 @@ namespace GulchGuardians.Units
     [CreateAssetMenu(fileName = "UnitFactory", menuName = "Factories/Unit Factory")]
     public class UnitFactory : InitializationFactory<Unit, UnitConfig, UnitInitParams>
     {
-        [SerializeField] private ClassIndex ClassIndex;
-
         protected override UnitInitParams GetInitParams(UnitConfig config)
         {
             return new UnitInitParams
@@ -17,7 +15,7 @@ namespace GulchGuardians.Units
                 Attack = Random.Range(minInclusive: config.MinAttack, maxExclusive: config.MaxAttack + 1),
                 Health = Random.Range(minInclusive: config.MinHealth, maxExclusive: config.MaxHealth + 1),
                 Abilities = config.Abilities,
-                Class = ClassIndex.Rookie,
+                Class = ClassIndex.I.Rookie,
                 SpriteAssetMap = config.GetSpriteAssetMap(),
             };
         }

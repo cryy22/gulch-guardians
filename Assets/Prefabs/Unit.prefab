@@ -5179,6 +5179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityIndex: {fileID: 11400000, guid: 2698c3d549e8b469dbddb3e50a3cc13c, type: 2}
+  ClassIndex: {fileID: 11400000, guid: 7bd5733c33a5d4de9892ff1310544458, type: 2}
 --- !u!212 &4943982858057783518
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,11 +1,11 @@
 using System;
-using GulchGuardians.Abilities;
+using GulchGuardians.Classes;
 
 namespace GulchGuardians.Promotions
 {
     public class PromotionSelectedEventArgs : EventArgs
     {
-        public PromotionSelectedEventArgs(AbilityType ability) { Ability = ability; }
-        public AbilityType Ability { get; }
+        public PromotionSelectedEventArgs(ClassType @class) { Class = @class; }
+        public ClassType Class { get; }
     }
 }

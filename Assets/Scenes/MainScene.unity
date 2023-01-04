@@ -2327,7 +2327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e1c5d171157456bb9adf1bc7259b966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ability: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
+  Class: {fileID: 11400000, guid: b98cc9771c04b44d5bb06552c521699d, type: 2}
 --- !u!114 &513305951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4365,7 +4365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e1c5d171157456bb9adf1bc7259b966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ability: {fileID: 11400000, guid: dd3be0bf6c5be428fafaa995a7576d00, type: 2}
+  Class: {fileID: 11400000, guid: 8065673217c284a9286c06fcf3d8387b, type: 2}
 --- !u!1001 &1087500374
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7429,6 +7429,7 @@ MonoBehaviour:
   PlayerTeam: {fileID: 294015327}
   EnemyTeam: {fileID: 1087500376}
   AbilityIndex: {fileID: 11400000, guid: 2698c3d549e8b469dbddb3e50a3cc13c, type: 2}
+  ClassIndex: {fileID: 11400000, guid: 7bd5733c33a5d4de9892ff1310544458, type: 2}
   AdvanceButton: {fileID: 1386515120}
   AutoButton: {fileID: 1617409816}
   TrySpacebarMessage: {fileID: 487261072}

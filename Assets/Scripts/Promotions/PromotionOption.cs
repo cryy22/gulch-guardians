@@ -1,5 +1,5 @@
 using System;
-using GulchGuardians.Abilities;
+using GulchGuardians.Classes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +9,7 @@ namespace GulchGuardians.Promotions
     [RequireComponent(typeof(Button))]
     public class PromotionOption : MonoBehaviour
     {
-        [SerializeField] private AbilityType Ability;
+        [SerializeField] private ClassType Class;
 
         private Button _button;
         private TMP_Text _text;
@@ -24,10 +24,10 @@ namespace GulchGuardians.Promotions
 
         private void Start()
         {
-            _text.text = Ability.Name;
+            _text.text = Class.Name;
             _button.onClick.AddListener(OnClicked);
         }
 
-        private void OnClicked() { Selected?.Invoke(sender: this, e: new PromotionSelectedEventArgs(Ability)); }
+        private void OnClicked() { Selected?.Invoke(sender: this, e: new PromotionSelectedEventArgs(Class)); }
     }
 }

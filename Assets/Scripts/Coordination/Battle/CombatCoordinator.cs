@@ -23,7 +23,6 @@ namespace GulchGuardians.Coordination.Battle
         [SerializeField] private Team EnemyTeam;
 
         [SerializeField] private AbilityIndex AbilityIndex;
-        [SerializeField] private ClassIndex ClassIndex;
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private Button AutoButton;
         [SerializeField] private GameObject TrySpacebarMessage;
@@ -118,7 +117,7 @@ namespace GulchGuardians.Coordination.Battle
 
         private IEnumerator RunUnitAttack(ActionContext context)
         {
-            bool actorIsHealer = context.Actor.Class == ClassIndex.Healer;
+            bool actorIsHealer = context.Actor.Class == ClassIndex.I.Healer;
             bool actorIsTrapper = context.Actor.HasAbility(AbilityIndex.Trapper);
             Unit firstDefender = context.DefendingSquad.FrontUnit;
 
@@ -139,7 +138,7 @@ namespace GulchGuardians.Coordination.Battle
         {
             Unit actor = context.Actor;
 
-            if (actor.Class == ClassIndex.Healer)
+            if (actor.Class == ClassIndex.I.Healer)
             {
                 yield return actor.HealSquad();
                 yield break;

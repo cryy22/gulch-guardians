@@ -13,14 +13,12 @@ namespace GulchGuardians.Units
     public class UnitSpriteView : MonoBehaviour
     {
         [SerializeField] private AbilityIndex AbilityIndex;
-        [SerializeField] private ClassIndex ClassIndex;
 
         private SpriteRenderer _renderer;
         private SpriteLibrary _library;
         private Animator _animator;
 
         private UnitSpriteAssetMap _assetMap;
-        private bool _hasHealerAsset;
 
         private void Awake()
         {
@@ -34,7 +32,6 @@ namespace GulchGuardians.Units
             _assetMap = assetMap;
 
             _library.spriteLibraryAsset = _assetMap.Default;
-            _hasHealerAsset = _assetMap.Healer != null;
 
             _animator.Play(
                 stateNameHash: 0,
@@ -48,14 +45,7 @@ namespace GulchGuardians.Units
         public void SetIdleAnimation() { _animator.SetTrigger(AnimatorProperties.OnIdleTrigger); }
         public void SetActAnimation() { _animator.SetTrigger(AnimatorProperties.OnActTrigger); }
         public void SetHurtAnimation() { _animator.SetTrigger(AnimatorProperties.OnHurtTrigger); }
-
-        public void UpdateSprite(ClassType classType)
-        {
-            if (_hasHealerAsset && classType == ClassIndex.Healer)
-                _library.spriteLibraryAsset = _assetMap.Healer;
-            else
-                _library.spriteLibraryAsset = _assetMap.Default;
-        }
+        public void UpdateSprite(ClassType classType) { _library.spriteLibraryAsset = _assetMap.GetAsset(classType); }
 
         public IEnumerator AnimateDefeat()
         {
