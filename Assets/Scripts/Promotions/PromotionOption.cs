@@ -7,10 +7,8 @@ using UnityEngine.UI;
 namespace GulchGuardians.Promotions
 {
     [RequireComponent(typeof(Button))]
-    public class PromotionOption : MonoBehaviour
+    public class PromotionOption : MonoBehaviour, IClassProvider
     {
-        [SerializeField] private ClassType Class;
-
         private Button _button;
         private TMP_Text _text;
 
@@ -29,5 +27,7 @@ namespace GulchGuardians.Promotions
         }
 
         private void OnClicked() { Selected?.Invoke(sender: this, e: new PromotionSelectedEventArgs(Class)); }
+
+        [field: SerializeField] public ClassType Class { get; private set; }
     }
 }
