@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using Crysc.Coordination;
 using GulchGuardians.Abilities;
 using GulchGuardians.Promotions;
@@ -76,12 +75,12 @@ namespace GulchGuardians.Coordination.Camp
 
         private void PromotionSelectedHandler(object sender, PromotionSelectedEventArgs e)
         {
-            StartCoroutine(ApplyPromotion(e.Ability));
+            ApplyPromotion(e.Ability);
         }
 
-        private IEnumerator ApplyPromotion(AbilityType ability)
+        private void ApplyPromotion(AbilityType ability)
         {
-            yield return _selectedUnit.AddAbility(ability);
+            StartCoroutine(_selectedUnit.AddAbility(ability));
             EndCoordination();
         }
     }
