@@ -37,6 +37,10 @@ MonoBehaviour:
     m_Address: UnitRegistry
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 9531440d827c46f2aaa9ce00f95c4e72
+    m_Address: UnitNamesList
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7c383ec3e73504115ab2dac7e830291f, type: 2}
   m_SchemaSet:
