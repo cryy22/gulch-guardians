@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace GulchGuardians.Abilities
 {
@@ -18,7 +19,8 @@ namespace GulchGuardians.Abilities
         {
             get
             {
-                if (_instance == null) _instance = Resources.Load<AbilityIndex>("Indexes/AbilityIndex");
+                if (_instance == null)
+                    _instance = Addressables.LoadAssetAsync<AbilityIndex>("AbilityIndex").WaitForCompletion();
                 return _instance;
             }
         }
