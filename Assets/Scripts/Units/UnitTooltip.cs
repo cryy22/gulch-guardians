@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Crysc.UI;
 using GulchGuardians.Abilities;
+using GulchGuardians.Classes;
 using TMPro;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace GulchGuardians.Units
         [SerializeField] private TMP_Text Line2Text;
         [SerializeField] private TMP_Text Line3Text;
 
+        [SerializeField] private ClassTextItem ClassTextItem;
         [SerializeField] private Transform AbilityTextItemParent;
         [SerializeField] private AbilityTextItem AbilityTextItemPrefab;
 
@@ -27,7 +29,6 @@ namespace GulchGuardians.Units
             base.UpdateTarget(target: target, previousTarget: previousTarget);
 
             SetContent(target);
-            SetAbilities(target);
 
             if (previousTarget != null) previousTarget.Changed -= ChangedEventHandler;
             target.Changed += ChangedEventHandler;
@@ -40,7 +41,6 @@ namespace GulchGuardians.Units
             var unit = (Unit) sender;
 
             SetContent(unit);
-            SetAbilities(unit);
         }
 
         private void SetContent(Unit unit)
@@ -49,6 +49,10 @@ namespace GulchGuardians.Units
             Line1Text.text = $"attack {TwoDigitNumber(unit.Attack)}";
             Line2Text.text = $"health {TwoDigitNumber(unit.Health)}";
             Line3Text.text = $"maxhlth {TwoDigitNumber(unit.MaxHealth)}";
+
+            ClassTextItem.SetClass(unit.Class);
+
+            SetAbilities(unit);
         }
 
         private void SetAbilities(Unit unit)

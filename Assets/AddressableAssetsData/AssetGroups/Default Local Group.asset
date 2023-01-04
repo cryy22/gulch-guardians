@@ -25,6 +25,18 @@ MonoBehaviour:
     m_Address: ClassIndex
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 53c39a9864e9a4fd6a0f07334fc1b1f5
+    m_Address: AbilityRegistry
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 58beb8ccc6c074c76a939c32343eff6f
+    m_Address: ClassRegistry
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e0c06b7c40c66416da3582c1c37a34f6
+    m_Address: UnitRegistry
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7c383ec3e73504115ab2dac7e830291f, type: 2}
   m_SchemaSet:

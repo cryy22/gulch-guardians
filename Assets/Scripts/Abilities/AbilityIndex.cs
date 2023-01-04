@@ -1,5 +1,6 @@
+using Crysc.Common;
+using GulchGuardians.Constants;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace GulchGuardians.Abilities
 {
@@ -13,17 +14,8 @@ namespace GulchGuardians.Abilities
         [SerializeField] private AbilityType ToughType;
         [SerializeField] private AbilityType TrapperType;
 
-        private static AbilityIndex _instance;
-
-        public static AbilityIndex I
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = Addressables.LoadAssetAsync<AbilityIndex>("AbilityIndex").WaitForCompletion();
-                return _instance;
-            }
-        }
+        private static readonly InstanceCacher<AbilityIndex> _cacher = new(AssetAddresses.AbilityIndex);
+        public static AbilityIndex I => _cacher.I;
 
         public AbilityType Archer => ArcherType;
         public AbilityType Boss => BossType;

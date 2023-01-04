@@ -1,22 +1,14 @@
+using Crysc.Common;
+using GulchGuardians.Constants;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace GulchGuardians.Classes
 {
     [CreateAssetMenu(fileName = "ClassIndex", menuName = "Indexes/Class Index")]
     public class ClassIndex : ScriptableObject
     {
-        private static ClassIndex _instance;
-
-        public static ClassIndex I
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = Addressables.LoadAssetAsync<ClassIndex>("ClassIndex").WaitForCompletion();
-                return _instance;
-            }
-        }
+        private static readonly InstanceCacher<ClassIndex> _cacher = new(AssetAddresses.ClassIndex);
+        public static ClassIndex I => _cacher.I;
 
         [field: SerializeField] public ClassType Rookie { get; private set; }
         [field: SerializeField] public ClassType Healer { get; private set; }
