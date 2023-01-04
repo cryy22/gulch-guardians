@@ -19,8 +19,6 @@ namespace GulchGuardians.Units
     [RequireComponent(typeof(UnitView))]
     public class Unit : InitializationBehaviour<UnitInitParams>
     {
-        [SerializeField] private AbilityIndex AbilityIndex;
-
         private readonly HashSet<AbilityType> _abilities = new();
 
         private ClickReporter _clickReporter;
@@ -55,7 +53,7 @@ namespace GulchGuardians.Units
             get
             {
                 var divisor = 1;
-                if (HasAbility(AbilityIndex.Archer)) divisor *= 2;
+                if (HasAbility(AbilityIndex.I.Archer)) divisor *= 2;
                 if (Class == ClassIndex.I.Healer) divisor *= 2;
 
                 return Attack / divisor;
@@ -127,7 +125,7 @@ namespace GulchGuardians.Units
             return index switch
             {
                 0 => true,
-                1 => HasAbility(AbilityIndex.Archer),
+                1 => HasAbility(AbilityIndex.I.Archer),
                 _ => false,
             };
         }
@@ -165,12 +163,12 @@ namespace GulchGuardians.Units
 
         private IEnumerator TakeDamage(int damage, Direction direction)
         {
-            damage = HasAbility(AbilityIndex.Tough) ? damage / 2 : damage;
+            damage = HasAbility(AbilityIndex.I.Tough) ? damage / 2 : damage;
             var abilitiesChanged = false;
-            if (HasAbility(AbilityIndex.Sturdy) && damage >= Health)
+            if (HasAbility(AbilityIndex.I.Sturdy) && damage >= Health)
             {
                 damage = Health - 1;
-                _abilities.Remove(AbilityIndex.Sturdy);
+                _abilities.Remove(AbilityIndex.I.Sturdy);
                 abilitiesChanged = true;
             }
 

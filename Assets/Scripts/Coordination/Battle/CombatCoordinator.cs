@@ -22,7 +22,6 @@ namespace GulchGuardians.Coordination.Battle
         [SerializeField] private Team PlayerTeam;
         [SerializeField] private Team EnemyTeam;
 
-        [SerializeField] private AbilityIndex AbilityIndex;
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private Button AutoButton;
         [SerializeField] private GameObject TrySpacebarMessage;
@@ -118,7 +117,7 @@ namespace GulchGuardians.Coordination.Battle
         private IEnumerator RunUnitAttack(ActionContext context)
         {
             bool actorIsHealer = context.Actor.Class == ClassIndex.I.Healer;
-            bool actorIsTrapper = context.Actor.HasAbility(AbilityIndex.Trapper);
+            bool actorIsTrapper = context.Actor.HasAbility(AbilityIndex.I.Trapper);
             Unit firstDefender = context.DefendingSquad.FrontUnit;
 
             yield return ExecuteActorAction(context);
@@ -148,7 +147,7 @@ namespace GulchGuardians.Coordination.Battle
             List<Unit> defenders = context.DefendingSquad.Units.ToList();
             Unit defender;
 
-            if (actor.HasAbility(AbilityIndex.Archer))
+            if (actor.HasAbility(AbilityIndex.I.Archer))
             {
                 int archerIndex = attackers.IndexOf(actor);
                 int defenderIndex = _archeryRange - 1 - archerIndex;
@@ -167,10 +166,10 @@ namespace GulchGuardians.Coordination.Battle
 
         private IEnumerator RotateEvasiveAwayFromFront(Squad squad)
         {
-            int evasiveCount = squad.Units.Count(u => u.HasAbility(AbilityIndex.Evasive));
+            int evasiveCount = squad.Units.Count(u => u.HasAbility(AbilityIndex.I.Evasive));
             if (evasiveCount == 0 || evasiveCount == squad.Count) yield break;
 
-            while (squad.FrontUnit.HasAbility(AbilityIndex.Evasive))
+            while (squad.FrontUnit.HasAbility(AbilityIndex.I.Evasive))
                 yield return RotateSquad(squad: squad, withHurtAnimation: false);
         }
 

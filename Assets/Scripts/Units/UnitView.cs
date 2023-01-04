@@ -18,7 +18,6 @@ namespace GulchGuardians.Units
         [SerializeField] private TMP_Text NameText;
         [SerializeField] private Transform AbilityIcons;
         [SerializeField] private AbilityIconItem AbilityIconPrefab;
-        [SerializeField] private AbilityIndex AbilityIndex;
         [SerializeField] private ParticleSystem AttackParticleSystem;
         [SerializeField] private List<GameObject> DetailElements;
 
@@ -45,7 +44,7 @@ namespace GulchGuardians.Units
             SpriteView.Setup(assetMap: spriteAssetMap, abilities: unit.Abilities);
 
             NameText.text = unit.FirstName;
-            if (unit.HasAbility(AbilityIndex.Boss))
+            if (unit.HasAbility(AbilityIndex.I.Boss))
             {
                 _shouldShowNametag = false;
                 Nametag.SetActive(false);

@@ -12,8 +12,6 @@ namespace GulchGuardians.Units
 {
     public class UnitSpriteView : MonoBehaviour
     {
-        [SerializeField] private AbilityIndex AbilityIndex;
-
         private SpriteRenderer _renderer;
         private SpriteLibrary _library;
         private Animator _animator;
@@ -39,7 +37,7 @@ namespace GulchGuardians.Units
                 normalizedTime: Random.Range(minInclusive: 0f, maxInclusive: 1f)
             );
 
-            if (abilities.Contains(AbilityIndex.Boss)) _renderer.transform.localScale *= 2f;
+            if (abilities.Contains(AbilityIndex.I.Boss)) _renderer.transform.localScale *= 2f;
         }
 
         public void SetIdleAnimation() { _animator.SetTrigger(AnimatorProperties.OnIdleTrigger); }

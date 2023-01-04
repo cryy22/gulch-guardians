@@ -8,15 +8,24 @@ namespace GulchGuardians.Abilities
         [SerializeField] private AbilityType ArcherType;
         [SerializeField] private AbilityType BossType;
         [SerializeField] private AbilityType EvasiveType;
-        [SerializeField] private AbilityType SpikyType;
         [SerializeField] private AbilityType SturdyType;
         [SerializeField] private AbilityType ToughType;
         [SerializeField] private AbilityType TrapperType;
 
+        private static AbilityIndex _instance;
+
+        public static AbilityIndex I
+        {
+            get
+            {
+                if (_instance == null) _instance = Resources.Load<AbilityIndex>("Indexes/AbilityIndex");
+                return _instance;
+            }
+        }
+
         public AbilityType Archer => ArcherType;
         public AbilityType Boss => BossType;
         public AbilityType Evasive => EvasiveType;
-        public AbilityType Spiky => SpikyType;
         public AbilityType Sturdy => SturdyType;
         public AbilityType Tough => ToughType;
         public AbilityType Trapper => TrapperType;

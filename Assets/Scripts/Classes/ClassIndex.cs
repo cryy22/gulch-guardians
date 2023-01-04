@@ -11,9 +11,7 @@ namespace GulchGuardians.Classes
         {
             get
             {
-                if (_instance != null) return _instance;
-
-                _instance = Resources.Load<ClassIndex>("Indexes/ClassIndex");
+                if (_instance == null) _instance = Resources.Load<ClassIndex>("Indexes/ClassIndex");
                 return _instance;
             }
         }
