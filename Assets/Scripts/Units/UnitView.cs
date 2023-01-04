@@ -61,7 +61,7 @@ namespace GulchGuardians.Units
             HealthText.color = unit.Health == unit.MaxHealth ? Color.white : Color.red;
 
             UpdateAbilities(unit);
-            SpriteView.UpdateSprite(unit.Abilities);
+            SpriteView.UpdateSprite(unit.Class);
         }
 
         public IEnumerator AnimateAttack(Unit target)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Crysc.Coordination;
 using GulchGuardians.Abilities;
+using GulchGuardians.Classes;
 using GulchGuardians.Squads;
 using GulchGuardians.Teams;
 using GulchGuardians.Units;
@@ -22,6 +23,7 @@ namespace GulchGuardians.Coordination.Battle
         [SerializeField] private Team EnemyTeam;
 
         [SerializeField] private AbilityIndex AbilityIndex;
+        [SerializeField] private ClassIndex ClassIndex;
         [SerializeField] private Button AdvanceButton;
         [SerializeField] private Button AutoButton;
         [SerializeField] private GameObject TrySpacebarMessage;
@@ -116,7 +118,7 @@ namespace GulchGuardians.Coordination.Battle
 
         private IEnumerator RunUnitAttack(ActionContext context)
         {
-            bool actorIsHealer = context.Actor.HasAbility(AbilityIndex.Healer);
+            bool actorIsHealer = context.Actor.Class == ClassIndex.Healer;
             bool actorIsTrapper = context.Actor.HasAbility(AbilityIndex.Trapper);
             Unit firstDefender = context.DefendingSquad.FrontUnit;
 
@@ -137,7 +139,7 @@ namespace GulchGuardians.Coordination.Battle
         {
             Unit actor = context.Actor;
 
-            if (actor.HasAbility(AbilityIndex.Healer))
+            if (actor.Class == ClassIndex.Healer)
             {
                 yield return actor.HealSquad();
                 yield break;

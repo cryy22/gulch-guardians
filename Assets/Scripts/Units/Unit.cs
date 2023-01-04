@@ -5,6 +5,7 @@ using System.Linq;
 using Crysc.Helpers;
 using Crysc.Initialization;
 using GulchGuardians.Abilities;
+using GulchGuardians.Classes;
 using GulchGuardians.Common;
 using GulchGuardians.Squads;
 using GulchGuardians.Teams;
@@ -19,6 +20,7 @@ namespace GulchGuardians.Units
     public class Unit : InitializationBehaviour<UnitInitParams>
     {
         [SerializeField] private AbilityIndex AbilityIndex;
+        [SerializeField] private ClassIndex ClassIndex;
 
         private readonly HashSet<AbilityType> _abilities = new();
 
@@ -47,6 +49,7 @@ namespace GulchGuardians.Units
 
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
+        public ClassType Class { get; private set; }
 
         private int ActionMagnitude
         {
@@ -54,7 +57,7 @@ namespace GulchGuardians.Units
             {
                 var divisor = 1;
                 if (HasAbility(AbilityIndex.Archer)) divisor *= 2;
-                if (HasAbility(AbilityIndex.Healer)) divisor *= 2;
+                if (Class == ClassIndex.Healer) divisor *= 2;
 
                 return Attack / divisor;
             }
@@ -77,6 +80,8 @@ namespace GulchGuardians.Units
             MaxHealth = Mathf.Max(a: Health, b: initParams.MaxHealth);
 
             _abilities.UnionWith(initParams.Abilities.Where(p => p.Value).Select(p => p.Key));
+            Class = initParams.Class;
+
             View.Setup(spriteAssetMap: initParams.SpriteAssetMap, unit: this);
         }
 
@@ -137,7 +142,7 @@ namespace GulchGuardians.Units
 
         public IEnumerator HealSquad()
         {
-            if (!HasAbility(AbilityIndex.Healer)) yield break;
+            if (Class != ClassIndex.Healer) yield break;
 
             yield return View.AnimateHeal();
             yield return CoroutineWaiter.RunConcurrently(

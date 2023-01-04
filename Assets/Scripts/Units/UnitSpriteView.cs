@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GulchGuardians.Abilities;
 using GulchGuardians.Audio;
+using GulchGuardians.Classes;
 using GulchGuardians.Constants;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -12,6 +13,7 @@ namespace GulchGuardians.Units
     public class UnitSpriteView : MonoBehaviour
     {
         [SerializeField] private AbilityIndex AbilityIndex;
+        [SerializeField] private ClassIndex ClassIndex;
 
         private SpriteRenderer _renderer;
         private SpriteLibrary _library;
@@ -47,9 +49,9 @@ namespace GulchGuardians.Units
         public void SetActAnimation() { _animator.SetTrigger(AnimatorProperties.OnActTrigger); }
         public void SetHurtAnimation() { _animator.SetTrigger(AnimatorProperties.OnHurtTrigger); }
 
-        public void UpdateSprite(IEnumerable<AbilityType> abilities)
+        public void UpdateSprite(ClassType classType)
         {
-            if (_hasHealerAsset && abilities.Contains(AbilityIndex.Healer))
+            if (_hasHealerAsset && classType == ClassIndex.Healer)
                 _library.spriteLibraryAsset = _assetMap.Healer;
             else
                 _library.spriteLibraryAsset = _assetMap.Default;

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: UnitFactory
   m_EditorClassIdentifier: 
   Prefab: {fileID: 6608307905624749109, guid: c719fc16d577f434aae58957cea96210, type: 3}
+  ClassIndex: {fileID: 11400000, guid: 7bd5733c33a5d4de9892ff1310544458, type: 2}

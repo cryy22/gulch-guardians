@@ -8,7 +8,6 @@ namespace GulchGuardians.Abilities
         [SerializeField] private AbilityType ArcherType;
         [SerializeField] private AbilityType BossType;
         [SerializeField] private AbilityType EvasiveType;
-        [SerializeField] private AbilityType HealerType;
         [SerializeField] private AbilityType SpikyType;
         [SerializeField] private AbilityType SturdyType;
         [SerializeField] private AbilityType ToughType;
@@ -17,7 +16,6 @@ namespace GulchGuardians.Abilities
         public AbilityType Archer => ArcherType;
         public AbilityType Boss => BossType;
         public AbilityType Evasive => EvasiveType;
-        public AbilityType Healer => HealerType;
         public AbilityType Spiky => SpikyType;
         public AbilityType Sturdy => SturdyType;
         public AbilityType Tough => ToughType;
